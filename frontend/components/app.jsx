@@ -9,7 +9,13 @@ const App = () => (
   <div>
     <Modal />
     <Route path="/" component={ NavBarContainer } />
-    <p>Yo2</p>
+    {/* <Switch>
+      <Route exact path="/" component={ PlacesIndexContainer } />
+      <Route path="/places/:placeId/pages/:pageId" component={ PageIndexContainer } />
+
+      <Redirect from="*" to="/" />
+    </Switch>
+    <Route exact path="/" component={ FooterContainer } /> */}
   </div>
 );
 
