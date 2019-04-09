@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+#root {
+}
+
+// @font-face { 
+//   font-family: 'Google Sans';
+//   src: font_url('fonts/GoogleSans-Regular.ttf');
+// }
+
+button {
+  cursor: pointer;
+}
+
+:hover {
+  text-decoration: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+
+@import 'nav_bar';
+@import 'session';
+@import 'modal';
+@import 'errors';

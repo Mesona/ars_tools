@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class NavBar extends React.Component {
 
@@ -8,7 +9,8 @@ class NavBar extends React.Component {
     const { currentUser, logout, openModal } = this.props;
     const display = currentUser ? (
       <div className="login-logout-options">
-        <span>Hello, { currentUser.username }</span><br></br>
+        <span>Hello, { currentUser.username }</span>
+        &nbsp;&nbsp;
         <button onClick={ logout }>Sign Out</button>
       </div>
     ) : (

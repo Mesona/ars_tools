@@ -1,0 +1,77 @@
+.nav-sticky {
+  border-bottom: 1px solid #DADCE0;
+  position: sticky;
+}
+
+.nav-bar {
+  display: flex;
+  margin-left: 15px;
+  margin-right: 15px;
+  height: 50px;
+  background: white;
+}
+
+.login-logout-options {
+    text-align: center;
+    vertical-align: middle; 
+    padding-top: 10px;
+    border-radius: 5px;
+}
+
+.login-logout-options button {
+  border: none;
+  background-color: inherit;
+  font-size: 16px;
+  color: rgb(32, 109, 209);
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.login-logout-options button:hover {
+  background-color: rgb(30, 203, 209);
+  transition: background-color 0.5s;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-logout-options button:focus {
+  outline: 0;
+}
+  
+.logo {
+  width: 15%;
+  text-align: center;
+  vertical-align: middle;
+  display: flex;
+}
+
+.logo-button {
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.logo-button:hover {
+  cursor: pointer;
+  background: inherit;
+}
+    
+img {
+  height: 40px;
+  width: 40px;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+    
+p {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.54);
+  text-decoration: none;
+  padding-bottom: -5px;
+}
+
+.nav-display {
+  width: 85%;
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,0 +1,28 @@
+.session-errors {
+  text-align: center;
+}
+
+.fading {
+  -webkit-animation-duration: 5s;
+  -webkit-animation-name: fading;
+  animation-duration: 5s;
+  animation-name: fading;
+  transition-delay: 5s;
+}
+
+@-webkit-keyframes fading {
+  from {
+      color: red;
+  }
+  to {
+      color: black;
+  }
+}
+@keyframes fading {
+  from {
+      color: red;
+  }
+  to {
+      color: black;
+  }
+}
