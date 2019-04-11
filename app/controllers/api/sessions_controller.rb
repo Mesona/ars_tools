@@ -10,13 +10,19 @@ class Api::SessionsController < ApplicationController
       render json: ['Invalid login credentials'], status: 401
     else
       login!(@user)
-      render json: @user; 
+      # render json: @user; 
+      render 'api/users/show';
     end
 
   end
 
   def destroy
-    logout!
-    render json: { message: 'Logout successful.' }
+    @user = current_user
+    if @user 
+      logout!
+      render json: { message: 'Logout successful.' }
+    else 
+      render json: ["You aren't signed in"], status: 404
+    end
   end
 end

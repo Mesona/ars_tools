@@ -30,9 +30,15 @@ class SessionForm extends React.Component {
   handleSubmit (e) {
     e.preventDefault();
     this.state.renderedErrors = true;
-    const user = Object.assign({}, this.state);
-    this.setState({currentUser: user});
-    this.props.processForm(user).then(this.props.closeModal);
+    // const user = Object.assign({}, this.state);
+    let user = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    // this.setState({currentUser: user});
+    this.props.processForm(user)
+      .then(this.props.closeModal)
+      // .then(() => this.props.history.push(`/users/${this.state.currentUser.id}`));
     if (this.props.errors.session !== []) {
       setTimeout(() => this.state.renderedErrors = false, 500);
     }
