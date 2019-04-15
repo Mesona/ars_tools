@@ -19,15 +19,17 @@ export const receiveErrors = errors => ({
   errors
 });
 
-export const clearErrors = errors => ({
+export const clearErrors = () => ({
   type: CLEAR_ERRORS,
 });
 
 export const createNewUser = formUser => dispatch => (
   SessionAPIUtils.postUser(formUser)
+    // .then(response => console.log(response))
     .then(user => dispatch(receiveCurrentUser(user)),
-      errors => dispatch(receiveErrors(errors.responseJSON)))
-);
+    //   errors => dispatch(receiveErrors(errors.responseJSON)))
+// );
+    ));
 
 export const login = formUser => dispatch => (
   SessionAPIUtils.postSession(formUser)

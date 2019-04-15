@@ -7,43 +7,38 @@ import configureStore from './store/store';
 document.addEventListener('DOMContentLoaded', () => {
   const root = document.getElementById('root');
 
-  // let store;
-  // if (window.currentUser) {
-  //   const { currentUser } = window;
-  //   const { id } = currentUser;
-  //   const preloadedState = { 
-  //     entities: {
-  //       users: {
-  //         [id]: currentUser
-  //       }
-  //     },
-  //     session: { id }
-  //   };
-
-  //   store = configureStore(preloadedState);
-
-  //   // Clean up after ourselves so we don't accidentally use the
-  //   // global currentUser instead of the one in the store
-  //   delete window.currentUser;
-
-  // } else {
-  //   store = configureStore();
-  // }
-
-
-  let preloadedState = undefined;
+  let store;
   if (window.currentUser) {
-    preloadedState = {
+    const { currentUser } = window;
+    const { id } = currentUser;
+    const preloadedState = { 
+      entities: {
+        users: {
+          [id]: currentUser
+        }
+      },
       session: {
-        currentUser: window.currentUser
+        currentUser: currentUser
       }
     };
+
+    store = configureStore(preloadedState);
+
+    // Clean up after ourselves so we don't accidentally use the
+    // global currentUser instead of the one in the store
     delete window.currentUser;
+
+  } else {
+    store = configureStore();
   }
 
-  const store = configureStore(preloadedState);
+
+  // TESTING
+
+  window.getState = store.getState;
+  window.dispatch = store.dispatch;
+  
+  // END TESTING
 
   ReactDOM.render(<Root store={store} />, root);
-
-  // ReactDOM.render('yay', root);
 });
