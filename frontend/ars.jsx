@@ -17,7 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
           [id]: currentUser
         }
       },
-      session: { id }
+      session: {
+        currentUser: currentUser
+      }
     };
 
     store = configureStore(preloadedState);
@@ -30,7 +32,13 @@ document.addEventListener('DOMContentLoaded', () => {
     store = configureStore();
   }
 
-  ReactDOM.render(<Root store={store} />, root);
 
-  // ReactDOM.render('yay', root);
+  // TESTING
+
+  window.getState = store.getState;
+  window.dispatch = store.dispatch;
+  
+  // END TESTING
+
+  ReactDOM.render(<Root store={store} />, root);
 });

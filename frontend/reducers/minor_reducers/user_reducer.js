@@ -6,13 +6,14 @@ import {
 } from '../../actions/user_actions';
 
 const UsersReducer = (state = {}, action) => {
+  let user;
   Object.freeze(state);
   switch (action.type) {
     case RECEIVE_ALL_USERS:
       return action.users;
     case RECEIVE_USER:
-      let user = action.user;
-      return merge({}, state, { [user.id]: user });
+      user = action.user;
+      return merge({}, state, { [action.user.id]: user });
     default:
       return state;
   }

@@ -1,0 +1,26 @@
+html, body, div, span, h1, h2, h3, h4, a, ol, ul, li, form, label, article, aside, figure, figcaption, footer, header, nav {
+  margin: 0;
+  /* margin-left: 0px;
+  margin-right: 0px; */
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+:hover {
+  text-decoration: none;
+}
+
+body {
+  height: 100%;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  width: 100%
+}

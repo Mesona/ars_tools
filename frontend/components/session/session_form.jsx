@@ -17,9 +17,9 @@ class SessionForm extends React.Component {
   }
 
 
-  componentWillUnmount() {
-    this.props.receiveErrors([]);
-  }
+  // componentWillUnmount() {
+  //   this.props.receiveErrors([]);
+  // }
 
   handleInput (field) {
     return (e) => {
@@ -30,9 +30,15 @@ class SessionForm extends React.Component {
   handleSubmit (e) {
     e.preventDefault();
     this.state.renderedErrors = true;
-    const user = Object.assign({}, this.state);
-    this.setState({currentUser: user});
-    this.props.processForm(user).then(this.props.closeModal);
+
+    let user = {
+      email: this.state.email,
+      password: this.state.password
+    };
+
+    this.props.processForm(user)
+      .then(this.props.closeModal)
+
     if (this.props.errors.session !== []) {
       setTimeout(() => this.state.renderedErrors = false, 500);
     }
@@ -68,7 +74,7 @@ class SessionForm extends React.Component {
           </label>
           <label onClick={e => e.stopPropagation()}>
             <section className="descriptor-div">
-              <span className={this.state.active === 'email' ? 'placeholderText' : this.state.email === '' ? '' : 'hidden'}>Email</span>
+              <span className={this.state.active === 'email' ? 'placeholderText' : this.state.email === '' ? '' : 'hidden'}>Email2</span>
             </section>
             <input
               type="text"

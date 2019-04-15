@@ -1,0 +1,140 @@
+
+.modal-background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 10;
+}
+
+.session-form {
+  font-family: 'Google Sans';
+  z-index: -2;
+}
+
+.session-form input {
+  padding: 6px;
+  z-index: 5;
+}
+
+.close-x {
+  float: right;
+  cursor: pointer;
+}
+
+.modal-title {
+  font-size: 26px;
+  margin: 0 auto;
+  width: 100%;
+  padding-top: 40px;
+  text-align: center;
+}
+
+.placeholderText {
+  position: relative;
+  top: -24px;
+  font-size: 14px;
+  color: #2276E4;
+  background: white;
+  padding: 3px;
+}
+
+.modal-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  width: 50%;
+  height: 70%;
+  border: 1px solid lightslategray;
+  border-radius: 10px;
+
+}
+
+input {
+  font-size: 20px;
+  border-radius: 3px;
+}
+
+.form-button {
+  background: #2E7DE3;
+  color: white;
+  border-radius: 4px;
+  width: 90px;
+  height: 40px;
+  position: absolute;
+  right: 40px;
+  bottom: 60px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.form-button:focus {
+  outline: 0;
+}
+
+.form-button:hover {
+  box-shadow: 0 3px 4px 0 rgba(0,0,0,0.24), 0 4px 12px 0 rgba(0,0,0,0.19);
+  transition: box-shadow 0.5s;
+}
+
+.other-form-button {
+  position: absolute;
+  bottom: 63px;
+  left: 40px;
+}
+
+.other-form-button:hover {
+  border-radius: 8px;
+  background: #F6FAFE;
+  transition: 1s;
+
+}
+
+.other-form-button:focus {
+  outline: 0;
+}
+
+.other-button {
+  border: none;
+  background-color: inherit;
+  font-size: 16px;
+  color: rgb(32, 109, 209);
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.other-button:focus {
+  outline: 0;
+}
+
+
+.login-form-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-form-box section {
+  position: relative;
+  top: 32px;
+  left: 6px;
+  font-size: 20px;
+  color: #80868B;
+  cursor: text;
+}
+
+.welcome-text span a {
+  text-decoration: initial;
+  color: blue;
+}
+
+.welcome-text span a:hover {
+  text-decoration: initial;
+  color: white;
+}
