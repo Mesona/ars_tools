@@ -1,14 +1,30 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Intro from './intro';
+import LandingContainer from './landing_container';
 
 class Home extends React.Component {
   render () {
-    return (
-      <section className="intro">
-        <p>Intro here!  You should not be logged in if you are seeing this</p>
-      </section>
+
+    const { currentUser } = this.props;
+    const display = currentUser ? (
+
+      <div>
+        <LandingContainer />
+      </div>
+    
+    ) : (
+
+      <div>
+        <Intro />
+      </div>
+
     );
 
+    return (
+      <section className="intro">
+        { display }
+      </section>
+    );
   }
 };
 
