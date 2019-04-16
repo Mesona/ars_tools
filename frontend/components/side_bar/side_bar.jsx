@@ -6,7 +6,9 @@ class SideBar extends React.Component {
     return (
       <section className="side-sticky">
         <header className="side-bar">
-          <p>Side Bar Here</p>
+          <div>Characters</div>
+          <div>Covenents</div>
+          <div>Campaigns</div>
         </header>
       </section>
     );

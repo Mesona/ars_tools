@@ -5,7 +5,7 @@ class Landing extends React.Component {
   render () {
     return (
       <section className="intro">
-        <p>Logged in!</p>
+
       </section>
     );
 
