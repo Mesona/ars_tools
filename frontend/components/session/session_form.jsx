@@ -17,10 +17,6 @@ class SessionForm extends React.Component {
   }
 
 
-  // componentWillUnmount() {
-  //   this.props.receiveErrors([]);
-  // }
-
   handleInput (field) {
     return (e) => {
       this.setState({ [field]: e.currentTarget.value });
