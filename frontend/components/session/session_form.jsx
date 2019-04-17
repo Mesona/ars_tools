@@ -56,7 +56,9 @@ class SessionForm extends React.Component {
       <div className="session-form" onClick={()=>{this.setState({active: false})}}>
         <div onClick={this.props.closeModal} className="close-x">X</div><br></br><br></br>
         <div className="modal-title">{this.props.formType}</div><br></br>
+
         <form className="login-form-box"  onSubmit={this.handleSubmit}>
+
           <label className={this.props.shouldHide ? 'hidden' : ''} onClick={e => e.stopPropagation()} >
             <section className="descriptor-div">
               <span className={this.state.active === 'username' ? 'placeholderText' : this.state.username === '' ? '' : 'hidden'}>Username</span>
@@ -68,9 +70,10 @@ class SessionForm extends React.Component {
               onClick={()=>{this.setState({active: 'username'})}}
             />
           </label>
+
           <label onClick={e => e.stopPropagation()}>
             <section className="descriptor-div">
-              <span className={this.state.active === 'email' ? 'placeholderText' : this.state.email === '' ? '' : 'hidden'}>Email2</span>
+              <span className={this.state.active === 'email' ? 'placeholderText' : this.state.email === '' ? '' : 'hidden'}>Email</span>
             </section>
             <input
               type="text"
@@ -79,6 +82,7 @@ class SessionForm extends React.Component {
               onClick={()=>{this.setState({active: 'email'})}}
             />
           </label>
+
           <label onClick={e => e.stopPropagation()}>
             <section className="descriptor-div">
               <span  className={this.state.active === 'password' ? 'placeholderText' : this.state.password === '' ? '' : 'hidden'}>Password</span>
@@ -90,13 +94,16 @@ class SessionForm extends React.Component {
               onClick={()=>{this.setState({active: 'password'})}}
             />
           </label>
+
           <div className="session-errors"><br></br>{this.renderErrors()}</div>
+
           <nav className="session-form-buttons">
             <input type="submit" className="form-button" value={this.props.formType}></input>
             <div className="other-form-button">
               {this.props.otherForm}
             </div>
           </nav>
+
         </form>
       </div>
     )

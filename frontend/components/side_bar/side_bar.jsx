@@ -6,9 +6,33 @@ class SideBar extends React.Component {
     return (
       <section className="side-sticky">
         <header className="side-bar">
-          <div>Characters</div>
-          <div>Covenents</div>
-          <div>Campaigns</div>
+          <div>
+            <span className="characters-title">Characters</span>
+            <ul>
+              <li>New</li>
+              <li>Stickied Character 1</li>
+              <li>Stickied Character 2</li>
+              <li>Stickied Character 3</li>
+            </ul>
+          </div>
+          <div>
+            <span className="covenants-title">Covenants</span>
+            <ul>
+              <li>New</li>
+              <li>Stickied Covenant 1</li>
+              <li>Stickied Covenant 2</li>
+              <li>Stickied Covenant 3</li>
+            </ul>
+          </div>
+          <div>
+            <span className="campaigns-title">Campaigns</span>
+            <ul>
+              <li>New</li>
+              <li>Stickied Campaign 1</li>
+              <li>Stickied Campaign 2</li>
+              <li>Stickied Campaign 3</li>
+            </ul>
+          </div>
         </header>
       </section>
     );

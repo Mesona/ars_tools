@@ -2,8 +2,9 @@ import { connect } from 'react-redux';
 
 import Landing from './landing';
 
-const mapStateToProps = ({ session }) => ({
-  currentUser: session.currentUser,
+const mapStateToProps = (state) => ({
+  currentUser: state.session.currentUser,
+  thisState: state,
 });
 
 const mapDispatchToProps = dispatch => ({

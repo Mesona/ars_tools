@@ -41,6 +41,8 @@ class User < ApplicationRecord
     self.session_token
   end
 
+  has_many :characters
+
   private
   def ensure_session_token
     self.session_token ||= SecureRandom.urlsafe_base64(16)
