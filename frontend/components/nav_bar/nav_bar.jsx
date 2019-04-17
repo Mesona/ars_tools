@@ -6,18 +6,22 @@ class NavBar extends React.Component {
 
     const { currentUser, logout, openModal } = this.props;
     const display = currentUser ? (
+
       <div className="login-logout-options">
         <span>Hello, { currentUser.username }</span>
         &nbsp;&nbsp;
         <button onClick={ logout }>Sign Out</button>
       </div>
+
     ) : (
+
       <div className="login-logout-options">
         <button onClick={() => openModal('login')}>Login</button>
         &nbsp;&nbsp;
         <button onClick={() => openModal('signup')}>Sign Up</button>
         &nbsp;&nbsp;
       </div>
+
     );
 
     return (
@@ -25,8 +29,6 @@ class NavBar extends React.Component {
         <header className="nav-bar">
 
           <div className="logo">
-            {/* <Link className="logo-button" to='/' ><img src={window.images.headerImg}></img></Link> */}
-            {/* <Link className="logo-button" to='/'><p>Places</p></Link> */}
             <p onClick={() => console.log(this.props)}>Ars</p>
           </div>
 
