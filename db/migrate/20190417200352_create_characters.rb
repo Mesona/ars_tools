@@ -3,15 +3,11 @@ class CreateCharacters < ActiveRecord::Migration[5.2]
     create_table :characters do |t|
       t.string :type, null: false
       t.string :name, null: false
-      t.string :abilities, null: false
-      t.string :virtues, null: false
-      t.string :flaws, null: false
-      t.string :equipment
-
+      t.integer :user_id, null: false
 
       t.timestamps
     end
-    add_index :characters, :name
     add_index :characters, :type
+    add_index :characters, :user_id
   end
 end
