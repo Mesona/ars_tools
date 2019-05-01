@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_17_200352) do
+ActiveRecord::Schema.define(version: 2019_05_01_014952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,6 +25,13 @@ ActiveRecord::Schema.define(version: 2019_04_17_200352) do
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
+  create_table "characters_virtues", id: false, force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "virtue_id", null: false
+    t.index ["character_id"], name: "index_characters_virtues_on_character_id"
+    t.index ["virtue_id"], name: "index_characters_virtues_on_virtue_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "username", null: false
     t.string "email", null: false
@@ -35,6 +42,19 @@ ActiveRecord::Schema.define(version: 2019_04_17_200352) do
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["session_token"], name: "index_users_on_session_token"
     t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
+  create_table "virtues", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.string "book", null: false
+    t.string "type", null: false
+    t.boolean "major"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book"], name: "index_virtues_on_book"
+    t.index ["major"], name: "index_virtues_on_major"
+    t.index ["type"], name: "index_virtues_on_type"
   end
 
 end
