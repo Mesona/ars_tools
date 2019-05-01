@@ -15,7 +15,6 @@ class Character < ApplicationRecord
   belongs_to :user
 
   has_and_belongs_to_many :virtues
+  has_and_belongs_to_many :flaws
   # has_many :abilities
-  # has_many :virtues
-  # has_many :flaws
 end

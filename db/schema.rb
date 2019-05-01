@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_01_022408) do
+ActiveRecord::Schema.define(version: 2019_05_01_025838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,11 +25,31 @@ ActiveRecord::Schema.define(version: 2019_05_01_022408) do
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
+  create_table "characters_flaws", id: false, force: :cascade do |t|
+    t.bigint "character_id", null: false
+    t.bigint "flaw_id", null: false
+    t.index ["character_id"], name: "index_characters_flaws_on_character_id"
+    t.index ["flaw_id"], name: "index_characters_flaws_on_flaw_id"
+  end
+
   create_table "characters_virtues", id: false, force: :cascade do |t|
     t.bigint "character_id", null: false
     t.bigint "virtue_id", null: false
     t.index ["character_id"], name: "index_characters_virtues_on_character_id"
     t.index ["virtue_id"], name: "index_characters_virtues_on_virtue_id"
+  end
+
+  create_table "flaws", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.string "book", null: false
+    t.string "flaw_type", null: false
+    t.boolean "major"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book"], name: "index_flaws_on_book"
+    t.index ["flaw_type"], name: "index_flaws_on_flaw_type"
+    t.index ["major"], name: "index_flaws_on_major"
   end
 
   create_table "users", force: :cascade do |t|
