@@ -11,7 +11,7 @@ Character.destroy_all
 Virtue.destroy_all
 
 demoUser = User.create!(username: 'Demo', email: 'demo@email.com', password: 'password')
-demoCharacter = Character.create!(type: 'Mage', name: 'Demo Mage', user_id: demoUser.id)
+demoCharacter = Character.create!(character_type: 'Mage', name: 'Demo Mage', user_id: demoUser.id)
 
 theGift = Virtue.create!(name: "The Gift",
   description: "The Gift is a special Virtue, because it has no cost. The character suffers all the penalties of The Gift, just as magi do (see page 75), but can be taught Supernatural Abilities without having to take the corresponding Virtues (see page 166 for rules). Most importantly, the character can be taught Hermetic Magic, so all magi must have this Virtue. A character with The Gift, even if he is not a magus, may take Hermetic Virtues and Flaws which relate to intrinsic ability rather than background or training.
@@ -20,4 +20,4 @@ theGift = Virtue.create!(name: "The Gift",
   plan for the character to become an apprentice. The ability to cast Hermetic magic is the single supernatural ability possessed by Hermetic magi in virtue of The Gift; again, they may take more Supernatural Ability Virtues if they wish.
   Grogs can never have The Gift, as a char- acter with The Gift is too important to be a grog. As a rule, companions should only have The Gift if they are intended to become magi. Troupes should not allow any other Gifted characters unless they are absolutely sure that they want them.",
   book: "Core",
-  type: "Special")
+  virtue_type: "Special")

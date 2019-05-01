@@ -10,18 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_01_014952) do
+ActiveRecord::Schema.define(version: 2019_05_01_022408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "characters", force: :cascade do |t|
-    t.string "type", null: false
+    t.string "character_type", null: false
     t.string "name", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["type"], name: "index_characters_on_type"
+    t.index ["character_type"], name: "index_characters_on_character_type"
     t.index ["user_id"], name: "index_characters_on_user_id"
   end
 
@@ -48,13 +48,13 @@ ActiveRecord::Schema.define(version: 2019_05_01_014952) do
     t.string "name", null: false
     t.text "description", null: false
     t.string "book", null: false
-    t.string "type", null: false
+    t.string "virtue_type", null: false
     t.boolean "major"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book"], name: "index_virtues_on_book"
     t.index ["major"], name: "index_virtues_on_major"
-    t.index ["type"], name: "index_virtues_on_type"
+    t.index ["virtue_type"], name: "index_virtues_on_virtue_type"
   end
 
 end

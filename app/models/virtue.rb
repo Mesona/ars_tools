@@ -6,7 +6,7 @@
 #  name        :string           not null
 #  description :text             not null
 #  book        :string           not null
-#  type        :string           not null
+#  virtue_type :string           not null
 #  major       :boolean
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
@@ -14,5 +14,5 @@
 
 class Virtue < ApplicationRecord
 
-  has_any_belongs_to_many :characters
+  has_and_belongs_to_many :characters
 end
