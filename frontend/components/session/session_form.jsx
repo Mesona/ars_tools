@@ -28,12 +28,15 @@ class SessionForm extends React.Component {
     this.state.renderedErrors = true;
 
     let user = {
+      username: this.state.username,
       email: this.state.email,
       password: this.state.password
     };
 
+    console.log(user)
+
     this.props.processForm(user)
-      .then(this.props.closeModal)
+      .then(this.props.closeModal);
 
     if (this.props.errors.session !== []) {
       setTimeout(() => this.state.renderedErrors = false, 500);

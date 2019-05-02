@@ -17,4 +17,9 @@ class Character < ApplicationRecord
   has_and_belongs_to_many :virtues
   has_and_belongs_to_many :flaws
   # has_many :abilities
+  # has_one inventory
+  # Need to add stats to character sheet (PER, STR, QUI, etc)
+  # Need to add Age to character
+  # Need to add appearant age to character
+  # has_many decrepitude
 end
