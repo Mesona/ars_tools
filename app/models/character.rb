@@ -16,7 +16,8 @@ class Character < ApplicationRecord
 
   has_and_belongs_to_many :virtues
   has_and_belongs_to_many :flaws
-  # has_many :abilities
+  has_many :ability_associations
+  has_many :abilities, through: :ability_associations
   # has_one inventory
   # Need to add stats to character sheet (PER, STR, QUI, etc)
   # Need to add Age to character

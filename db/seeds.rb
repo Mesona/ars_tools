@@ -11,6 +11,7 @@ Character.destroy_all
 
 require File.expand_path('../seeds/virtues', __FILE__)
 require File.expand_path('../seeds/flaws', __FILE__)
+require File.expand_path('../seeds/abilities', __FILE__)
 
 demo_user = User.create!(username: 'Demo', email: 'demo@email.com', password: 'password')
 demo_character = Character.create!(character_type: 'Mage', name: 'Demo Mage', user_id: demo_user.id)

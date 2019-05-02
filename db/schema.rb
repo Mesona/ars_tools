@@ -10,10 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_01_025838) do
+ActiveRecord::Schema.define(version: 2019_05_02_192353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "abilities", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.string "book", null: false
+    t.string "ability_type", null: false
+    t.boolean "unlearned_usable"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ability_type"], name: "index_abilities_on_ability_type"
+    t.index ["book"], name: "index_abilities_on_book"
+  end
+
+  create_table "ability_associations", force: :cascade do |t|
+    t.integer "ability_id"
+    t.integer "character_id"
+    t.integer "ability_experience", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "specialization"
+    t.index ["ability_id", "character_id"], name: "index_ability_associations_on_ability_id_and_character_id"
+    t.index ["character_id"], name: "index_ability_associations_on_character_id"
+  end
 
   create_table "characters", force: :cascade do |t|
     t.string "character_type", null: false
