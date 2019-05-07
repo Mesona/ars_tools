@@ -10,6 +10,7 @@
 #  major       :boolean
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  free        :boolean          default(FALSE)
 #
 
 class Virtue < ApplicationRecord

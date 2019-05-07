@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_02_192353) do
+ActiveRecord::Schema.define(version: 2019_05_07_033010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2019_05_02_192353) do
     t.boolean "major"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "free", default: false
     t.index ["book"], name: "index_virtues_on_book"
     t.index ["major"], name: "index_virtues_on_major"
     t.index ["virtue_type"], name: "index_virtues_on_virtue_type"
