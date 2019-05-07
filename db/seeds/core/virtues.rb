@@ -156,4 +156,10 @@ module Virtues
     virtue_type: "Hermetic",
     major: true)
 
+  # virtue_name = Virtue.create!(name: ""),
+  # description: "",
+  # virtue_type: "",
+  # book: "Core",
+  # major: false)
+
 end
