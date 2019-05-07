@@ -124,33 +124,36 @@ module Virtues
     major: true)
 
   deft_form = Virtue.create!(name: "Deft Form"),
-    description: "",
+    description: "You are particularly skilled with one Form. You suffer no penalty to the Casting Total casting spells in that Form when using non-standard voicings/gestures (see page 83), including using no voice or gestures because you are in a non-human form. Voice Range spells still have a Range based on how loudly you are speaking.",
     book: "Core",
-    virtue_type: "",
+    virtue_type: "Hermetic",
     major: false)
 
-  virtue_name = Virtue.create!(name: ),
-    description: "",
+  diedne_magic = Virtue.create!(name: "Diedne Magic"),
+    description: "Your magic lineage and traditions are from the druids and the vanquished former house of Diedne, making you especially skilled with spontaneous magic. When you cast a spontaneous spell without expending fatigue, you may choose to divide by five or by two. If you choose to divide by five, you need not roll a stress die, and cannot botch, just as normal. If you choose to divide by two, you must roll a stress die, and may botch.
+    When you expend fatigue on casting a spontaneous spell, the lowest applicable Art is doubled before the whole total is divided by two. You still roll a stress die, and may botch.
+    You must keep your lineage hidden from the Order, giving you the Major Story Flaw Dark Secret. This is in addition to your normal allowance of Flaws, and does not grant you any points with which to buy Virtues.",
     book: "Core",
-    virtue_type: "",
+    virtue_type: "Hermetic",
+    major: true)
+
+  dowsing = Virtue.create!(name: "Dowsing"),
+    description: "You have the ability to find things nearby through the use of a dowsing rod (usually a forked stick) and your own intuitive sense. Choosing this Virtue confers the Ability Dowsing 1 (page 64).",
+    book: "Core",
+    virtue_type: "Supernatural",
+    major: true)
+
+  educated = Virtue.create!(name: "Educated"),
+    description: "You have been educated in a grammar school, and may have attended a university or cathedral school. You may purchase Academic Abilities during character generation. During character generation you get an additional 50 experience points, which must be spent on Latin and Artes Liberales.",
+    book: "Core",
+    virtue_type: "General",
     major: false)
 
-  virtue_name = Virtue.create!(name: ),
-    description: "",
+  elemental_magic = Virtue.create!(name: "Elemental Magic"),
+    description: "You have been trained in the ability to manipulate raw elemental forms (Ignem, Auram, Terram and Aquam), and view them as a connected whole rather than four separate Arts. Whenever you successfully study one of these Arts (that is, gain at least one experience point from study), you gain an additional expe- rience point in each of the other three.
+    Your elemental magics are also more flex- ible than those of other magi — there is no dis- advantage in adding elemental Form requisites to any elemental spell. If an Aquam, Auram, Ignem, or Terram spell has another element as a requisite, you may ignore the requisite. You must still use the primary Art, even if the req- uisite is higher.",
     book: "Core",
-    virtue_type: "",
-    major: false)
-
-  virtue_name = Virtue.create!(name: ),
-    description: "",
-    book: "Core",
-    virtue_type: "",
-    major: false)
-
-  virtue_name = Virtue.create!(name: ),
-    description: "",
-    book: "Core",
-    virtue_type: "",
-    major: false)
+    virtue_type: "Hermetic",
+    major: true)
 
 end
