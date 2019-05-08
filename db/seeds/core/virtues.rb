@@ -398,6 +398,181 @@ module Virtues
     book: "Core",
     major: false)
 
+  learn_ability_from_mistakes = Virtue.create!(name: "Learn (Ability) From Mistakes"),
+    description: "You are able to improve a particular Ability through the expedient of repeated fail- ure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  lesser_immunity = Virtue.create!(name: "Lesser Immunity"),
+    description: "You are immune to some hazard which is either rare, or not deadly, or both. See “Greater Immunity,” page 43.",
+    virtue_type: "Supernatural",
+    book: "Core",
+    major: false)
+
+  lesser_purifying_touch = Virtue.create!(name: "Lesser Purifying Touch"),
+    description: "You can, with a touch and the expenditure of a Fatigue level, heal a specific illness. This illness should be one that people often recover from on their own, or one that is not particu- larly serious. You can only choose an illness, not an injury or other misfortune. See page 180 for rules on diseases.",
+    virtue_type: "Supernatural",
+    book: "Core",
+    major: false)
+
+  life_boost = Virtue.create!(name: "Life Boost"),
+    description: "You may boost your formulaic spell casting totals by expending additional Fatigue levels. Each Fatigue level gives you an additional bonus of +5 on the roll, which can yield very impres- sive Penetration totals. You may burn more Fatigue levels than you possess. If you do, you must Soak damage, without the help of armor. The Damage total is 5 for every additional Fatigue level spent, plus a stress die. Thus, if you spend three additional levels, you must Soak a damage of 15 + stress die, with your Soak (no armor) + stress die. Fatigue levels spent in this way are spent regardless of the success or failure of the casting roll, and any wounds taken are similarly taken even if you fail to cast the spell. You can kill yourself doing this. The total num- ber of Fatigue levels to be used must be commit- ted before the casting roll is made.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  life-linked_spontaneous_magic = Virtue.create!(name: "Life-Linked Spontaneous Magic"),
+    description: "You can do more with spontaneous magic than most magi at the cost of your own life energy. When you decide to use this ability in casting a spontaneous spell, you declare the level of effect you wish to produce before rolling. This level may include a number of lev- els of penetration (see page 82). For example, you can choose to cast a level 10 effect at level 20, to give a penetration of 10 plus your Penetration score.
+      Roll to cast a fatiguing spontaneous spell. If your result is higher than the level you declared, you spend only one Fatigue level as usual. If your result is less than the level you declared, you must expend one additional Fatigue level per five points (or fraction thereof) by which you missed the target level. If you run out of Fatigue levels, you take a wound. The number of levels still needed for the spell is treated as the amount by which a damage total exceeds your soak, and you take the corresponding wound. You can kill yourself this way.
+      A maga with this Virtue may still cast fatiguing spontaneous spells normally.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  light_touch = Virtue.create!(name: "Light Touch"),
+    description: "You have especially good hand-eye coordi- nation and great proficiency for using your hands in precise, fast ways. You gain +1 to all rolls involving subtle manipulation of objects (like picking pockets) and roll one less botch die than you normally would in such activities (minimum of one). This bonus does not apply to archery, but does apply to playing musical instruments.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  lightning_reflexes = Virtue.create!(name: "Lightning Reflexes"),
+    description: "You respond to surprises almost instantly. In fact, your reflexes are sometimes so fast that you don’t have a chance to think about how you are going to respond. Whenever you are sur- prised or startled, roll a stress die + Quickness. If you get a 3 or better, you respond reflexively. You must tell the storyguide on each occasion what one type of action (attacking, blocking, running, etc.) you would like to respond with. If attacking in response, you gain +9 to your Initiative Total. The storyguide is the final arbiter of what happens (though it is always in the best interests of your immediate self-preser- vation). You only react to threats that you are not fully aware of, so you don’t get a bonus against an assassin you watch sneak up on you. Note that you do not get a choice about whether to react. You could just as easily skew- er a friend sneaking up in fun as you would an assassin about to strike. Also note that you must perceive an action to react to it — you can still be easily killed in your sleep. This Virtue gives you no special powers of perception.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  long-winded = Virtue.create!(name: "Long-Winded"),
+    description: "You can last longer when exerting yourself than most, and gain +3 on all your Fatigue rolls. This bonus does not apply to casting spells.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  luck = Virtue.create!(name: "Luck"),
+    description: "You perform well in situations where luck is more of a factor than skill or talent. You get +1 to +3 (storyguide’s discretion) on rolls in such situations, depending upon how much luck is involved. You do well at games of chance, but may be labeled a cheater if you play them too often.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  magic_sensitivity = Virtue.create!(name: "Magic Sensitivity"),
+    description: "You are often able to identify a place or object as magical. However, your sensitivity makes you more susceptible to magical effects: subtract your Magic Sensitivity score from all magic resistance rolls you make. Choosing this Virtue confers the Ability Magic Sensitivity 1 (page 66).",
+    virtue_type: "Supernatural",
+    book: "Core",
+    major: false)
+
+  magical_memory = Virtue.create!(name: "Magical Memory"),
+    description: "Your memory has been developed to remember magical rather than mundane things. You need not keep laboratory texts (see page 101) of your creations to get the benefit of a Lab Text when reproducing them. If you have creat- ed an effect by following another magus’s lab text once, you may get the same benefit in future without needing to have the text available.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  magister_in_artibus = Virtue.create!(name: "Magister in Artibus"),
+    description: "You have incepted Master of Arts in one of the universities of Europe (Paris, Bologna, Oxford, Cambridge, Montpellier, Arezzo or Salamanca) and completed your two years’ regency of compulsory teaching. You are entitled to be addressed as Magister, are subject only to canon law, and may teach anywhere in Europe.
+      You are at least (25 – Int) years old, and must have scores of at least 5 in Latin and Artes Liberales. You have, however, spent eight years in a university, and gain an additional 30 expe- rience points in each of those years, for a total of 240 additional experience points over and above your allowance based on age. You may buy Academic Abilities during character gener- ation, and must spend your additional experi- ence points on Academic Abilities or Teaching.
+      You must spend two seasons teaching to maintain yourself and your reputation as a dependable instructor. These two seasons are spread between September and June, so you are genuinely free in the summer. If you take the Poor flaw, you are still genuinely free in the summer. If you take the Wealthy virtue, you can maintain your reputation with a single season’s teaching.
+      This Virtue is only available to male char- acters, and is compatible with the Hermetic Magus, Mendicant Friar, and Priest Virtues.",
+    virtue_type: "Social Status",
+    book: "Core",
+    major: true)
+
+  major_magical_focus = Virtue.create!(name: "Major Magical Focus"),
+    description: "Your magic is much more potent in a fair- ly limited area, such as weather, necromancy, birds, or emotions. This area should be smaller than a single Art, but may be spread over sev- eral Arts — necromancy, for example, covers both Corpus and Mentem effects. You cannot be focused on laboratory activities, although a focus does apply to laboratory activities.
+      When you cast a spell or generate a Lab Total within your focus, add the lowest applic- able Art score twice. If a spell has requisites, the lowest applicable score may be one of the req- uisites, rather than one of the primary Arts. Thus, if a magus with a focus on birds was casting a spell to turn a bird into pure flame, MuAn (Ig), with Muto 14, An 18, and Ig 10, his final total would be 34 + other modifiers: 14 from Muto, and 20 from adding Ignem twice. If he was casting a spell to turn a bird into another sort of bird, MuAn with no requisites, his total would be 46 + other modifiers, 18 from Animal and 28 from adding Muto twice.
+      A character can have only one Magical Focus, either major or minor, regardless of the source of the focus.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  mastered_spells = Virtue.create!(name: "Mastered Spells"),
+    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  mendicant_friar = Virtue.create!(name: "Mendicant Friar"),
+    description: "You are a follower of St. Francis or St. Dominic, going among the rich and poor, spreading the word of God and giving comfort to the sick, homeless, hungry, or dying. You are sworn to serve the Church for the rest of your life, but your wandering habits are considered suspect by the local bishop and parish clergy, and you lack political influence within the organization. Like all clerics, however, you are only subject to canon law.
+      Due to your training, you may take Academic Abilities during character genera- tion. If you wish, you may be an ordained priest and may officiate at marriages, baptisms, funer- als, and the Mass, though the parish clergy may resent your interfering on their “turf.” You do not need to take the Priest Virtue in addition to this one if you do want to be ordained.
+      You have sworn vows of poverty, chastity, and obedience, which together constitute a Major Story Flaw (Monastic Vows, see page 56) which you must take if you take this Virtue (this Flaw balances other Virtues as normal). You may not take the Wealthy Virtue or Poor Flaw. This Virtue is only available to male char- acters, and is compatible with the Magister in Artibus Major Virtue.",
+    virtue_type: "Social Status",
+    book: "Core",
+    major: false)
+
+  mercenary_captain = Virtue.create!(name: "Mercenary Captain"),
+    description: "You lead a small company of mercenaries (5 to 10), for hire to the highest bidder. You are much like a knight-errant, only without the prestige. During your travels you have gained great wealth — and squandered it — several times over. You may take Martial Abilities dur- ing character generation.
+      If you are Poor, you lead only a couple of other mercenaries, but you and they may have armor and weapons available to normal charac- ters. If you are Wealthy you lead about twenty mercenaries, and can delegate some of the work to sergeants. This Virtue is available to male and female characters.",
+    virtue_type: "Social Status",
+    book: "Core",
+    major: false)
+
+  merchant = Virtue.create!(name: "Merchant"),
+    description: "You live from the buying and selling of goods. You may be a peddler, if you are rela- tively poor, a shopkeeper, or a traveling mer- chant. The Wealthy Major Virtue and Poor Major Flaw affect you normally.",
+    virtue_type: "Social Status",
+    book: "Core",
+    major: false,
+    free: true)
+
+  mercurian_magic = Virtue.create!(name: "Mercurian Magic"),
+    description: "Your magical lineage and traditions are from the Roman priests of Mercury, which pre- date the Order of Hermes, making you espe- cially skilled with Ritual Magic and magic used in conjunction with others. In addition to your standard spell allocation, you also know Wizard’s Communion (page 160) at a level equal to the highest level of Ritual spell that you know, and should you invent or learn a Ritual spell of higher level, you automatically invent a Wizard’s Communion spell of the same level, with- out needing to spend extra time.
+      When casting a spell using Wizard’s Communion, you may add your Mastery score (page 86) in the spell being cast and your Mastery score in Wizard’s Communion to the effective level of the Wizard’s Communion.
+      Finally, any Ritual spells which you cast have only half the usual vis requirement. If cast as part of a Wizard’s Communion, all the par- ticipants need to have this Virtue to gain this benefit.
+      Your concentration in Ritual magic has a downside, however — you may only cast Spontaneous magic using the rules for Ceremonial Casting (page 83).",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  method_caster = Virtue.create!(name: "Method Caster"),
+    description: "You are excellent at formulaic spells, as you have perfected a consistent and precise method for casting them. You gain a +3 bonus to any formulaic spell you cast. However, if you vary at all from your precise method (by altering your gestures or voicing), you do not get this bonus.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  minor_magical_focus = Virtue.create!(name: "Minor Magical Focus"),
+    description: "Your magic is particularly attuned to some narrow field, such as self-transformation, birds of prey, or healing. In general, the field should be slightly narrower than a single Technique and Form combination, although it may include restricted areas of several such combinations. Healing, for example, is a part of Creo Corpus, Creo Animal, and possibly Creo Herbam. You cannot be focused on a lab- oratory activity, such as creating charged items, although a focus does apply to labora- tory activities.
+      When you cast a spell or generate a Lab Total within your focus, add the lowest applic- able Art score twice, as for a Major Magical Focus (page 45).
+      A magus may only have one Magical Focus, whether major or minor, regardless of the source of the focus.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  mythic_blood = Virtue.create!(name: "Mythic Blood"),
+    description: "You are a blood descendant of either a wizard of legend (possibly one of the Twelve Founders, or some other ancient and powerful sorcerer) or a supernatural being (such as a dragon).
+      Your potent Gift means that you do not lose Fatigue levels if your Casting Total falls short of the level of a formulaic spell by less than ten points, although you do lose Fatigue if the spell fails completely. You must expend Fatigue normally to cast spontaneous magic, and if you fail to cast a formulaic spell you lose the normal number of Fatigue levels.
+      Additionally, you may choose one special magic feat which you can invoke at will and cancel at will, as often as you like. Invoking this feat takes as long as fast-casting a mastered for- mulaic spell (see page 87), and requires the same level of concentration. The effect should be designed as a Hermetic effect, with a level + Penetration limited as below. The Penetration of the effect is not modified by the magus’s Penetration Ability score, and cannot be nega- tive, so that the highest possible level of the effect is 30.
+      Invocation: Level + Penetration Speak and Gesture: 30
+      Speak: 25
+      Gesture: 20
+      Nither Speak nor Gesture: 15
+      This Virtue includes a Minor Magical
+      Focus in an area related to your legendary ancestor and a hereditary Minor Personality Flaw (both at no extra cost). Mythic Blood is not particularly uncommon in the Order of Hermes, so this Virtue does not grant any Reputation.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  peasant = Virtue.create!(name: "Peasant"),
+    description: "You live by working the land. You may control quite a lot of land and hire people to work it, if you are wealthy, or be one of the peo- ple who is hired, if you are poor. You are free, rather than a serf. The Wealthy Major Virtue and Poor Major Flaw affect you normally.",
+    virtue_type: "Social Status",
+    book: "Core",
+    major: false,
+    free: true)
+
+  perfect_balance = Virtue.create!(name: "Perfect Balance"),
+    description: "You are skilled at keeping your balance, especially on narrow ledges or tightropes. Add +6 to any roll to avoid falling or tripping.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  personal_vis_source = Virtue.create!(name: "Personal Vis Source"),
+    description: "You have exclusive access to a supply of raw vis. Determine the amount and type with the help of your troupe; the yield should be about one tenth as much as the player covenant expects to gather per year at the beginning of the saga. The yield of your source does not normally change over the course of time, even if the covenant uncovers new sources.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  piercing_gaze = Virtue.create!(name: "Piercing Gaze"),
+    description: "By staring intently at people you make them feel uneasy, as if you are peering into their souls. Those with ulterior motives, uneasy consciences, or lying tongues must make rolls against an appropriate Personality Trait, Guile, or whatever the storyguide deems appropriate, to remain calm. Furthermore, you gain a +3 to rolls involving intimidation. Faeries and demons are unfazed by your power.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
   # virtue_name = Virtue.create!(name: ""),
   #   description: "",
   #   virtue_type: "",
