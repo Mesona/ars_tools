@@ -341,13 +341,13 @@ module Virtues
     book: "Core",
     major: false)
 
-  inoffensive_to_animals = Virtue.create!(name: "Inoffensive To Animals"),
+  inoffensive_to_animals_general = Virtue.create!(name: "Inoffensive To Animals"),
     description: "Your Gift does not bother animals, although it still has the normal effects on people. Animals with a Might score might react either way, depending on the animal. As a rule, if the animal reacts positively to The Gift most of the time, it reacts positively to you because you do have The Gift. If it reacts negatively, this Virtue over-rides it. UnGifted characters may take this Virtue if they have the Flaw Magical Air (page 56).",
     virtue_type: "General",
     book: "Core",
     major: false)
 
-  inoffensive_to_animals = Virtue.create!(name: "Inoffensive To Animals"),
+  inoffensive_to_animals_hermetic = Virtue.create!(name: "Inoffensive To Animals"),
     description: "Your Gift does not bother animals, although it still has the normal effects on people. Animals with a Might score might react either way, depending on the animal. As a rule, if the animal reacts positively to The Gift most of the time, it reacts positively to you because you do have The Gift. If it reacts negatively, this Virtue over-rides it. UnGifted characters may take this Virtue if they have the Flaw Magical Air (page 56).",
     virtue_type: "Hermetic",
     book: "Core",
