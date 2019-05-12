@@ -428,7 +428,7 @@ module Virtues
     book: "Core",
     major: false)
 
-  life-linked_spontaneous_magic = Virtue.create!(name: "Life-Linked Spontaneous Magic"),
+  life_linked_spontaneous_magic = Virtue.create!(name: "Life-Linked Spontaneous Magic"),
     description: "You can do more with spontaneous magic than most magi at the cost of your own life energy. When you decide to use this ability in casting a spontaneous spell, you declare the level of effect you wish to produce before rolling. This level may include a number of levels of penetration (see page 82). For example, you can choose to cast a level 10 effect at level 20, to give a penetration of 10 plus your Penetration score.
       Roll to cast a fatiguing spontaneous spell. If your result is higher than the level you declared, you spend only one Fatigue level as usual. If your result is less than the level you declared, you must expend one additional Fatigue level per five points (or fraction thereof) by which you missed the target level. If you run out of Fatigue levels, you take a wound. The number of levels still needed for the spell is treated as the amount by which a damage total exceeds your soak, and you take the corresponding wound. You can kill yourself this way.
       A maga with this Virtue may still cast fatiguing spontaneous spells normally.",
@@ -448,7 +448,7 @@ module Virtues
     book: "Core",
     major: false)
 
-  long-winded = Virtue.create!(name: "Long-Winded"),
+  long_winded = Virtue.create!(name: "Long-Winded"),
     description: "You can last longer when exerting yourself than most, and gain +3 on all your Fatigue rolls. This bonus does not apply to casting spells.",
     virtue_type: "General",
     book: "Core",
@@ -729,7 +729,7 @@ module Virtues
     book: "Core",
     major: true)
 
-  strong-willed = Virtue.create!(name: "Strong-Willed"),
+  strong_willed = Virtue.create!(name: "Strong-Willed"),
     description: "You cannot easily be coerced into activities, beliefs, or feelings. You get +3 on any roll which may require strength of will.",
     virtue_type: "General",
     book: "Core",
@@ -827,7 +827,7 @@ module Virtues
     book: "Core",
     major: true)
 
-  well-traveled = Virtue.create!(name: "Well-Traveled"),
+  well_traveled = Virtue.create!(name: "Well-Traveled"),
     description: "You have journeyed extensively in this part of the world and find it easy to get along with people throughout the area. You have fifty bonus experience points to spend on living languages, Area Lores, and Bargain, Carouse, Charm, Etiquette, Folk Ken, or Guile.",
     virtue_type: "General",
     book: "Core",
@@ -844,11 +844,4 @@ module Virtues
     virtue_type: "Social Status",
     book: "Core",
     major: false)
-
-  = Virtue.create!(name: ""),
-    description: "",
-    virtue_type: "",
-    book: "Core",
-    major: false)
-
 end
