@@ -444,10 +444,662 @@ module Flaws
     book: "Core",
     major: false)
 
-  # = Flaw.create!(name: ""),
-  #   descrtiption: "",
-  #   flaw_type: "",
-  #   book: "Core",
-  #   major: false)
+  hunchback = Flaw.create!(name: "Hhunchback"),
+    descrtiption: "You have a deformed body that gives you a grotesque appearance and hinders your movements. You are at –3 to all rolls involving agility and balance. Communication rolls that involve good looks are at –3.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  incompatible_arts = Flaw.create!(name: "Incompatible Arts"),
+    descrtiption: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  incomprehensible = Flaw.create!(name: "Incomprehensible"),
+    descrtiption: "You are almost completely unable to convey the knowledge and understanding that you have. Anyone trying to learn from you or from a book you have written must halve their Study Total (or Lab Total, if you are a magus and have written Lab Texts on some spells or enchanted items). If you are a magus teaching spells, halve all applicable Lab Totals, both yours and the student’s.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  indiscreet = Flaw.create!(name: "Indiscreet"),
+    descrtiption: "You are unable to keep a secret. You must tell all to the first interested party you meet in an effort to be helpful or to demonstrate that you are in-the-know, unless you make a 9+ Intelligence-based stress roll. If you botch, you may have to be physically restrained by your companions from answering any questions put to you for the remainder of the encounter.",
+    flaw_type: "Story",
+    book: "Core",
+    major: true)
+
+  infamous = Flaw.create!(name: "Infamous"),
+    descrtiption: "People know you well and curse you in their prayers. You have a level 4 bad Reputation, specifying the horrible deeds that earned you such ill will.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  infamous_master = Flaw.create!(name: "Infamous Master"),
+    descrtiption: "Your master was a diabolist, bumbler, fool, widely despised, or held in contempt for some other reason. Most magi expect lit- tle better from you. Even if you’ve done nothing wrong, you are treated as though you don’t deserve to be a member of the Order. You have a bad Reputation of the appropriate type at level 3 among magi.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  judged_unfairly = Flaw.create!(name: "Judged Unfairly"),
+    descrtiption: "Somehow you come across the wrong way to people, and they universally distrust and underestimate you. You catch no one’s eye, impress no one, and can get no one to take you seriously. If you ever find an exceptional some- one who sees you as you want to be seen, you will cling to that person.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  lame = Flaw.create!(name: "Lame"),
+    descrtiption: "One of your legs is weakened, whether since birth or through some accident. You move slowly and clumsily. Your base speed is a mere one mile per hour, and anyone can outrun you. You suffer a –6 penalty on rolls involving moving quickly or with agility, –3 on Dodge, and –1 on other combat scores.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  lecherous_major = Flaw.create!(name: "Lecherous"),
+    descrtiption: "You seek sexual contact with as many people as possible. Note that you need not be any good at seduction; skill here merely changes the kinds of problems you encounter.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: true)
+
+  lecherous_minor = Flaw.create!(name: "Lecherous"),
+    descrtiption: "You seek sexual contact with as many people as possible. Note that you need not be any good at seduction; skill here merely changes the kinds of problems you encounter.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  lesser_maledictions = Flaw.create!(name: "Lesser Maledictions"),
+    descrtiption: "You have been cursed by some supernat- ural power. The effects of the curse should be about as bad as other Minor General Flaws.",
+    flaw_type: "Supernatural",
+    book: "Core",
+    major: false)
+
+  limited_magical_resistance = Flaw.create!(name: "Limited Magical Resistance"),
+    descrtiption: "You are less able to resist magic than other magi. You gain no bonus from one of your Form scores to Magic Resistance rolls, though if you are caught without your Parma Magica, you retain a Magic Resistance of 0. You may take this Flaw multiple times, for multiple Forms.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  loose_magic = Flaw.create!(name: "Loose Magic"),
+    descrtiption: "Your Study Total is halved whenever you try to master spells.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  lost_love = Flaw.create!(name: "Lost Love"),
+    descrtiption: "You have lost your true love to death, dis- tance, or marriage. You take little joy in life’s pleasures and give up easily in the face of diffi- culty, since you’ve already lost the most impor- tant struggle. On those occasions when you for- get yourself and have a good time, you inevitably feel sorrow afterwards, thinking about how it could have been if your love were with you.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  low_self_esteem = Flaw.create!(name: "Low Self-Esteem"),
+    descrtiption: "You have a deflated opinion of your own self- worth. You begin the game with no Confidence Score, and never have any Confidence Points.",
+    flaw_type: "General",
+    book: "Core",
+    major: true)
+
+  lycanthrope = Flaw.create!(name: "Lycanthrope"),
+    descrtiption: "You have been cursed to change form into a dangerous predator (such as a wolf, lynx, or bear) on nights of the full moon (or similar, monthly astrological events). No items or clothing transform between shapes, and it takes one full round for the full transformation to take effect. You aren’t immune to normal weapons, and the curse does not infect bite victims. The animal may be detected as a cursed human with an InAn or InCo spell.
+      You have the intelligence of an animal while changed, react to all stimuli as an ani- mal, and don’t retain any memory of actions taken in animal form, save occasionally in dreams. You may not even realize that you are under this curse. You still recognize both friends and enemies when changed.
+      Lycanthropes may transform into a non-magical animal between Size –1 (wolf) and Size +2 (bear). You have the normal physical characteristics of the animal, except that +3 is added to your Soak score (in ani- mal form only). Furthermore, you are fully healed of all wounds incurred in animal form upon resuming human form (which happens at dawn).",
+    flaw_type: "Supernatural",
+    book: "Core",
+    major: true)
+
+  magic_addiction = Flaw.create!(name: "Magic Addiction"),
+    descrtiption: "You crave the rush of casting and holding power over magic. Whenever you cast a spell, you have a difficult time stopping yourself from casting again and again until you drop from exhaustion. Whenever you use a stress die in spellcasting, you must, whether or not the spell succeeds, make an Intelligence + Concentration stress roll, against an Ease Factor of half the level of the spell (or, if you botched, the level you were attempting). If you fail, as your next action you must either cast a Formulaic spell of at least the same level as the previous spell, or cast any spontaneous spell, expending Fatigue and not reserving levels for Penetration. You must roll again to control your addiction, based on the level of the spell you just cast, but you get a +3 bonus to the roll for every spell you cast after the first. If you botch, you continue casting spells until you fall unconscious.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  magical_air = Flaw.create!(name: "Magical Air"),
+    descrtiption: "People and animals react to you as if you had The Gift, but, at least as far as you know, you have no magical abilities. You may not take this Flaw if you actually do have The Gift; see The Blatant Gift (page 51) instead.",
+    flaw_type: "General",
+    book: "Core",
+    major: true)
+
+  magical_animal_companion = Flaw.create!(name: "Magical Animal Companion"),
+    descrtiption: "You are accompanied by a magical animal that’s smart enough to follow your orders or to disobey them on its own initiative. The smaller and more innocuous the creature, the more intelligent it is. A ferret or crow is as intelligent as a human, a wolf is very cunning, and an ani- mal the size of a horse is simply more intelli- gent than normal. The creature has a Magic Might score of 10 – Size.",
+    flaw_type: "Story",
+    book: "Core",
+    major: false)
+
+  meddler_major = Flaw.create!(name: "Meddler"),
+    descrtiption: "You want to fix other peoples’ lives: arrange matches, teach children to sew “prop- erly,” or tend the sick. You waste a lot of time and energy on such endeavors, and people usu- ally resent it.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: true)
+
+  meddler_minor = Flaw.create!(name: "Meddler"),
+    descrtiption: "You want to fix other peoples’ lives: arrange matches, teach children to sew “prop- erly,” or tend the sick. You waste a lot of time and energy on such endeavors, and people usu- ally resent it.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  mentor = Flaw.create!(name: "Mentor"),
+    descrtiption: "A person of some importance, wealth, or wisdom has taken an interest in your life, and at times provides you with minor material aid and advice. However, at some point your mentor will have a small favor or two to ask of you. He might not necessarily like your relationship with the covenant — perhaps you must keep it a secret. The Mentor must be an NPC.",
+    flaw_type: "Story",
+    book: "Core",
+    major: false)
+
+  missing_ear = Flaw.create!(name: "Missing Ear"),
+    descrtiption: "You cannot accurately locate the direction of sounds, and suffer a penalty of –3 to hearing rolls.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  missing_eye = Flaw.create!(name: "Missing Eye"),
+    descrtiption: "You cannot judge close distances easily and get –3 on Attack rolls for missiles and tar- geting rolls for spells. In melee combat you suf- fer –1 on Attack rolls because your field of vision is limited. You also have a blind side from which people can approach unseen. This Flaw can be combined with Poor Eyesight (below), but the penalties are cumulative.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  missing_hang = Flaw.create!(name: "Missing Hand"),
+    descrtiption: "Perhaps it was an accident or a punish- ment in your past that cost you one of your hands. Climbing, combat, and other activities normally requiring both hands are at a penalty of –3 or greater.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  mistaken_identity = Flaw.create!(name: "Mistaken Identity"),
+    descrtiption: "Someone, who looks exactly like you and whom you and your companions will most likely never meet, lives near you, and is responsible for an ongoing variety of violent, illegal, obscene, or embarrassing acts. You often have to explain who you are, and sometimes have to deal with the consequences of the other person’s acts.",
+    flaw_type: "Story",
+    book: "Core",
+    major: true)
+
+  monastic_vows = Flaw.create!(name: "Monastic Vows"),
+    descrtiption: "You have taken vows of poverty, chastity, and obedience to a religious superior. This covers the vows taken by mendicant friars, as well as those taken by monks and nuns strictly speaking.",
+    flaw_type: "Story",
+    book: "Core",
+    major: true)
+
+  motion_sickness = Flaw.create!(name: "Motion Sickness"),
+    descrtiption: "Riding a horse, in a cart, or sailing on a ship makes you violently ill. When not traveling on foot, you suffer double the fatigue loss on long journeys specified on page 185, with a minimum loss of two Fatigue levels. Violent jostling over a period of a few hours could conceivably lead to unconsciousness.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  mute = Flaw.create!(name: "Mute"),
+    descrtiption: "You cannot speak; perhaps your tongue was cut out. You probably use rudimentary hand gestures and grunts to communicate your needs. You can still understand languages per- fectly well, and may learn to read and write if you have an appropriate Virtue. Note that magi with this Flaw get a –10 penalty to all spell- casting, although this may be offset by taking the Quiet Magic Virtue (page 48). A magus with this Flaw can be assumed to be able to make sounds, which are sufficient to allow nor- mal use of the Voice Range.",
+    flaw_type: "General",
+    book: "Core",
+    major: true)
+
+  necessary_condition = Flaw.create!(name: "Necessary Condition"),
+    descrtiption: "In order for your magic to work, you must perform a specific action while casting any spell. This should be something simple, such as singing or spinning around three times. If you cannot perform the action, you cannot cast spells at all.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  no_hands = Flaw.create!(name: "No Hands"),
+    descrtiption: "You have no hands. Any activity requiring hands is impossible, and magi with this flaw take a –5 penalty to all spellcasting. This may be offset by taking the Subtle Magic Virtue.",
+    flaw_type: "General",
+    book: "Core",
+    major: true)
+
+  no_sense_of_direction = Flaw.create!(name: "No Sense of Direction"),
+    descrtiption: "You are completely unable to follow directions. North, south, east, and west have no meaning to you, and you often confuse right and left. You frequently get lost while traveling unfamiliar paths by yourself, or with others fol- lowing your lead, and often have to reason your way home or to your destination from first principles. This Flaw is incompatible with the Well-Traveled Virtue.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  nocturnal = Flaw.create!(name: "Nocturnal"),
+    descrtiption: "Your natural body rhythms try to keep you sleeping until noon. You are at –1 on all rolls made between dawn and midday. Conversely, you have little difficulty staying up at night. Though you enjoy no special benefits in the dark, your companions may decide to saddle you with night guard duty on a regular basis to use your attributes to best effect.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  noncombatant = Flaw.create!(name: "Noncombatant"),
+    descrtiption: "You have no interest in combat, nor do you have any ability with it. You might be unreason- ably afraid of combat, or a complete pacifist, or prone to freezing and doing nothing.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  oath_of_fealty = Flaw.create!(name: "Oath of Fealty"),
+    descrtiption: "You have sworn an oath of loyalty and support to someone outside the covenant, and sometimes they call on you to uphold your vow. Magi are forbidden from taking Oaths of Fealty by the Hermetic Code. Some don’t let that stop them.",
+    flaw_type: "Story",
+    book: "Core",
+    major: true)
+
+  obese = Flaw.create!(name: "Obese"),
+    descrtiption: "You are large because of fat, not muscle. You are at –1 to all rolls that involve moving quickly or gracefully and at –3 to all Fatigue rolls. You are not so large that your Size is increased, and you may take this Flaw along with the Virtues and Flaws that change your Size.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  obsessed = Flaw.create!(name: "Obsessed"),
+    descrtiption: "You are fixated on some prized object, action, or ideal. This interferes with your accom- plishment of more immediate tasks. Examples might include obsessive protection of magi to the point that you attack those who insult them, or obsessive neatness where you keep yourself spotless and deride those who do not.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  offensive_to_animals_general = Flaw.create!(name: "Offensive to Animals"),
+    descrtiption: "Animals react to you as if you had The Gift, although people still do not. You may not take this Flaw and Magical Air. Characters with The Gift may only take this Flaw if they have the Gentle Gift, in which case only humans react to them as if they didn’t have The Gift. Animals with a Might score react in different ways. In general, those that react negatively to The Gift react negatively to you, while those that react positively do not, unless you actually have The Gift.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  offensive_to_animals_hermetic = Flaw.create!(name: "Offensive to Animals"),
+    descrtiption: "Animals react to you as if you had The Gift, although people still do not. You may not take this Flaw and Magical Air. Characters with The Gift may only take this Flaw if they have the Gentle Gift, in which case only humans react to them as if they didn’t have The Gift. Animals with a Might score react in different ways. In general, those that react negatively to The Gift react negatively to you, while those that react positively do not, unless you actually have The Gift.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  optimistic_major = Flaw.create!(name: "Optimistic"),
+    descrtiption: "You are convinced that everything will turn out for the best. This is not overconfi- dence, as you accept that you might well fail. Even if you do, however, you are sure that cir- cumstances will mean that everything works to your benefit.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: true)
+
+  optimistic_minor = Flaw.create!(name: "Optimistic"),
+    descrtiption: "You are convinced that everything will turn out for the best. This is not overconfi- dence, as you accept that you might well fail. Even if you do, however, you are sure that cir- cumstances will mean that everything works to your benefit.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  outcast = Flaw.create!(name: "Outcase"),
+    descrtiption: "You have the rough task of making it on your own — normal society rejects you and you are not attached to a covenant. Perhaps you have a magical nature, a supernatural back- ground, some disfigurement, or a tremendous scandal in your past. You may not take the Wealthy Virtue.",
+    flaw_type: "Social Status",
+    book: "Core",
+    major: false)
+
+  outlaw = Flaw.create!(name: "Outlaw"),
+    descrtiption: "You have been outlawed, and must live by your wits outside society. You may take Martial Abilities at character generation, and have a Reputation at level 2 for whatever got you out- lawed.",
+    flaw_type: "Social Status",
+    book: "Core",
+    major: true)
+
+  outlaw_leader = Flaw.create!(name: "Outlaw Leader"),
+    descrtiption: "You command a small group (three to six persons) of outlaws. Your followers look up to you and do what you tell them — within rea- son. However, you must occasionally stick up for the group or one of its members, as well as provide for them. You often have to deal with challenges to your leadership in one form or another. You are well known as an outlaw in the local area, with a Reputation level of 3. You are actively sought by the local lord, sheriff, or other such official. You may take Martial Abilities at character generation. Grogs may not take this Flaw.",
+    flaw_type: "Social Status",
+    book: "Core",
+    major: false)
+
+  outsider = Flaw.create!(name: "Outsider"),
+    descrtiption: "You belong to a group that is both readi- ly identifiable and distrusted or disliked. Examples include Saracens, Jews, and Moors. You are shunned and often persecuted because of this, and your life and freedom may occa- sionally be in peril. You have a bad Reputation of level 1 to 3 (depending upon how easy it is to identify you) among members of the domi- nant social group of your area. There is no way for you to ever remove that stain, and you are marked by it wherever you go.",
+    flaw_type: "Social Status",
+    book: "Core",
+    major: true)
+
+  overconfident_major = Flaw.create!(name: "Overconfident"),
+    descrtiption: "You have a completely unshakable faith in your own abilities. You believe that you will always perform at, or slightly above, the peak of your abilities, and cannot imagine failure. If you actually botch, you come up with some rationalization as to what “really” happened.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: true)
+
+  overconfident_minor = Flaw.create!(name: "Overconfident"),
+    descrtiption: "You have a completely unshakable faith in your own abilities. You believe that you will always perform at, or slightly above, the peak of your abilities, and cannot imagine failure. If you actually botch, you come up with some rationalization as to what “really” happened.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  oversensitive = Flaw.create!(name: "Oversensitive"),
+    descrtiption: "Something that others find merely unpleasant you consider intolerable. Examples might include an oversensitivity to disrespect, to slovenliness, or to impiety. If you are the vio- lent type, you may start fights with those who offend you.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  painful_magic = Flaw.create!(name: "Painful Magic"),
+    descrtiption: "Casting spells causes you to suffer the equivalent of one Fatigue level in pain for each spell you cast. This reduces all your actions by the appropriate Fatigue penalty, which is cumu- lative with any from actual fatigue or injuries (though you do not suffer any physical damage from pain). You recover these “pain levels” just like Fatigue levels.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  palsied_hands = Flaw.create!(name: "Palsied Hands"),
+    descrtiption: "Your hands shake uncontrollably, which makes casting spells or holding objects diffi- cult. All rolls involving holding or wielding an object are made at –2, including weapon skills. Magi and others who rely on hand gestures to work magic must roll an extra botch die when casting a spell.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  pessimistic = Flaw.create!(name: "Pessimistic"),
+    descrtiption: "Personality",
+    flaw_type: "",
+    book: "Core",
+    major: false)
+
+  pious_major = Flaw.create!(name: "Pious"),
+    descrtiption: "You are a fervent follower of your reli- gion. You avoid the things it prohibits, and enthusiastically do the things it commands.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: true)
+
+  pious_minor = Flaw.create!(name: "Pious"),
+    descrtiption: "You are a fervent follower of your reli- gion. You avoid the things it prohibits, and enthusiastically do the things it commands.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  plagued_by_supernatural_entities = Flaw.create!(name: "Plagued by Supernatural Entities"),
+    descrtiption: "Some supernatural being interferes in your life on a fairly regular basis. It may even have your best interests at heart, but the result is that you get dragged into stories. Suitable examples would be a demon trying to corrupt you, an angel trying to save you, a faerie play- ing games with you, or a ghost continuing the agenda she had while alive.",
+    flaw_type: "Story",
+    book: "Core",
+    major: true)
+
+  poor = Flaw.create!(name: "Poor"),
+    descrtiption: "You are a poor member of your social class. You must work three seasons per year in order to make ends meet, and can afford only the necessities of life, as measured by your sta- tus. This also means that you have one fewer season available for any form of advancement other than exposure, which is a major hin- drance. You cannot take this Flaw if you are supported by the covenant. In particular, this Flaw is not available to magi.",
+    flaw_type: "General",
+    book: "Core",
+    major: true)
+
+  poor_characteristic = Flaw.create!(name: "Poor (Characteristic)"),
+    descrtiption: "You have an exceedingly bad Characteristic — lower one which is already –3 or lower by one point. Describe what it is about you that makes this obvious, such as a feeble stature, hideous visage, or slack-jawed stupidity. You may take this Flaw twice for a single Characteristic, lowering it to –5, and multiple times for different Characteristics.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  poor_eyesight = Flaw.create!(name: "Poor Eyesight"),
+    descrtiption: "Bleary vision impedes your performance. Rolls involving sight, including rolls to attack and defend, are at –3. New environments are disorienting and perhaps frightening for you. This Flaw can be combined with Missing Eye (above), but the penalties are cumulative.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  poor_formulaic_magic = Flaw.create!(name: "Poor Formulaic Magic"),
+    descrtiption: "You are simply not very good at formula- ic magic. Subtract five from every roll that you make to cast formulaic spells. This does not apply to Ritual spells.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  poor_hearing = Flaw.create!(name: "Poor Hearing"),
+    descrtiption: "Subtract 3 from rolls involving hearing. Speech that is hard for others to understand because of language, dialect, or accent is almost impossible for you to follow. You often pretend to be listening to people when in fact you are not.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  poor_memory = Flaw.create!(name: "Poor Memory"),
+    descrtiption: "You have a very hard time recalling one type of thing, such as names, faces, or places.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  poor_student = Flaw.create!(name: "Poor Student"),
+    descrtiption: "You are bad at learning new things. Subtract three from all Advancement Totals derived from teaching and books (that is, you have no penalty to adventure experience, expo- sure, practice, or training), but do not reduce a total below one. If you could learn something without this Flaw, you still learn a bit.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  prohibition = Flaw.create!(name: "Prohibition"),
+    descrtiption: "Personality",
+    flaw_type: "You have had a Conditional Curse (also known as a “Geas”) cast upon you and must obey the restrictions of your prohibition or be penalized by the curse. If you fail to adhere to the restrictions, you will suffer the curse in full force. The troupe must agree on both the restriction, and the curse that strikes you if you break it.",
+    book: "Core",
+    major: false)
+
+  proud_major = Flaw.create!(name: "Proud"),
+    descrtiption: "You believe that you are more important than just about everybody, and expect the appropriate respect. Magi may admit one or two equals, but do not believe that they have any superiors. Mundanes will admit social superiors, but still believe themselves to be fun- damentally better than, say, the king.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: true)
+
+  proud_minor = Flaw.create!(name: "Proud"),
+    descrtiption: "You believe that you are more important than just about everybody, and expect the appropriate respect. Magi may admit one or two equals, but do not believe that they have any superiors. Mundanes will admit social superiors, but still believe themselves to be fun- damentally better than, say, the king.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  reckless = Flaw.create!(name: "Reckless"),
+    descrtiption: "You tend not to notice that situations are threatening. You start with a Personality Trait of Reckless +3, and can never have a positive Personality Trait reflecting care or patience. Whenever the storyguide deems it necessary for you to check bravery or a similar Personality Trait, make a roll against your Reckless score instead. A success means you do not realize your danger, and can act immedi- ately without further checks.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  reclusive = Flaw.create!(name: "Reclusive"),
+    descrtiption: "You do not like being disturbed or inter- rupted. You feel that an intrusion by another upon your time is unnecessary at best, and an insult at worst. You are very reluctant to be dragged into public places, or group activities, and generally complain when you must partic- ipate. Note that this is often a bad Flaw for a player character, unless there is a good reason why that character needs to stay out of play most of the time (for example, he is played by the alpha storyguide).",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  restriction = Flaw.create!(name: "Restriction"),
+    descrtiption: "You cannot cast spells at all under certain uncommon conditions. These might refer to your state, such as touching the earth directly or having no beard, or to the target, such as birds or glass, or to your location when you use the magic, such as on a small boat or in a storm. The Restriction also applies to effects generat- ed by any enchanted items you create. Spells cast remain in effect even if the Restriction comes into play. Thus, if your Restriction is that you must not have a beard, you cast a spell with Year duration, and then grow a beard, the spell does not fail.",
+    flaw_type: "Heremtic",
+    book: "Core",
+    major: true)
+
+  rigid_magic = Flaw.create!(name: "Rigid Magic"),
+    descrtiption: "You cannot use vis when you cast spells. Thus, you cannot increase your spell rolls or cast Ritual magic. You can use vis in the laboratory.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  sheltered_upbringing = Flaw.create!(name: "Sheltered Upbringing"),
+    descrtiption: "You grew up completely separated from society, knowing only your parents or mentor. Recently you have been introduced to a won- drous new world of strangers, and you are over- whelmed. Depending on your personality, you might react with contempt, fear, or wonder. You are unable to function normally because you cannot understand most human customs. You may not take Bargain, Charm, Etiquette, Folk Ken, Guile, Intrigue, or Leadership as begin- ning Abilities, but you may learn them in play.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  short_attention_span = Flaw.create!(name: "Short Attention Span"),
+    descrtiption: "You have trouble concentrating. Keeping watch, listening to complex orders, following the plot of a story, or performing other such tasks that require continued attention are usu- ally not within your ability.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  short_lived_magic = Flaw.create!(name: "Short-Lived Magic"),
+    descrtiption: "Your spells do not last as long as they should. Spells that should last a year, last a moon; those of a moon, only to the next sun- rise or sundown; and those of a sun, merely Diameter. Diameter, Concentration, Ring, and Momentary spells are not affected.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  short_ranged_magic = Flaw.create!(name: "Short-Ranged Magic"),
+    descrtiption: "Halve your Casting Totals whenever you are not touching the target of the spell. Halve your Lab Total when designing an effect or spell that has a range greater than Touch.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  simple_minded = Flaw.create!(name: "Simple-Minded"),
+    descrtiption: "You can only think about one thing at a time — guarding the bridge, hunting for a missing ring, or hiding in the trees for example. You become easily confused unless others give you very clear instructions. When unexpected circumstances pop up, you find them difficult to deal with.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  slow_caster = Flaw.create!(name: "Slow Caster"),
+    descrtiption: "Your magic requires more time to prepare and execute than that of other magi. Your for- mulaic spells take two rounds to cast; sponta- neous spells also take two rounds unless you fast-cast, in which case they take one round casting time. Fast-cast mastered spells also take the normal one-round time. Ritual spells are performed as normal, since all magi must cast them slowly and carefully.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  small_frame = Flaw.create!(name: "Small Framce"),
+    descrtiption: "You are of a lighter-than-average build. Your Size is reduced to –1. This means that the severity of wounds you take increases in four point increments, rather than five point. (See page 171). You cannot take this Flaw and Giant Blood, Large, or Dwarf.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  social_handicap = Flaw.create!(name: "Social Handicap"),
+    descrtiption: "You have some trait that keeps you from interacting easily with other people. This impairs your dealings with most of society, causing penalties of –3 on appropriate rolls. Examples include morose temperament, unworldliness, an unpleasant odor, or outspo- ken atheism.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  soft_hearted = Flaw.create!(name: "Soft-Hearted"),
+    descrtiption: "You cannot bear to witness suffering, and causing it brings you sleepless nights. Even the deaths of enemies are painful for you. You avoid danger and try to keep your friends out of it as well. Life and health mean so much that you would rather give up important goals than let another person risk combat. You are easily moved by song and story.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  study_requirement = Flaw.create!(name: "Study Requirement"),
+    descrtiption: "You are unable to study magic from books or vis alone. You must study in the presence of the appropriate Art. For example, you need to sit next to a brook or pond to study Aquam, or a large fire to study Ignem. Growing things are good for Creo, decaying ones good for Perdo. As your knowledge grows, you need to work with larger and larger quantities. See “Study Bonus Virtue” on page 49 for a list of examples.
+      You may take Study Bonus and Study Requirement.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  supernatural_nuisance = Flaw.create!(name: "Supernatural Nuisance"),
+    descrtiption: "Supernatural entities of a certain kind interfere in your life in minor ways whenever you are around them. This differs from Plagued by Supernatural Entity in that the nuisances do not have any long-term plans. This could rep- resent a ghost that haunts you, or general enmi- ty from faeries towards you.",
+    flaw_type: "Story",
+    book: "Core",
+    major: true)
+
+  susceptibility_to_divine_power = Flaw.create!(name: "Susceptibility to Divine Power"),
+    descrtiption: "You are especially sensitive to the Dominion and suffer twice the normal penal- ties (such as spellcasting modifiers and botch rolls) to your magic when in a divine aura.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  susceptibility_to_faerie_power = Flaw.create!(name: "Susceptibility to Faerie Power"),
+    descrtiption: "You are especially susceptible to the fay and their magic. Whenever you enter a faerie area, you must make a Stamina roll equal to or greater than its aura rating to avoid becoming disoriented. In addition, your Magic Resistance score, including Parma Magica, against faerie magic is halved. If someone else uses their Parma Magica to protect you, their resistance is not affected and you benefit normally.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  susceptibility_to_infernal_power = Flaw.create!(name: "Susceptibility to Infernal Power"),
+    descrtiption: "You are especially vulnerable to the dark powers. Whenever you enter an area of infernal influence, you must make a Stamina roll equal to or greater than the aura rating or become ill (–1 on all rolls). You get only half your normal Magic Resistance score against infernal magic, though if someone else’s Parma Magica is pro- tecting you, it counts normally.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  tainted_with_evil = Flaw.create!(name: "Tainted With Evil"),
+    descrtiption: "An air of corruption surrounds you as a result of something you, your parens, or your ancestors did. Others naturally feel very ill at ease around you, and can easily grow to hate you. Gaining a positive Reputation is impossi- ble. Magi do not react as strongly to this attribute as normal people.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  temperate = Flaw.create!(name: "Temperate"),
+    descrtiption: "You do not over-indulge in any sensual pleasures.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  tormenting_master = Flaw.create!(name: "Tormenting Master"),
+    descrtiption: "Your master does not believe you have successfully passed the apprentice’s gauntlet (the test of becoming a magus). He periodical- ly troubles you with political moves and indi- rect attacks. This Flaw is only applicable to magi, although other characters could take an analogous Story Hook.",
+    flaw_type: "Story",
+    book: "Core",
+    major: true)
+
+  transvestite = Flaw.create!(name: "Transvestite"),
+    descrtiption: "You dress and act as a member of the opposite gender, and expect to be treated as such. Note that this is not a delusion — you know what your physical gender is, but choose to live as the other gender. In Christian and Muslim lands you are regarded as a freak, and are often shunned, laughed at, or even chased out of town. However, these problems will only arise if others realize you are not a mem- ber of the gender you are living as. Because of your long experience living as a member of your chosen gender, attempting to live as a member of your physical gender will result in a –3 to all social skill rolls for as long as the char- acter attempts to live as this gender.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  true_love_major = Flaw.create!(name: "True Love"),
+    descrtiption: "You have found the one person meant for you in all of creation, and the bond between the two of you cannot be sundered. Whenever you are suffering, in danger, or dejected, the thought of your love will give you strength to persevere. In dire need, he may even come to rescue you. More often, he will be in trouble and need res- cuing. If any enchantment keeps you from your true love’s side, the power of your devotion can probably break it. Your love is higher than mor- tal magic, and no magic can make you hate your love, or make you truly betray him. Your True Love must be a non-player character. To have another player character as your True Love, see the True Love Virtue on page 50.
+      This Story Hook may be renamed “True Friend” to cover characters with whom you are very closely linked, but not in a romantic way.
+      If the True Love is significantly weaker than the player character, and not able to pro- vide useful assistance in most cases, this is a Major Flaw. If the True Love is competent, equal to or better than the player character, then this is only a Minor Flaw. The True Love may need rescuing occasionally, but more often he will involve the player character in his plans.",
+    flaw_type: "Story",
+    book: "Core",
+    major: true)
+
+  true_love_minor = Flaw.create!(name: "True Love"),
+    descrtiption: "You have found the one person meant for you in all of creation, and the bond between the two of you cannot be sundered. Whenever you are suffering, in danger, or dejected, the thought of your love will give you strength to persevere. In dire need, he may even come to rescue you. More often, he will be in trouble and need res- cuing. If any enchantment keeps you from your true love’s side, the power of your devotion can probably break it. Your love is higher than mor- tal magic, and no magic can make you hate your love, or make you truly betray him. Your True Love must be a non-player character. To have another player character as your True Love, see the True Love Virtue on page 50.
+      This Story Hook may be renamed “True Friend” to cover characters with whom you are very closely linked, but not in a romantic way.
+      If the True Love is significantly weaker than the player character, and not able to pro- vide useful assistance in most cases, this is a Major Flaw. If the True Love is competent, equal to or better than the player character, then this is only a Minor Flaw. The True Love may need rescuing occasionally, but more often he will involve the player character in his plans.",
+    flaw_type: "Story",
+    book: "Core",
+    major: false)
+
+  twilight_prone = Flaw.create!(name: "Twilight Prone"),
+    descrtiption: "You either enjoy or cannot help running excessive amounts of magic through you when you cast spells. You must roll to resist Twilight on a single magical botch, rather than on a double botch like most magi.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  unimaginative_learner = Flaw.create!(name: "Unimaginative Learner"),
+    descrtiption: "You have trouble figuring things out for yourself. Subtract three from rolls when you study from raw vis.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  unpredictable_magic = Flaw.create!(name: "Unpredictable Magic"),
+    descrtiption: "You always roll a stress die when using magic, even if completely relaxed. If you choose to cast a spontaneous spell without expending fatigue, you must still roll to check for a botch, although the roll does not add to your Casting Total. Even if you have mastered a spell, you must always roll at least one botch die.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  unstructured_caster = Flaw.create!(name: "Unstructured Caster"),
+    descrtiption: "You have never quite mastered the intrica- cies of spellcasting, and are unable to perform formulaic magic without extreme effort. You cast all formulaic spells as though they were rit- ual spells (including the need for vis), and you may not learn ritual spells at all. You cast spon- taneous spells normally.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  visions = Flaw.create!(name: "Visions"),
+    descrtiption: "You often see images related to emotionally or magically laden events. A vision might be of the past, a possible future, or a distant occurrence, and is often symbolic or confusing. Visions usually come to you at quiet times or in places connected with a powerful emotional or magical event, such as the site of a patricide or diabolic sacrifice. Your visions may warn you of dangers to come, or involve you in matters you would otherwise avoid.
+      The visions come purely at the sto- ryguide’s discretion, and reveal only what he wants to reveal.",
+    flaw_type: "Supernatural",
+    book: "Core",
+    major: false)
+
+  vow = Flaw.create!(name: "Vow"),
+    descrtiption: "You have sworn to do something difficult, and breaking your vow is a serious matter. Example vows include never raising a weapon, never speaking, or living in poverty. If you do fail to uphold your vow, you must perform some kind of atonement, whether it be reli- gious penance or coming to terms with your failure in some other way. Furthermore, your Confidence Score drops by one until you atone. Depending on your vow, some people may respect your dedication, giving you a good Reputation of level 1 among those people.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  warped_magic = Flaw.create!(name: "Warped Magic"),
+    descrtiption: "Your magic is accompanied by some unpleasant side effect that always manifests itself the same way, but with increasing intensi- ty according to the level of the spell. Examples include nearby items become hot or nearby plant matter becomes shriveled and wilted. This effect may cause trouble from time to time, but is usually just annoying.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  waster_of_vis = Flaw.create!(name: "Waster of Vis"),
+    descrtiption: "When you use raw vis you waste one quarter (rounded up) of the pawns you apply. The lost raw vis does not apply to the magical effect being enacted but does count toward the total number of botch dice you must roll if you roll a zero. You must use a third again as many pawns as usual when casting a ritual spell, and if you want to improve an Art score by study- ing raw vis, you must use a third again as many pawns as usual. This Flaw applies to all occa- sions on which you use vis, including certamen, laboratory work, and boosting penetration. Wasted pawns count toward the maximum number you can use at one time.
+      For example, if you would normally use 12 pawns, you use 16, and 4, one quarter of those you use, are wasted. If you would normally need 10 pawns, you use 14, because 4 pawns are wasted.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  weak_characteristics = Flaw.create!(name: "Weak Characteristics"),
+    descrtiption: "You have three fewer points to spend buy- ing Characteristics than most characters. You may take this Flaw twice, leaving you with only one point to spend.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  weak_enchanter = Flaw.create!(name: "Weak Enchanter"),
+    descrtiption: "Your Gift is ill attuned to creating enchanted devices. Halve your Lab Total whenever you create or investigate an enchant- ed item. If you have a Deficiency that counts as part of the Lab Total, apply the Deficiency first and then halve the remaining total.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  weak_magic = Flaw.create!(name: "Weak Magic"),
+    descrtiption: "Your magic is particularly bad at penetrat- ing magic resistance. You halve the normal Penetration Total for all spells, and only get half the normal benefit when instilling Penetration into an item. Note that you halve the Penetration Total, after subtracting the spell level and making any adjustments for the use of Arcane Connections. You do not halve the Casting Total and calculate Penetration from that.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  weak_magic_resistance = Flaw.create!(name: "Weak Magic Resistance"),
+    descrtiption: "Any form of magic resistance you gener- ate is much weaker under relatively common circumstances which are fairly easy for an opponent to utilize, such as when you are wet or facing away from the caster of the spell. If the conditions are met, do not subtract the level of the effect from the casting total before calculating Penetration. You would be well advised to keep your weakness from being dis- covered by too many potential enemies.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  weak_parens = Flaw.create!(name: "Weak Parens"),
+    descrtiption: "Your parens was less powerful and a worse teacher than normal. You gain 60 fewer experi- ence points and 30 fewer spell levels from apprenticeship, for a total of 180 experience points and 90 levels of spells.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  weak_scholar = Flaw.create!(name: "Weak Scholar"),
+    descrtiption: "You don’t understand what others teach you very well. You get a –6 penalty to Lab Totals when working from the Lab Texts of others, including when re-inventing spells.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  weak_spontaneous_magic = Flaw.create!(name: "Weak Spontaneous Magic"),
+    descrtiption: "You may not exert yourself when casting spontaneous magic, so you always divide your Casting Total by five. In stressful conditions you must still roll a stress die to see if you botch, but the die roll does not add to your casting total. You may still use ceremonial casting.
+      This Flaw may be combined with Difficult Spontaneous Magic to create a magus who can- not cast spontaneous magic at all.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: true)
+
+  weakness = Flaw.create!(name: "Weakness"),
+    descrtiption: "You have a soft spot for some sort of object or person. In the face of this, all else is unimportant: promises are forgotten, duties neglected, and common sense cast to the winds. Examples include poets and storytellers, food, flattery, or a pretty face.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  weak_willed = Flaw.create!(name: "Weak-Willed"),
+    descrtiption: "You look to others for guidance rather than to yourself. Those who try to fool, intim- idate, or manipulate you gain +3 to their rolls. What you need more than anything else is to find someone you can trust.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
+
+  weird_magic = Flaw.create!(name: "Weird Magic"),
+    descrtiption: "Your control over magic is somewhat loose, perhaps due to Twilight effects or idio- syncratic training. Roll one extra botch die when you roll a zero on stressed spell casting rolls, apart from your other botch dice. Botches from this die should be strange or bizarre rather than dangerous, and if the Weird Magic botch occurs along with a regular botch, the results could be truly spectacular.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  wrathful_major = Flaw.create!(name: "Wrathful"),
+    descrtiption: "You are prone to anger over the smallest issues, and your rage when you are thwarted in something major is terrible to behold.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: true)
+
+  wrathful_minor = Flaw.create!(name: "Wrathful"),
+    descrtiption: "You are prone to anger over the smallest issues, and your rage when you are thwarted in something major is terrible to behold.",
+    flaw_type: "Personality",
+    book: "Core",
+    major: false)
 
 end
