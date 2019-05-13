@@ -11,6 +11,7 @@
 #
 
 class Character < ApplicationRecord
+  # validate :virtues_and_flaws
 
   belongs_to :user
 
@@ -23,4 +24,17 @@ class Character < ApplicationRecord
   # Need to add Age to character
   # Need to add appearant age to character
   # has_many decrepitude
+
+  private
+
+  # def virtues_and_flaws
+  #   core_book_virtues_and_flaws
+  # end
+
+  # def core_book_virtues_and_flaws
+  #   virtues = self.virtues
+  #   if virtues.includes(XXX && YYY)
+  # end
+
+
 end
