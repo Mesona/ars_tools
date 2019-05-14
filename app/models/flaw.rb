@@ -10,10 +10,10 @@
 #  major       :boolean
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  extra       :string
 #
 
 class Flaw < ApplicationRecord
 
-  has_and_belongs_to_many :characters
+  has_many :flaw_associations
+  has_many :characters, through: :flaw_associations
 end

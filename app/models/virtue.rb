@@ -11,10 +11,10 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  free        :boolean          default(FALSE)
-#  extra       :string
 #
 
 class Virtue < ApplicationRecord
 
-  has_and_belongs_to_many :characters
+  has_many :virtue_associations
+  has_many :characters, through: :virtue_associations
 end

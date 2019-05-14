@@ -15,8 +15,12 @@ class Character < ApplicationRecord
 
   belongs_to :user
 
-  has_and_belongs_to_many :virtues
-  has_and_belongs_to_many :flaws
+  has_many :virtue_associations
+  has_many :virtues, through: :virtue_associations
+
+  has_many :flaw_associations
+  has_many :flaws, through: :flaw_associations
+
   has_many :ability_associations
   has_many :abilities, through: :ability_associations
   # has_one inventory
