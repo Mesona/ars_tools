@@ -15,4 +15,23 @@
 class Ability < ApplicationRecord
   has_many :ability_associations
   has_many :characters, through: :ability_associations
+
+  # def experience
+  #   self.ability_associations
+  # end
+
+  # has_many :experience, through: :ability_associations
+
+  # has_many :experience,
+  #   class_name: :AbilityAssociation,
+  #   foreign_key: :experience
+
+  # has_one :experience,
+  #   class_name: :AbilityAssociation,
+  #   foreign_key: :ability_experience
+
+  # has_one :specialization,
+  #   class_name: :AbilityAssociation,
+  #   foreign_key: :specialization
+
 end

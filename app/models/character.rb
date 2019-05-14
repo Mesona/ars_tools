@@ -29,6 +29,14 @@ class Character < ApplicationRecord
   # Need to add appearant age to character
   # has_many decrepitude
 
+
+  # [68] pry(main)> c.ability_associations.includes(:ability).each do |a|
+  #   [68] pry(main)*   a.ability.name
+  #   [68] pry(main)*   a.experience
+  #   [68] pry(main)* end  
+    
+
+
   private
 
   # def virtues_and_flaws

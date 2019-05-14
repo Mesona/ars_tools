@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_14_183428) do
+ActiveRecord::Schema.define(version: 2019_05_14_191658) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2019_05_14_183428) do
   create_table "ability_associations", force: :cascade do |t|
     t.integer "ability_id"
     t.integer "character_id"
-    t.integer "ability_experience", default: 0
+    t.integer "experience", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "specialization"
