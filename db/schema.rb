@@ -44,16 +44,16 @@ ActiveRecord::Schema.define(version: 2019_05_15_210022) do
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "intelligence"
-    t.string "perception"
-    t.string "strength"
-    t.string "stamina"
-    t.string "presence"
-    t.string "communication"
-    t.string "dexterity"
-    t.string "quickness"
-    t.string "age"
-    t.string "appearant_age"
+    t.integer "intelligence", default: 0
+    t.integer "perception", default: 0
+    t.integer "strength", default: 0
+    t.integer "stamina", default: 0
+    t.integer "presence", default: 0
+    t.integer "communication", default: 0
+    t.integer "dexterity", default: 0
+    t.integer "quickness", default: 0
+    t.integer "age", default: 0
+    t.integer "appearant_age", default: 0
     t.index ["age"], name: "index_characters_on_age"
     t.index ["character_type"], name: "index_characters_on_character_type"
     t.index ["user_id"], name: "index_characters_on_user_id"
