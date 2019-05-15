@@ -24,10 +24,7 @@ class Character < ApplicationRecord
   has_many :ability_associations
   has_many :abilities, through: :ability_associations
   # has_one inventory
-  # Need to add stats to character sheet (PER, STR, QUI, etc)
-  # Need to add Age to character
-  # Need to add appearant age to character
-  # has_many decrepitude
+  # need to add decrepitude when I get to aging
 
 
   # [68] pry(main)> c.ability_associations.includes(:ability).each do |a|
