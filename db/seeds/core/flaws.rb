@@ -360,7 +360,31 @@ module Flaws
     book: "Core",
     major: true)
 
-  flawed_parma_magica = Flaw.create!(name: "Flawed Parma Magica",
+  flawed_parma_magica_one = Flaw.create!(name: "Flawed Parma Magica",
+    description: "Your Parma Magica is defective and pro- vides only half the normal Magic Resistance against a certain Form. You may purchase this Flaw more than once for different Forms.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  flawed_parma_magica_two = Flaw.create!(name: "Flawed Parma Magica",
+    description: "Your Parma Magica is defective and pro- vides only half the normal Magic Resistance against a certain Form. You may purchase this Flaw more than once for different Forms.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  flawed_parma_magica_three = Flaw.create!(name: "Flawed Parma Magica",
+    description: "Your Parma Magica is defective and pro- vides only half the normal Magic Resistance against a certain Form. You may purchase this Flaw more than once for different Forms.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  flawed_parma_magica_four = Flaw.create!(name: "Flawed Parma Magica",
+    description: "Your Parma Magica is defective and pro- vides only half the normal Magic Resistance against a certain Form. You may purchase this Flaw more than once for different Forms.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  flawed_parma_magica_five = Flaw.create!(name: "Flawed Parma Magica",
     description: "Your Parma Magica is defective and pro- vides only half the normal Magic Resistance against a certain Form. You may purchase this Flaw more than once for different Forms.",
     flaw_type: "Hermetic",
     book: "Core",
@@ -450,7 +474,31 @@ module Flaws
     book: "Core",
     major: false)
 
-  incompatible_arts = Flaw.create!(name: "Incompatible Arts",
+  incompatible_arts_one = Flaw.create!(name: "Incompatible Arts",
+    description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  incompatible_arts_two = Flaw.create!(name: "Incompatible Arts",
+    description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  incompatible_arts_three = Flaw.create!(name: "Incompatible Arts",
+    description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  incompatible_arts_four = Flaw.create!(name: "Incompatible Arts",
+    description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  incompatible_arts_five = Flaw.create!(name: "Incompatible Arts",
     description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
     flaw_type: "Hermetic",
     book: "Core",
@@ -510,7 +558,31 @@ module Flaws
     book: "Core",
     major: false)
 
-  limited_magical_resistance = Flaw.create!(name: "Limited Magical Resistance",
+  limited_magical_resistance_one = Flaw.create!(name: "Limited Magical Resistance",
+    description: "You are less able to resist magic than other magi. You gain no bonus from one of your Form scores to Magic Resistance rolls, though if you are caught without your Parma Magica, you retain a Magic Resistance of 0. You may take this Flaw multiple times, for multiple Forms.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  limited_magical_resistance_two = Flaw.create!(name: "Limited Magical Resistance",
+    description: "You are less able to resist magic than other magi. You gain no bonus from one of your Form scores to Magic Resistance rolls, though if you are caught without your Parma Magica, you retain a Magic Resistance of 0. You may take this Flaw multiple times, for multiple Forms.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  limited_magical_resistance_three = Flaw.create!(name: "Limited Magical Resistance",
+    description: "You are less able to resist magic than other magi. You gain no bonus from one of your Form scores to Magic Resistance rolls, though if you are caught without your Parma Magica, you retain a Magic Resistance of 0. You may take this Flaw multiple times, for multiple Forms.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  limited_magical_resistance_four = Flaw.create!(name: "Limited Magical Resistance",
+    description: "You are less able to resist magic than other magi. You gain no bonus from one of your Form scores to Magic Resistance rolls, though if you are caught without your Parma Magica, you retain a Magic Resistance of 0. You may take this Flaw multiple times, for multiple Forms.",
+    flaw_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  limited_magical_resistance_five = Flaw.create!(name: "Limited Magical Resistance",
     description: "You are less able to resist magic than other magi. You gain no bonus from one of your Form scores to Magic Resistance rolls, though if you are caught without your Parma Magica, you retain a Magic Resistance of 0. You may take this Flaw multiple times, for multiple Forms.",
     flaw_type: "Hermetic",
     book: "Core",
@@ -776,7 +848,31 @@ module Flaws
     book: "Core",
     major: true)
 
-  poor_characteristic = Flaw.create!(name: "Poor (Characteristic)",
+  poor_characteristic_one = Flaw.create!(name: "Poor (Characteristic)",
+    description: "You have an exceedingly bad Characteristic — lower one which is already –3 or lower by one point. Describe what it is about you that makes this obvious, such as a feeble stature, hideous visage, or slack-jawed stupidity. You may take this Flaw twice for a single Characteristic, lowering it to –5, and multiple times for different Characteristics.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  poor_characteristic_two = Flaw.create!(name: "Poor (Characteristic)",
+    description: "You have an exceedingly bad Characteristic — lower one which is already –3 or lower by one point. Describe what it is about you that makes this obvious, such as a feeble stature, hideous visage, or slack-jawed stupidity. You may take this Flaw twice for a single Characteristic, lowering it to –5, and multiple times for different Characteristics.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  poor_characteristic_three = Flaw.create!(name: "Poor (Characteristic)",
+    description: "You have an exceedingly bad Characteristic — lower one which is already –3 or lower by one point. Describe what it is about you that makes this obvious, such as a feeble stature, hideous visage, or slack-jawed stupidity. You may take this Flaw twice for a single Characteristic, lowering it to –5, and multiple times for different Characteristics.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  poor_characteristic_four = Flaw.create!(name: "Poor (Characteristic)",
+    description: "You have an exceedingly bad Characteristic — lower one which is already –3 or lower by one point. Describe what it is about you that makes this obvious, such as a feeble stature, hideous visage, or slack-jawed stupidity. You may take this Flaw twice for a single Characteristic, lowering it to –5, and multiple times for different Characteristics.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  poor_characteristic_five = Flaw.create!(name: "Poor (Characteristic)",
     description: "You have an exceedingly bad Characteristic — lower one which is already –3 or lower by one point. Describe what it is about you that makes this obvious, such as a feeble stature, hideous visage, or slack-jawed stupidity. You may take this Flaw twice for a single Characteristic, lowering it to –5, and multiple times for different Characteristics.",
     flaw_type: "General",
     book: "Core",
@@ -1029,7 +1125,13 @@ module Flaws
     book: "Core",
     major: true)
 
-  weak_characteristics = Flaw.create!(name: "Weak Characteristics",
+  weak_characteristics_one = Flaw.create!(name: "Weak Characteristics",
+    description: "You have three fewer points to spend buy- ing Characteristics than most characters. You may take this Flaw twice, leaving you with only one point to spend.",
+    flaw_type: "General",
+    book: "Core",
+    major: false)
+
+  weak_characteristics_two = Flaw.create!(name: "Weak Characteristics",
     description: "You have three fewer points to spend buy- ing Characteristics than most characters. You may take this Flaw twice, leaving you with only one point to spend.",
     flaw_type: "General",
     book: "Core",

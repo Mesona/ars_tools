@@ -150,6 +150,7 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Characters may not have both the 'Strong Faerie Blood' and 'Faerie Blood' Virtues")
     end
 
+    # TODO: Finish filling this out
     # if virtues.include?(allVirtues.find_by(name: "Student of (Realm)")) && virtues.include?(allVirtues.find_by(name: "Puissant (Ability)"))
     #   if 
     #     errors.add(:virtues, "Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm) Virtue'")
@@ -163,6 +164,47 @@ class Character < ApplicationRecord
     if (virtues.include?(allVirtues.find_by(name: "Wealthy")) || flaws.include?(allFlaws.find_by(name: "Poor")) ) && self.character_type = "Mage"
       errors.add(:virtues, "Magi may not take the 'Wealthy' Virtue or the 'Poor' Flaw")
     end
+
+    if flaws.include?(allFlaws.find_by(name: "Blatant Gift")) && self.character_type != "Mage"
+      errors.add(:flaws, "Only Magi may take the Flaw 'Blatant Gift'")
+    end
+
+    if flaws.include?(allFlaws.find_by(name: "Branded Criminal")) && virtues.include?(allVirtues.find_by(name: "Wealthy"))
+      errors.add(:flaws, "Characters with the 'Branded Criminal' Flaw may not take the 'Wealthy' Virtue")
+    end
+
+    # TODO: Finish filling this out
+    # if flaws.include?(allFlaws.find_by(name: "Incompatible Arts")) && (flaws.include?(allFlaws.find_by(name: "Deficient Form")) || flaws.include?(allFlaws.find_by(name: "Deficient Technique")))
+      # if
+      #   errors.add(:flaws, "Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+      # end
+    # end
+
+    if flaws.include?(allFlaws.find_by(name: "Magical Air")) && self.character_type = "Mage"
+      errors.add(:flaws, "Mages cannot take the Flaw 'Magical Air'")
+    end
+
+    if flaws.include?(allFlaws.find_by(name: "No Sense of Direction")) && virtues.include?(allVirtues.find_by(name: "Well-Traveled"))
+      errors.add(:flaws, "The 'No Sense of Direction' Flaw cannot be combined with the 'Well-Traveled' Virtue")
+    end
+
+    if flaws.include?(allFlaws.find_by(name: "Offensive to Animals")) 
+      if flaws.include?(allFlaws.find_by(name: "Magical Air"))
+        errors.add(:flaws, "Characters may not have both the 'Offensive to Animals' and 'Magical Air' Flaws")
+      end
+      if self.character_type = "Mage" && ! virtues.include?(allVirtues.find_by(name: "Gentle Gift"))
+        errors.add(:flaws, "Mages may only take the 'Offensive to Animals' Flaw if they also have the 'Gentle Gift' Virtue")
+      end
+    end
+
+    if flaws.include?(allFlaws.find_by(name: "Outcast")) && virtues.include?(allVirtues.find_by(name: "Wealthy"))
+      errors.add(:virtues, "Characters may not take the 'Outcast' Flaw and the 'Wealthy' Virtue")
+    end
+
+    if flaws.include?(allFlaws.find_by(name: "Outlaw Leader")) && self.character_type = "Grog"
+      errors.add(:flaws, "Grogs may not take the 'Outlaw Leader' Flaw")
+    end
+
 
   end
 
