@@ -690,19 +690,56 @@ module Virtues
     book: "Core",
     major: false)
 
-  puissant_ability = Virtue.create!(name: "Puissant (Ability)",
+  puissant_ability_one = Virtue.create!(name: "Puissant (Ability)",
     description: "You are particularly adept with one Ability, and add 2 to its value whenever you use it. Note that you do not, in general, use an Ability when learning it, teaching it, or writing about it. You may only take this Virtue once for a given Ability, but may take it more than once for different Abilities.",
     virtue_type: "General",
     book: "Core",
     major: false)
 
-  puissant_art = Virtue.create!(name: "Puissant (Art)",
+  puissant_ability_two = Virtue.create!(name: "Puissant (Ability)",
+    description: "You are particularly adept with one Ability, and add 2 to its value whenever you use it. Note that you do not, in general, use an Ability when learning it, teaching it, or writing about it. You may only take this Virtue once for a given Ability, but may take it more than once for different Abilities.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  puissant_ability_three = Virtue.create!(name: "Puissant (Ability)",
+    description: "You are particularly adept with one Ability, and add 2 to its value whenever you use it. Note that you do not, in general, use an Ability when learning it, teaching it, or writing about it. You may only take this Virtue once for a given Ability, but may take it more than once for different Abilities.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  puissant_ability_four = Virtue.create!(name: "Puissant (Ability)",
+    description: "You are particularly adept with one Ability, and add 2 to its value whenever you use it. Note that you do not, in general, use an Ability when learning it, teaching it, or writing about it. You may only take this Virtue once for a given Ability, but may take it more than once for different Abilities.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  puissant_ability_five = Virtue.create!(name: "Puissant (Ability)",
+    description: "You are particularly adept with one Ability, and add 2 to its value whenever you use it. Note that you do not, in general, use an Ability when learning it, teaching it, or writing about it. You may only take this Virtue once for a given Ability, but may take it more than once for different Abilities.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  puissant_art_one = Virtue.create!(name: "Puissant (Art)",
     description: "You add 3 to the value of one Art whenever you use it. This means all totals in which the score of the Art is part of the total. It does not apply to Study Totals. You may take this Virtue twice, for two different Arts. If a spell has requisites, include the bonus from Puissant Art with that Art when calculating which Art is higher. If the Puissant Art is higher, the bonus does not apply to the requisite.",
     virtue_type: "Hermetic",
     book: "Core",
     major: false)
 
-  quiet_magic = Virtue.create!(name: "Quiet Magic",
+  puissant_art_two = Virtue.create!(name: "Puissant (Art)",
+    description: "You add 3 to the value of one Art whenever you use it. This means all totals in which the score of the Art is part of the total. It does not apply to Study Totals. You may take this Virtue twice, for two different Arts. If a spell has requisites, include the bonus from Puissant Art with that Art when calculating which Art is higher. If the Puissant Art is higher, the bonus does not apply to the requisite.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  quiet_magic_one = Virtue.create!(name: "Quiet Magic",
+    description: "You can cast spells using only a soft voice at no penalty, and at only a –5 penalty if you do not speak at all. You gain no benefits from using your voice normally but gain the normal benefit for using a booming voice. The range of Voice Range spells is determined normally, based on how loud your voice is.
+      You may take this Virtue twice, and eliminate the penalty altogether.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  quiet_magic_two = Virtue.create!(name: "Quiet Magic",
     description: "You can cast spells using only a soft voice at no penalty, and at only a –5 penalty if you do not speak at all. You gain no benefits from using your voice normally but gain the normal benefit for using a booming voice. The range of Voice Range spells is determined normally, based on how loud your voice is.
       You may take this Virtue twice, and eliminate the penalty altogether.",
     virtue_type: "Hermetic",
@@ -789,13 +826,61 @@ module Virtues
     book: "Core",
     major: false)
 
-  social_contacts = Virtue.create!(name: "Social Contacts",
+  social_contacts_one = Virtue.create!(name: "Social Contacts",
     description: "You have a broad range of acquaintances in a specific social circle (specified when this Virtue is purchased), accumulated over years of travel and socializing. Almost everywhere you go, you meet someone you know, or can get in touch with someone who can help you. Whenever you are somewhere new, you can contact someone on a simple Presence roll against an Ease Factor of 6. The storyguide may modify this target number upward for very small areas or areas where it is extremely unlikely that you would know someone. You may purchase this Virtue more than once, each time specifying a different social group.",
     virtue_type: "General",
     book: "Core",
     major: false)
 
-  special_circumstances = Virtue.create!(name: "Special Circumstances",
+  social_contacts_two = Virtue.create!(name: "Social Contacts",
+    description: "You have a broad range of acquaintances in a specific social circle (specified when this Virtue is purchased), accumulated over years of travel and socializing. Almost everywhere you go, you meet someone you know, or can get in touch with someone who can help you. Whenever you are somewhere new, you can contact someone on a simple Presence roll against an Ease Factor of 6. The storyguide may modify this target number upward for very small areas or areas where it is extremely unlikely that you would know someone. You may purchase this Virtue more than once, each time specifying a different social group.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  social_contacts_three = Virtue.create!(name: "Social Contacts",
+    description: "You have a broad range of acquaintances in a specific social circle (specified when this Virtue is purchased), accumulated over years of travel and socializing. Almost everywhere you go, you meet someone you know, or can get in touch with someone who can help you. Whenever you are somewhere new, you can contact someone on a simple Presence roll against an Ease Factor of 6. The storyguide may modify this target number upward for very small areas or areas where it is extremely unlikely that you would know someone. You may purchase this Virtue more than once, each time specifying a different social group.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  social_contacts_four = Virtue.create!(name: "Social Contacts",
+    description: "You have a broad range of acquaintances in a specific social circle (specified when this Virtue is purchased), accumulated over years of travel and socializing. Almost everywhere you go, you meet someone you know, or can get in touch with someone who can help you. Whenever you are somewhere new, you can contact someone on a simple Presence roll against an Ease Factor of 6. The storyguide may modify this target number upward for very small areas or areas where it is extremely unlikely that you would know someone. You may purchase this Virtue more than once, each time specifying a different social group.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  social_contacts_five = Virtue.create!(name: "Social Contacts",
+    description: "You have a broad range of acquaintances in a specific social circle (specified when this Virtue is purchased), accumulated over years of travel and socializing. Almost everywhere you go, you meet someone you know, or can get in touch with someone who can help you. Whenever you are somewhere new, you can contact someone on a simple Presence roll against an Ease Factor of 6. The storyguide may modify this target number upward for very small areas or areas where it is extremely unlikely that you would know someone. You may purchase this Virtue more than once, each time specifying a different social group.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  special_circumstances_one = Virtue.create!(name: "Special Circumstances",
+    description: "You are able to perform magic better in certain uncommon situations (such as during a storm or while touching the target), gaining a +3 bonus to your rolls to cast or resist spells. You may take this Virtue more than once, but you only gain a +3 bonus even if more than one set of circumstances applies.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  special_circumstances_two = Virtue.create!(name: "Special Circumstances",
+    description: "You are able to perform magic better in certain uncommon situations (such as during a storm or while touching the target), gaining a +3 bonus to your rolls to cast or resist spells. You may take this Virtue more than once, but you only gain a +3 bonus even if more than one set of circumstances applies.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  special_circumstances_three = Virtue.create!(name: "Special Circumstances",
+    description: "You are able to perform magic better in certain uncommon situations (such as during a storm or while touching the target), gaining a +3 bonus to your rolls to cast or resist spells. You may take this Virtue more than once, but you only gain a +3 bonus even if more than one set of circumstances applies.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  special_circumstances_four = Virtue.create!(name: "Special Circumstances",
+    description: "You are able to perform magic better in certain uncommon situations (such as during a storm or while touching the target), gaining a +3 bonus to your rolls to cast or resist spells. You may take this Virtue more than once, but you only gain a +3 bonus even if more than one set of circumstances applies.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  special_circumstances_five = Virtue.create!(name: "Special Circumstances",
     description: "You are able to perform magic better in certain uncommon situations (such as during a storm or while touching the target), gaining a +3 bonus to your rolls to cast or resist spells. You may take this Virtue more than once, but you only gain a +3 bonus even if more than one set of circumstances applies.",
     virtue_type: "Hermetic",
     book: "Core",
@@ -819,7 +904,25 @@ module Virtues
     book: "Core",
     major: false)
 
-  student_of_realm = Virtue.create!(name: "Student of (Realm)",
+  student_of_realm_one = Virtue.create!(name: "Student of (Realm)",
+    description: "You have been trained in the mystical aspects of one of the four realms of power (Divine, Faerie, Infernal, or Magic), and you have a +2 bonus on all uses of the appropriate Lore. You may take that Lore at character generation even if you cannot learn other Arcane Abilities. You may take this Virtue multiple times, for a different realm each time. You may not take Student of (Realm) and Puissant Ability for the same Lore.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  student_of_realm_two = Virtue.create!(name: "Student of (Realm)",
+    description: "You have been trained in the mystical aspects of one of the four realms of power (Divine, Faerie, Infernal, or Magic), and you have a +2 bonus on all uses of the appropriate Lore. You may take that Lore at character generation even if you cannot learn other Arcane Abilities. You may take this Virtue multiple times, for a different realm each time. You may not take Student of (Realm) and Puissant Ability for the same Lore.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  student_of_realm_three = Virtue.create!(name: "Student of (Realm)",
+    description: "You have been trained in the mystical aspects of one of the four realms of power (Divine, Faerie, Infernal, or Magic), and you have a +2 bonus on all uses of the appropriate Lore. You may take that Lore at character generation even if you cannot learn other Arcane Abilities. You may take this Virtue multiple times, for a different realm each time. You may not take Student of (Realm) and Puissant Ability for the same Lore.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  student_of_realm_four = Virtue.create!(name: "Student of (Realm)",
     description: "You have been trained in the mystical aspects of one of the four realms of power (Divine, Faerie, Infernal, or Magic), and you have a +2 bonus on all uses of the appropriate Lore. You may take that Lore at character generation even if you cannot learn other Arcane Abilities. You may take this Virtue multiple times, for a different realm each time. You may not take Student of (Realm) and Puissant Ability for the same Lore.",
     virtue_type: "General",
     book: "Core",
@@ -899,7 +1002,19 @@ module Virtues
     book: "Core",
     major: false)
 
-  ways_of_the_land = Virtue.create!(name: "Ways of the (Land)",
+  ways_of_the_land_one = Virtue.create!(name: "Ways of the (Land)",
+    description: "You have a deep understanding of a type of terrain, feeling more natural and at home there than anywhere else. Examples include Ways of the Forest, Ways of the Mountain, Ways of the Steppe or Ways of the Town. You get a +3 bonus to all rolls, including combat, that directly involve that area and its inhabitants; mundane, magical, or faerie. In addition, you roll one fewer botch die than normal (which may mean you roll no botch dice) in rolls that pertain to your area of understanding. You are not normally molested by animals of the terrain, and though particularly vicious creatures may still attack you, at least they’ll accord you proper respect. (For Ways of the Town, this still applies to town animals, of which there are plenty in the medieval world, rather than people. The +3 bonus does apply to people.) You may choose this Virtue multiple times, for different types of terrain.",
+    virtue_type: "General",
+    book: "Core",
+    major: true)
+
+  ways_of_the_land_two = Virtue.create!(name: "Ways of the (Land)",
+    description: "You have a deep understanding of a type of terrain, feeling more natural and at home there than anywhere else. Examples include Ways of the Forest, Ways of the Mountain, Ways of the Steppe or Ways of the Town. You get a +3 bonus to all rolls, including combat, that directly involve that area and its inhabitants; mundane, magical, or faerie. In addition, you roll one fewer botch die than normal (which may mean you roll no botch dice) in rolls that pertain to your area of understanding. You are not normally molested by animals of the terrain, and though particularly vicious creatures may still attack you, at least they’ll accord you proper respect. (For Ways of the Town, this still applies to town animals, of which there are plenty in the medieval world, rather than people. The +3 bonus does apply to people.) You may choose this Virtue multiple times, for different types of terrain.",
+    virtue_type: "General",
+    book: "Core",
+    major: true)
+
+  ways_of_the_land_three = Virtue.create!(name: "Ways of the (Land)",
     description: "You have a deep understanding of a type of terrain, feeling more natural and at home there than anywhere else. Examples include Ways of the Forest, Ways of the Mountain, Ways of the Steppe or Ways of the Town. You get a +3 bonus to all rolls, including combat, that directly involve that area and its inhabitants; mundane, magical, or faerie. In addition, you roll one fewer botch die than normal (which may mean you roll no botch dice) in rolls that pertain to your area of understanding. You are not normally molested by animals of the terrain, and though particularly vicious creatures may still attack you, at least they’ll accord you proper respect. (For Ways of the Town, this still applies to town animals, of which there are plenty in the medieval world, rather than people. The +3 bonus does apply to people.) You may choose this Virtue multiple times, for different types of terrain.",
     virtue_type: "General",
     book: "Core",
