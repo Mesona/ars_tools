@@ -284,7 +284,13 @@ module Virtues
     book: "Core",
     major: false)
 
-  great_characteristic = Virtue.create!(name: "Great (Characteristic)",
+  great_characteristic_one = Virtue.create!(name: "Great (Characteristic)",
+    description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  great_characteristic_two = Virtue.create!(name: "Great (Characteristic)",
     description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
     virtue_type: "General",
     book: "Core",
@@ -335,7 +341,31 @@ module Virtues
     book: "Core",
     major: false)
 
-  improved_characteristics = Virtue.create!(name: "Improved Characteristics",
+  improved_characteristics_one = Virtue.create!(name: "Improved Characteristics",
+    description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  improved_characteristics_two = Virtue.create!(name: "Improved Characteristics",
+    description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  improved_characteristics_three = Virtue.create!(name: "Improved Characteristics",
+    description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  improved_characteristics_four = Virtue.create!(name: "Improved Characteristics",
+    description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  improved_characteristics_five = Virtue.create!(name: "Improved Characteristics",
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
@@ -404,7 +434,31 @@ module Virtues
     book: "Core",
     major: false)
 
-  learn_ability_from_mistakes = Virtue.create!(name: "Learn (Ability) From Mistakes",
+  learn_ability_from_mistakes_one = Virtue.create!(name: "Learn (Ability) From Mistakes",
+    description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  learn_ability_from_mistakes_two = Virtue.create!(name: "Learn (Ability) From Mistakes",
+    description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  learn_ability_from_mistakes_three = Virtue.create!(name: "Learn (Ability) From Mistakes",
+    description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  learn_ability_from_mistakes_four = Virtue.create!(name: "Learn (Ability) From Mistakes",
+    description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
+    virtue_type: "General",
+    book: "Core",
+    major: false)
+
+  learn_ability_from_mistakes_five = Virtue.create!(name: "Learn (Ability) From Mistakes",
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
@@ -488,6 +542,36 @@ module Virtues
     virtue_type: "Hermetic",
     book: "Core",
     major: true)
+
+  mastered_spells_one = Virtue.create!(name: "Mastered Spells",
+    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  mastered_spells_two = Virtue.create!(name: "Mastered Spells",
+    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  mastered_spells_three = Virtue.create!(name: "Mastered Spells",
+    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  mastered_spells_four = Virtue.create!(name: "Mastered Spells",
+    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
+
+  mastered_spells_five = Virtue.create!(name: "Mastered Spells",
+    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
+    virtue_type: "Hermetic",
+    book: "Core",
+    major: false)
 
   mastered_spells = Virtue.create!(name: "Mastered Spells",
     description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
