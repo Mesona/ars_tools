@@ -21,6 +21,10 @@ f = Flaw.first
 v = Virtue.first
 a = Ability.first
 
+VirtueAssociation.destroy_all
+FlawAssociation.destroy_all
+AbilityAssociation.destroy_all
+
 VirtueAssociation.create!(character: demo_character, virtue: v)
 FlawAssociation.create!(character: demo_character, flaw: f)
 AbilityAssociation.create!(character: demo_character, ability: a, experience: 200)

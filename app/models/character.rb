@@ -21,7 +21,7 @@
 #
 
 class Character < ApplicationRecord
-  # validate :virtues_and_flaws
+  validate :virtues_and_flaws
 
   belongs_to :user
 
@@ -46,14 +46,20 @@ class Character < ApplicationRecord
 
   private
 
-  # def virtues_and_flaws
-  #   core_book_virtues_and_flaws
-  # end
+  def virtues_and_flaws
+    core_book_virtues_and_flaws
+  end
 
-  # def core_book_virtues_and_flaws
-  #   virtues = self.virtues
-  #   if virtues.includes(XXX && YYY)
-  # end
+  def core_book_virtues_and_flaws
+    virtues = self.virtues
+    flaws = self.flaws
+    allVirtues = Virtue.all
+    allFlaws = Flaw.all
+
+    if virtues.ids.include?(allVirtues.find_by(name: "Wealthy").id) && flaws.ids.include?(allFlaws.find_by(name: "Poor").id)
+      errors.add(:virtues, "Cannot have both the Wealthy Virtue and the Poor flaw")
+    end
+  end
 
 
 end
