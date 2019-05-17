@@ -78,33 +78,21 @@ class Character < ApplicationRecord
     if (virtues.include?(allVirtues.find_by(name: "Giant Blood")) && 
         (virtues.include?(allVirtues.find_by(name: "Large")) || 
         flaws.include?(allFlaws.find_by(name: "Small Frame")) || 
-        flaws.include?(allFlaws.find_by(name: "Dwarf"))) ||
-      virtues.include?(allVirtues.find_by(name: "Large")) && 
+        flaws.include?(allFlaws.find_by(name: "Dwarf")))) ||
+      (virtues.include?(allVirtues.find_by(name: "Large"))  &&
         (virtues.include?(allVirtues.find_by(name: "Giant Blood")) || 
         flaws.include?(allFlaws.find_by(name: "Small Frame")) || 
-        flaws.include?(allFlaws.find_by(name: "Dwarf"))) ||
-      flaws.include?(allFlaws.find_by(name: "Small Frame")) && 
+        flaws.include?(allFlaws.find_by(name: "Dwarf")))) ||
+      (flaws.include?(allFlaws.find_by(name: "Small Frame")) && 
         (virtues.include?(allVirtues.find_by(name: "Giant Blood")) || 
         virtues.include?(allVirtues.find_by(name: "Large")) || 
-        flaws.include?(allFlaws.find_by(name: "Dwarf"))) ||
-      flaws.include?(allFlaws.find_by(name: "Dwarf")) && 
+        flaws.include?(allFlaws.find_by(name: "Dwarf")))) ||
+      (flaws.include?(allFlaws.find_by(name: "Dwarf")) && 
         (virtues.include?(allVirtues.find_by(name: "Giant Blood")) || 
         virtues.include?(allVirtues.find_by(name: "Large")) || 
         flaws.include?(allFlaws.find_by(name: "Small Frame"))))
       errors.add(:virtues, "Characters may only have one Virtue or Flaw from: 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'")
     end
-
-    # if virtues.name.include?(allVirtues.find_by(name: "Large")) && (virtues.include?(allVirtues.find_by(name: "Giant Blood")) || flaws.include?(allFlaws.find_by(name: "Small Frame")) || flaws.include?(allFlaws.find_by(name: "Dwarf")))
-    #   errors.add(:virtues, "Characters may only have one Virtue or Flaw from: Giant Blood / Large / Small Frame / Dwarf")
-    # end
-
-    # if flaws.name.include?(allFlaws.find_by(name: "Small Frame")) && (virtues.include?(allVirtues.find_by(name: "Giant Blood")) || virtues.include?(allVirtues.find_by(name: "Large")) || flaws.include?(allFlaws.find_by(name: "Dwarf")))
-    #   errors.add(:virtues, "Characters may only have one Virtue or Flaw from: Giant Blood / Large / Small Frame / Dwarf")
-    # end
-
-    # if flaws.name.include?(allFlaws.find_by(name: "Dwarf")) && (virtues.include?(allVirtues.find_by(name: "Giant Blood")) || virtues.include?(allVirtues.find_by(name: "Large")) || flaws.include?(allFlaws.find_by(name: "Small Frame")))
-    #   errors.add(:virtues, "Characters may only have one Virtue or Flaw from: Giant Blood / Large / Small Frame / Dwarf")
-    # end
 
     if virtues.include?(allVirtues.find_by(name: "Hermetic Magus")) && self.character_type != "Mage"
       errors.add(:virtues, "Only magi may take the Virtue 'Hermetic Magus'")
@@ -173,12 +161,22 @@ class Character < ApplicationRecord
       errors.add(:flaws, "Characters with the 'Branded Criminal' Flaw may not take the 'Wealthy' Virtue")
     end
 
-    # TODO: Finish filling this out
-    # if flaws.include?(allFlaws.find_by(name: "Incompatible Arts")) && (flaws.include?(allFlaws.find_by(name: "Deficient Form")) || flaws.include?(allFlaws.find_by(name: "Deficient Technique")))
-      # if
-      #   errors.add(:flaws, "Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
-      # end
-    # end
+    if flaws.include?(allFlaws.find_by(name: "Incompatible Arts"))
+      ia_special_one = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).special_one
+      ia_special_two = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).special_two
+      if flaws.include?(allFlaws.find_by(name: "Deficient Form"))
+        df_special = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Deficient Form").id).special_one
+        if ia_special_one[-2,2] == df_special || ia_special_two[-2,2] == df_special
+          errors.add(:flaws, "Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+        end
+      end
+      if flaws.include?(allFlaws.find_by(name: "Deficient Technique"))
+        dt_special = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Deficient Technique").id).special_one
+        if ia_special_one[-2,2] == dt_special || ia_special_two[-2,2] == dt_special
+          errors.add(:flaws, "Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+        end
+      end
+    end
 
     if flaws.include?(allFlaws.find_by(name: "Magical Air")) && self.character_type = "Mage"
       errors.add(:flaws, "Mages cannot take the Flaw 'Magical Air'")

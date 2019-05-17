@@ -986,7 +986,7 @@ module Flaws
     book: "Core",
     major: false)
 
-  small_frame = Flaw.create!(name: "Small Framce",
+  small_frame = Flaw.create!(name: "Small Frame",
     description: "You are of a lighter-than-average build. Your Size is reduced to –1. This means that the severity of wounds you take increases in four point increments, rather than five point. (See page 171). You cannot take this Flaw and Giant Blood, Large, or Dwarf.",
     flaw_type: "General",
     book: "Core",

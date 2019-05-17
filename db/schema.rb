@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_15_210022) do
+ActiveRecord::Schema.define(version: 2019_05_17_175326) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,9 +76,10 @@ ActiveRecord::Schema.define(version: 2019_05_15_210022) do
   create_table "flaw_associations", force: :cascade do |t|
     t.integer "flaw_id"
     t.integer "character_id"
-    t.string "special"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "special_one"
+    t.string "special_two"
     t.index ["character_id"], name: "index_flaw_associations_on_character_id"
     t.index ["flaw_id", "character_id"], name: "index_flaw_associations_on_flaw_id_and_character_id"
   end
@@ -111,9 +112,10 @@ ActiveRecord::Schema.define(version: 2019_05_15_210022) do
   create_table "virtue_associations", force: :cascade do |t|
     t.integer "virtue_id"
     t.integer "character_id"
-    t.string "special"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "special_one"
+    t.string "special_two"
     t.index ["character_id"], name: "index_virtue_associations_on_character_id"
     t.index ["virtue_id", "character_id"], name: "index_virtue_associations_on_virtue_id_and_character_id"
   end
