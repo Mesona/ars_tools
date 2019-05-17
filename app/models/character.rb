@@ -54,6 +54,8 @@ class Character < ApplicationRecord
     flaws = self.flaws
     allVirtues = Virtue.all
     allFlaws = Flaw.all
+    flawAssociations = FlawAssociation.where(character_id: self.id)
+    virtueAssociations = VirtueAssociation.where(character_id: self.id)
 
     if virtues.include?(allVirtues.find_by(name: "Wealthy")) && flaws.include?(allFlaws.find_by(name: "Poor"))
       errors.add(:virtues, "Cannot have both the 'Wealthy' Virtue and the 'Poor' Flaw")
@@ -139,11 +141,14 @@ class Character < ApplicationRecord
     end
 
     # TODO: Finish filling this out
-    # if virtues.include?(allVirtues.find_by(name: "Student of (Realm)")) && virtues.include?(allVirtues.find_by(name: "Puissant (Ability)"))
-    #   if 
-    #     errors.add(:virtues, "Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm) Virtue'")
-    #   end
-    # end
+    if virtues.include?(allVirtues.find_by(name: "Student of (Realm)")) && virtues.include?(allVirtues.find_by(name: "Puissant (Ability)"))
+      realm = self.virtue_associations.includes(:virtue).find_by(virtue_id: allVirtues.find_by(name: "Student of (Realm)").id).special_one
+      puissant = self.virtue_associations.includes(:virtue).find_by(virtue_id: allVirtues.find_by(name: "Puissant (Ability)").id).special_one
+      if self.virtue_associations.find_by(special_one: "Divine Lore").nil? == false && 
+        self.virtue_associations.find_by(special_one: "Divine Lore").virtue_id == allVirtues.find_by(name: "Puissant (Ability)").id
+        errors.add(:virtues, "Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm) Virtue'")
+      end
+    end
 
     if virtues.include?(allVirtues.find_by(name: "Temporal Influence")) && self.character_type = "Grog"
       errors.add(:virtues, "Grogs may not take the Virtue 'Temporal Influence'")
@@ -162,18 +167,22 @@ class Character < ApplicationRecord
     end
 
     if flaws.include?(allFlaws.find_by(name: "Incompatible Arts"))
-      ia_special_one = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).special_one
-      ia_special_two = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).special_two
+      # ia_special_one = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).special_one
+      # ia_special_two = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).special_two
       if flaws.include?(allFlaws.find_by(name: "Deficient Form"))
         df_special = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Deficient Form").id).special_one
-        if ia_special_one[-2,2] == df_special || ia_special_two[-2,2] == df_special
-          errors.add(:flaws, "Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+        flawAssociations.where(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).each do |fa|
+          if fa.special_one[-2,2] == df_special || fa.special_two[-2,2] == df_special
+            errors.add(:flaws, "Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+          end
         end
       end
       if flaws.include?(allFlaws.find_by(name: "Deficient Technique"))
         dt_special = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Deficient Technique").id).special_one
-        if ia_special_one[-2,2] == dt_special || ia_special_two[-2,2] == dt_special
-          errors.add(:flaws, "Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+        flawAssociations.where(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).each do |fa|
+          if fa.special_one[-2,2] == dt_special || fa.special_two[-2,2] == dt_special
+            errors.add(:flaws, "Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+          end
         end
       end
     end

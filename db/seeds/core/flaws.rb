@@ -474,35 +474,41 @@ module Flaws
     book: "Core",
     major: false)
 
-  incompatible_arts_one = Flaw.create!(name: "Incompatible Arts",
+  incompatible_arts = Flaw.create!(name: "Incompatible Arts",
     description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
     flaw_type: "Hermetic",
     book: "Core",
     major: false)
 
-  incompatible_arts_two = Flaw.create!(name: "Incompatible Arts",
-    description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
-    flaw_type: "Hermetic",
-    book: "Core",
-    major: false)
+  # incompatible_arts_one = Flaw.create!(name: "Incompatible Arts",
+  #   description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
+  #   flaw_type: "Hermetic",
+  #   book: "Core",
+  #   major: false)
 
-  incompatible_arts_three = Flaw.create!(name: "Incompatible Arts",
-    description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
-    flaw_type: "Hermetic",
-    book: "Core",
-    major: false)
+  # incompatible_arts_two = Flaw.create!(name: "Incompatible Arts",
+  #   description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
+  #   flaw_type: "Hermetic",
+  #   book: "Core",
+  #   major: false)
 
-  incompatible_arts_four = Flaw.create!(name: "Incompatible Arts",
-    description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
-    flaw_type: "Hermetic",
-    book: "Core",
-    major: false)
+  # incompatible_arts_three = Flaw.create!(name: "Incompatible Arts",
+  #   description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
+  #   flaw_type: "Hermetic",
+  #   book: "Core",
+  #   major: false)
 
-  incompatible_arts_five = Flaw.create!(name: "Incompatible Arts",
-    description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
-    flaw_type: "Hermetic",
-    book: "Core",
-    major: false)
+  # incompatible_arts_four = Flaw.create!(name: "Incompatible Arts",
+  #   description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
+  #   flaw_type: "Hermetic",
+  #   book: "Core",
+  #   major: false)
+
+  # incompatible_arts_five = Flaw.create!(name: "Incompatible Arts",
+  #   description: "For some reason you are completely unable to use two combinations of Techniques and Forms, except for Vim and Corpus. For example, you may be unable to use Intellego Herbam and Intellego Animal. This Flaw may be taken repeatedly with different combinations, but may not be combined with a Deficiency.",
+  #   flaw_type: "Hermetic",
+  #   book: "Core",
+  #   major: false)
 
   incomprehensible = Flaw.create!(name: "Incomprehensible",
     description: "You are almost completely unable to convey the knowledge and understanding that you have. Anyone trying to learn from you or from a book you have written must halve their Study Total (or Lab Total, if you are a magus and have written Lab Texts on some spells or enchanted items). If you are a magus teaching spells, halve all applicable Lab Totals, both yours and the student’s.",

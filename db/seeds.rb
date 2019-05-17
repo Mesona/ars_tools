@@ -38,8 +38,12 @@ AbilityAssociation.create!(character: demo_character2, ability: a, experience: 5
 # VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Giant Blood"))
 # FlawAssociation.create!(character: demo_character2, flaw: Flaw.find_by(name: "Small Frame"))
 
-VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Student of (Realm)"), special_one: "Divine")
-VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Divine Lore")
+# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Student of (Realm)"), special_one: "Faerie")
+# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Student of (Realm)"), special_one: "Divine")
+# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Athletics")
+# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Magic Lore")
+# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Divine Lore")
 
 # FlawAssociation.create!(character: demo_character2, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "CrAq", special_two: "CrHe")
-# FlawAssociation.create!(character: demo_character2, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Te")
+# FlawAssociation.create!(character: demo_character2, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "CrTe", special_two: "CrAn")
+# FlawAssociation.create!(character: demo_character2, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Pe")
