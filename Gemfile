@@ -36,14 +36,15 @@ gem 'jquery-rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'faker'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.4'
   gem 'capybara', '>= 2.15'
+  gem 'faker'
+  gem 'shoulda-matchers'
 end
 
 group :development do
@@ -65,7 +66,6 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
-  gem 'shoulda-matchers', require: false
   gem 'rails-controller-testing'
   gem 'database_cleaner', '~> 1.5'
 end
