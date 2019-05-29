@@ -21,12 +21,17 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  subject(:user) do
-    User.create!(
-      username: "gerald",
-      email: "test@test.test",
-      password: "super_secret_password"
-    )
+  # subject(:user) do
+  #   FactoryBot.create(:user)
+    # User.create!(
+    #   username: "geralda",
+    #   email: "test@test.test",
+    #   password: "super_secret_password"
+    # )
+  # end
+  before(:each) do
+    temp_user = FactoryBot.build(:user)
+    # puts temp_user.username
   end
 
   describe "password encryption" do
@@ -42,8 +47,25 @@ RSpec.describe User, type: :model do
     end
   end
 
-  it { should validate_presence_of(:username) }
-  it { should validate_uniqueness_of(:username) }
+  context "When creating a user" do
+    describe "With incorrect input" do
+      it "should throw an error when username is missing" do
+        temp_user.username = ""
+        expect(temp_user.save!).should raise_error
+      end
+      it "should throw an error when email is missing"
+      it "should thrown an error when the password is missing"
+      it "should thrown an error when username is not unique"
+      it "should thrown an error when email is not unique"
+    end
+
+    describe "With correct input" do
+      it "should be discoverable in the database"
+    end
+  end
+
+  # it { should validate_presence_of(:username) }
+  # it { should validate_uniqueness_of(:username) }
 
   # context "When creating a new user with valid input" do
   #   it "Should save properly" do
