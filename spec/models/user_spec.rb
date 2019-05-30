@@ -13,27 +13,12 @@
 
 require 'rails_helper'
 
-# RSpec.describe User, type: :model do
-#   it "has a valid factory" do
-#     expect(user).to be_valid
-#   end
-# end
-
 RSpec.describe User, type: :model do
 
-  # subject(:user) do
-  #   FactoryBot.create(:user)
-    # User.create!(
-    #   username: "geralda",
-    #   email: "test@test.test",
-    #   password: "super_secret_password"
-    # )
-  # end
+  temp_user = 0;
   before(:each) do
     temp_user = FactoryBot.build(:user)
-    # puts temp_user.username
   end
-
   describe "password encryption" do
     it "does not save passwords to the database" do
       User.create!(username: "mary_mack", email: "mary@mack.com", password: "abcdef")
@@ -47,20 +32,38 @@ RSpec.describe User, type: :model do
     end
   end
 
-  context "When creating a user" do
+  describe "When creating a user" do
     describe "With incorrect input" do
+      # temp_user = FactoryBot.build(:user)
       it "should throw an error when username is missing" do
         temp_user.username = ""
-        expect(temp_user.save!).should raise_error
+        expect { temp_user.save! }.to raise_error("Validation failed: Username can't be blank") 
       end
-      it "should throw an error when email is missing"
-      it "should thrown an error when the password is missing"
+      it "should throw an error when email is missing" do
+        temp_user.email = ""
+        expect { temp_user.save! }.to raise_error("Validation failed: Email can't be blank, Email is invalid")
+      end
+      it "should throw an error when email is not formatted properly" do
+        temp_user.email = "emaiiiiiil"
+        expect { temp_user.save! }.to raise_error("Validation failed: Email is invalid")
+      end
+      it "should thrown an error when the password is missing" do
+        temp_user.password = ""
+        expect { temp_user.save! }.to raise_error("Validation failed: Password is too short (minimum is 6 characters)")
+      end
+      it "should thrown an error when the password is too short" do
+        temp_user.password = "12345"
+        expect { temp_user.save! }.to raise_error("Validation failed: Password is too short (minimum is 6 characters)")
+      end
       it "should thrown an error when username is not unique"
       it "should thrown an error when email is not unique"
     end
 
     describe "With correct input" do
-      it "should be discoverable in the database"
+      it "should be discoverable in the database" do
+        temp_user = FactoryBot.create(:user)
+        expect(User.last.username).to eq(temp_user.username)
+      end
     end
   end
 
