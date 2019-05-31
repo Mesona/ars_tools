@@ -22,8 +22,56 @@
 
 require 'rails_helper'
 
-# RSpec.describe Character, type: :model do
-#   it "has a valid factory" do
-#     expect(character).to be_valid
-#   end
-# end
+RSpec.describe Character, type: :model do
+
+  test_user = FactoryBot.create(:user)
+  test_character = ""; 
+  before(:each) do
+    test_character = FactoryBot.build(:character, user_id: test_user.id)
+  end
+
+  describe "Generic characters" do
+    it "should not have both 'Wealthy' and 'Poor'"
+    it "should not be 'Covenfolk' with 'Wealthy' or 'Poor'"
+    it "should not be 'Custos' with 'Wealthy' or 'Poor'"
+    it "should only have one from 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'"
+    it "should only have 'The Gift' if they are 'Mages'"
+    it "should only have 'Hermetic Magus' if they are 'Mages'"
+    it "should only take 'Inoffensive to Animals' if they are 'Mages' or have 'Magical Air'"
+    it "should not be a 'Redcap' with 'Wealthy' or 'Poor'"
+    it "should not have both 'Strong Faerie Blood' and 'Faerie Blood'"
+    it "should not be 'Students of (Realm)' for Realms that they have 'Puissant (Ability)' in"
+    it "should not take 'Blatant Gift' unless they are 'Mages'"
+    it "should not have both 'Branded Criminal' and 'Wealthy'"
+    it "should not have both 'No Sense of Direction' and 'Well-Traveled'"
+    it "should not have both 'Offensive to Animals' and 'Magical Air'"
+    it "should not have both 'Outcast' and 'Wealthy'"
+  end
+
+  describe "Mages" do
+    it "should not have 'Wealthy' or 'Poor'"
+    it "should have 'Dark Secret' if they have 'Diedne Magic'"
+    it "should not have both 'Major Magic Focus' and 'Minor Magical Focus'"
+    it "should not have both 'Minor Magical Focus' and'Mythic Blood'"
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in"
+    it "should not take 'Incompatible Arts' for the same technique they have a 'Deficient Technique' in"
+    it "should not have 'Magical Air'"
+    it "should have 'Gentle Gift' if they have 'Offensive to Animals'"
+  end
+
+  describe "Grogs" do
+    it "should not have any 'Major' Virtues or Flaws"
+    it "should not take 'Temporal Influence'"
+    it "should not take 'Outlaw Leader'"
+  end
+
+  describe "Gender rules" do
+    it "Only 'Male' characters may take 'Knight'"
+    it "Only 'Male' characters may take 'Magister in Artibus'"
+    it "Magisters cannot take 'Wealthy' or 'Poor'"
+    it "Only 'Male' characters may take 'Priest'"
+    it "Priests must also take 'Vow'"
+    
+  end
+
+end

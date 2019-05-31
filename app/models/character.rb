@@ -140,7 +140,6 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Characters may not have both the 'Strong Faerie Blood' and 'Faerie Blood' Virtues")
     end
 
-    # TODO: Finish filling this out
     if virtues.include?(allVirtues.find_by(name: "Student of (Realm)")) && virtues.include?(allVirtues.find_by(name: "Puissant (Ability)"))
       realm = self.virtue_associations.includes(:virtue).find_by(virtue_id: allVirtues.find_by(name: "Student of (Realm)").id).special_one
       puissant = self.virtue_associations.includes(:virtue).find_by(virtue_id: allVirtues.find_by(name: "Puissant (Ability)").id).special_one
@@ -167,8 +166,6 @@ class Character < ApplicationRecord
     end
 
     if flaws.include?(allFlaws.find_by(name: "Incompatible Arts"))
-      # ia_special_one = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).special_one
-      # ia_special_two = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).special_two
       if flaws.include?(allFlaws.find_by(name: "Deficient Form"))
         df_special = self.flaw_associations.includes(:flaw).find_by(flaw_id: allFlaws.find_by(name: "Deficient Form").id).special_one
         flawAssociations.where(flaw_id: allFlaws.find_by(name: "Incompatible Arts").id).each do |fa|

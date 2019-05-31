@@ -15,7 +15,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
 
-  temp_user = 0;
+  temp_user = ""
   before(:each) do
     temp_user = FactoryBot.build(:user)
   end
