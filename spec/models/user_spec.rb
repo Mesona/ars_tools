@@ -34,7 +34,6 @@ RSpec.describe User, type: :model do
 
   describe "When creating a user" do
     describe "With incorrect input" do
-      # temp_user = FactoryBot.build(:user)
       it "should throw an error when username is missing" do
         temp_user.username = ""
         expect { temp_user.save! }.to raise_error("Validation failed: Username can't be blank") 
@@ -55,8 +54,16 @@ RSpec.describe User, type: :model do
         temp_user.password = "12345"
         expect { temp_user.save! }.to raise_error("Validation failed: Password is too short (minimum is 6 characters)")
       end
-      it "should thrown an error when username is not unique"
-      it "should thrown an error when email is not unique"
+      it "should thrown an error when username is not unique" do
+        temp_user_two = FactoryBot.create(:user)
+        temp_user.username = temp_user_two.username
+        expect { temp_user.save! }.to raise_error("Validation failed: Username has already been taken")
+      end
+      it "should thrown an error when email is not unique" do
+        temp_user_two = FactoryBot.create(:user)
+        temp_user.email = temp_user_two.email
+        expect { temp_user.save! }.to raise_error("Validation failed: Email has already been taken")
+      end
     end
 
     describe "With correct input" do
@@ -66,43 +73,5 @@ RSpec.describe User, type: :model do
       end
     end
   end
-
-  # it { should validate_presence_of(:username) }
-  # it { should validate_uniqueness_of(:username) }
-
-  # context "When creating a new user with valid input" do
-  #   it "Should save properly" do
-  #     # u.save!
-  #     # expect ( User.last.username ).to be("test")
-  #     u = User.first.username
-  #     expect ( u ).to eq "Demo"
-  #   end
-  # end
-
-  # context "When creating a new user with invalid input" do
-  #   it "Should require a username" do
-  #     u.username = ""
-  #     output = u.save!
-  #     expect(output).to raise_exception
-  #   end
-
-  #   it "Should require the username to be unique" do
-  #     u.username = ""
-  #     output = u.save!
-  #     expect(output).to raise_exception
-  #   end
-
-  #   it "Should require a valid email" do
-  #     u.username = ""
-  #     output = u.save!
-  #     expect(output).to raise_exception
-  #   end
-
-  #   it "Should require a password_digest" do
-  #     u.username = ""
-  #     output = u.save!
-  #     expect(output).to raise_exception
-  #   end
-  # end
 
 end
