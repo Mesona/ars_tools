@@ -61,7 +61,7 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Cannot have both the 'Wealthy' Virtue and the 'Poor' Flaw")
     end
 
-    if (self.character_type = "Grog" || self.character_type = "NPC") && virtues.include?(allVirtues.find_by(name: "The Gift").id)
+    if (self.character_type == "Grog" || self.character_type == "NPC") && virtues.include?(allVirtues.find_by(name: "The Gift").id)
       errors.add(:virtues, "Grogs and NPCs cannot have 'The Gift.'")
     end
 
@@ -104,15 +104,15 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Only magi or individuals with the Flaw 'Magical Air' may take 'Inoffensive to Animals'")
     end
 
-    if virtues.include?(allVirtues.find_by(name: "Knight")) && self.gender = "Female"
+    if virtues.include?(allVirtues.find_by(name: "Knight")) && self.gender == "Female"
       errors.add(:virtues, "Only 'Male' characters may take the virtue 'Knight'")
     end
 
-    if virtues.include?(allVirtues.find_by(name: "Magister in Artibus")) && self.gender = "Female"
+    if virtues.include?(allVirtues.find_by(name: "Magister in Artibus")) && self.gender == "Female"
       errors.add(:virtues, "Only 'Male' characters may take the virtue 'Magister in Artibus'")
     end
 
-    if virtues.include?(allVirtues.find_by(name: "Magister in Artibus")) && (self.gender = "Female" || virtues.include?(allVirtues.find_by(name: "Wealthy")) || flaws.include?(allFlaws.find_by(name: "Poor")) )
+    if virtues.include?(allVirtues.find_by(name: "Magister in Artibus")) && (self.gender == "Female" || virtues.include?(allVirtues.find_by(name: "Wealthy")) || flaws.include?(allFlaws.find_by(name: "Poor")) )
       errors.add(:virtues, "The 'Magister in Artibus' Virtue is not available to 'Female' characters, and cannot be taken with the 'Wealthy' Virtue or 'Poor' Flaw")
     end
 
@@ -124,7 +124,7 @@ class Character < ApplicationRecord
       errors.add(:virtues, "'Mythic Blood' grants the 'Minor Magical Focus' Virtue for free and must be taken")
     end
 
-    if virtues.include?(allVirtues.find_by(name: "Priest")) && self.gender = "Female"
+    if virtues.include?(allVirtues.find_by(name: "Priest")) && self.gender == "Female"
       errors.add(:virtues, "Only 'Male' characters may take the Virtue 'Priest")
     end
 
@@ -149,11 +149,11 @@ class Character < ApplicationRecord
       end
     end
 
-    if virtues.include?(allVirtues.find_by(name: "Temporal Influence")) && self.character_type = "Grog"
+    if virtues.include?(allVirtues.find_by(name: "Temporal Influence")) && self.character_type == "Grog"
       errors.add(:virtues, "Grogs may not take the Virtue 'Temporal Influence'")
     end
 
-    if (virtues.include?(allVirtues.find_by(name: "Wealthy")) || flaws.include?(allFlaws.find_by(name: "Poor")) ) && self.character_type = "Mage"
+    if self.character_type == "Mage" && (virtues.include?(allVirtues.find_by(name: "Wealthy")) || flaws.include?(allFlaws.find_by(name: "Poor")) )
       errors.add(:virtues, "Magi may not take the 'Wealthy' Virtue or the 'Poor' Flaw")
     end
 
@@ -184,7 +184,7 @@ class Character < ApplicationRecord
       end
     end
 
-    if flaws.include?(allFlaws.find_by(name: "Magical Air")) && self.character_type = "Mage"
+    if flaws.include?(allFlaws.find_by(name: "Magical Air")) && self.character_type == "Mage"
       errors.add(:flaws, "Mages cannot take the Flaw 'Magical Air'")
     end
 
@@ -196,7 +196,7 @@ class Character < ApplicationRecord
       if flaws.include?(allFlaws.find_by(name: "Magical Air"))
         errors.add(:flaws, "Characters may not have both the 'Offensive to Animals' and 'Magical Air' Flaws")
       end
-      if self.character_type = "Mage" && ! virtues.include?(allVirtues.find_by(name: "Gentle Gift"))
+      if self.character_type == "Mage" && ! virtues.include?(allVirtues.find_by(name: "Gentle Gift"))
         errors.add(:flaws, "Mages may only take the 'Offensive to Animals' Flaw if they also have the 'Gentle Gift' Virtue")
       end
     end
@@ -205,7 +205,7 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Characters may not take the 'Outcast' Flaw and the 'Wealthy' Virtue")
     end
 
-    if flaws.include?(allFlaws.find_by(name: "Outlaw Leader")) && self.character_type = "Grog"
+    if flaws.include?(allFlaws.find_by(name: "Outlaw Leader")) && self.character_type == "Grog"
       errors.add(:flaws, "Grogs may not take the 'Outlaw Leader' Flaw")
     end
 

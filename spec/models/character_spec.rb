@@ -24,22 +24,17 @@ require 'rails_helper'
 
 RSpec.describe Character, type: :model do
 
-  test_user = FactoryBot.create(:user)
   test_character = ""
+  test_user = FactoryBot.create(:user)
   before(:each) do
-    test_character = FactoryBot.build(:character, user_id: test_user.id)
+    test_character = FactoryBot.build(:character, user_id: test_user.id, character_type: "Other")
   end
 
   describe "Generic characters" do
     it "should not have both 'Wealthy' and 'Poor'" do
-      puts "!!!!!!!!"
-      puts test_user
-      puts "!!!!!!!!"
-      puts test_character
-      puts "!!!!!!!!"
-      # VirtueAssociation.create(character_id: test_character.id, virtue_id: Virtue.find_by(name: "Wealthy").id)
-      # FlawAssociation.create(character_id: test_character.id, flaw_id: Flaw.find_by(name: "Poor").id)
-      # expect { test_character.save! }.to raise_error("Validation failed: Username can't be blank") 
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Wealthy"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Cannot have both the 'Wealthy' Virtue and the 'Poor' Flaw") 
     end
     it "should not be 'Covenfolk' with 'Wealthy' or 'Poor'"
     it "should not be 'Custos' with 'Wealthy' or 'Poor'"

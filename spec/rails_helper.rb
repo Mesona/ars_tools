@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'capybara/rspec'
 require 'shoulda/matchers'
 require 'factory_bot_rails'
+Rails.application.load_seed
 
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
