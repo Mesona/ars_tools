@@ -25,13 +25,22 @@ require 'rails_helper'
 RSpec.describe Character, type: :model do
 
   test_user = FactoryBot.create(:user)
-  test_character = ""; 
+  test_character = ""
   before(:each) do
     test_character = FactoryBot.build(:character, user_id: test_user.id)
   end
 
   describe "Generic characters" do
-    it "should not have both 'Wealthy' and 'Poor'"
+    it "should not have both 'Wealthy' and 'Poor'" do
+      puts "!!!!!!!!"
+      puts test_user
+      puts "!!!!!!!!"
+      puts test_character
+      puts "!!!!!!!!"
+      # VirtueAssociation.create(character_id: test_character.id, virtue_id: Virtue.find_by(name: "Wealthy").id)
+      # FlawAssociation.create(character_id: test_character.id, flaw_id: Flaw.find_by(name: "Poor").id)
+      # expect { test_character.save! }.to raise_error("Validation failed: Username can't be blank") 
+    end
     it "should not be 'Covenfolk' with 'Wealthy' or 'Poor'"
     it "should not be 'Custos' with 'Wealthy' or 'Poor'"
     it "should only have one from 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'"
@@ -46,6 +55,11 @@ RSpec.describe Character, type: :model do
     it "should not have both 'No Sense of Direction' and 'Well-Traveled'"
     it "should not have both 'Offensive to Animals' and 'Magical Air'"
     it "should not have both 'Outcast' and 'Wealthy'"
+    it "should have a number of excess stat points (above +3) equal to their number of 'Great (Characteristic)' virtues"
+    it "should not have any stat above +5"
+    it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws"
+    it "should not have any stats below -5"
+
   end
 
   describe "Mages" do
