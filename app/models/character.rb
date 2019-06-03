@@ -61,16 +61,24 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Cannot have both the 'Wealthy' Virtue and the 'Poor' Flaw")
     end
 
-    if (self.character_type == "Grog" || self.character_type == "NPC") && virtues.include?(allVirtues.find_by(name: "The Gift").id)
-      errors.add(:virtues, "Grogs and NPCs cannot have 'The Gift.'")
+    if (self.character_type == "Grog" || self.character_type == "NPC") && virtues.include?(allVirtues.find_by(name: "The Gift"))
+      errors.add(:virtues, "Only Magi can have 'The Gift.'")
     end
 
-    if virtues.include?(allVirtues.find_by(name: "Covenfolk").id) && (virtues.include?(allVirtues.find_by(name: "Wealthy").id) || flaws.include?(allFlaws.find_by(name: "Poor").id))
-      errors.add(:virtues, "'Covenfolk' may not take the 'Wealthy' Virtue or 'Poor' Flaw")
+    if virtues.include?(allVirtues.find_by(name: "Covenfolk")) && virtues.include?(allVirtues.find_by(name: "Wealthy"))
+      errors.add(:virtues, "'Covenfolk' may not take the 'Wealthy' Virtue")
     end
 
-    if virtues.include?(allVirtues.find_by(name: "Custos").id) && (virtues.include?(allVirtues.find_by(name: "Wealthy").id) || flaws.include?(allFlaws.find_by(name: "Poor").id))
-      errors.add(:virtues, "'Custos' may not take the 'Wealthy' Virtue or 'Poor' Flaw")
+    if virtues.include?(allVirtues.find_by(name: "Covenfolk")) && flaws.include?(allFlaws.find_by(name: "Poor"))
+      errors.add(:virtues, "'Covenfolk' may not take the 'Poor' Flaw")
+    end
+
+    if virtues.include?(allVirtues.find_by(name: "Custos")) && virtues.include?(allVirtues.find_by(name: "Wealthy"))
+      errors.add(:virtues, "'Custos' may not take the 'Wealthy' Virtue")
+    end
+
+    if virtues.include?(allVirtues.find_by(name: "Custos")) && flaws.include?(allFlaws.find_by(name: "Poor"))
+      errors.add(:virtues, "'Custos' may not take the 'Poor' Flaw")
     end
 
     if virtues.include?(allVirtues.find_by(name: "Diedne Magic")) && ! flaws.include?(allFlaws.find_by(name: "Dark Secret"))
