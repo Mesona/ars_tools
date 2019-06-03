@@ -108,8 +108,12 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Only magi may take the Virtue 'Hermetic Magus'")
     end
 
-    if virtues.include?(allVirtues.find_by(name: "Inoffensive to Animals")) && (self.character_type != "Mage" || ! flaws.include?(allFlaws.find_by(name: "Magical Air")))
-      errors.add(:virtues, "Only magi or individuals with the Flaw 'Magical Air' may take 'Inoffensive to Animals'")
+    # if virtues.include?(allVirtues.find_by(name: "Inoffensive to Animals")) && self.character_type != "Mage"
+    #   errors.add(:virtues, "Only magi or individuals with the Flaw 'Magical Air' may take 'Inoffensive to Animals'")
+    # end
+
+    if virtues.include?(allVirtues.find_by(name: "Inoffensive To Animals")) && self.character_type != "Mage" && !flaws.include?(allFlaws.find_by(name: "Magical Air"))
+      errors.add(:virtues, "Only magi or individuals with the Flaw 'Magical Air' may take 'Inoffensive To Animals'")
     end
 
     if virtues.include?(allVirtues.find_by(name: "Knight")) && self.gender == "Female"

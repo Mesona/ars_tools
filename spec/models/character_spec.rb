@@ -76,12 +76,12 @@ RSpec.describe Character, type: :model do
     it "should only have 'Hermetic Magus' if they are 'Mages'" do
       test_character.character_type = "Mage"
       VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Hermetic Magus"))
-      expect { test_character.save! }.to raise_error("Validation failed: Virtues Only magi may take the Virtue 'Hermetic Magus'")
+      expect(test_character.save!).to eq(true)
     end
 
     it "should only take 'Inoffensive to Animals' if they are 'Mages' or have 'Magical Air'" do
       VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Inoffensive To Animals", virtue_type: "General"))
-      expect { test_character.save! }.to raise_error("Validation failed: Virtues Only magi may take the Virtue 'Hermetic Magus'")
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Only magi or individuals with the Flaw 'Magical Air' may take 'Inoffensive To Animals'")
     end
 
     it "should only take 'Inoffensive to Animals' if they are 'Mages' or have 'Magical Air'" do
@@ -96,14 +96,54 @@ RSpec.describe Character, type: :model do
       expect(test_character.save!).to eq(true)
     end
 
-    it "should not be a 'Redcap' with 'Wealthy' or 'Poor'"
-    it "should not have both 'Strong Faerie Blood' and 'Faerie Blood'"
+    it "should not be a 'Redcap' with 'Wealthy'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Redcap"))
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Wealthy"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters with the Virtue 'Redcap' cannot take the Virtue 'Wealthy' or the Flaw 'Poor'")
+    end
+
+    it "should not be a 'Redcap' with 'Poor'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Redcap"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters with the Virtue 'Redcap' cannot take the Virtue 'Wealthy' or the Flaw 'Poor'")
+    end
+
+    it "should not have both 'Strong Faerie Blood' and 'Faerie Blood'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Strong Faerie Blood"))
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Faerie Blood"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not have both the 'Strong Faerie Blood' and 'Faerie Blood' Virtues")
+    end
+
     it "should not be 'Students of (Realm)' for Realms that they have 'Puissant (Ability)' in"
-    it "should not take 'Blatant Gift' unless they are 'Mages'"
-    it "should not have both 'Branded Criminal' and 'Wealthy'"
-    it "should not have both 'No Sense of Direction' and 'Well-Traveled'"
-    it "should not have both 'Offensive to Animals' and 'Magical Air'"
-    it "should not have both 'Outcast' and 'Wealthy'"
+
+    it "should not take 'Blatant Gift' unless they are 'Mages'" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Blatant Gift"))
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Only Magi may take the Flaw 'Blatant Gift'")
+    end
+
+    it "should not have both 'Branded Criminal' and 'Wealthy'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Wealthy"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Branded Criminal"))
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters with the 'Branded Criminal' Flaw may not take the 'Wealthy' Virtue")
+    end
+
+    it "should not have both 'No Sense of Direction' and 'Well-Traveled'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Well-Traveled"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "No Sense of Direction"))
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws The 'No Sense of Direction' Flaw cannot be combined with the 'Well-Traveled' Virtue")
+    end
+
+    it "should not have both 'Offensive to Animals' and 'Magical Air'" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Magical Air"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Offensive to Animals"))
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not have both the 'Offensive to Animals' and 'Magical Air' Flaws")
+    end
+
+    it "should not have both 'Outcast' and 'Wealthy'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Wealthy"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Outcast"))
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws The 'No Sense of Direction' Flaw cannot be combined with the 'Well-Traveled' Virtue")
+    end
     it "should have a number of excess stat points (above +3) equal to their number of 'Great (Characteristic)' virtues"
     it "should not have any stat above +5"
     it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws"
