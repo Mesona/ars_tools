@@ -33,6 +33,10 @@ class Character < ApplicationRecord
 
   has_many :ability_associations
   has_many :abilities, through: :ability_associations
+
+  # attr_reader :intelligence, :perception, :strength, :stamina, :presence
+  # attr_reader :communication, :dexterity, :quickness, :age, :appearant_age
+
   # has_one inventory
   # need to add decrepitude when I get to aging
   # need to add gender to character page
@@ -42,6 +46,24 @@ class Character < ApplicationRecord
   #   [68] pry(main)*   a.ability.name
   #   [68] pry(main)*   a.experience
   #   [68] pry(main)* end  
+
+  # def intelligence
+  #   return @intelligence
+  # end
+
+  def stats
+    # return "Intelligence: " + self.intelligence.to_s
+    #   "Perception: " + self.perception.to_s
+    # puts "Intelligence: " + self.intelligence.to_s
+    # puts "Perception: " + self.perception.to_s
+    # puts "Strength: " + self.strength.to_s
+    # puts "Stamina: " + self.stamina.to_s
+    # puts "Presence: " + self.presence.to_s
+    # puts "Communication: " + self.communication.to_s
+    # puts "Dexterity: " + self.dexterity.to_s
+    # puts "Quickness: " + self.quickness.to_s
+  end
+
 
   private
 
@@ -62,7 +84,7 @@ class Character < ApplicationRecord
     end
 
     if (self.character_type == "Grog" || self.character_type == "NPC") && virtues.include?(allVirtues.find_by(name: "The Gift"))
-      errors.add(:virtues, "Only Magi can have 'The Gift.'")
+      errors.add(:virtues, "Only Magi can have 'The Gift'")
     end
 
     if virtues.include?(allVirtues.find_by(name: "Covenfolk")) && virtues.include?(allVirtues.find_by(name: "Wealthy"))

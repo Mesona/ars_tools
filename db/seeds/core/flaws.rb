@@ -770,7 +770,7 @@ module Flaws
     book: "Core",
     major: false)
 
-  outcast = Flaw.create!(name: "Outcase",
+  outcast = Flaw.create!(name: "Outcast",
     description: "You have the rough task of making it on your own — normal society rejects you and you are not attached to a covenant. Perhaps you have a magical nature, a supernatural back- ground, some disfigurement, or a tremendous scandal in your past. You may not take the Wealthy Virtue.",
     flaw_type: "Social Status",
     book: "Core",

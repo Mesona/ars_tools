@@ -61,11 +61,45 @@ RSpec.describe Character, type: :model do
       expect { test_character.save! }.to raise_error("Validation failed: Virtues 'Custos' may not take the 'Poor' Flaw") 
     end
 
-    it "should only have one from 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'"
+    it "should only have one from 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Giant Blood"))
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Large"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may only have one Virtue or Flaw from: 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'") 
+    end
+
+    it "should only have one from 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Giant Blood"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Small Frame"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may only have one Virtue or Flaw from: 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'") 
+    end
+
+    it "should only have one from 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Giant Blood"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Dwarf"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may only have one Virtue or Flaw from: 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'") 
+    end
+
+    it "should only have one from 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Large"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Small Frame"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may only have one Virtue or Flaw from: 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'") 
+    end
+
+    it "should only have one from 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Large"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Dwarf"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may only have one Virtue or Flaw from: 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'") 
+    end
+
+    it "should only have one from 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Small Frame"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Dwarf"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may only have one Virtue or Flaw from: 'Giant Blood' / 'Large' / 'Small Frame' / 'Dwarf'") 
+    end
 
     it "should only have 'The Gift' if they are 'Mages'" do
       VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "The Gift"))
-      expect { test_character.save! }.to raise_error("Validation failed: Virtues Only Magi can have 'The Gift.'")
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Only Magi can have 'The Gift'")
     end
 
     it "should only have 'Hermetic Magus' if they are 'Mages'" do
@@ -142,8 +176,9 @@ RSpec.describe Character, type: :model do
     it "should not have both 'Outcast' and 'Wealthy'" do
       VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Wealthy"))
       FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Outcast"))
-      expect { test_character.save! }.to raise_error("Validation failed: Flaws The 'No Sense of Direction' Flaw cannot be combined with the 'Well-Traveled' Virtue")
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not take the 'Outcast' Flaw and the 'Wealthy' Virtue")
     end
+    
     it "should have a number of excess stat points (above +3) equal to their number of 'Great (Characteristic)' virtues"
     it "should not have any stat above +5"
     it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws"
@@ -154,26 +189,100 @@ RSpec.describe Character, type: :model do
   end
 
   describe "Mages" do
-    it "should not have 'Wealthy' or 'Poor'"
-    it "should have 'Dark Secret' if they have 'Diedne Magic'"
-    it "should not have both 'Major Magic Focus' and 'Minor Magical Focus'"
-    it "should not have both 'Minor Magical Focus' and'Mythic Blood'"
+
+    before(:each) do
+      test_character = FactoryBot.create(:character, user_id: test_user.id, character_type: "Mage")
+    end
+
+    it "should not have 'Wealthy'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Wealthy"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Magi may not take the 'Wealthy' Virtue or the 'Poor' Flaw")
+    end
+
+    it "should not have 'Poor'" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Magi may not take the 'Wealthy' Virtue or the 'Poor' Flaw")
+    end
+
+    it "should have 'Dark Secret' if they have 'Diedne Magic'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Diedne Magic"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues The 'Diedne Magic' Virtue must also be paired with the 'Dark Secret' Flaw")
+    end
+
+    it "should have 'Dark Secret' if they have 'Diedne Magic'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Diedne Magic"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Dark Secret"))
+      expect(test_character.save!).to eq(true)
+    end
+
+    it "should not have both 'Major Magic Focus' and 'Minor Magical Focus'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Major Magical Focus"))
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Minor Magical Focus"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters cannot have both 'Major Magical Focus' and 'Minor Magical Focus'")
+    end
+
+    it "should have 'Minor Magical Focus' if they have 'Mythic Blood'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Mythic Blood"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues 'Mythic Blood' grants the 'Minor Magical Focus' Virtue for free and must be taken")
+    end
+
+    it "should have 'Minor Magical Focus' if they have 'Mythic Blood'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Mythic Blood"))
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Minor Magical Focus"))
+      expect(test_character.save!).to eq(true)
+    end
+
     it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in"
+
     it "should not take 'Incompatible Arts' for the same technique they have a 'Deficient Technique' in"
-    it "should not have 'Magical Air'"
-    it "should have 'Gentle Gift' if they have 'Offensive to Animals'"
+
+    it "should not have 'Magical Air'" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Magical Air"))
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Mages cannot take the Flaw 'Magical Air'")
+    end
+
+    it "should have 'Gentle Gift' if they have 'Offensive to Animals'" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Offensive to Animals"))
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Mages may only take the 'Offensive to Animals' Flaw if they also have the 'Gentle Gift' Virtue")
+    end
+
+    it "should have 'Gentle Gift' if they have 'Offensive to Animals'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Gentle Gift"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Offensive to Animals"))
+      expect(test_character.save!).to eq(true)
+    end
+
   end
 
   describe "Grogs" do
-    it "should not have 'The Gift'"
+
+    before(:each) do
+      test_character = FactoryBot.create(:character, user_id: test_user.id, character_type: "Grog")
+    end
+
+    it "should not have 'The Gift'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "The Gift"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Only Magi can have 'The Gift'")
+    end
+
     it "should not have any 'Major' Virtues or Flaws"
-    it "should not take 'Temporal Influence'"
-    it "should not take 'Outlaw Leader'"
+
+    it "should not take 'Temporal Influence'" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Temporal Influence"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Grogs may not take the Virtue 'Temporal Influence'")
+    end
+
+    it "should not take 'Outlaw Leader'" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Outlaw Leader"))
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Grogs may not take the 'Outlaw Leader' Flaw")
+    end
+
   end
 
   describe "Others"
 
   describe "Gender rules" do
+
     it "Only 'Male' characters may take 'Knight'"
     it "Only 'Male' characters may take 'Magister in Artibus'"
     it "Magisters cannot take 'Wealthy' or 'Poor'"
