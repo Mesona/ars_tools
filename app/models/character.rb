@@ -47,22 +47,17 @@ class Character < ApplicationRecord
   #   [68] pry(main)*   a.experience
   #   [68] pry(main)* end  
 
-  # def intelligence
-  #   return @intelligence
+  # def stats
+  #   print "Intelligence: #{self.intelligence}
+  #     Perception:  #{self.perception}
+  #     Strength: #{self.strength}
+  #     Stamina: #{self.stamina}
+  #     Presence: #{self.presence}
+  #     Communication: #{self.communication}
+  #     Dexterity: #{self.dexterity}
+  #     Quickness: #{self.quickness}
+  #     ".lstrip
   # end
-
-  def stats
-    # return "Intelligence: " + self.intelligence.to_s
-    #   "Perception: " + self.perception.to_s
-    # puts "Intelligence: " + self.intelligence.to_s
-    # puts "Perception: " + self.perception.to_s
-    # puts "Strength: " + self.strength.to_s
-    # puts "Stamina: " + self.stamina.to_s
-    # puts "Presence: " + self.presence.to_s
-    # puts "Communication: " + self.communication.to_s
-    # puts "Dexterity: " + self.dexterity.to_s
-    # puts "Quickness: " + self.quickness.to_s
-  end
 
 
   private
@@ -174,11 +169,13 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Characters may not have both the 'Strong Faerie Blood' and 'Faerie Blood' Virtues")
     end
 
+    # still working on generalizing instead of hardcoding, but its late TODO
+    # p = c.virtue_associations.includes(:virtue).where(virtue_id: Virtue.find_by(name: "Puissant (Ability)"))
     if virtues.include?(allVirtues.find_by(name: "Student of (Realm)")) && virtues.include?(allVirtues.find_by(name: "Puissant (Ability)"))
       realm = self.virtue_associations.includes(:virtue).find_by(virtue_id: allVirtues.find_by(name: "Student of (Realm)").id).special_one
       puissant = self.virtue_associations.includes(:virtue).find_by(virtue_id: allVirtues.find_by(name: "Puissant (Ability)").id).special_one
-      if self.virtue_associations.find_by(special_one: "Divine Lore").nil? == false && 
-        self.virtue_associations.find_by(special_one: "Divine Lore").virtue_id == allVirtues.find_by(name: "Puissant (Ability)").id
+      if self.virtue_associations.find_by(special_one: "Dominion Lore").nil? == false && 
+        self.virtue_associations.find_by(special_one: "Dominion Lore").virtue_id == allVirtues.find_by(name: "Puissant (Ability)").id
         errors.add(:virtues, "Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm) Virtue'")
       end
     end

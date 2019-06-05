@@ -178,7 +178,7 @@ RSpec.describe Character, type: :model do
       FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Outcast"))
       expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not take the 'Outcast' Flaw and the 'Wealthy' Virtue")
     end
-    
+
     it "should have a number of excess stat points (above +3) equal to their number of 'Great (Characteristic)' virtues"
     it "should not have any stat above +5"
     it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws"
@@ -232,9 +232,95 @@ RSpec.describe Character, type: :model do
       expect(test_character.save!).to eq(true)
     end
 
-    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in"
+    it "should not take 'Incompatible Arts' for the same technique they have a 'Deficient Technique' in (Technique: Creo)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Cr")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Technique"), special_one: "Cr")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
 
-    it "should not take 'Incompatible Arts' for the same technique they have a 'Deficient Technique' in"
+    it "should not take 'Incompatible Arts' for the same technique they have a 'Deficient Technique' in (Technique: Intelligo)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "In")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Technique"), special_one: "In")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same technique they have a 'Deficient Technique' in (Technique: Muto)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Mu")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Technique"), special_one: "Mu")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same technique they have a 'Deficient Technique' in (Technique: Perdo)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Pe")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Technique"), special_one: "Pe")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same technique they have a 'Deficient Technique' in (Technique: Rego)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Re")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Technique"), special_one: "Re")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in (Form: Animal)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "An")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "An")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in (Form: Aquam)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Aq")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Aq")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in (Form: Auram)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Au")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Au")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in (Form: Corpus)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Co")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Co")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in (Form: Herbam)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "He")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "He")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in (Form: Ignem)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Ig")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Ig")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in (Form: Imaginem)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Im")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Im")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in (Form: Mentem)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Me")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Me")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in (Form: Terram)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Te")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Te")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
+
+    it "should not take 'Incompatible Arts' for the same form they have a 'Deficient Form' in (Form: Vim)" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "Vi")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Vi")
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not take the 'Incompatible Arts' Flaw for the same Form or Technique they have a 'Deficient' Flaw in")
+    end
 
     it "should not have 'Magical Air'" do
       FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Magical Air"))
