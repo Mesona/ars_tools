@@ -148,7 +148,29 @@ RSpec.describe Character, type: :model do
       expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not have both the 'Strong Faerie Blood' and 'Faerie Blood' Virtues")
     end
 
-    it "should not be 'Students of (Realm)' for Realms that they have 'Puissant (Ability)' in"
+    it "should not be 'Student of (Realm)' for Realms that they have 'Puissant (Ability)' in (Realm: Divine)" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Student of (Realm)"), special_one: "Divine")
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Dominion Lore")
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm)' Virtue")
+    end
+
+    it "should not be 'Student of (Realm)' for Realms that they have 'Puissant (Ability)' in (Realm: Infernal)" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Student of (Realm)"), special_one: "Infernal")
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Infernal Lore")
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm)' Virtue")
+    end
+
+    it "should not be 'Student of (Realm)' for Realms that they have 'Puissant (Ability)' in (Realm: Magic)" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Student of (Realm)"), special_one: "Magic")
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Magic Lore")
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm)' Virtue")
+    end
+
+    it "should not be 'Student of (Realm)' for Realms that they have 'Puissant (Ability)' in (Realm: Faerie)" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Student of (Realm)"), special_one: "Faerie")
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Faerie Lore")
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm)' Virtue")
+    end
 
     it "should not take 'Blatant Gift' unless they are 'Mages'" do
       FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Blatant Gift"))

@@ -35,5 +35,6 @@ FactoryBot.define do
     quickness { rand(6) - 3 }
     age { rand(25) + 5 }
     appearant_age { rand(25) + 5 }
+    gender { "Male" }
   end
 end

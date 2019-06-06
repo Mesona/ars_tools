@@ -169,14 +169,14 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Characters may not have both the 'Strong Faerie Blood' and 'Faerie Blood' Virtues")
     end
 
-    # still working on generalizing instead of hardcoding, but its late TODO
-    # p = c.virtue_associations.includes(:virtue).where(virtue_id: Virtue.find_by(name: "Puissant (Ability)"))
     if virtues.include?(allVirtues.find_by(name: "Student of (Realm)")) && virtues.include?(allVirtues.find_by(name: "Puissant (Ability)"))
-      realm = self.virtue_associations.includes(:virtue).find_by(virtue_id: allVirtues.find_by(name: "Student of (Realm)").id).special_one
-      puissant = self.virtue_associations.includes(:virtue).find_by(virtue_id: allVirtues.find_by(name: "Puissant (Ability)").id).special_one
-      if self.virtue_associations.find_by(special_one: "Dominion Lore").nil? == false && 
-        self.virtue_associations.find_by(special_one: "Dominion Lore").virtue_id == allVirtues.find_by(name: "Puissant (Ability)").id
-        errors.add(:virtues, "Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm) Virtue'")
+      realm = self.virtue_associations.includes(:virtue).where(virtue_id: allVirtues.find_by(name: "Student of (Realm)"))
+      puissant = self.virtue_associations.includes(:virtue).where(virtue_id: allVirtues.find_by(name: "Puissant (Ability)"))
+      if (puissant.where(special_one: "Dominion Lore") != [] && realm.where(special_one: "Divine") != []) ||
+         (puissant.where(special_one: "Infernal Lore") != [] && realm.where(special_one: "Infernal") != []) ||
+         (puissant.where(special_one: "Magic Lore") != [] && realm.where(special_one: "Magic") != []) ||
+         (puissant.where(special_one: "Faerie Lore") != [] && realm.where(special_one: "Faerie") != [])
+           errors.add(:virtues, "Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm)' Virtue")
       end
     end
 
