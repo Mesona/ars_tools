@@ -172,10 +172,14 @@ RSpec.describe Character, type: :model do
       expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not take 'Puissant (Ability)' for the same Lore Ability that aligns with their 'Student of (Realm)' Virtue")
     end
 
-    it "should not take 'Blatant Gift' unless they are 'Mages'" do
-      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Blatant Gift"))
-      expect { test_character.save! }.to raise_error("Validation failed: Flaws Only Magi may take the Flaw 'Blatant Gift'")
-    end
+    # This rule was specifically called out in the book, yet mundane characters are already
+    # blocked form taking Hermetic Virtues & Flaws. So the rule is left here commented out
+    # in case there's ever a reason to specifically check for it.
+
+    # it "should not take 'Blatant Gift' unless they are 'Mages'" do
+    #   FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Blatant Gift"))
+    #   expect { test_character.save! }.to raise_error("Validation failed: Flaws Only Magi may take the Flaw 'Blatant Gift'")
+    # end
 
     it "should not have both 'Branded Criminal' and 'Wealthy'" do
       VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Wealthy"))
@@ -201,12 +205,65 @@ RSpec.describe Character, type: :model do
       expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not take the 'Outcast' Flaw and the 'Wealthy' Virtue")
     end
 
-    it "should have a number of excess stat points (above +3) equal to their number of 'Great (Characteristic)' virtues"
-    it "should not have any stat above +5"
+    it "should have a number of excess stat points (above +3) equal to their number of 'Great (Characteristic)' virtues" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Strength")
+      test_character.strength = 4
+      expect(test_character.save!).to eq(true)
+    end
+    
+    it "should have a number of excess stat points (above +3) equal to their number of 'Great (Characteristic)' virtues" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Stamina")
+      test_character.stamina = 4
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Communication")
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Communication")
+      test_character.communication = 5
+      expect(test_character.save!).to eq(true)
+    end
+    
+    it "should have a number of excess stat points (above +3) equal to their number of 'Great (Characteristic)' virtues" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Intelligence")
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Intelligence")
+      test_character.intelligence= 4
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Mismatch 'Great (Characteristic)' and Intelligence")
+    end
+
+    it "should have a number of excess stat points (above +3) equal to their number of 'Great (Characteristic)' virtues" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Strength")
+      test_character.strength = 5
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Mismatch 'Great (Characteristic)' and Strength")
+    end
+    
+    it "should have a number of excess stat points (above +3) equal to their number of 'Great (Characteristic)' virtues" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Stamina")
+      test_character.stamina = 4
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Perception")
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Perception")
+      test_character.perception= 4
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Dexterity")
+      test_character.dexterity = 4
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Mismatch 'Great (Characteristic)' and Perception")
+    end
+    
+    it "should not have any stat above +5" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Quickness")
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Quickness")
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Great (Characteristic)"), special_one: "Quickness")
+      test_character.quickness = 6
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not have a stat above +5")
+    end
+
     it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws"
     it "should not have any stats below -5"
-    it "should not have any 'Hermetic' Virtues"
-    it "should not have any 'Hermetic' Flaws"
+
+    it "should not have any 'Hermetic' Virtues" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Magical Memory"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Only Mages may take Hermetic Virtues")
+    end
+
+    it "should not have any 'Hermetic' Flaws" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Hedge Wizard"))
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Only Mages may take Hermetic Flaws")
+    end
 
   end
 

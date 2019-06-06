@@ -59,6 +59,18 @@ class Character < ApplicationRecord
   #     ".lstrip
   # end
 
+  def stats
+    return {
+      "Intelligence": self.intelligence,
+      "Perception": self.perception,
+      "Strength": self.strength,
+      "Stamina": self.stamina,
+      "Presence": self.presence,
+      "Communication": self.communication,
+      "Dexterity": self.dexterity,
+      "Quickness": self.quickness 
+    }
+  end
 
   private
 
@@ -124,10 +136,6 @@ class Character < ApplicationRecord
     if virtues.include?(allVirtues.find_by(name: "Hermetic Magus")) && self.character_type != "Mage"
       errors.add(:virtues, "Only magi may take the Virtue 'Hermetic Magus'")
     end
-
-    # if virtues.include?(allVirtues.find_by(name: "Inoffensive to Animals")) && self.character_type != "Mage"
-    #   errors.add(:virtues, "Only magi or individuals with the Flaw 'Magical Air' may take 'Inoffensive to Animals'")
-    # end
 
     if virtues.include?(allVirtues.find_by(name: "Inoffensive To Animals")) && self.character_type != "Mage" && !flaws.include?(allFlaws.find_by(name: "Magical Air"))
       errors.add(:virtues, "Only magi or individuals with the Flaw 'Magical Air' may take 'Inoffensive To Animals'")
@@ -240,8 +248,35 @@ class Character < ApplicationRecord
       errors.add(:flaws, "Grogs may not take the 'Outlaw Leader' Flaw")
     end
 
+    if virtues.where(virtue_type: "Hermetic") != [] && self.character_type != "Mage"
+      errors.add(:virtues, "Only Mages may take Hermetic Virtues")
+    end
+
+    if flaws.where(flaw_type: "Hermetic") != [] && self.character_type != "Mage"
+      errors.add(:flaws, "Only Mages may take Hermetic Flaws")
+    end
+
+    stats.each do | stat |
+      if stat[1] > 5
+        errors.add(:virtues, "Characters may not have a stat above +5")
+      elsif stat[1] < -5
+        errors.add(:flaws, "Characters may not have a stat below -5")
+      elsif stat[1] > 3
+        excess_stats = stat[1] - 3
+        great_characteristics = virtueAssociations.where(virtue_id: (allVirtues.find_by(name: "Great (Characteristic)")), special_one: stat[0].to_s).count
+        if great_characteristics != excess_stats
+          errors.add(:virtues, "Mismatch 'Great (Characteristic)' and #{stat[0].to_s}")
+        end
+      elsif stat[1] < -3
+        excess_stats = (stat[1] * -1) - 3
+        poor_characteristics = flawAssociations.where(flaw_id: (allFlaws.find_by(name: "Poor (Characteristic)")), special_one: stat[0].to_s).count
+        if poor_characteristics != excess_stats
+          errors.add(:flaws, "Mismatch 'Poor (Characteristic)' and #{stat[0].to_s}")
+        end
+      end
+    end
+
 
   end
-
 
 end
