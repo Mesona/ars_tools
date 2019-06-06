@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_17_175326) do
+ActiveRecord::Schema.define(version: 2019_06_06_021231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2019_05_17_175326) do
     t.integer "quickness", default: 0
     t.integer "age", default: 0
     t.integer "appearant_age", default: 0
+    t.string "gender"
     t.index ["age"], name: "index_characters_on_age"
     t.index ["character_type"], name: "index_characters_on_character_type"
     t.index ["user_id"], name: "index_characters_on_user_id"
