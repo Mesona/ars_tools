@@ -34,30 +34,14 @@ class Character < ApplicationRecord
   has_many :ability_associations
   has_many :abilities, through: :ability_associations
 
-  # attr_reader :intelligence, :perception, :strength, :stamina, :presence
-  # attr_reader :communication, :dexterity, :quickness, :age, :appearant_age
-
+  # TODO
   # has_one inventory
   # need to add decrepitude when I get to aging
-  # need to add gender to character page
-
 
   # [68] pry(main)> c.ability_associations.includes(:ability).each do |a|
   #   [68] pry(main)*   a.ability.name
   #   [68] pry(main)*   a.experience
   #   [68] pry(main)* end  
-
-  # def stats
-  #   print "Intelligence: #{self.intelligence}
-  #     Perception:  #{self.perception}
-  #     Strength: #{self.strength}
-  #     Stamina: #{self.stamina}
-  #     Presence: #{self.presence}
-  #     Communication: #{self.communication}
-  #     Dexterity: #{self.dexterity}
-  #     Quickness: #{self.quickness}
-  #     ".lstrip
-  # end
 
   def stats
     return {
@@ -149,8 +133,8 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Only 'Male' characters may take the virtue 'Magister in Artibus'")
     end
 
-    if virtues.include?(allVirtues.find_by(name: "Magister in Artibus")) && (self.gender == "Female" || virtues.include?(allVirtues.find_by(name: "Wealthy")) || flaws.include?(allFlaws.find_by(name: "Poor")) )
-      errors.add(:virtues, "The 'Magister in Artibus' Virtue is not available to 'Female' characters, and cannot be taken with the 'Wealthy' Virtue or 'Poor' Flaw")
+    if virtues.include?(allVirtues.find_by(name: "Magister in Artibus")) && (virtues.include?(allVirtues.find_by(name: "Wealthy")) || flaws.include?(allFlaws.find_by(name: "Poor")) )
+      errors.add(:virtues, "The 'Magister in Artibus' Virtue cannot be taken with the 'Wealthy' Virtue or 'Poor' Flaw")
     end
 
     if virtues.include?(allVirtues.find_by(name: "Major Magical Focus")) && virtues.include?(allVirtues.find_by(name: "Minor Magical Focus"))
@@ -250,6 +234,14 @@ class Character < ApplicationRecord
 
     if virtues.where(virtue_type: "Hermetic") != [] && self.character_type != "Mage"
       errors.add(:virtues, "Only Mages may take Hermetic Virtues")
+    end
+
+    if virtues.where(major: true) != [] && self.character_type == "Grog"
+      errors.add(:virtues, "Grogs may not have 'Major' Virtues")
+    end
+
+    if flaws.where(major: true) != [] && self.character_type == "Grog"
+      errors.add(:flaws, "Grogs may not have 'Major' Flaws")
     end
 
     if flaws.where(flaw_type: "Hermetic") != [] && self.character_type != "Mage"

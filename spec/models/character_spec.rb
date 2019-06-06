@@ -252,8 +252,50 @@ RSpec.describe Character, type: :model do
       expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters may not have a stat above +5")
     end
 
-    it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws"
-    it "should not have any stats below -5"
+    it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Quickness")
+      test_character.quickness = -4
+      expect(test_character.save!).to eq(true)
+    end
+    
+    it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Strength")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Strength")
+      test_character.strength = -5
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Quickness")
+      test_character.quickness = -4
+      expect(test_character.save!).to eq(true)
+    end
+
+    it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Strength")
+      test_character.strength = -5
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Mismatch 'Poor (Characteristic)' and Strength")
+    end
+    
+    it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Stamina")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Stamina")
+      test_character.stamina = -4
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Mismatch 'Poor (Characteristic)' and Stamina")
+    end
+    
+    it "should have a number of excess negative stat points (below -3) equal to their number of 'Poor (Characteristic) flaws" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Stamina")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Stamina")
+      test_character.stamina = -5
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Presence")
+      test_character.presence = -5
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Mismatch 'Poor (Characteristic)' and Presence")
+    end
+    
+    it "should not have any stats below -5" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Communication")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Communication")
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor (Characteristic)"), special_one: "Communication")
+      test_character.stamina = -6
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Characters may not have a stat below -5")
+    end
 
     it "should not have any 'Hermetic' Virtues" do
       VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Magical Memory"))
@@ -430,7 +472,15 @@ RSpec.describe Character, type: :model do
       expect { test_character.save! }.to raise_error("Validation failed: Virtues Only Magi can have 'The Gift'")
     end
 
-    it "should not have any 'Major' Virtues or Flaws"
+    it "should not have any 'Major' Virtues" do
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Wealthy"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Grogs may not have 'Major' Virtues")
+    end
+
+    it "should not have any 'Major' Flaws" do
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor"))
+      expect { test_character.save! }.to raise_error("Validation failed: Flaws Grogs may not have 'Major' Flaws")
+    end
 
     it "should not take 'Temporal Influence'" do
       VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Temporal Influence"))
@@ -448,11 +498,63 @@ RSpec.describe Character, type: :model do
 
   describe "Gender rules" do
 
-    it "Only 'Male' characters may take 'Knight'"
-    it "Only 'Male' characters may take 'Magister in Artibus'"
-    it "Magisters cannot take 'Wealthy' or 'Poor'"
-    it "Only 'Male' characters may take 'Priest'"
-    it "Priests must also take 'Vow'"
+    it "Only 'Male' characters may take 'Knight'" do
+      test_character.gender = "Female"
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Knight"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Only 'Male' characters may take the virtue 'Knight'")
+    end
+
+    it "Only 'Male' characters may take 'Knight'" do
+      test_character.gender = "Male"
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Knight"))
+      expect(test_character.save!).to eq(true)
+    end
+
+    it "Only 'Male' characters may take 'Magister in Artibus'" do
+      test_character.gender = "Female"
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Magister in Artibus"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Only 'Male' characters may take the virtue 'Magister in Artibus'")
+    end
+
+    it "Only 'Male' characters may take 'Magister in Artibus'" do
+      test_character.gender = "Male"
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Magister in Artibus"))
+      expect(test_character.save!).to eq(true)
+    end
+
+    it "Magisters cannot take 'Wealthy'" do
+      test_character.gender = "Male"
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Magister in Artibus"))
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Wealthy"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues The 'Magister in Artibus' Virtue cannot be taken with the 'Wealthy' Virtue or 'Poor' Flaw")
+    end
+
+    it "Magisters cannot take 'Poor'" do
+      test_character.gender = "Male"
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Magister in Artibus"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Poor"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues The 'Magister in Artibus' Virtue cannot be taken with the 'Wealthy' Virtue or 'Poor' Flaw")
+    end
+
+    it "Only 'Male' characters may take 'Priest'" do
+      test_character.gender = "Female"
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Priest"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Vow"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Only 'Male' characters may take the Virtue 'Priest")
+    end
+
+    it "Only 'Male' characters may take 'Priest'" do
+      test_character.gender = "Male"
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Priest"))
+      FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Vow"))
+      expect(test_character.save!).to eq(true)
+    end
+
+    it "Priests must also take 'Vow'" do
+      test_character.gender = "Male"
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Priest"))
+      expect { test_character.save! }.to raise_error("Validation failed: Virtues Characters with the 'Priest' Virtue must also take the Flaw 'Vow'")
+    end
     
   end
 
