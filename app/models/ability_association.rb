@@ -18,8 +18,11 @@ class AbilityAssociation < ApplicationRecord
   belongs_to :character
   belongs_to :ability
 
-  def update_specialization(string)
-    self.specialization = string
-    self.save!
+  # TODO
+  # Impliment this in frontend when time comes
+  # Character.last.ability_associations.last[:experience] = 50
+  def exp
+    return self.experience
   end
+
 end

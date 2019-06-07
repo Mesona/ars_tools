@@ -42,10 +42,6 @@ class User < ApplicationRecord
     self.session_token
   end
 
-  # def id
-  #   return self.id
-  # end
-
   has_many :characters
 
   private

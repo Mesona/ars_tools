@@ -34,6 +34,7 @@ class Character < ApplicationRecord
 
   has_many :ability_associations
   has_many :abilities, through: :ability_associations
+  accepts_nested_attributes_for :ability_associations, update_only: true
 
   # TODO
   # has_one inventory
