@@ -21,6 +21,7 @@
 #
 
 class Character < ApplicationRecord
+  validates :character_type, :name, presence: true
   validate :virtues_and_flaws
 
   belongs_to :user

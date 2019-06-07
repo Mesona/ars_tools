@@ -375,7 +375,7 @@ module Abilities
   ability_type: "Martial",
   unlearned_usable: true)
 
-  wilderness_sense = Ability.create!(name: "Winderness Sense",
+  wilderness_sense = Ability.create!(name: "Wilderness Sense",
   description: "You are mystically attuned to the ways of the wilderness. A Perception + Wilderness Sense roll against an Ease Factor of 9 lets you determine the direction of north, the upcoming weather, or the presence of natural hazards or resources. One roll will only reveal one piece of information. Specialties: direction, weather, hazards, resources.",
   book: "Core",
   ability_type: "Supernatural",

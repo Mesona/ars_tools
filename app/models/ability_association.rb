@@ -12,8 +12,14 @@
 #
 
 class AbilityAssociation < ApplicationRecord
+
   attr_accessor :experience, :specialization
   
   belongs_to :character
   belongs_to :ability
+
+  def update_specialization(string)
+    self.specialization = string
+    self.save!
+  end
 end
