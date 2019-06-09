@@ -26,6 +26,7 @@
   },
   "scripts": {
     "start": "webpack --mode=development --watch",
+    "rails": "rails s",
     "postinstall": "webpack -p",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
