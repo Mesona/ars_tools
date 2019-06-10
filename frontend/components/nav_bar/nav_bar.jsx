@@ -28,8 +28,8 @@ class NavBar extends React.Component {
       <section className="nav-sticky">
         <header className="nav-bar">
 
-          <div className="logo">
-            <p onClick={() => console.log(this.props)}>Ars</p>
+          <div className="logo--container">
+            <p className="logo--text" onClick={() => console.log(this.props)}>ARS</p>
           </div>
 
           <div className="nav-display">

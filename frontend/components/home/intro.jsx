@@ -5,7 +5,7 @@ class Intro extends React.Component {
   render () {
     return (
       <section className="intro">
-        <p>Intro here!  You should not be logged in if you are seeing this</p>
+        <p>Welcome to ARS. Please log in or sign up.</p>
       </section>
     );
 
