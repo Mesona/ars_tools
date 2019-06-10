@@ -28,22 +28,3 @@ AbilityAssociation.destroy_all
 VirtueAssociation.create!(character: demo_character, virtue: v)
 FlawAssociation.create!(character: demo_character, flaw: f)
 AbilityAssociation.create!(character: demo_character, ability: a, experience: 200)
-
-# MANUAL TESTING UNTIL AUTOMATED TESTING SET UP
-
-# VirtueAssociation.create!(character: demo_character2, virtue: v)
-# FlawAssociation.create!(character: demo_character2, flaw: f)
-AbilityAssociation.create!(character: demo_character2, ability: a, experience: 50)
-
-# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Giant Blood"))
-# FlawAssociation.create!(character: demo_character2, flaw: Flaw.find_by(name: "Small Frame"))
-
-# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Student of (Realm)"), special_one: "Faerie")
-# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Student of (Realm)"), special_one: "Divine")
-# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Athletics")
-# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Magic Lore")
-# VirtueAssociation.create!(character: demo_character2, virtue: Virtue.find_by(name: "Puissant (Ability)"), special_one: "Divine Lore")
-
-# FlawAssociation.create!(character: demo_character2, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "CrAq", special_two: "CrHe")
-# FlawAssociation.create!(character: demo_character2, flaw: Flaw.find_by(name: "Incompatible Arts"), special_one: "CrTe", special_two: "CrAn")
-# FlawAssociation.create!(character: demo_character2, flaw: Flaw.find_by(name: "Deficient Form"), special_one: "Pe")
