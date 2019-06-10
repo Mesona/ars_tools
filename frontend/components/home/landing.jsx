@@ -6,7 +6,15 @@ class Landing extends React.Component {
     return (
       <section className="intro">
         <div onClick={() => console.log(this.props)}>
-          <p>Test</p>
+          <p>Campaigns</p>
+          <hr></hr>
+        </div>
+        <div onClick={() => console.log(this.props)}>
+          <p>Characters</p>
+          <hr></hr>
+        </div>
+        <div onClick={() => console.log(this.props)}>
+          <p>Covenants</p>
         </div>
       </section>
     );
