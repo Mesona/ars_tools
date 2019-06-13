@@ -22,6 +22,7 @@ class Api::CharactersController < ApplicationController
 
   def create
     @character = Character.new(character_params)
+    Character.generate_abilities(params[:id])
 
     if @character.save!
       render json: @character;

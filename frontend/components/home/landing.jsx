@@ -30,7 +30,7 @@ class Landing extends React.Component {
         </div>
         <div>
           <p>Characters</p>
-          <br></br>
+          {/* TODO -- Add dropdown to show/hide this section */}
           <div className="users-characters">
             <ul>
               <li>

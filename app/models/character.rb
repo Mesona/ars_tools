@@ -60,6 +60,13 @@ class Character < ApplicationRecord
 
   private
 
+  def self.generate_abilities(character_id)
+    abilities = Ability.all
+    abilities.each do |ability|
+      AbilityAssociation.create(ability_id: ability.id, character_id: character_id)
+    end
+  end
+
   def virtues_and_flaws
     core_book_virtues_and_flaws
   end
