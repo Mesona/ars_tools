@@ -6,7 +6,6 @@ class CharacterIndex extends React.Component {
     return (
     <ul>
       <li>
-        {/* <p> test </p> */}
         <img src={window.images.blankCharacter} className="blank-character-png"></img>
       </li>
       <li>
