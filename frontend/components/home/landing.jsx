@@ -1,5 +1,6 @@
 import React from 'react';
 // import { Link } from 'react-router-dom';
+import CharacterIndex from '../character/index';
 
 class Landing extends React.Component {
   constructor(props) {
@@ -17,12 +18,7 @@ class Landing extends React.Component {
     this.props.requestAllCharacters(this.props.currentUser.id)
       .then((response) => this.setState({
         characters: response.characters,
-      }))
-      .then(console.log("characters loaded"))
-      
-    console.log("!!!!!")
-    console.log(this.props)
-    console.log("!!!!!")
+      }));
   }
 
   render () {
@@ -44,16 +40,7 @@ class Landing extends React.Component {
                 New character
               </li>
             </ul>
-            {this.state.characters === null ? '' : this.state.characters.map((character) => (
-              <ul>
-                <li>
-                  <img src={window.images.blankCharacter} className="blank-character-png"></img>
-                </li>
-                <li>
-                  {character.name}
-                </li>
-              </ul>
-            ))}
+            {this.state.characters === null ? '' : this.state.characters.map((character) => <CharacterIndex key={character.id} currentCharacter={character}/>)}
           </div>
           <hr></hr>
         </div>
