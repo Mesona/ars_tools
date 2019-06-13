@@ -4,7 +4,7 @@ import CharacterShow from './show';
 
 const mapStateToProps = (state, ownProps) => ({
   currentUser: state.session.currentUser,
-  currentCharacter: ownProps.currentCharacter,
+  currentCharacter: state.entities.characters[ownProps.match.params.characterId]
 });
 
 const mapDispatchToProps = dispatch => ({

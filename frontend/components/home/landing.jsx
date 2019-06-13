@@ -38,6 +38,15 @@ class Landing extends React.Component {
       }));
   }
 
+  componentWillUnmount() {
+    this.setState({
+      characters: null,
+      campaigns: null,
+      covenants: null,
+      showCharacters: false,
+    });
+  }
+
   render () {
     return (
       <section className="intro">
