@@ -35,13 +35,26 @@ class Landing extends React.Component {
         <div>
           <p>Characters</p>
           <br></br>
-          {this.state.characters === null ? '' : this.state.characters.map((character) => (
+          <div className="users-characters">
             <ul>
               <li>
-                {character.name}
+                <img src={window.images.blankCharacter} className="blank-character-png"></img>
+              </li>
+              <li>
+                New character
               </li>
             </ul>
-          ))}
+            {this.state.characters === null ? '' : this.state.characters.map((character) => (
+              <ul>
+                <li>
+                  <img src={window.images.blankCharacter} className="blank-character-png"></img>
+                </li>
+                <li>
+                  {character.name}
+                </li>
+              </ul>
+            ))}
+          </div>
           <hr></hr>
         </div>
         <div>
