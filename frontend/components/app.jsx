@@ -16,10 +16,10 @@ const App = () => (
     <ProtectedRoute path="/" component={ SideBarContainer } />
     {/* <ProtectedRoute path="/" component={ SideBarContainer } /> */}
     <Switch>
-      {/* <Route path="/users/:userId" component={ Home } /> */}
-      {/* <AuthRoute exact path="/" component={ Home } /> */}
-      {/* <ProtectedRoute exact path="/" component={ Intro } /> */}
-      {/* <Route path="/places/:placeId/pages/:pageId" component={ PageIndexContainer } /> */}
+      {/* <Route path="/users/:userId" component={} /> */}
+      {/* <AuthRoute exact path="/" component={} /> */}
+      {/* <Route path="/users/:userId/characters" component={} /> */}
+      {/* <Route path="/characters/:characterId" component={} /> */}
 
       {/* <Redirect from="*" to="/" /> */}
     </Switch>

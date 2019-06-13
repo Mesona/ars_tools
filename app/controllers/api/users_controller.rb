@@ -1,15 +1,17 @@
 class Api::UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  # before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   def index
     @users = User.all
-    render :index
+    # render :index
+    render json: @users
   end
 
   def show
     @user = User.find(params[:id])
     if @user
-      render :show
+      # render :show
+      render json: @user
     else
       render json: @user.errors.full_messages, status: 404 
     end
