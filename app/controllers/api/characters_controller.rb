@@ -7,6 +7,7 @@ class Api::CharactersController < ApplicationController
   end
 
   def show
+    # @character = Character.find(params[:id]).includes(:ability).as_json(include: { ability: { only: [:name] } })
     @character = Character.find(params[:id])
     if @character
       render json: @character;
@@ -22,6 +23,7 @@ class Api::CharactersController < ApplicationController
 
   def create
     @character = Character.new(character_params)
+    Character.generate_abilities(params[:id])
 
     if @character.save!
       render json: @character;

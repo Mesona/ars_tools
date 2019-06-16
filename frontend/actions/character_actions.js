@@ -28,7 +28,7 @@ export const resetCharacters = () => ({
 
 export const receiveCharacterErrors = errors => ({
   type: RECEIVE_CHARACTER_ERRORS,
-  errros,
+  errors,
 });
 
 export const requestAllCharacters = userId => dispatch => (

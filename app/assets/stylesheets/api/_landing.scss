@@ -1,0 +1,31 @@
+.intro {
+  border: 1px solid orange;
+  width: 100%;
+}
+
+.blank-character-png {
+  width: 100px;
+  height: 100px;
+  border: 3px dashed green;
+}
+
+.show-characters-button {
+  width:178px;
+  height:18px;
+  border-radius:5px;
+  padding-left: 10px;
+  position: relative;
+}
+
+.show-characters-button:before {
+  content: "";
+  position:relative;
+  width:0px;
+  height:0px;
+  border: 6px solid;
+  border-color: #5F6368 transparent transparent transparent;
+}
+
+.show-users-characters {
+  display: flex;
+}
