@@ -32,6 +32,14 @@
 /config/master.key
 
 
+# Additional development files
+.DS_Store
+.cache/
+dist/
+coverage/
+.vscode/
+.env
+
 # Manually added ignores
 tmp/
 log/
