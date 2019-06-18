@@ -1,5 +1,7 @@
 import React from 'react';
 import CharacterShowStats from './show_stats';
+import CharacterShowAbilities from './show_abilities';
+import CharacterShowDetails from './show_details';
 
 class CharacterShow extends React.Component {
   constructor(props) {
@@ -44,7 +46,13 @@ class CharacterShow extends React.Component {
       // Tab for spells, if a mage character
       // Tab for inventory
       <div>
-        { currentCharacter === null ? '' : <CharacterShowStats currentCharacter={currentCharacter} />}
+        { currentCharacter === null ? '' : 
+          <section>
+            <CharacterShowDetails currentCharacter={currentCharacter} />
+            <CharacterShowAbilities currentCharacter={currentCharacter} />
+            <CharacterShowStats currentCharacter={currentCharacter} />
+          </section>
+        }
       </div>
     )
   }
