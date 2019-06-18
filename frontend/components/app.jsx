@@ -9,7 +9,7 @@ import SideBarContainer from "./side_bar/side_bar_container";
 import HomeContainer from "./home/home_container";
 import CharacterShowContainer from "./character/show_container";
 
-export default function App() {
+const App = () => {
   return (
     <div>
       <Modal />
@@ -31,4 +31,6 @@ export default function App() {
       {/* <Route exact path="/" component={ FooterContainer } /> */}
     </div>
   );
-}
+};
+
+export default App;
