@@ -25,4 +25,12 @@ class AbilityAssociation < ApplicationRecord
     return self.experience
   end
 
+  def ability_name
+    ability.name
+  end
+
+  def ability_description
+    ability.description
+  end
+
 end

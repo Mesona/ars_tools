@@ -25,6 +25,10 @@ class CharacterShow extends React.Component {
     console.log("!!!!!");
     console.log(this.state);
     console.log("!!!!!");
+    console.log(this.state.currentCharacter.abilities)
+    console.log("!!!!!");
+    console.log(this.state.currentCharacter.ability_associations);
+    console.log("!!!!!");
   }
 
 
@@ -39,10 +43,36 @@ class CharacterShow extends React.Component {
             </li>
             <li>
               { currentCharacter.name }
+              <br></br>
             </li>
             <li>
-              { currentCharacter.abilities === null ? '' : currentCharacter.abilities}
+              { currentCharacter.ability_associations === undefined ? 'no' : 
+                currentCharacter.ability_associations.map( ability_association => 
+                <ul>
+                  <li>
+                    ability: {ability_association.ability_name}
+                  </li>
+                  <li>
+                    Experience: {ability_association.experience}
+                  </li>
+                  <hr></hr>
+                </ul>
+                )}
             </li>
+            {/* <li>
+              { currentCharacter.abilities === undefined ? 'no' : 
+                currentCharacter.abilities.map( ability => 
+                <ul>
+                  <li>
+                    {ability.name}
+                  </li>
+                  <li>
+                    Experience: {ability.experience}
+                  </li>
+                  <hr></hr>
+                </ul>
+                )}
+            </li> */}
             <li>
               Strength: { currentCharacter.strength }
             </li>

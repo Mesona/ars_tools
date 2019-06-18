@@ -58,12 +58,19 @@ class Character < ApplicationRecord
     }
   end
 
+  def all_abilities
+    ability_associations.includes(:ability).each do |ability_association|
+      puts ability_association.ability.name
+      puts ability_association.experience
+    end
+  end
+
   private
 
   def self.generate_abilities(character_id)
     abilities = Ability.all
     abilities.each do |ability|
-      AbilityAssociation.create(ability_id: ability.id, character_id: character_id)
+      AbilityAssociation.create(ability_id: ability.id, character_id: character_id, experience: 0)
     end
   end
 

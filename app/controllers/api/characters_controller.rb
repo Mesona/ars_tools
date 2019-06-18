@@ -3,14 +3,18 @@ class Api::CharactersController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     @characters = @user.characters
-    render json: @characters
+    # render json: @characters
+    render :index
   end
 
   def show
-    # @character = Character.find(params[:id]).includes(:ability).as_json(include: { ability: { only: [:name] } })
-    @character = Character.find(params[:id])
+    @character = Character.includes(:abilities, :ability_associations).find(params[:id])
     if @character
-      render json: @character;
+      # @character.ability_associations.load
+      # @character.abilities.load
+      render :show
+      # render json: @character, include: :ability_associations
+      # render json: @character
     else
       render json: @character.errors.full_messages, status: 404 
     end
