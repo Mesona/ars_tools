@@ -48,7 +48,7 @@ class CharacterShow extends React.Component {
             <li>
               { currentCharacter.ability_associations === undefined ? 'no' : 
                 currentCharacter.ability_associations.map( ability_association => 
-                <ul>
+                <ul key={ability_association.id}>
                   <li>
                     ability: {ability_association.ability_name}
                   </li>

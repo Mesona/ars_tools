@@ -40,11 +40,6 @@ class Character < ApplicationRecord
   # has_one inventory
   # need to add decrepitude when I get to aging
 
-  # [68] pry(main)> c.ability_associations.includes(:ability).each do |a|
-  #   [68] pry(main)*   a.ability.name
-  #   [68] pry(main)*   a.experience
-  #   [68] pry(main)* end  
-
   def stats
     return {
       "Intelligence": self.intelligence,
