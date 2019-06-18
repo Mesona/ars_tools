@@ -1,4 +1,5 @@
 import React from 'react';
+import CharacterShowStats from './show_stats';
 
 class CharacterShow extends React.Component {
   constructor(props) {
@@ -6,6 +7,10 @@ class CharacterShow extends React.Component {
 
     this.state = {
       currentCharacter: null,
+      page: "character",
+      // "page" state will eventually be used to determine if
+      // it should render the character's stats, their spells, 
+      // or their inventory
     }
 
 
@@ -35,54 +40,11 @@ class CharacterShow extends React.Component {
   render () {
     const { currentCharacter } = this.state;
     return (
+      // TODO
+      // Tab for spells, if a mage character
+      // Tab for inventory
       <div>
-        { currentCharacter === null ? '' : (
-          <ul>
-            <li>
-              <img onClick={this.sendData} src={window.images.blankCharacter} className="blank-character-png"></img>
-            </li>
-            <li>
-              { currentCharacter.name }
-              <br></br>
-            </li>
-            <li>
-              { currentCharacter.ability_associations === undefined ? 'no' : 
-                currentCharacter.ability_associations.map( ability_association => 
-                <ul key={ability_association.id}>
-                  <li>
-                    ability: {ability_association.ability_name}
-                  </li>
-                  <li>
-                    Experience: {ability_association.experience}
-                  </li>
-                  <hr></hr>
-                </ul>
-                )}
-            </li>
-            {/* <li>
-              { currentCharacter.abilities === undefined ? 'no' : 
-                currentCharacter.abilities.map( ability => 
-                <ul>
-                  <li>
-                    {ability.name}
-                  </li>
-                  <li>
-                    Experience: {ability.experience}
-                  </li>
-                  <hr></hr>
-                </ul>
-                )}
-            </li> */}
-            <li>
-              Strength: { currentCharacter.strength }
-            </li>
-            {/* { currentCharacter.abilities.map ( ability => 
-            <li>
-              {ability.name}
-            </li>
-            )} */}
-          </ul>
-        )}
+        { currentCharacter === null ? '' : <CharacterShowStats currentCharacter={currentCharacter} />}
       </div>
     )
   }
