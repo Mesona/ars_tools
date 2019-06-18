@@ -3,7 +3,7 @@ class Api::CharactersController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     @characters = @user.characters
-    render :index
+    render json: @characters
   end
 
   def show

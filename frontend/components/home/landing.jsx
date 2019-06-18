@@ -14,21 +14,15 @@ class Landing extends React.Component {
     };
 
     this.showCharacters = this.showCharacters.bind(this);
-    this.hideCharacters = this.hideCharacters.bind(this);
   }
-
 
   showCharacters(e) {
     e.preventDefault();
-    this.setState({ showCharacters: true }, () => {
-      document.addEventListener('click', this.hideCharacters);
-    });
-  }
-
-  hideCharacters() {
-    this.setState({ showCharacters: false }, () => {
-      document.removeEventListener('click', this.hideCharacters);
-    });
+    if (this.state.showCharacters === true) {
+      this.setState({ showCharacters: false })
+    } else {
+      this.setState({ showCharacters: true })
+    }
   }
 
   componentDidMount() {
@@ -36,15 +30,6 @@ class Landing extends React.Component {
       .then((response) => this.setState({
         characters: response.characters,
       }));
-  }
-
-  componentWillUnmount() {
-    this.setState({
-      characters: null,
-      campaigns: null,
-      covenants: null,
-      showCharacters: false,
-    });
   }
 
   render () {
@@ -55,7 +40,6 @@ class Landing extends React.Component {
           <hr></hr>
         </div>
         <div onClick={this.showCharacters}>
-          {/* <span>Characters</span> */}
           <p>Characters</p>
           <div className="show-characters-button" />
           { this.state.showCharacters ? (

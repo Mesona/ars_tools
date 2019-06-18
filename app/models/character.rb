@@ -39,6 +39,9 @@ class Character < ApplicationRecord
   # TODO
   # has_one inventory
   # need to add decrepitude when I get to aging
+  # has_many arts for mages
+  # has_many spells for mages
+  # has_many lab_texts & books, or should this be a subsection of inventory?
 
   def stats
     return {
