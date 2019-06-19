@@ -1,5 +1,6 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import CharacterIndex from '../character/index';
 
 class Landing extends React.Component {
@@ -44,14 +45,16 @@ class Landing extends React.Component {
           <div className="show-characters-button" />
           { this.state.showCharacters ? (
             <div className="show-users-characters">
-              <ul>
-                <li>
-                  <img src={window.images.blankCharacter} className="blank-character-png"></img>
-                </li>
-                <li>
-                  New character
-                </li>
-              </ul>
+              <Link to={`/character/new`}>
+                <ul>
+                  <li>
+                    <img src={window.images.blankCharacter} className="blank-character-png"></img>
+                  </li>
+                  <li>
+                    New character
+                  </li>
+                </ul>
+              </Link>
               {this.state.characters === null ? '' : this.state.characters.map((character) => <CharacterIndex key={character.id} currentCharacter={character}/>)}
             </div>
           ) : (
@@ -68,4 +71,4 @@ class Landing extends React.Component {
   }
 };
 
-export default Landing;
+export default withRouter(Landing);

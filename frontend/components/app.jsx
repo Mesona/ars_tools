@@ -8,27 +8,34 @@ import NavBarContainer from "./nav_bar/nav_bar_container";
 import SideBarContainer from "./side_bar/side_bar_container";
 import HomeContainer from "./home/home_container";
 import CharacterShowContainer from "./character/show_container";
+import CharacterCreateContainer from "./character/create_container";
 
 const App = () => {
   return (
     <div>
       <Modal />
       <Route path="/" component={NavBarContainer} />
-      {/* <ProtectedRoute path="/" component={ SideBarContainer } /> */}
       <Switch>
         <Route exact path="/" component={HomeContainer} />
+        <Route path="/test" component={CharacterCreateContainer} />
         {/* <Route path="/users/:userId" component={} /> */}
         {/* <AuthRoute exact path="/" component={} /> */}
-        {/* <Route path="/users/:userId/characters" component={} /> */}
         <Route
           path="/characters/:characterId"
           component={CharacterShowContainer}
         />
 
+        <Route
+        // TODO
+        // FOR SOME REASON, PATH="/characters/new" DOES NOT WORK
+        // I'M TIRED OF TROUBLESHOOTING SO USING THIS TEMPORARY FIX
+          exact path="/character/new"
+          component={CharacterCreateContainer}
+        />
+
         <Redirect from="*" to="/" />
       </Switch>
       <ProtectedRoute path="/" component={SideBarContainer} />
-      {/* <Route exact path="/" component={ FooterContainer } /> */}
     </div>
   );
 };

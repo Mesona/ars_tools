@@ -31,6 +31,10 @@ export const receiveCharacterErrors = errors => ({
   errors,
 });
 
+export const clearErrors = () => ({
+  type: CLEAR_ERRORS,
+});
+
 export const requestAllCharacters = userId => dispatch => (
   CharactersAPIUtils.getCharacters(userId)
     .then(characters => dispatch(receiveAllCharacters(characters)),
