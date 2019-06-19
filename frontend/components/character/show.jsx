@@ -47,7 +47,7 @@ class CharacterShow extends React.Component {
       // Tab for inventory
       <div>
         { currentCharacter === null ? '' : 
-          <section>
+          <section onClick={this.sendData}>
             <CharacterShowDetails currentCharacter={currentCharacter} />
             <CharacterShowAbilities currentCharacter={currentCharacter} />
             <CharacterShowStats currentCharacter={currentCharacter} />

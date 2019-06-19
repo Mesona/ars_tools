@@ -22,7 +22,7 @@ class AbilityAssociation < ApplicationRecord
   # Impliment this in frontend when time comes
   # Character.last.ability_associations.last[:experience] = 50
   def exp
-    return self.experience
+    return self[:experience]
   end
 
   def ability_name
