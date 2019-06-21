@@ -1,10 +1,20 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import CharacterCreateStats from './create_stats';
+import CharacterCreateVirtues from './create_virtues';
 
 class CharacterCreate extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  componentDidMount() {
+    console.log("#####")
+    console.log(this.props)
+    console.log("#####")
+    console.log(this.state)
+    console.log("#####")
   }
 
   render () {
@@ -26,20 +36,37 @@ class CharacterCreate extends React.Component {
         </section>
       );
     } else if ( this.props.page === "virtues" ) {
-     <p>Virtues</p> 
+      return (
+        <CharacterCreateVirtues
+          characterId={characterId}
+          requestCharacter={this.props.requestCharacter}
+          updateCharacter={this.props.updateCharacter}
+        />
+      )
+
     } else if ( this.props.page === "early" ) {
-      <p>Early</p>
+      return (
+        <p>Early</p>
+      )
     } else if ( this.props.page === "pre-apprenticeship" ) {
-      <p>Pre Apprentice</p>
+      return (
+        <p>Pre Apprentice</p>
+      )
     } else if ( this.props.page === "apprenticeship" ) {
-      <p>Apprenticeship</p>
+      return (
+        <p>Apprenticeship</p>
+      )
     } else if ( this.props.page === "advanced" ) {
-      <p>Advanced</p>
+      return (
+        <p>Advanced</p>
+      )
     } else {
-      <p>Wrong Page</p>
+      return (
+        <p>Wrong Page</p>
+      )
     }
 
   }
 };
 
-export default CharacterCreate;
+export default withRouter(CharacterCreate);

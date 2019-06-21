@@ -11,18 +11,27 @@ import CharacterShowContainer from "./character/show_container";
 import CharacterCreateContainer from "./character/create_container";
 
 const App = () => {
+
   return (
     <div>
       <Modal />
       <Route path="/" component={NavBarContainer} />
       <Switch>
         <Route exact path="/" component={HomeContainer} />
-        <Route path="/test" component={CharacterCreateContainer} />
-        {/* <Route path="/users/:userId" component={} /> */}
-        {/* <AuthRoute exact path="/" component={} /> */}
+
         <Route
-          path="/characters/:characterId"
+          exact path="/characters/:characterId"
           component={CharacterShowContainer}
+        />
+
+        <Route
+          path="/character/new/virtues/:characterId"
+          render={(props) => <CharacterCreateContainer {...props} page="virtues" />}
+        />
+
+        <Route
+          exact path="/character/new/:characterId"
+          render={(props) => <CharacterCreateContainer {...props} page="stats" />}
         />
 
         <Route
@@ -34,20 +43,10 @@ const App = () => {
           page="stats"
         />
 
-        <Route
-          path="/character/new/:characterId"
-          component={CharacterCreateContainer}
-          page="stats"
-        />
-
-        <Route
-          path="character/new/virtues/:characterId"
-          component={CharacterCreateContainer}
-          page="virtues"
-        />
-
         <Redirect from="*" to="/" />
+
       </Switch>
+
       <ProtectedRoute path="/" component={SideBarContainer} />
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 
-class CharacterCreatStats extends React.Component {
+class CharacterCreateStats extends React.Component {
  constructor(props) {
    super(props);
 
@@ -29,12 +29,6 @@ class CharacterCreatStats extends React.Component {
  } 
 
  componentDidMount() {
-    console.log("!!!!!")
-    console.log(this.props)
-    console.log("!!!!!")
-    console.log(this.state)
-    console.log("!!!!!")
-    // this.props.match.params.characterId === null  ? '' :
     this.props.characterId === null  ? '' :
       this.props.requestCharacter(this.props.characterId)
         .then((response) => this.setState({
@@ -44,13 +38,9 @@ class CharacterCreatStats extends React.Component {
 
  handleSubmit(e) {
     e.preventDefault();
-    // const currentCharacter = Object.assign({}, this.state);
-    // console.log(currentCharacter)
-    console.log("!!!!!")
-    console.log(this.props)
-    console.log("!!!!!")
-    console.log(this.state)
-    console.log("!!!!!")
+    const currentCharacter = Object.assign({}, this.state);
+    this.props.createCharacter(currentCharacter)
+      .then((response) => this.props.history.push(`/character/new/virtues/${response.character.id}`));
   }
 
   update(field) {
@@ -179,4 +169,4 @@ class CharacterCreatStats extends React.Component {
   }
 };
 
-export default CharacterCreatStats;
+export default CharacterCreateStats;

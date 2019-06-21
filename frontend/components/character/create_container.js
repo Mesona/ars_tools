@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import { createCharacter, requestCharacter } from '../../actions/character_actions';
+import { withRouter } from 'react-router-dom';
 
+import { createCharacter, requestCharacter } from '../../actions/character_actions';
 import CharacterCreate from './create';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -11,6 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   createCharacter: (character) => dispatch(createCharacter(character)),
   requestCharacter: (id) => dispatch(requestCharacter(id)),
+  updateCharacter: (character) => dispatch(updateCharacter(character)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CharacterCreate);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CharacterCreate));
