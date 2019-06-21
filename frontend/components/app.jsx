@@ -31,6 +31,19 @@ const App = () => {
         // I'M TIRED OF TROUBLESHOOTING SO USING THIS TEMPORARY FIX
           exact path="/character/new"
           component={CharacterCreateContainer}
+          page="stats"
+        />
+
+        <Route
+          path="/character/new/:characterId"
+          component={CharacterCreateContainer}
+          page="stats"
+        />
+
+        <Route
+          path="character/new/virtues/:characterId"
+          component={CharacterCreateContainer}
+          page="virtues"
         />
 
         <Redirect from="*" to="/" />

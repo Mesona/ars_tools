@@ -6,6 +6,7 @@ export const CREATE_CHARACTER = 'CREATE_CHARACTER';
 export const REMOVE_CHARACTER = 'REMOVE_CHARACTER';
 export const RECEIVE_CHARACTER_ERRORS = 'RECEIVE_CHARACTER_ERRORS';
 export const RESET_CHARACTERS = 'RESET_CHARACTERS';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 
 const receiveAllCharacters = characters => ({
   type: RECEIVE_ALL_CHARACTERS,
