@@ -6,8 +6,8 @@ class CharacterCreateVirtues extends React.Component {
 
    this.state = {
     currentCharacter: null,
-     page_location: 0,
-     pages: ["stats"],
+    virtues: null,
+    flaws: null,
    };
 
    this.handleSubmit = this.handleSubmit.bind(this);
@@ -15,17 +15,27 @@ class CharacterCreateVirtues extends React.Component {
  } 
 
  componentDidMount() {
-    console.log("!!!!!")
-    console.log(this.props)
-    console.log("!!!!!")
-    console.log(this.state)
-    console.log("!!!!!")
-    // this.props.match.params.characterId === null  ? '' :
     this.props.characterId === null  ? '' :
       this.props.requestCharacter(this.props.characterId)
         .then((response) => this.setState({
           currentCharacter: response.character,
     }));
+
+    this.props.requestAllVirtues()
+      .then((response) => this.setState({
+        virtues: response.virtues,
+    }));
+
+    this.props.requestAllFlaws()
+      .then((response) => this.setState({
+        flaws: response.flaws,
+    }));
+
+    console.log("!!!!!")
+    console.log(this.props)
+    console.log("!!!!!")
+    console.log(this.state)
+    console.log("!!!!!")
   }
 
  handleSubmit(e) {
@@ -39,17 +49,6 @@ class CharacterCreateVirtues extends React.Component {
   update(field) {
     return (e) => {
       this.setState({[field]: e.currentTarget.value});
-      if (field === "character_type") {
-        if (e.currentTarget.value === "mage") {
-          this.setState({
-            pages: ["stats", "virtues", "early", "pre-apprenticeship", "apprenticeship", "advanced"],
-          });
-        } else {
-          this.setState({
-            pages: ["stats", "virtues", "early", "advanced"],
-          });
-        }
-      }
     };
   }
 

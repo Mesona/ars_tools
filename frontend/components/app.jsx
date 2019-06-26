@@ -1,8 +1,8 @@
 import React from "react";
 
 import { Route, Redirect, Switch } from "react-router-dom";
-// import { AuthRoute, ProtectedRoute } from '../util/route_util';
-import { ProtectedRoute } from "../util/route_util";
+// import { AuthRoute, ProtectedRoute } from '../util/route_utils';
+import { ProtectedRoute } from "../util/route_utils";
 import Modal from "./modal/modal";
 import NavBarContainer from "./nav_bar/nav_bar_container";
 import SideBarContainer from "./side_bar/side_bar_container";

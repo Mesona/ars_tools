@@ -41,6 +41,8 @@ class CharacterCreate extends React.Component {
           characterId={characterId}
           requestCharacter={this.props.requestCharacter}
           updateCharacter={this.props.updateCharacter}
+          requestAllVirtues={this.props.requestAllVirtues}
+          requestAllFlaws={this.props.requestAllFlaws}
         />
       )
 
