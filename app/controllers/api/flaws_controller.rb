@@ -2,6 +2,7 @@ class Api::FlawsController < ApplicationController
 
   def index
     @flaws = Flaw.all
+    render json: @flaws
   end
 
   def show

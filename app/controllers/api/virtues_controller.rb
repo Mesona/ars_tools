@@ -2,6 +2,7 @@ class Api::VirtuesController < ApplicationController
 
   def index
     @virtues = Virtue.all
+    render json: @virtues
   end
 
   def show

@@ -58,7 +58,27 @@ class CharacterCreateVirtues extends React.Component {
 
     return (
       <div>
-        <p>Virtues Test</p>
+        <p>Virtues</p>
+        <hr></hr>
+        { this.state.virtues === null ? '' : this.state.virtues.map( virtue => 
+          <ul key={virtue.id}>
+            <li>
+              {virtue.name}
+              <br></br>
+            </li>
+          </ul>
+        )}
+        <hr></hr>
+
+        <br></br>
+        <p>Flaws</p>
+        { this.state.flaws === null ? '' : this.state.flaws.map( flaw => 
+        <ul key={flaw.id}>
+          <li>
+            {flaw.name}
+          </li>
+        </ul>
+        )}
       </div>
     )
   }
