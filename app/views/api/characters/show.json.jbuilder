@@ -1,7 +1,10 @@
-# TODO
-# Break line into smaller lines when proven works
-# Possibly add abilities to extract as well, but that's later
+json.extract! @character, :id, :character_type, :name, :intelligence, :perception, :strength, :stamina, :presence, :communication, :dexterity, :quickness, :age, :appearant_age
+json.user_id @character.user_id
+json.key @character.id
 
-json.extract! @character, :id, :character_type, :name, :intelligence, :perception, :strength, :stamina, :presence, :communication, :dexterity, :quickness, :age, :appearant_age, :abilities, :ability_associations
-json.user_id = @character.user_id
-json.key = @character.id
+json.ability_associations @character.ability_associations.each do |ability_association|
+  json.extract! ability_association, :id, :specialization
+  json.ability_name ability_association.ability_name
+  json.ability_description ability_association.ability_description
+  json.experience ability_association.exp
+end

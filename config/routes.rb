@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     
     resource :session, only: [:new, :create, :destroy]
     resources :characters, except: [:index]
+    resources :virtues, only: [:index, :show]
+    resources :flaws, only: [:index, :show]
   end
   
   root to: 'root#root'

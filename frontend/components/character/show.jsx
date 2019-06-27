@@ -1,4 +1,7 @@
 import React from 'react';
+import CharacterShowStats from './show_stats';
+import CharacterShowAbilities from './show_abilities';
+import CharacterShowDetails from './show_details';
 
 class CharacterShow extends React.Component {
   constructor(props) {
@@ -6,6 +9,10 @@ class CharacterShow extends React.Component {
 
     this.state = {
       currentCharacter: null,
+      page: "character",
+      // "page" state will eventually be used to determine if
+      // it should render the character's stats, their spells, 
+      // or their inventory
     }
 
 
@@ -25,34 +32,27 @@ class CharacterShow extends React.Component {
     console.log("!!!!!");
     console.log(this.state);
     console.log("!!!!!");
+    console.log(this.state.currentCharacter.abilities)
+    console.log("!!!!!");
+    console.log(this.state.currentCharacter.ability_associations);
+    console.log("!!!!!");
   }
 
 
   render () {
     const { currentCharacter } = this.state;
     return (
+      // TODO
+      // Tab for spells, if a mage character
+      // Tab for inventory
       <div>
-        { currentCharacter === null ? '' : (
-          <ul>
-            <li>
-              <img onClick={this.sendData} src={window.images.blankCharacter} className="blank-character-png"></img>
-            </li>
-            <li>
-              { currentCharacter.name }
-            </li>
-            <li>
-              { currentCharacter.abilities === null ? '' : currentCharacter.abilities}
-            </li>
-            <li>
-              Strength: { currentCharacter.strength }
-            </li>
-            {/* { currentCharacter.abilities.map ( ability => 
-            <li>
-              {ability.name}
-            </li>
-            )} */}
-          </ul>
-        )}
+        { currentCharacter === null ? '' : 
+          <section onClick={this.sendData}>
+            <CharacterShowDetails currentCharacter={currentCharacter} />
+            <CharacterShowAbilities currentCharacter={currentCharacter} />
+            <CharacterShowStats currentCharacter={currentCharacter} />
+          </section>
+        }
       </div>
     )
   }

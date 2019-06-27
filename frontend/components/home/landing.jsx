@@ -1,5 +1,6 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import CharacterIndex from '../character/index';
 
 class Landing extends React.Component {
@@ -14,21 +15,15 @@ class Landing extends React.Component {
     };
 
     this.showCharacters = this.showCharacters.bind(this);
-    this.hideCharacters = this.hideCharacters.bind(this);
   }
-
 
   showCharacters(e) {
     e.preventDefault();
-    this.setState({ showCharacters: true }, () => {
-      document.addEventListener('click', this.hideCharacters);
-    });
-  }
-
-  hideCharacters() {
-    this.setState({ showCharacters: false }, () => {
-      document.removeEventListener('click', this.hideCharacters);
-    });
+    if (this.state.showCharacters === true) {
+      this.setState({ showCharacters: false })
+    } else {
+      this.setState({ showCharacters: true })
+    }
   }
 
   componentDidMount() {
@@ -36,15 +31,6 @@ class Landing extends React.Component {
       .then((response) => this.setState({
         characters: response.characters,
       }));
-  }
-
-  componentWillUnmount() {
-    this.setState({
-      characters: null,
-      campaigns: null,
-      covenants: null,
-      showCharacters: false,
-    });
   }
 
   render () {
@@ -55,19 +41,20 @@ class Landing extends React.Component {
           <hr></hr>
         </div>
         <div onClick={this.showCharacters}>
-          {/* <span>Characters</span> */}
           <p>Characters</p>
           <div className="show-characters-button" />
           { this.state.showCharacters ? (
             <div className="show-users-characters">
-              <ul>
-                <li>
-                  <img src={window.images.blankCharacter} className="blank-character-png"></img>
-                </li>
-                <li>
-                  New character
-                </li>
-              </ul>
+              <Link to={`/character/new`}>
+                <ul>
+                  <li>
+                    <img src={window.images.blankCharacter} className="blank-character-png"></img>
+                  </li>
+                  <li>
+                    New character
+                  </li>
+                </ul>
+              </Link>
               {this.state.characters === null ? '' : this.state.characters.map((character) => <CharacterIndex key={character.id} currentCharacter={character}/>)}
             </div>
           ) : (
@@ -84,4 +71,4 @@ class Landing extends React.Component {
   }
 };
 
-export default Landing;
+export default withRouter(Landing);

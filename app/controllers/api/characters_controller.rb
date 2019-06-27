@@ -7,10 +7,9 @@ class Api::CharactersController < ApplicationController
   end
 
   def show
-    # @character = Character.find(params[:id]).includes(:ability).as_json(include: { ability: { only: [:name] } })
-    @character = Character.find(params[:id])
+    @character = Character.includes(:abilities, :ability_associations).find(params[:id])
     if @character
-      render json: @character;
+      render :show
     else
       render json: @character.errors.full_messages, status: 404 
     end
