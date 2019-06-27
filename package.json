@@ -18,6 +18,12 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0"
   },
+  "devDependencies": {
+    "eslint": "^5.12.1",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "prettier": "^1.16.1"
+  },
   "description": "This README would normally document whatever steps are necessary to get the application up and running.",
   "version": "1.0.0",
   "directories": {

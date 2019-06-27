@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
-    resources :users
-    
+    resources :users do
+      resources :characters, only: [:index]
+    end
     
     resource :session, only: [:new, :create, :destroy]
+    resources :characters, except: [:index]
+    resources :virtues, only: [:index, :show]
+    resources :flaws, only: [:index, :show]
   end
   
   root to: 'root#root'

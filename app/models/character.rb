@@ -39,11 +39,9 @@ class Character < ApplicationRecord
   # TODO
   # has_one inventory
   # need to add decrepitude when I get to aging
-
-  # [68] pry(main)> c.ability_associations.includes(:ability).each do |a|
-  #   [68] pry(main)*   a.ability.name
-  #   [68] pry(main)*   a.experience
-  #   [68] pry(main)* end  
+  # has_many arts for mages
+  # has_many spells for mages
+  # has_many lab_texts & books, or should this be a subsection of inventory?
 
   def stats
     return {
@@ -58,7 +56,21 @@ class Character < ApplicationRecord
     }
   end
 
+  def all_abilities
+    ability_associations.includes(:ability).each do |ability_association|
+      puts ability_association.ability.name
+      puts ability_association.experience
+    end
+  end
+
   private
+
+  def self.generate_abilities(character_id)
+    abilities = Ability.all
+    abilities.each do |ability|
+      AbilityAssociation.create(ability_id: ability.id, character_id: character_id, experience: 0)
+    end
+  end
 
   def virtues_and_flaws
     core_book_virtues_and_flaws
