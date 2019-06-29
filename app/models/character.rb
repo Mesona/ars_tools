@@ -88,7 +88,7 @@ class Character < ApplicationRecord
       errors.add(:virtues, "Cannot have both the 'Wealthy' Virtue and the 'Poor' Flaw")
     end
 
-    if (self.character_type == "Grog" || self.character_type == "NPC") && virtues.include?(allVirtues.find_by(name: "The Gift"))
+    if (self.character_type == "Grog" || self.character_type == "NPC" || self.character_type === "Companion") && virtues.include?(allVirtues.find_by(name: "The Gift"))
       errors.add(:virtues, "Only Magi can have 'The Gift'")
     end
 

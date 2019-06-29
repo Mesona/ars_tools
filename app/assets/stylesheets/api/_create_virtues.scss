@@ -3,6 +3,24 @@
   justify-content: space-evenly;
 }
 
-// .major {
-//   float: left,
+.create-virtue-input {
+  display: flex;
+  border: 1px solid green;
+}
+
+// .create-virtue-hover:focus {
+//   background-color: blue;
 // }
+
+// .create-virtue-checkbox {
+//   display: none;
+// }
+
+// .create-virtue-checkbox {
+//   border: 5px solid orange;
+//   background-color: cyan;
+// }
+
+.disabled {
+  background-color: magenta;
+}

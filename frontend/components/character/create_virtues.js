@@ -14,10 +14,15 @@ class CharacterCreateVirtues extends React.Component {
     currentVirtuePoints: 0,
     flawPoints: 0,
     minorVirtues: 0,
+    currentVirtues: {},
+    currentFlaws: {},
    };
 
    this.handleSubmit = this.handleSubmit.bind(this);
-   this.update = this.update.bind(this)
+   this.update = this.update.bind(this);
+   this.handleVirtue = this.handleVirtue.bind(this);
+  //  this.handleFlaw = this.handleFlaw.bind(this);
+   this.validation = this.validation.bind(this);
  } 
 
  componentDidMount() {
@@ -55,6 +60,132 @@ class CharacterCreateVirtues extends React.Component {
     };
   }
 
+  handleVirtue(e, virtue) {
+    // e.stopPropagation();
+    e.preventDefault();
+    let name = virtue.name;
+    let id = virtue.id;
+    let { currentVirtues } = this.state;
+    if (currentVirtues[name] === id) {
+      delete currentVirtues[name];
+      this.setState({
+        currentVirtues,
+      });
+      document.getElementById(virtue.id).style.background = "";
+    } else {
+      currentVirtues[name] = id;
+      this.setState({
+        currentVirtues,
+      });
+      document.getElementById(virtue.id).style.background = "purple";
+    }
+
+    console.log(this.state.currentVirtues)
+  }
+
+  validation(virtue) {
+    const { currentCharacter } = this.state;
+    if (currentCharacter !== null) {
+
+      // Character validations
+      if (currentCharacter.character_type === "Grog") {
+        if (virtue.major === true ||
+          virtue.name === "The Gift"
+        ) {
+          return "disabled";
+        }
+
+      } else if (currentCharacter.character_type === "NPC") {
+        if (virtue.name === "The Gift" 
+        ) {
+          return "disabled";
+        }
+
+      } else if (currentCharacter.character_type === "Companion") {
+        if (virtue.name === "The Gift"
+        ) {
+          return "disabled";
+        }
+
+      } else if (currentCharacter.character_type === "Mage") {
+
+        if (virtue.name === "Wealthy" ||
+          virtue.name === "Poor"
+        ) {
+          return "disabled";
+        }
+      }
+    }
+
+    // Conditional validations
+    if (this.state.currentVirtues.wealthy === true) {
+      if (virtue.name === "Poor" ||
+        virtue.name === "Custos" ||
+        virtue.name === "Covenfolk"
+      ) {
+        return "disabled";
+      }
+
+    } else if (this.state.currentFlaws.poor === true) {
+      if (virtue.name === "Wealthy" ||
+        virtue.name === "Custos" ||
+        virtue.name === "Covenfolk"
+      ) {
+        return "disabled";
+      }
+
+    } else if (this.state.currentVirtues.custos === true) {
+      if (virtue.name === "Wealthy" ||
+        virtue.name === "Poor"
+      ) {
+        return "disabled";
+      }
+
+    } else if (this.state.currentVirtues.covenfolk === true) {
+      if (virtue.name === "Wealthy" ||
+        virtue.name === "Poor"
+      ) {
+        return false;
+      }
+
+    } else if (this.state.currentVirtues["Giant Blood"]=== true) {
+      if (virtue.name === "Large" ||
+        virtue.name === "Small Frame" ||
+        virtue.name === "Dwarf"
+      ) {
+        return false;
+      }
+
+    } else if (this.state.currentVirtues["Large"] === true) {
+      if (virtue.name === "Giant Blood" ||
+        virtue.name === "Small Frame" ||
+        virtue.name === "Dwarf"
+      ) {
+        return false;
+      }
+
+    } else if (this.state.currentFlaws.small_frame === true) {
+      if (virtue.name === "Large" ||
+        virtue.name === "Giant Blood" ||
+        virtue.name === "Dwarf"
+      ) {
+        return false;
+      }
+
+    } else if (this.state.currentFlaws.dwarf === true) {
+      if (virtue.name === "Large" ||
+        virtue.name === "Small Frame" ||
+        virtue.name === "Giant Blood"
+      ) {
+        return false;
+      }
+    }
+
+
+    // Necessary validations
+    // If have "Diedne Magic" need to have "Dark Secret"
+  }
+
   render () {
 
     const { currentCharacter } = this.state;
@@ -69,6 +200,9 @@ class CharacterCreateVirtues extends React.Component {
     let storyFlaws;
     let hermeticFlaws;
     let socialStatusFlaws;
+
+    let grogCheck; 
+    let validationCheck;
 
     if (this.state.virtues !== null) {
       specialVirtues = this.state.virtues.filter( e => e.virtue_type === "Special");
@@ -101,13 +235,17 @@ class CharacterCreateVirtues extends React.Component {
         <hr></hr>
         <div className="create-virtues-parent">
 
-        <div className="major">
-          {specialVirtues === undefined ? '' : specialVirtues.map( virtue => 
-            <div className="create-virtue-hover" key={virtue.id}>
-              <CharacterCreateVirtue virtue={virtue} />
-            </div>
-          )}
-        </div>
+          <div className="major">
+            {specialVirtues === undefined ? '' : specialVirtues.map( virtue => 
+              // <div className="create-virtue-hover" key={virtue.id} onClick={ () => this.handleVirtue(virtue)}>
+              <div className="create-virtue-hover" key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                {/* <label>
+                  <input type="checkbox" disabled={grogCheck} ></input> */}
+                  <CharacterCreateVirtue virtue={virtue} />
+                {/* </label> */}
+              </div>
+            )}
+          </div>
 
         </div>
 
@@ -117,8 +255,8 @@ class CharacterCreateVirtues extends React.Component {
           <div className="major"><p>Major Virtues:</p>
             {generalVirtues === undefined ? '' : 
               generalVirtues.filter( e => e.major === true).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
-                  <CharacterCreateVirtue virtue={virtue} />
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                  <CharacterCreateVirtue virtue={virtue} currentCharacter={currentCharacter} />
                 </div>
             )}
           </div>
@@ -126,18 +264,24 @@ class CharacterCreateVirtues extends React.Component {
           <div className="minor"><p>Minor Virtues:</p>
             {generalVirtues === undefined ? '' :
               generalVirtues.filter( e => e.major === false).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+              <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
 
           <div className="free"><p>Free Virtues:</p>
             {generalVirtues === undefined ? '' :
               generalVirtues.filter( e => e.free === true).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+                <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
         </div>
@@ -148,27 +292,36 @@ class CharacterCreateVirtues extends React.Component {
           <div className="major"><p>Major Virtues:</p>
             {hermeticVirtues === undefined ? '' : 
               hermeticVirtues.filter( e => e.major === true).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+                <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
 
           <div className="minor"><p>Minor Virtues:</p>
             {hermeticVirtues === undefined ? '' :
               hermeticVirtues.filter( e => e.major === false).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+                <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
 
           <div className="free"><p>Free Virtues:</p>
             {hermeticVirtues === undefined ? '' :
               hermeticVirtues.filter( e => e.free === true).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+                <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
         </div>
@@ -179,27 +332,36 @@ class CharacterCreateVirtues extends React.Component {
           <div className="major"><p>Major Virtues:</p>
             {supernaturalVirtues === undefined ? '' : 
               supernaturalVirtues.filter( e => e.major === true).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
 
           <div className="minor"><p>Minor Virtues:</p>
             {supernaturalVirtues === undefined ? '' :
               supernaturalVirtues.filter( e => e.major === false).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
 
           <div className="free"><p>Free Virtues:</p>
             {supernaturalVirtues === undefined ? '' :
               supernaturalVirtues.filter( e => e.free === true).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
         </div>
@@ -210,27 +372,36 @@ class CharacterCreateVirtues extends React.Component {
           <div className="major"><p>Major Virtues:</p>
             {socialStatusVirtues === undefined ? '' : 
               socialStatusVirtues.filter( e => e.major === true).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
 
           <div className="minor"><p>Minor Virtues:</p>
             {socialStatusVirtues === undefined ? '' :
               socialStatusVirtues.filter( e => e.major === false).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
 
           <div className="free"><p>Free Virtues:</p>
             {socialStatusVirtues === undefined ? '' :
               socialStatusVirtues.filter( e => e.free === true).map( virtue => 
-                <div className="create-virtue-hover" key={virtue.id}>
+                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <label>
+                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
                   <CharacterCreateVirtue virtue={virtue} />
-                </div>
+                </label>
+              </div>
             )}
           </div>
         </div>
