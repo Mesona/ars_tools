@@ -1,14 +1,30 @@
 import React from 'react';
+import UniversalVirtue from './create_virtue_universal';
+import UniqueVirtue from './create_virtue_unique';
 
-const CharacterCreateVirtue = (props) => (
-  <ul className="create-virtue">
-    <li>
-      Virtue Name: { props.virtue.name }
-      <br></br>
-      Virtue Type: { props.virtue.virtue_type }
-    </li>
-    <hr></hr>
-  </ul>
-)
+class CharacterCreateVirtue extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render () {
+    const { virtue } = this.props;
+
+    if (virtue.special === true) {
+      return (
+        <div>
+          <UniqueVirtue virtue={virtue} />
+        </div>
+      )
+    } else {
+      return (
+        <div>
+          <UniversalVirtue virtue={virtue} />
+        </div>
+      )
+    }
+  }
+
+}
 
 export default CharacterCreateVirtue;
