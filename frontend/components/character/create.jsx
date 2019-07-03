@@ -10,11 +10,11 @@ class CharacterCreate extends React.Component {
   }
 
   componentDidMount() {
-    console.log("#####")
-    console.log(this.props)
-    console.log("#####")
-    console.log(this.state)
-    console.log("#####")
+    // console.log("#####")
+    // console.log(this.props)
+    // console.log("#####")
+    // console.log(this.state)
+    // console.log("#####")
   }
 
   render () {

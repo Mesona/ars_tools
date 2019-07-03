@@ -18,6 +18,7 @@
 #  quickness      :integer          default(0)
 #  age            :integer          default(0)
 #  appearant_age  :integer          default(0)
+#  gender         :string
 #
 
 FactoryBot.define do

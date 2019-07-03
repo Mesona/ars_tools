@@ -6,12 +6,34 @@ class UniqueVirtue extends React.Component {
   }
 
   render () {
-    const { virtue } = this.props;
-
+    const { currentCharacter, virtue } = this.props;
     
+    // let stats = [];
+    // currentCharacter.stats.forEach( )
+    // currentCharacter.stats.each do |stat, value|
+    // end
+    console.log("!!!!!")
+    console.log(this.props)
+    console.log("!!!!!")
+
+    switch (virtue.name) {
+      case "Improved Characteristics":
+        return (
+          <ul>
+            
+          </ul>
+        );
+      case "Affinity With (Ability)":
+        return (
+          <div>
+            Affinity Test
+          </div>
+        )
+    } 
     return (
       <div>
-        <UniversalVirtue virtue={virtue} />
+        {/* <UniversalVirtue virtue={virtue} /> */}
+        Oops
       </div>
     )
   }

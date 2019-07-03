@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+
 
 class CharacterCreateStats extends React.Component {
  constructor(props) {
@@ -34,18 +36,26 @@ class CharacterCreateStats extends React.Component {
         .then((response) => this.setState({
           currentCharacter: response.character,
     }));
+    console.log("#####")
+    console.log(this.props)
+    console.log("#####")
+    console.log(this.state)
+    console.log("#####")
   }
 
  handleSubmit(e) {
     e.preventDefault();
-    const currentCharacter = Object.assign({}, this.state);
+    console.log(this.state);
+    const currentCharacter = Object.assign({}, this.state.currentCharacter);
     this.props.createCharacter(currentCharacter)
+      // .then((response) => console.log(response.character.id))
       .then((response) => this.props.history.push(`/character/new/virtues/${response.character.id}`));
   }
 
   update(field) {
     return (e) => {
-      this.setState({[field]: e.currentTarget.value});
+      console.log([field]);
+      this.setState({currentCharacter: {...this.state.currentCharacter, [field]: e.currentTarget.value}});
       if (field === "character_type") {
         if (e.currentTarget.value === "mage") {
           this.setState({
@@ -69,8 +79,8 @@ class CharacterCreateStats extends React.Component {
 
         <label>Character Name: 
           <input
-            type="text"
-            value={currentCharacter.name}
+            type="string"
+            defaultValue={currentCharacter.name}
             onChange={this.update('name')}
           />
         </label>
@@ -81,7 +91,7 @@ class CharacterCreateStats extends React.Component {
 
         <label>Character Type:
           <select 
-            value={currentCharacter.character_type} 
+            defaultValue={currentCharacter.character_type} 
             required
             onChange={this.update('character_type')}>
             <option value="" disabled selected>Pick One</option>
@@ -100,7 +110,7 @@ class CharacterCreateStats extends React.Component {
           Intelligence: 
           <input
             type="number"
-            value={currentCharacter.intelligence}
+            defaultValue={currentCharacter.intelligence}
             onChange={this.update('intelligence')}
           />
           <br></br>
@@ -108,7 +118,7 @@ class CharacterCreateStats extends React.Component {
           Perception: 
           <input
             type="number"
-            value={currentCharacter.perception}
+            defaultValue={currentCharacter.perception}
             onChange={this.update('perception')}
           />
           <br></br>
@@ -116,7 +126,7 @@ class CharacterCreateStats extends React.Component {
           Strength: 
           <input
             type="number"
-            value={currentCharacter.strength}
+            defaultValue={currentCharacter.strength}
             onChange={this.update('strength')}
           />
           <br></br>
@@ -124,7 +134,7 @@ class CharacterCreateStats extends React.Component {
           Stamina: 
           <input
             type="number"
-            value={currentCharacter.stamina}
+            defaultValue={currentCharacter.stamina}
             onChange={this.update('stamina')}
           />
           <br></br>
@@ -132,7 +142,7 @@ class CharacterCreateStats extends React.Component {
           Presence: 
           <input
             type="number"
-            value={currentCharacter.presence}
+            defaultValue={currentCharacter.presence}
             onChange={this.update('presence')}
           />
           <br></br>
@@ -140,7 +150,7 @@ class CharacterCreateStats extends React.Component {
           Communication: 
           <input
             type="number"
-            value={currentCharacter.communication}
+            defaultValue={currentCharacter.communication}
             onChange={this.update('communication')}
           />
           <br></br>
@@ -148,7 +158,7 @@ class CharacterCreateStats extends React.Component {
           Dexterity: 
           <input
             type="number"
-            value={currentCharacter.dexterity}
+            defaultValue={currentCharacter.dexterity}
             onChange={this.update('dexterity')}
           />
           <br></br>
@@ -156,7 +166,7 @@ class CharacterCreateStats extends React.Component {
           Quickness: 
           <input
             type="number"
-            value={currentCharacter.quickness}
+            defaultValue={currentCharacter.quickness}
             onChange={this.update('quickness')}
           />
           <br></br>
@@ -169,4 +179,4 @@ class CharacterCreateStats extends React.Component {
   }
 };
 
-export default CharacterCreateStats;
+export default withRouter(CharacterCreateStats);

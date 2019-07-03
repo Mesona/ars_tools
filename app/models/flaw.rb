@@ -10,6 +10,7 @@
 #  major       :boolean
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  special     :boolean          default(FALSE)
 #
 
 class Flaw < ApplicationRecord

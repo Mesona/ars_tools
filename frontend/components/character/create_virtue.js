@@ -8,12 +8,13 @@ class CharacterCreateVirtue extends React.Component {
   }
 
   render () {
-    const { virtue } = this.props;
+    const { currentCharacter, virtue } = this.props;
 
     if (virtue.special === true) {
       return (
         <div>
-          <UniqueVirtue virtue={virtue} />
+          <UniqueVirtue currentCharacter={currentCharacter} virtue={virtue} />
+          <UniversalVirtue virtue={virtue} />
         </div>
       )
     } else {

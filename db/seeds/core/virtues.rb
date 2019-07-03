@@ -16,10 +16,39 @@ module Virtues
     virtue_type: "Hermetic",
     major: false)
 
-  affinity_with_ability = Virtue.create!(name: "Affinity With (Ability)",
+  affinity_with_ability_one = Virtue.create!(name: "Affinity With (Ability)",
     description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
     book: "Core",
     virtue_type: "General",
+    special: true,
+    major: false)
+
+  affinity_with_ability_two = Virtue.create!(name: "Affinity With (Ability)",
+    description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
+    book: "Core",
+    virtue_type: "General",
+    special: true,
+    major: false)
+
+  affinity_with_ability_three = Virtue.create!(name: "Affinity With (Ability)",
+    description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
+    book: "Core",
+    virtue_type: "General",
+    special: true,
+    major: false)
+
+  affinity_with_ability_four = Virtue.create!(name: "Affinity With (Ability)",
+    description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
+    book: "Core",
+    virtue_type: "General",
+    special: true,
+    major: false)
+
+  affinity_with_ability_five = Virtue.create!(name: "Affinity With (Ability)",
+    description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
+    book: "Core",
+    virtue_type: "General",
+    special: true,
     major: false)
 
   affinity_with_art = Virtue.create!(name: "Affinity With (Art)",
@@ -345,30 +374,35 @@ module Virtues
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   improved_characteristics_two = Virtue.create!(name: "Improved Characteristics",
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   improved_characteristics_three = Virtue.create!(name: "Improved Characteristics",
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   improved_characteristics_four = Virtue.create!(name: "Improved Characteristics",
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   improved_characteristics_five = Virtue.create!(name: "Improved Characteristics",
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   inoffensive_to_animals_general = Virtue.create!(name: "Inoffensive To Animals",
