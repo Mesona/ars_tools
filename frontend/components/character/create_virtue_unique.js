@@ -12,9 +12,9 @@ class UniqueVirtue extends React.Component {
     // currentCharacter.stats.forEach( )
     // currentCharacter.stats.each do |stat, value|
     // end
-    console.log("!!!!!")
-    console.log(this.props)
-    console.log("!!!!!")
+    // console.log("!!!!!")
+    // console.log(this.props)
+    // console.log("!!!!!")
 
     switch (virtue.name) {
       case "Improved Characteristics":

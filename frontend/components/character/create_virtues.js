@@ -26,12 +26,13 @@ class CharacterCreateVirtues extends React.Component {
  } 
 
  componentDidMount() {
-    this.props.characterId === null  ? '' :
+    // this.props.characterId === null  ? '' :
       this.props.requestCharacter(this.props.characterId)
+        // .then((response) => console.log(response.character)
         .then((response) => this.setState({
-          currentCharacter: response.character,
-          virtuePoints: (response.character.character_type === "Mage" ? 10 : 
-            response.character.character_type === "Companion" ? 10 : 3),
+          currentCharacter: {...response.character},
+          virtuePoints: (response.character.character_type === "mage" ? 10 : 
+            response.character.character_type === "companion" ? 10 : 3),
         })
     );
 
@@ -220,6 +221,12 @@ class CharacterCreateVirtues extends React.Component {
       hermeticFlaws = this.state.flaws.filter( e => e.flaw_type === "Hermetic");
       socialStatusFlaws = this.state.flaws.filter( e => e.flaw_type === "Social Status");
     }
+
+    console.log("///////")
+    console.log(this.state)
+    console.log("\\\\\\")
+    console.log(this.props)
+    console.log("///////")
 
     return (
       <div>
