@@ -60,7 +60,6 @@ group :development do
   gem 'annotate'
 end
 
-
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'selenium-webdriver'

@@ -317,12 +317,35 @@ module Virtues
     description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   great_characteristic_two = Virtue.create!(name: "Great (Characteristic)",
     description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
     virtue_type: "General",
     book: "Core",
+    special: true,
+    major: false)
+
+  great_characteristic_three = Virtue.create!(name: "Great (Characteristic)",
+    description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
+    virtue_type: "General",
+    book: "Core",
+    special: true,
+    major: false)
+
+  great_characteristic_four = Virtue.create!(name: "Great (Characteristic)",
+    description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
+    virtue_type: "General",
+    book: "Core",
+    special: true,
+    major: false)
+
+  great_characteristic_five = Virtue.create!(name: "Great (Characteristic)",
+    description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
+    virtue_type: "General",
+    book: "Core",
+    special: true,
     major: false)
 
   greater_immunity = Virtue.create!(name: "Greater Immunity",
@@ -374,35 +397,30 @@ module Virtues
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   improved_characteristics_two = Virtue.create!(name: "Improved Characteristics",
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   improved_characteristics_three = Virtue.create!(name: "Improved Characteristics",
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   improved_characteristics_four = Virtue.create!(name: "Improved Characteristics",
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   improved_characteristics_five = Virtue.create!(name: "Improved Characteristics",
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   inoffensive_to_animals_general = Virtue.create!(name: "Inoffensive To Animals",

@@ -9,7 +9,6 @@ const UniversalVirtue = (props) => (
       <br></br>
       Virtue Book: { props.virtue.book }
     </li>
-    <hr></hr>
   </ul>
 )
 

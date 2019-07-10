@@ -1,6 +1,8 @@
 import React from 'react';
 import CharacterCreateVirtue from './create_virtue';
 import CharacterCreateFlaw from './create_flaw';
+import UniversalVirtue from './create_virtue_universal';
+import UniqueVirtue from './create_virtue_unique';
 
 class CharacterCreateVirtues extends React.Component {
  constructor(props) {
@@ -89,26 +91,26 @@ class CharacterCreateVirtues extends React.Component {
     if (currentCharacter !== null) {
 
       // Character validations
-      if (currentCharacter.character_type === "Grog") {
+      if (currentCharacter.character_type === "grog") {
         if (virtue.major === true ||
           virtue.name === "The Gift"
         ) {
           return "disabled";
         }
 
-      } else if (currentCharacter.character_type === "NPC") {
+      } else if (currentCharacter.character_type === "npc") {
         if (virtue.name === "The Gift" 
         ) {
           return "disabled";
         }
 
-      } else if (currentCharacter.character_type === "Companion") {
+      } else if (currentCharacter.character_type === "companion") {
         if (virtue.name === "The Gift"
         ) {
           return "disabled";
         }
 
-      } else if (currentCharacter.character_type === "Mage") {
+      } else if (currentCharacter.character_type === "mage") {
 
         if (virtue.name === "Wealthy" ||
           virtue.name === "Poor"
@@ -222,12 +224,6 @@ class CharacterCreateVirtues extends React.Component {
       socialStatusFlaws = this.state.flaws.filter( e => e.flaw_type === "Social Status");
     }
 
-    console.log("///////")
-    console.log(this.state)
-    console.log("\\\\\\")
-    console.log(this.props)
-    console.log("///////")
-
     return (
       <div>
         {/* TODO: Need to add hover or something that gives the
@@ -246,10 +242,17 @@ class CharacterCreateVirtues extends React.Component {
             {specialVirtues === undefined ? '' : specialVirtues.map( virtue => 
               // <div className="create-virtue-hover" key={virtue.id} onClick={ () => this.handleVirtue(virtue)}>
               <div className="create-virtue-hover" key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                {/* <label>
-                  <input type="checkbox" disabled={grogCheck} ></input> */}
-                  <CharacterCreateVirtue virtue={virtue} />
-                {/* </label> */}
+                  <label>
+                    <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input>
+                    { virtue.special === true ?
+                      <div>
+                        <UniversalVirtue virtue={virtue} />
+                        <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
+                      </div>
+                      :
+                      <UniversalVirtue virtue={virtue} />
+                    }
+                  </label>
               </div>
             )}
           </div>
@@ -263,7 +266,18 @@ class CharacterCreateVirtues extends React.Component {
             {generalVirtues === undefined ? '' : 
               generalVirtues.filter( e => e.major === true).map( virtue => 
                 <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                  <CharacterCreateVirtue virtue={virtue} currentCharacter={currentCharacter} />
+                  <label>
+                    <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input>
+                    { virtue.special === true ?
+                      <div>
+                        <UniversalVirtue virtue={virtue} />
+                        <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
+                      </div>
+                      :
+                      <UniversalVirtue virtue={virtue} />
+                    }
+                    <hr></hr>
+                  </label>
                 </div>
             )}
           </div>
@@ -274,7 +288,15 @@ class CharacterCreateVirtues extends React.Component {
               <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
                 <label>
                   <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
+                  { virtue.special === true ?
+                    <div>
+                      <UniversalVirtue virtue={virtue} />
+                      <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
+                    </div>
+                    :
+                    <UniversalVirtue virtue={virtue} />
+                  }
+                  <hr></hr>
                 </label>
               </div>
             )}
@@ -283,10 +305,17 @@ class CharacterCreateVirtues extends React.Component {
           <div className="free"><p>Free Virtues:</p>
             {generalVirtues === undefined ? '' :
               generalVirtues.filter( e => e.free === true).map( virtue => 
-                <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+              <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
                 <label>
-                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
+                  <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input>
+                  { virtue.special === true ?
+                    <div>
+                      <UniversalVirtue virtue={virtue} />
+                      <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
+                    </div>
+                    :
+                    <UniversalVirtue virtue={virtue} />
+                  }
                 </label>
               </div>
             )}

@@ -36,11 +36,6 @@ class CharacterCreateStats extends React.Component {
         .then((response) => this.setState({
           currentCharacter: response.character,
     }));
-    console.log("#####")
-    console.log(this.props)
-    console.log("#####")
-    console.log(this.state)
-    console.log("#####")
   }
 
  handleSubmit(e) {
