@@ -77,7 +77,7 @@ class CharacterCreateStats extends React.Component {
 
   showDropdownMenu(e) {
     e.preventDefault();
-    this.setState({ displayMenu: true }, () => {
+    this.setState({ displayMenu: e.target.id }, () => {
       document.addEventListener('click', this.hideDropdownMenu);
     });
   }
@@ -138,11 +138,30 @@ class CharacterCreateStats extends React.Component {
 
             <br></br>
             <div>
-            <span>Intelligence:</span>
-            {/* TODO: Move stats to separate page after virtues and flaws */}
-            {/* TODO: Have virtues on same page as character type, but virtues don't appear until character type is chosen */}
-            <button className="mini-place-index-hamburger" onClick={this.showDropdownMenu} id="intelligence">{this.state.currentCharacter.intelligence}
-              { this.state.displayMenu ? (
+              <span>Intelligence:</span>
+              {/* TODO: Move stats to separate page after virtues and flaws */}
+              {/* TODO: Have virtues on same page as character type, but virtues don't appear until character type is chosen */}
+              <button onClick={this.showDropdownMenu} id="intelligence">{this.state.currentCharacter.intelligence}
+                { this.state.displayMenu === "intelligence" ? (
+                  <ul>
+                    <li value="-3">-3</li>
+                    <li value="-2">-2</li>
+                    <li value="-1">-1</li>
+                    <li value="0">0</li>
+                    <li value="1">1</li>
+                    <li value="2">2</li>
+                    <li value="3">3</li>
+                  </ul>
+                ) : (
+                  null
+                )}
+              </button>
+            </div>
+            <br></br>
+          
+            <span>Perception:</span>
+            <button onClick={this.showDropdownMenu} id="perception">{this.state.currentCharacter.perception}
+              { this.state.displayMenu === "perception" ? (
                 <ul>
                   <li value="-3">-3</li>
                   <li value="-2">-2</li>
@@ -156,15 +175,6 @@ class CharacterCreateStats extends React.Component {
                 null
               )}
             </button>
-            </div>
-            <br></br>
-          
-            Perception: 
-            <input
-              type="number"
-              defaultValue={currentCharacter.perception}
-              onChange={this.update('perception')}
-            />
             <br></br>
             
             Strength: 
