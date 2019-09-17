@@ -32,18 +32,21 @@ const App = () => {
             render={(props) => <CharacterCreateContainer {...props} page="virtues" />}
           />
 
-          <Route
+          {/* <Route
             exact path="/character/new/:characterId"
-            render={(props) => <CharacterCreateContainer {...props} page="stats" />}
-          />
+            render={(props) => <CharacterCreateContainer {...props} page="new-character" />}
+            // render={(props) => <CharacterCreateContainer {...props} page="stats" />}
+          /> */}
 
           <Route
           // TODO
           // FOR SOME REASON, PATH="/characters/new" DOES NOT WORK
           // I'M TIRED OF TROUBLESHOOTING SO USING THIS TEMPORARY FIX
             exact path="/character/new"
-            component={CharacterCreateContainer}
-            page="stats"
+            // component={CharacterCreateContainer}
+            // page="stats"
+            // page="new-character"
+            render={(props) => <CharacterCreateContainer {...props} page="new-character" />}
           />
 
           <Redirect from="*" to="/" />

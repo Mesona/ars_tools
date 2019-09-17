@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import CharacterCreateInitial from './create_initial';
 import CharacterCreateStats from './create_stats';
 import CharacterCreateVirtues from './create_virtues';
 
@@ -24,16 +25,25 @@ class CharacterCreate extends React.Component {
       characterId = null :
       characterId = this.props.match.params.characterId;
     
-    if ( this.props.page === "stats" || this.props.page === undefined ) {
+    if ( this.props.page === "new-character" || this.props.page === undefined ) {
       return (
         <section className="new-character">
-          <CharacterCreateStats
+          <CharacterCreateInitial
             currentUser={this.props.currentUser}
             characterId={characterId}
             createCharacter={this.props.createCharacter}
             requestCharacter={this.props.requestCharacter}
+            updateCharacter={this.props.updateCharacter}
           />
         </section>
+        // <section className="stats">
+        //   <CharacterCreateStats
+        //     currentUser={this.props.currentUser}
+        //     characterId={characterId}
+        //     createCharacter={this.props.createCharacter}
+        //     requestCharacter={this.props.requestCharacter}
+        //   />
+        // </section>
       );
     } else if ( this.props.page === "virtues" ) {
       return (
@@ -45,6 +55,22 @@ class CharacterCreate extends React.Component {
           requestAllFlaws={this.props.requestAllFlaws}
         />
       )
+    } else if ( this.props.page === "new-character" ) {
+      return (
+        <CharacterCreateInitial
+          characterId={characterId}
+          requestCharacter={this.props.requestCharacter}
+          updateCharacter={this.props.updateCharacter}
+        />
+      )
+    // } else if ( this.props.page === "stats" ) {
+    //   return (
+    //     <CharacterCreateStats
+    //       characterId={characterId}
+    //       requestCharacter={this.props.requestCharacter}
+    //       updateCharacter={this.props.updateCharacter}
+    //     />
+    //   )
 
     } else if ( this.props.page === "early" ) {
       return (
@@ -63,6 +89,7 @@ class CharacterCreate extends React.Component {
         <p>Advanced</p>
       )
     } else {
+      console.log(this.props)
       return (
         <p>Wrong Page</p>
       )
