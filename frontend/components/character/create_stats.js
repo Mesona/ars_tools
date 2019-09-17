@@ -25,6 +25,7 @@ class CharacterCreateStats extends React.Component {
      page_location: 0,
      pages: ["stats"],
      displayMenu: false,
+     currentStat: "",
    };
 
    this.handleSubmit = this.handleSubmit.bind(this);
@@ -68,11 +69,11 @@ class CharacterCreateStats extends React.Component {
     };
   }
 
-  updateStat(stat, number) {
-    let currentCharacter = this.state.currentCharacter;
-    currentCharacter[stat] = number;
-    this.setState({currentCharacter: {...currentCharacter}});
-  }
+  // updateStat(stat, number) {
+  //   let currentCharacter = this.state.currentCharacter;
+  //   currentCharacter[stat] = number;
+  //   this.setState({currentCharacter: {...currentCharacter}});
+  // }
 
   showDropdownMenu(e) {
     e.preventDefault();
@@ -87,12 +88,24 @@ class CharacterCreateStats extends React.Component {
     });
   }
 
+  updateStat(e) {
+    if (e !== undefined) {
+      if (e.target.id !== "") {
+        this.setState({currentStat: e.target.id});
+      } else if (e.target.value !== "" && e.target.value !== undefined) {
+        let currentCharacter = this.state.currentCharacter;
+        currentCharacter[this.state.currentStat] = e.target.value;
+        this.setState({currentCharacter: {...currentCharacter}});
+      }
+    }
+  }
+
   render () {
 
     const { currentCharacter } = this.state;
 
     return (
-      <form className="new-character-setup-form" onSubmit={this.handleSubmit} >
+      <form className="new-character-setup-form" onSubmit={this.handleSubmit}>
 
         <label>Character Name: 
           <input
@@ -102,8 +115,6 @@ class CharacterCreateStats extends React.Component {
           />
         </label>
         
-        <br></br>
-
         <br></br>
 
         <label>Character Type:
@@ -123,45 +134,29 @@ class CharacterCreateStats extends React.Component {
 
         <div className="characterStats">
 
-          <label>Stats:
+          <label onClick={this.updateStat}>Stats:
 
             <br></br>
-            Intelligence: 
-            {/* <input
-              type="number"
-              defaultValue={currentCharacter.intelligence}
-              onChange={this.update('intelligence')}
-            /> */}
-            <button className="mini-place-index-hamburger" onClick={this.showDropdownMenu}>{this.state.currentCharacter.intelligence}
+            <div>
+            <span>Intelligence:</span>
+            {/* TODO: Move stats to separate page after virtues and flaws */}
+            {/* TODO: Have virtues on same page as character type, but virtues don't appear until character type is chosen */}
+            <button className="mini-place-index-hamburger" onClick={this.showDropdownMenu} id="intelligence">{this.state.currentCharacter.intelligence}
               { this.state.displayMenu ? (
-                // <ul onClick={() => this.updateStat("intelligence", )}>
                 <ul>
-                  <li onClick={() => this.updateStat("intelligence", -3)}>
-                   -3
-                  </li>
-                  <li onClick={() => this.updateStat("intelligence", -2)}>
-                   -2
-                  </li>
-                  <li onClick={() => this.updateStat("intelligence", -1)}>
-                    -1
-                  </li>
-                  <li onClick={() => this.updateStat("intelligence", 0)}>
-                    0
-                  </li>
-                  <li onClick={() => this.updateStat("intelligence", 1)}>
-                    1
-                  </li>
-                  <li onClick={() => this.updateStat("intelligence", 2)}>
-                   2
-                  </li>
-                  <li onClick={() => this.updateStat("intelligence", 3)}>
-                   3
-                  </li>
+                  <li value="-3">-3</li>
+                  <li value="-2">-2</li>
+                  <li value="-1">-1</li>
+                  <li value="0">0</li>
+                  <li value="1">1</li>
+                  <li value="2">2</li>
+                  <li value="3">3</li>
                 </ul>
               ) : (
                 null
               )}
             </button>
+            </div>
             <br></br>
           
             Perception: 
