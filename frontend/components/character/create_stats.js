@@ -45,7 +45,6 @@ class CharacterCreateStats extends React.Component {
 
  handleSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
     const currentCharacter = Object.assign({}, this.state.currentCharacter);
     this.props.createCharacter(currentCharacter)
       // .then((response) => console.log(response.character.id))
@@ -54,7 +53,6 @@ class CharacterCreateStats extends React.Component {
 
   update(field) {
     return (e) => {
-      console.log([field]);
       this.setState({currentCharacter: {...this.state.currentCharacter, [field]: e.currentTarget.value}});
       if (field === "character_type") {
         if (e.currentTarget.value === "mage") {
