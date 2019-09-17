@@ -24,10 +24,15 @@ class CharacterCreateStats extends React.Component {
     },
      page_location: 0,
      pages: ["stats"],
+     displayMenu: false,
    };
 
    this.handleSubmit = this.handleSubmit.bind(this);
-   this.update = this.update.bind(this)
+   this.update = this.update.bind(this);
+
+   this.showDropdownMenu = this.showDropdownMenu.bind(this);
+   this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
+   this.updateStat = this.updateStat.bind(this);
  } 
 
  componentDidMount() {
@@ -63,6 +68,25 @@ class CharacterCreateStats extends React.Component {
         }
       }
     };
+  }
+
+  updateStat(stat, number) {
+    let currentCharacter = this.state.currentCharacter;
+    currentCharacter[stat] = number;
+    this.setState({currentCharacter: {...currentCharacter}});
+  }
+
+  showDropdownMenu(e) {
+    e.preventDefault();
+    this.setState({ displayMenu: true }, () => {
+      document.addEventListener('click', this.hideDropdownMenu);
+    });
+  }
+
+  hideDropdownMenu() {
+    this.setState({ displayMenu: false }, () => {
+      document.removeEventListener('click', this.hideDropdownMenu);
+    });
   }
 
   render () {
@@ -105,11 +129,41 @@ class CharacterCreateStats extends React.Component {
 
             <br></br>
             Intelligence: 
-            <input
+            {/* <input
               type="number"
               defaultValue={currentCharacter.intelligence}
               onChange={this.update('intelligence')}
-            />
+            /> */}
+            <button className="mini-place-index-hamburger" onClick={this.showDropdownMenu}>{this.state.currentCharacter.intelligence}
+              { this.state.displayMenu ? (
+                // <ul onClick={() => this.updateStat("intelligence", )}>
+                <ul>
+                  <li onClick={() => this.updateStat("intelligence", -3)}>
+                   -3
+                  </li>
+                  <li onClick={() => this.updateStat("intelligence", -2)}>
+                   -2
+                  </li>
+                  <li onClick={() => this.updateStat("intelligence", -1)}>
+                    -1
+                  </li>
+                  <li onClick={() => this.updateStat("intelligence", 0)}>
+                    0
+                  </li>
+                  <li onClick={() => this.updateStat("intelligence", 1)}>
+                    1
+                  </li>
+                  <li onClick={() => this.updateStat("intelligence", 2)}>
+                   2
+                  </li>
+                  <li onClick={() => this.updateStat("intelligence", 3)}>
+                   3
+                  </li>
+                </ul>
+              ) : (
+                null
+              )}
+            </button>
             <br></br>
           
             Perception: 
