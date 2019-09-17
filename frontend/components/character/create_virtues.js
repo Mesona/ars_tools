@@ -4,6 +4,7 @@ import CharacterCreateFlaw from './create_flaw';
 import UniversalVirtue from './create_virtue_universal';
 import UniqueVirtue from './create_virtue_unique';
 
+
 class CharacterCreateVirtues extends React.Component {
  constructor(props) {
    super(props);
@@ -18,6 +19,7 @@ class CharacterCreateVirtues extends React.Component {
     minorVirtues: 0,
     currentVirtues: {},
     currentFlaws: {},
+    virtuePointText: "alskdvlaskd",
    };
 
    this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,17 +27,21 @@ class CharacterCreateVirtues extends React.Component {
    this.handleVirtue = this.handleVirtue.bind(this);
   //  this.handleFlaw = this.handleFlaw.bind(this);
    this.validation = this.validation.bind(this);
+   this.establishVirtues = this.establishVirtues.bind(this);
  } 
 
  componentDidMount() {
     // this.props.characterId === null  ? '' :
       this.props.requestCharacter(this.props.characterId)
-        // .then((response) => console.log(response.character)
-        .then((response) => this.setState({
-          currentCharacter: {...response.character},
-          virtuePoints: (response.character.character_type === "mage" ? 10 : 
-            response.character.character_type === "companion" ? 10 : 3),
-        })
+        .then((response) => {
+          this.setState({
+            currentCharacter: {...response.character},
+            virtuePoints: (response.character.character_type === "mage" ? 10 : 
+              response.character.character_type === "companion" ? 10 : 3),
+            },
+            this.establishVirtues
+          );
+        }
     );
 
     this.props.requestAllVirtues()
@@ -83,7 +89,6 @@ class CharacterCreateVirtues extends React.Component {
       document.getElementById(virtue.id).style.background = "purple";
     }
 
-    console.log(this.state.currentVirtues)
   }
 
   validation(virtue) {
@@ -189,6 +194,30 @@ class CharacterCreateVirtues extends React.Component {
     // If have "Diedne Magic" need to have "Dark Secret"
   }
 
+  establishVirtues() {
+    let character_type = this.state.currentCharacter.character_type;
+    // TODO: Look up the actual virtue descriptions
+    let universalVirtueText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
+    switch (character_type) {
+      case "mage":
+        let mageVirtueText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
+        this.setState({virtuePointText: universalVirtueText + mageVirtueText});
+        break;
+      case "grog":
+        let grogVirtueText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
+        this.setState({virtuePointText: universalVirtueText + grogVirtueText});
+        break;
+      case "companion":
+        let companionVirtueText = "Companions are things that can be created";
+        this.setState({virtuePointText: universalVirtueText + companionVirtueText});
+        break;
+      case "other":
+        let otherVirtueText = "There are several that are free and can be taken with no penalty."
+        this.setState({virtuePointText: universalVirtueText + otherVirtueText});
+        break;
+    }
+  }
+
   render () {
 
     const { currentCharacter } = this.state;
@@ -229,7 +258,9 @@ class CharacterCreateVirtues extends React.Component {
         {/* TODO: Need to add hover or something that gives the
         information regarding which virtues are available
         and how many of what type can be taken */}
-        <p>Remaining Virtue Points Allowed: {this.state.virtuePoints - this.state.currentVirtuePoints}</p>
+        {/* <img src="" title={virtuePointText}></img> */}
+        <p title={this.state.virtuePointText}>Remaining Virtue Points Allowed: {this.state.virtuePoints - this.state.currentVirtuePoints}</p>
+        {/* <p>Remaining Virtue Points Allowed: {this.state.virtuePoints - this.state.currentVirtuePoints}</p> */}
         <br></br>
         <p>Virtues</p>
         <hr></hr>
