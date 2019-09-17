@@ -16,38 +16,40 @@ const App = () => {
     <div>
       <Modal />
       <Route path="/" component={NavBarContainer} />
-      <Switch>
-        <Route exact path="/" component={HomeContainer} />
+      <div className="componentSpreader" >
+        <ProtectedRoute path="/" component={SideBarContainer} />
 
-        <Route
-          exact path="/characters/:characterId"
-          component={CharacterShowContainer}
-        />
+        <Switch>
+          <Route exact path="/" component={HomeContainer} />
 
-        <Route
-          path="/character/new/virtues/:characterId"
-          render={(props) => <CharacterCreateContainer {...props} page="virtues" />}
-        />
+          <Route
+            exact path="/characters/:characterId"
+            component={CharacterShowContainer}
+          />
 
-        <Route
-          exact path="/character/new/:characterId"
-          render={(props) => <CharacterCreateContainer {...props} page="stats" />}
-        />
+          <Route
+            path="/character/new/virtues/:characterId"
+            render={(props) => <CharacterCreateContainer {...props} page="virtues" />}
+          />
 
-        <Route
-        // TODO
-        // FOR SOME REASON, PATH="/characters/new" DOES NOT WORK
-        // I'M TIRED OF TROUBLESHOOTING SO USING THIS TEMPORARY FIX
-          exact path="/character/new"
-          component={CharacterCreateContainer}
-          page="stats"
-        />
+          <Route
+            exact path="/character/new/:characterId"
+            render={(props) => <CharacterCreateContainer {...props} page="stats" />}
+          />
 
-        <Redirect from="*" to="/" />
+          <Route
+          // TODO
+          // FOR SOME REASON, PATH="/characters/new" DOES NOT WORK
+          // I'M TIRED OF TROUBLESHOOTING SO USING THIS TEMPORARY FIX
+            exact path="/character/new"
+            component={CharacterCreateContainer}
+            page="stats"
+          />
 
-      </Switch>
+          <Redirect from="*" to="/" />
 
-      <ProtectedRoute path="/" component={SideBarContainer} />
+        </Switch>
+      </div>
     </div>
   );
 };

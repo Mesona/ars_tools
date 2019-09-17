@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 
 class CharacterCreateStats extends React.Component {
@@ -89,7 +89,7 @@ class CharacterCreateStats extends React.Component {
             defaultValue={currentCharacter.character_type} 
             required
             onChange={this.update('character_type')}>
-            <option value="" disabled selected>Pick One</option>
+            <option value="" disabled defaultValue>Pick One</option>
             <option value="mage">Mage</option>
             <option value="grog">Grog</option>
             <option value="companion">Companion</option>
@@ -99,75 +99,84 @@ class CharacterCreateStats extends React.Component {
 
         <br></br>
 
-        <label>Stats:
+        <div className="characterStats">
 
-          <br></br>
-          Intelligence: 
-          <input
-            type="number"
-            defaultValue={currentCharacter.intelligence}
-            onChange={this.update('intelligence')}
-          />
-          <br></br>
+          <label>Stats:
+
+            <br></br>
+            Intelligence: 
+            <input
+              type="number"
+              defaultValue={currentCharacter.intelligence}
+              onChange={this.update('intelligence')}
+            />
+            <br></br>
           
-          Perception: 
-          <input
-            type="number"
-            defaultValue={currentCharacter.perception}
-            onChange={this.update('perception')}
-          />
-          <br></br>
-          
-          Strength: 
-          <input
-            type="number"
-            defaultValue={currentCharacter.strength}
-            onChange={this.update('strength')}
-          />
-          <br></br>
-          
-          Stamina: 
-          <input
-            type="number"
-            defaultValue={currentCharacter.stamina}
-            onChange={this.update('stamina')}
-          />
-          <br></br>
-          
-          Presence: 
-          <input
-            type="number"
-            defaultValue={currentCharacter.presence}
-            onChange={this.update('presence')}
-          />
-          <br></br>
-          
-          Communication: 
-          <input
-            type="number"
-            defaultValue={currentCharacter.communication}
-            onChange={this.update('communication')}
-          />
-          <br></br>
-          
-          Dexterity: 
-          <input
-            type="number"
-            defaultValue={currentCharacter.dexterity}
-            onChange={this.update('dexterity')}
-          />
-          <br></br>
-          
-          Quickness: 
-          <input
-            type="number"
-            defaultValue={currentCharacter.quickness}
-            onChange={this.update('quickness')}
-          />
-          <br></br>
-          
-          <input type="submit"></input>
-        </label>
+            Perception: 
+            <input
+              type="number"
+              defaultValue={currentCharacter.perception}
+              onChange={this.update('perception')}
+            />
+            <br></br>
+            
+            Strength: 
+            <input
+              type="number"
+              defaultValue={currentCharacter.strength}
+              onChange={this.update('strength')}
+            />
+            <br></br>
+            
+            Stamina: 
+            <input
+              type="number"
+              defaultValue={currentCharacter.stamina}
+              onChange={this.update('stamina')}
+            />
+            <br></br>
+            
+            Presence: 
+            <input
+              type="number"
+              defaultValue={currentCharacter.presence}
+              onChange={this.update('presence')}
+            />
+            <br></br>
+            
+            Communication: 
+            <input
+              type="number"
+              defaultValue={currentCharacter.communication}
+              onChange={this.update('communication')}
+            />
+            <br></br>
+            
+            Dexterity: 
+            <input
+              type="number"
+              defaultValue={currentCharacter.dexterity}
+              onChange={this.update('dexterity')}
+            />
+            <br></br>
+            
+            Quickness: 
+            <input
+              type="number"
+              defaultValue={currentCharacter.quickness}
+              onChange={this.update('quickness')}
+            />
+            <br></br>
+            
+            <input type="submit"></input>
+          </label>
+        </div>
+
+        <br></br>
+
+        <NavLink to={`/`}>
+          Back
+        </NavLink>
 
       </form>
     )
