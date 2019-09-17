@@ -55,22 +55,22 @@ class CharacterCreate extends React.Component {
           requestAllFlaws={this.props.requestAllFlaws}
         />
       )
-    } else if ( this.props.page === "new-character" ) {
-      return (
-        <CharacterCreateInitial
-          characterId={characterId}
-          requestCharacter={this.props.requestCharacter}
-          updateCharacter={this.props.updateCharacter}
-        />
-      )
-    // } else if ( this.props.page === "stats" ) {
+    // } else if ( this.props.page === "new-character" ) {
     //   return (
-    //     <CharacterCreateStats
+    //     <CharacterCreateInitial
     //       characterId={characterId}
     //       requestCharacter={this.props.requestCharacter}
     //       updateCharacter={this.props.updateCharacter}
     //     />
     //   )
+    } else if ( this.props.page === "stats" ) {
+      return (
+        <CharacterCreateStats
+          characterId={characterId}
+          requestCharacter={this.props.requestCharacter}
+          updateCharacter={this.props.updateCharacter}
+        />
+      )
 
     } else if ( this.props.page === "early" ) {
       return (

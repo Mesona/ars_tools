@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 
 class CharacterCreateInitial extends React.Component {
@@ -8,7 +8,7 @@ class CharacterCreateInitial extends React.Component {
 
    this.state = {
     currentCharacter: {
-      characterType: "",
+      character_type: "",
       name: "",
       gender: "",
       user_id: this.props.currentUser.id,
@@ -20,7 +20,6 @@ class CharacterCreateInitial extends React.Component {
 
    this.showDropdownMenu = this.showDropdownMenu.bind(this);
    this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
-   this.updateStat = this.updateStat.bind(this);
  } 
 
  componentDidMount() {
@@ -35,13 +34,13 @@ class CharacterCreateInitial extends React.Component {
     e.preventDefault();
     const currentCharacter = Object.assign({}, this.state.currentCharacter);
     this.props.createCharacter(currentCharacter)
-      .then((response) => this.props.history.push(`/character/new/virtues/${response.character.id}`));
+      .then((response) => this.props.history.push(`/characters/new/virtues/${response.character.id}`));
   }
 
   update(field) {
     return (e) => {
       this.setState({currentCharacter: {...this.state.currentCharacter, [field]: e.currentTarget.value}});
-      if (field === "characterType") {
+      if (field === "character_type") {
         if (e.currentTarget.value === "mage") {
           this.setState({
             pages: ["stats", "virtues", "early", "pre-apprenticeship", "apprenticeship", "advanced"],
@@ -68,18 +67,6 @@ class CharacterCreateInitial extends React.Component {
     });
   }
 
-  updateStat(e) {
-    if (e !== undefined) {
-      if (e.target.id !== "") {
-        this.setState({currentStat: e.target.id});
-      } else if (e.target.value !== "" && e.target.value !== undefined) {
-        let currentCharacter = this.state.currentCharacter;
-        currentCharacter[this.state.currentStat] = e.target.value;
-        this.setState({currentCharacter: {...currentCharacter}});
-      }
-    }
-  }
-
   render () {
 
     const { currentCharacter } = this.state;
@@ -87,6 +74,7 @@ class CharacterCreateInitial extends React.Component {
     return (
       <form className="new-character-setup-form" onSubmit={this.handleSubmit}>
 
+        {/* TODO: Sanitize character name input */}
         <div>
           <label>Character Name: 
             <input
@@ -100,9 +88,9 @@ class CharacterCreateInitial extends React.Component {
         <div>
           <label>Character Type:
             <select 
-              defaultValue={currentCharacter.characterType} 
+              defaultValue={currentCharacter.character_type} 
               required
-              onChange={this.update('characterType')}>
+              onChange={this.update('character_type')}>
               <option value="" disabled defaultValue>Pick One</option>
               <option value="mage">Mage</option>
               <option value="grog">Grog</option>
@@ -125,11 +113,15 @@ class CharacterCreateInitial extends React.Component {
           </label>
         </div>
 
-        {/* Region born, background bio, still in apprenticeship, house association, all will be done in another page */}
+        {/* TODO: Region born, background bio, still in apprenticeship, house association, all will be done in another page */}
 
-        <NavLink to={`/`}>
+        <div>
+          <span onClick={this.handleSubmit}>Next</span>
+        </div>
+
+        <Link to={`/`}>
           Back
-        </NavLink>
+        </Link>
 
       </form>
     )

@@ -28,7 +28,7 @@ const App = () => {
           />
 
           <Route
-            path="/character/new/virtues/:characterId"
+            path="/characters/new/virtues/:characterId"
             render={(props) => <CharacterCreateContainer {...props} page="virtues" />}
           />
 
