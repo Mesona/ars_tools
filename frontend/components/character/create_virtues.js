@@ -198,12 +198,6 @@ class CharacterCreateVirtues extends React.Component {
     let specialVirtues;
     let supernaturalVirtues;
     let socialStatusVirtues;
-    let generalFlaws;
-    let supernaturalFlaws;
-    let personalityFlaws;
-    let storyFlaws;
-    let hermeticFlaws;
-    let socialStatusFlaws;
 
     let grogCheck; 
     let validationCheck;
@@ -231,15 +225,13 @@ class CharacterCreateVirtues extends React.Component {
           <div className="major">
             {specialVirtues === undefined ? '' : specialVirtues.map( virtue => 
               <div className="create-virtue-hover" key={virtue.id}>
-              {/* <div className="create-virtue-hover" key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}> */}
                   <label>
-                    {/* <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input> */}
                     <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} onChange={(e) => this.handleVirtue(e, virtue)}></input>
                     { virtue.special === true ?
-                      <div>
+                      <React.Fragment>
                         <UniversalVirtue virtue={virtue} />
                         <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
-                      </div>
+                      </React.Fragment>
                       :
                       <UniversalVirtue virtue={virtue} />
                     }
@@ -260,10 +252,10 @@ class CharacterCreateVirtues extends React.Component {
                   <label>
                     <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input>
                     { virtue.special === true ?
-                      <div>
+                      <>
                         <UniversalVirtue virtue={virtue} />
                         <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
-                      </div>
+                      </>
                       :
                       <UniversalVirtue virtue={virtue} />
                     }
@@ -280,10 +272,10 @@ class CharacterCreateVirtues extends React.Component {
                 <label>
                   <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input>
                   { virtue.special === true ?
-                    <div>
+                    <>
                       <UniversalVirtue virtue={virtue} />
                       <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
-                    </div>
+                    </>
                     :
                     <UniversalVirtue virtue={virtue} />
                   }

@@ -66,7 +66,7 @@ class UniqueVirtue extends React.Component {
     switch (virtue.name) {
       case "Great (Characteristic)":
         return (
-          <div>
+          <>
             Test
             {/* {greatCharacteristics} */}
             {/* <select>
@@ -74,19 +74,19 @@ class UniqueVirtue extends React.Component {
                 <option value={characteristic}>{characteristic}</option>
               ))}
             </select> */}
-          </div>
+          </>
         );
       case "Affinity With (Ability)":
         return (
-          <div>
+          <>
             Affinity Test
-          </div>
+          </>
         )
       default:
         return (
-          <div>
+          <>
             SOMETHING WENT WRONG
-          </div>
+          </>
         )
     } 
     // return (
