@@ -36,13 +36,23 @@ class CharacterCreateStats extends React.Component {
    this.updateStat = this.updateStat.bind(this);
  } 
 
- componentDidMount() {
-    this.props.characterId === null  ? '' :
-      this.props.requestCharacter(this.props.characterId)
-        .then((response) => this.setState({
-          currentCharacter: response.character,
-    }));
-  }
+//  componentDidMount() {
+//     this.props.characterId === null  ? '' :
+//       this.props.requestCharacter(this.props.characterId)
+//         .then((response) => this.setState({
+//           currentCharacter: response.character,
+//     }));
+//   }
+
+componentDidMount() {
+  // this.props.characterId === null  ? '' :
+    this.props.requestCharacter(this.props.characterId)
+      .then((response) => {
+        this.setState({
+          currentCharacter: {...response.character},
+        });
+      }
+  );
 
  handleSubmit(e) {
     e.preventDefault();

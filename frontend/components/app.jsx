@@ -32,10 +32,14 @@ const App = () => {
             render={(props) => <CharacterCreateContainer {...props} page="virtues" />}
           />
 
+          <Route
+            path="/characters/new/stats/:characterId"
+            render={(props) => <CharacterCreateContainer {...props} page="stats" />}
+          />
+
           {/* <Route
             exact path="/character/new/:characterId"
             render={(props) => <CharacterCreateContainer {...props} page="new-character" />}
-            // render={(props) => <CharacterCreateContainer {...props} page="stats" />}
           /> */}
 
           <Route

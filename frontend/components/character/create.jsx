@@ -36,14 +36,6 @@ class CharacterCreate extends React.Component {
             updateCharacter={this.props.updateCharacter}
           />
         </section>
-        // <section className="stats">
-        //   <CharacterCreateStats
-        //     currentUser={this.props.currentUser}
-        //     characterId={characterId}
-        //     createCharacter={this.props.createCharacter}
-        //     requestCharacter={this.props.requestCharacter}
-        //   />
-        // </section>
       );
     } else if ( this.props.page === "virtues" ) {
       return (
@@ -55,14 +47,6 @@ class CharacterCreate extends React.Component {
           requestAllFlaws={this.props.requestAllFlaws}
         />
       )
-    // } else if ( this.props.page === "new-character" ) {
-    //   return (
-    //     <CharacterCreateInitial
-    //       characterId={characterId}
-    //       requestCharacter={this.props.requestCharacter}
-    //       updateCharacter={this.props.updateCharacter}
-    //     />
-    //   )
     } else if ( this.props.page === "stats" ) {
       return (
         <CharacterCreateStats
