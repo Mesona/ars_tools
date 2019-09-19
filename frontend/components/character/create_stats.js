@@ -10,7 +10,6 @@ class CharacterCreateStats extends React.Component {
     currentCharacter: {
       character_type: "",
       name: "",
-      // user_id: this.props.currentUser.id,
       user_id: null,
       intelligence: 0,
       perception: 0,
@@ -23,30 +22,13 @@ class CharacterCreateStats extends React.Component {
       age: null,
       appearant_age: null,
     },
-     page_location: 0,
-     pages: ["stats"],
-     displayMenu: false,
-     currentStat: "",
    };
 
    this.handleSubmit = this.handleSubmit.bind(this);
-   this.update = this.update.bind(this);
-
-   this.showDropdownMenu = this.showDropdownMenu.bind(this);
-   this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
    this.updateStat = this.updateStat.bind(this);
  } 
 
-//  componentDidMount() {
-//     this.props.characterId === null  ? '' :
-//       this.props.requestCharacter(this.props.characterId)
-//         .then((response) => this.setState({
-//           currentCharacter: response.character,
-//     }));
-//   }
-
 componentDidMount() {
-  // this.props.characterId === null  ? '' :
     this.props.requestCharacter(this.props.characterId)
       .then((response) => {
         this.setState({
@@ -59,44 +41,7 @@ componentDidMount() {
     e.preventDefault();
     const currentCharacter = Object.assign({}, this.state.currentCharacter);
     this.props.createCharacter(currentCharacter)
-      // .then((response) => console.log(response.character.id))
       .then((response) => this.props.history.push(`/character/new/virtues/${response.character.id}`));
-  }
-
-  update(field) {
-    return (e) => {
-      this.setState({currentCharacter: {...this.state.currentCharacter, [field]: e.currentTarget.value}});
-      if (field === "character_type") {
-        if (e.currentTarget.value === "mage") {
-          this.setState({
-            pages: ["stats", "virtues", "early", "pre-apprenticeship", "apprenticeship", "advanced"],
-          });
-        } else {
-          this.setState({
-            pages: ["stats", "virtues", "early", "advanced"],
-          });
-        }
-      }
-    };
-  }
-
-  // updateStat(stat, number) {
-  //   let currentCharacter = this.state.currentCharacter;
-  //   currentCharacter[stat] = number;
-  //   this.setState({currentCharacter: {...currentCharacter}});
-  // }
-
-  showDropdownMenu(e) {
-    e.preventDefault();
-    this.setState({ displayMenu: e.target.id }, () => {
-      document.addEventListener('click', this.hideDropdownMenu);
-    });
-  }
-
-  hideDropdownMenu() {
-    this.setState({ displayMenu: false }, () => {
-      document.removeEventListener('click', this.hideDropdownMenu);
-    });
   }
 
   updateStat(e) {
@@ -113,30 +58,6 @@ componentDidMount() {
 
     return (
       <form className="new-character-setup-form" onSubmit={this.handleSubmit}>
-
-        <label>Character Name: 
-          <input
-            type="string"
-            defaultValue={currentCharacter.name}
-            onChange={this.update('name')}
-          />
-        </label>
-        
-        <br></br>
-
-        <label>Character Type:
-          <select 
-            defaultValue={currentCharacter.character_type} 
-            required
-            onChange={this.update('character_type')}>
-            <option value="" disabled defaultValue>Pick One</option>
-            <option value="mage">Mage</option>
-            <option value="grog">Grog</option>
-            <option value="companion">Companion</option>
-            <option value="npc">NPC</option>
-          </select>
-        </label>
-
         <br></br>
 
         <div className="characterStats">
