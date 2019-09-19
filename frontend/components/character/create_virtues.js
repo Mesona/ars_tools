@@ -69,47 +69,18 @@ class CharacterCreateVirtues extends React.Component {
     };
   }
 
-  // handleVirtue(e, virtue) {
   handleVirtue(e, virtue) {
     let checked = e.target.checked || null;
 
-    // let virtue = {};
-    // virtue.name = virtue;
-    // virtue.id = virtue.id;
     let { currentVirtues } = this.state;
     if (checked) {
       currentVirtues[virtue.id] = virtue;
       this.setState({currentVirtues: currentVirtues});
     } else {
       let currentVirtueID = virtue.id;
-      console.log("CirtueID: " + currentVirtueID)
-      delete currentVirtues.currentVirtueID;
+      delete currentVirtues[currentVirtueID];
       this.setState({currentVirtues: currentVirtues});
     }
-
-    // console.log("Current virtues: " + this.state.currentVirtues);
-    console.log(this.state.currentVirtues);
-
-
-
-
-    // let name = virtue.name;
-    // let id = virtue.id;
-    // let { currentVirtues } = this.state;
-    // if (currentVirtues[name] === id) {
-    //   delete currentVirtues[name];
-    //   this.setState({
-    //     currentVirtues,
-    //   });
-    //   document.getElementById(virtue.id).style.background = "";
-    // } else {
-    //   currentVirtues[name] = id;
-    //   this.setState({
-    //     currentVirtues,
-    //   });
-    //   document.getElementById(virtue.id).style.background = "purple";
-    // }
-
   }
 
   validation(virtue) {
