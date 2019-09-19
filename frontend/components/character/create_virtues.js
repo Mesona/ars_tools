@@ -19,19 +19,17 @@ class CharacterCreateVirtues extends React.Component {
     minorVirtues: 0,
     currentVirtues: {},
     currentFlaws: {},
-    virtuePointText: "alskdvlaskd",
+    virtuePointText: "",
    };
 
    this.handleSubmit = this.handleSubmit.bind(this);
    this.update = this.update.bind(this);
    this.handleVirtue = this.handleVirtue.bind(this);
-  //  this.handleFlaw = this.handleFlaw.bind(this);
    this.validation = this.validation.bind(this);
    this.establishVirtues = this.establishVirtues.bind(this);
  } 
 
  componentDidMount() {
-    // this.props.characterId === null  ? '' :
       this.props.requestCharacter(this.props.characterId)
         .then((response) => {
           this.setState({
@@ -117,8 +115,7 @@ class CharacterCreateVirtues extends React.Component {
 
     // Conditional validations
     if (this.state.currentVirtues.wealthy === true) {
-      if (flaw.name === "Poor" ||
-        virtue.name === "Custos" ||
+      if (virtue.name === "Custos" ||
         virtue.name === "Covenfolk"
       ) {
         return "disabled";
@@ -133,52 +130,37 @@ class CharacterCreateVirtues extends React.Component {
       }
 
     } else if (this.state.currentVirtues.custos === true) {
-      if (virtue.name === "Wealthy" ||
-        virtue.name === "Poor"
-      ) {
+      if (virtue.name === "Wealthy") {
         return "disabled";
       }
 
     } else if (this.state.currentVirtues.covenfolk === true) {
-      if (virtue.name === "Wealthy" ||
-        virtue.name === "Poor"
-      ) {
+      if (virtue.name === "Wealthy") {
         return false;
       }
 
     } else if (this.state.currentVirtues["Giant Blood"]=== true) {
-      if (virtue.name === "Large" ||
-        virtue.name === "Small Frame" ||
-        virtue.name === "Dwarf"
-      ) {
+      if (virtue.name === "Large") {
         return false;
       }
 
     } else if (this.state.currentVirtues["Large"] === true) {
-      if (virtue.name === "Giant Blood" ||
-        virtue.name === "Small Frame" ||
-        virtue.name === "Dwarf"
-      ) {
+      if (virtue.name === "Giant Blood") {
         return false;
       }
 
     } else if (this.state.currentFlaws.small_frame === true) {
       if (virtue.name === "Large" ||
-        virtue.name === "Giant Blood" ||
-        virtue.name === "Dwarf"
-      ) {
+        virtue.name === "Giant Blood") {
         return false;
       }
 
     } else if (this.state.currentFlaws.dwarf === true) {
       if (virtue.name === "Large" ||
-        virtue.name === "Small Frame" ||
-        virtue.name === "Giant Blood"
-      ) {
+      virtue.name === "Giant Blood") {
         return false;
       }
     }
-
 
     // Necessary validations
     // If have "Diedne Magic" need to have "Dark Secret"
@@ -232,15 +214,6 @@ class CharacterCreateVirtues extends React.Component {
       hermeticVirtues = this.state.virtues.filter( e => e.virtue_type === "Hermetic");
       supernaturalVirtues = this.state.virtues.filter( e => e.virtue_type === "Supernatural");
       socialStatusVirtues = this.state.virtues.filter(e => e.virtue_type === "Social Status");
-    }
-
-    if (this.state.flaws !== null) {
-      generalFlaws = this.state.flaws.filter( e => e.flaw_type === "General");
-      supernaturalFlaws = this.state.flaws.filter( e => e.flaw_type === "Supernatural");
-      personalityFlaws = this.state.flaws.filter( e => e.flaw_type === "Personality");
-      storyFlaws = this.state.flaws.filter( e => e.flaw_type === "Story");
-      hermeticFlaws = this.state.flaws.filter( e => e.flaw_type === "Hermetic");
-      socialStatusFlaws = this.state.flaws.filter( e => e.flaw_type === "Social Status");
     }
 
     return (
@@ -458,213 +431,6 @@ class CharacterCreateVirtues extends React.Component {
               </div>
             )}
           </div>
-        </div>
-
-        <p>Remaining Flaw Points Required: {this.state.currentVirtuePoints - this.state.flawPoints}</p>
-        <br></br>
-        <p>Flaws</p>
-        <hr></hr>
-
-        <p>General:</p>
-        <hr></hr>
-        <div className="create-virtues-parent">
-
-          <div className="major"><p>Major Flaws:</p>
-            {generalFlaws === undefined ? '' : 
-              generalFlaws.filter( e => e.major === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="minor"><p>Minor Flaws:</p>
-            {generalFlaws === undefined ? '' : 
-              generalFlaws.filter( e => e.major === false).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="free"><p>Free Flaws:</p>
-            {generalFlaws === undefined ? '' : 
-              generalFlaws.filter( e => e.free === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-        </div>
-
-        <p>Supernatural:</p>
-        <hr></hr>
-        <div className="create-virtues-parent">
-
-          <div className="major"><p>Major Flaws:</p>
-            {supernaturalFlaws === undefined ? '' : 
-              supernaturalFlaws.filter( e => e.major === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="minor"><p>Minor Flaws:</p>
-            {supernaturalFlaws === undefined ? '' : 
-              supernaturalFlaws.filter( e => e.major === false).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="free"><p>Free Flaws:</p>
-            {supernaturalFlaws === undefined ? '' : 
-              supernaturalFlaws.filter( e => e.free === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-        </div>
-
-
-        <p>Personality:</p>
-        <hr></hr>
-        <div className="create-virtues-parent">
-
-          <div className="major"><p>Major Flaws:</p>
-            {personalityFlaws === undefined ? '' : 
-              personalityFlaws.filter( e => e.major === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="minor"><p>Minor Flaws:</p>
-            {personalityFlaws === undefined ? '' : 
-              personalityFlaws.filter( e => e.major === false).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="free"><p>Free Flaws:</p>
-            {personalityFlaws === undefined ? '' : 
-              personalityFlaws.filter( e => e.free === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-        </div>
-
-
-        <p>Story:</p>
-        <hr></hr>
-        <div className="create-virtues-parent">
-
-          <div className="major"><p>Major Flaws:</p>
-            {storyFlaws === undefined ? '' : 
-              storyFlaws.filter( e => e.major === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="minor"><p>Minor Flaws:</p>
-            {storyFlaws === undefined ? '' : 
-              storyFlaws.filter( e => e.major === false).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="free"><p>Free Flaws:</p>
-            {storyFlaws === undefined ? '' : 
-              storyFlaws.filter( e => e.free === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-        </div>
-
-
-        <p>Hermetic:</p>
-        <hr></hr>
-        <div className="create-virtues-parent">
-
-          <div className="major"><p>Major Flaws:</p>
-            {hermeticFlaws === undefined ? '' : 
-              hermeticFlaws.filter( e => e.major === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="minor"><p>Minor Flaws:</p>
-            {hermeticFlaws === undefined ? '' : 
-              hermeticFlaws.filter( e => e.major === false).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="free"><p>Free Flaws:</p>
-            {hermeticFlaws === undefined ? '' : 
-              hermeticFlaws.filter( e => e.free === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-        </div>
-
-
-        <p>Social Status:</p>
-        <hr></hr>
-        <div className="create-virtues-parent">
-
-          <div className="major"><p>Major Flaws:</p>
-            {socialStatusFlaws === undefined ? '' : 
-              socialStatusFlaws.filter( e => e.major === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="minor"><p>Minor Flaws:</p>
-            {socialStatusFlaws === undefined ? '' : 
-              socialStatusFlaws.filter( e => e.major === false).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
-          <div className="free"><p>Free Flaws:</p>
-            {socialStatusFlaws === undefined ? '' : 
-              socialStatusFlaws.filter( e => e.free === true).map( flaw => 
-                <div className="create-flaw-hover" key={flaw.id}>
-                  <CharacterCreateFlaw flaw={flaw} />
-                </div>
-            )}
-          </div>
-
         </div>
 
       </div>
