@@ -69,46 +69,25 @@ class CharacterCreateVirtues extends React.Component {
     };
   }
 
-  // handleVirtue(e, virtue) {
   handleVirtue(e, virtue) {
-    let checked = e.target.checked || null;
-
-    // let virtue = {};
-    // virtue.name = virtue;
-    // virtue.id = virtue.id;
+    // e.stopPropagation();
+    e.preventDefault();
+    let name = virtue.name;
+    let id = virtue.id;
     let { currentVirtues } = this.state;
-    if (checked) {
-      currentVirtues[virtue.id] = virtue;
-      this.setState({currentVirtues: currentVirtues});
+    if (currentVirtues[name] === id) {
+      delete currentVirtues[name];
+      this.setState({
+        currentVirtues,
+      });
+      document.getElementById(virtue.id).style.background = "";
     } else {
-      let currentVirtueID = virtue.id;
-      console.log("CirtueID: " + currentVirtueID)
-      delete currentVirtues.currentVirtueID;
-      this.setState({currentVirtues: currentVirtues});
+      currentVirtues[name] = id;
+      this.setState({
+        currentVirtues,
+      });
+      document.getElementById(virtue.id).style.background = "purple";
     }
-
-    // console.log("Current virtues: " + this.state.currentVirtues);
-    console.log(this.state.currentVirtues);
-
-
-
-
-    // let name = virtue.name;
-    // let id = virtue.id;
-    // let { currentVirtues } = this.state;
-    // if (currentVirtues[name] === id) {
-    //   delete currentVirtues[name];
-    //   this.setState({
-    //     currentVirtues,
-    //   });
-    //   document.getElementById(virtue.id).style.background = "";
-    // } else {
-    //   currentVirtues[name] = id;
-    //   this.setState({
-    //     currentVirtues,
-    //   });
-    //   document.getElementById(virtue.id).style.background = "purple";
-    // }
 
   }
 
@@ -146,7 +125,7 @@ class CharacterCreateVirtues extends React.Component {
 
     // Conditional validations
     if (this.state.currentVirtues.wealthy === true) {
-      if (flaw.name === "Poor" ||
+      if (virtue.name === "Poor" ||
         virtue.name === "Custos" ||
         virtue.name === "Covenfolk"
       ) {
@@ -286,11 +265,10 @@ class CharacterCreateVirtues extends React.Component {
 
           <div className="major">
             {specialVirtues === undefined ? '' : specialVirtues.map( virtue => 
-              <div className="create-virtue-hover" key={virtue.id}>
-              {/* <div className="create-virtue-hover" key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}> */}
+              // <div className="create-virtue-hover" key={virtue.id} onClick={ () => this.handleVirtue(virtue)}>
+              <div className="create-virtue-hover" key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
                   <label>
-                    {/* <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input> */}
-                    <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} onChange={(e) => this.handleVirtue(e, virtue)}></input>
+                    <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input>
                     { virtue.special === true ?
                       <div>
                         <UniversalVirtue virtue={virtue} />

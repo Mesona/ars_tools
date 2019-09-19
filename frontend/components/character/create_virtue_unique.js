@@ -10,9 +10,9 @@ class UniqueVirtue extends React.Component {
     
     let greatCharacteristics = {};
     let poorCharacteristics = {};
-    console.log('/////')
-    console.log(this.props)
-    console.log('/////')
+    // console.log('/////')
+    // console.log(this.props)
+    // console.log('/////')
 
     // Stat checking for various virtues and flaws
     if (currentCharacter.intelligence >= 3 && currentCharacter.intelligence < 5) {
