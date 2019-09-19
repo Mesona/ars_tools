@@ -145,25 +145,16 @@ componentDidMount() {
 
             <br></br>
             <div>
-              <span>Intelligence:</span>
-              {/* TODO: Move stats to separate page after virtues and flaws */}
-              {/* TODO: Have virtues on same page as character type, but virtues don't appear until character type is chosen */}
-              {/* TODO: Fix stat button, because any time ANY of them are clicked, the intelligence dropdown flashes blue as well */}
-              <button onClick={this.showDropdownMenu} id="intelligence">{this.state.currentCharacter.intelligence}
-                { this.state.displayMenu === "intelligence" ? (
-                  <ul>
-                    <li value="-3">-3</li>
-                    <li value="-2">-2</li>
-                    <li value="-1">-1</li>
-                    <li value="0">0</li>
-                    <li value="1">1</li>
-                    <li value="2">2</li>
-                    <li value="3">3</li>
-                  </ul>
-                ) : (
-                  null
-                )}
-              </button>
+            <label htmlFor="intelligence">Intelligence:</label>
+              <select id="intelligence" value={this.state.currentCharacter.intelligence} onChange={this.updateStat}>
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
             </div>
           
             <div>
@@ -177,136 +168,85 @@ componentDidMount() {
                 <option value="2">2</option>
                 <option value="3">3</option>
               </select>
-              {/* <button onClick={this.showDropdownMenu} id="perception">{this.state.currentCharacter.perception}
-                { this.state.displayMenu === "perception" ? (
-                  <ul>
-                    <li value="-3">-3</li>
-                    <li value="-2">-2</li>
-                    <li value="-1">-1</li>
-                    <li value="0">0</li>
-                    <li value="1">1</li>
-                    <li value="2">2</li>
-                    <li value="3">3</li>
-                  </ul>
-                ) : (
-                  null
-                )}
-              </button> */}
             </div>
             
             <div>
-              <span>Strength:</span>
-              <button onClick={this.showDropdownMenu} id="strength">{this.state.currentCharacter.strength}
-                { this.state.displayMenu === "strength" ? (
-                  <ul>
-                    <li value="-3">-3</li>
-                    <li value="-2">-2</li>
-                    <li value="-1">-1</li>
-                    <li value="0">0</li>
-                    <li value="1">1</li>
-                    <li value="2">2</li>
-                    <li value="3">3</li>
-                  </ul>
-                ) : (
-                  null
-                )}
-              </button>
+            <label htmlFor="strength">Strength:</label>
+              <select id="strength" value={this.state.currentCharacter.strength} onChange={this.updateStat}>
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
             </div>
 
             <div>
-              <span>Stamina:</span>
-              <button onClick={this.showDropdownMenu} id="stamina">{this.state.currentCharacter.stamina}
-                { this.state.displayMenu === "stamina" ? (
-                  <ul>
-                    <li value="-3">-3</li>
-                    <li value="-2">-2</li>
-                    <li value="-1">-1</li>
-                    <li value="0">0</li>
-                    <li value="1">1</li>
-                    <li value="2">2</li>
-                    <li value="3">3</li>
-                  </ul>
-                ) : (
-                  null
-                )}
-              </button>
+            <label htmlFor="stamina">Stamina:</label>
+              <select id="stamina" value={this.state.currentCharacter.stamina} onChange={this.updateStat}>
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
             </div> 
 
             
             <div>
-              <span>Presence:</span>
-              <button onClick={this.showDropdownMenu} id="stamina">{this.state.currentCharacter.stamina}
-                { this.state.displayMenu === "stamina" ? (
-                  <ul>
-                    <li value="-3">-3</li>
-                    <li value="-2">-2</li>
-                    <li value="-1">-1</li>
-                    <li value="0">0</li>
-                    <li value="1">1</li>
-                    <li value="2">2</li>
-                    <li value="3">3</li>
-                  </ul>
-                ) : (
-                  null
-                )}
-              </button>
+            <label htmlFor="presence">Presence:</label>
+              <select id="presence" value={this.state.currentCharacter.presence} onChange={this.updateStat}>
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
             </div>
             
             <div>
-              <span>Communication:</span>
-              <button onClick={this.showDropdownMenu} id="communication">{this.state.currentCharacter.communication}
-                { this.state.displayMenu === "communication" ? (
-                  <ul>
-                    <li value="-3">-3</li>
-                    <li value="-2">-2</li>
-                    <li value="-1">-1</li>
-                    <li value="0">0</li>
-                    <li value="1">1</li>
-                    <li value="2">2</li>
-                    <li value="3">3</li>
-                  </ul>
-                ) : (
-                  null
-                )}
-              </button>
+            <label htmlFor="communication">Communication:</label>
+              <select id="communication" value={this.state.currentCharacter.communication} onChange={this.updateStat}>
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
             </div>
             
             <div>
-              <span>Dexterity:</span>
-              <button onClick={this.showDropdownMenu} id="dexterity">{this.state.currentCharacter.dexterity}
-                { this.state.displayMenu === "dexterity" ? (
-                  <ul>
-                    <li value="-3">-3</li>
-                    <li value="-2">-2</li>
-                    <li value="-1">-1</li>
-                    <li value="0">0</li>
-                    <li value="1">1</li>
-                    <li value="2">2</li>
-                    <li value="3">3</li>
-                  </ul>
-                ) : (
-                  null
-                )}
-              </button>
+            <label htmlFor="dexterity">Dexterity:</label>
+              <select id="dexterity" value={this.state.currentCharacter.dexterity} onChange={this.updateStat}>
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
             </div>
             
             <div>
-              <span>Quickness:</span>
-              <button onClick={this.showDropdownMenu} id="quickness">{this.state.currentCharacter.quickness}
-                { this.state.displayMenu === "quickness" ? (
-                  <ul>
-                    <li value="-3">-3</li>
-                    <li value="-2">-2</li>
-                    <li value="-1">-1</li>
-                    <li value="0">0</li>
-                    <li value="1">1</li>
-                    <li value="2">2</li>
-                    <li value="3">3</li>
-                  </ul>
-                ) : (
-                  null
-                )}
-              </button>
+            <label htmlFor="quickness">Quickness:</label>
+              <select id="quickness" value={this.state.currentCharacter.quickness} onChange={this.updateStat}>
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
             </div>
             
             <input type="submit"></input>
