@@ -10,7 +10,8 @@ class CharacterCreateStats extends React.Component {
     currentCharacter: {
       character_type: "",
       name: "",
-      user_id: this.props.currentUser.id,
+      // user_id: this.props.currentUser.id,
+      user_id: null,
       intelligence: 0,
       perception: 0,
       strength: 0,
@@ -51,8 +52,8 @@ componentDidMount() {
         this.setState({
           currentCharacter: {...response.character},
         });
-      }
-  );
+    });
+}
 
  handleSubmit(e) {
     e.preventDefault();
@@ -99,15 +100,11 @@ componentDidMount() {
   }
 
   updateStat(e) {
-    if (e !== undefined) {
-      if (e.target.id !== "") {
-        this.setState({currentStat: e.target.id});
-      } else if (e.target.value !== "" && e.target.value !== undefined) {
-        let currentCharacter = this.state.currentCharacter;
-        currentCharacter[this.state.currentStat] = e.target.value;
-        this.setState({currentCharacter: {...currentCharacter}});
-      }
-    }
+    if (e.currentTarget.value !== undefined) {
+      let currentCharacter = this.state.currentCharacter;
+      currentCharacter[e.target.id] = e.currentTarget.value;
+      this.setState({currentCharacter: {...currentCharacter}});
+    } 
   }
 
   render () {
@@ -170,8 +167,17 @@ componentDidMount() {
             </div>
           
             <div>
-              <span>Perception:</span>
-              <button onClick={this.showDropdownMenu} id="perception">{this.state.currentCharacter.perception}
+              <label htmlFor="perception">Perception:</label>
+              <select id="perception" value={this.state.currentCharacter.perception} onChange={this.updateStat}>
+                <option value="-3">-3</option>
+                <option value="-2">-2</option>
+                <option value="-1">-1</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+              {/* <button onClick={this.showDropdownMenu} id="perception">{this.state.currentCharacter.perception}
                 { this.state.displayMenu === "perception" ? (
                   <ul>
                     <li value="-3">-3</li>
@@ -185,7 +191,7 @@ componentDidMount() {
                 ) : (
                   null
                 )}
-              </button>
+              </button> */}
             </div>
             
             <div>
