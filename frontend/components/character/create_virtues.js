@@ -37,7 +37,7 @@ class CharacterCreateVirtues extends React.Component {
             virtuePoints: (response.character.character_type === "mage" ? 10 : 
               response.character.character_type === "companion" ? 10 : 3),
             },
-            this.establishVirtues
+            // this.establishVirtues
           );
         }
     );
@@ -68,6 +68,9 @@ class CharacterCreateVirtues extends React.Component {
   }
 
   handleVirtue(e, virtue) {
+    console.log(this.state)
+    console.log("Props: ")
+    console.log(this.props)
     let checked = e.target.checked || null;
 
     let { currentVirtues } = this.state;
@@ -230,7 +233,7 @@ class CharacterCreateVirtues extends React.Component {
                     { virtue.special === true ?
                       <React.Fragment>
                         <UniversalVirtue virtue={virtue} />
-                        <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
+                        {/* <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} /> */}
                       </React.Fragment>
                       :
                       <UniversalVirtue virtue={virtue} />
@@ -254,7 +257,7 @@ class CharacterCreateVirtues extends React.Component {
                     { virtue.special === true ?
                       <>
                         <UniversalVirtue virtue={virtue} />
-                        <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
+                        {/* <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} /> */}
                       </>
                       :
                       <UniversalVirtue virtue={virtue} />
@@ -274,7 +277,7 @@ class CharacterCreateVirtues extends React.Component {
                   { virtue.special === true ?
                     <>
                       <UniversalVirtue virtue={virtue} />
-                      <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
+                      {/* <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} /> */}
                     </>
                     :
                     <UniversalVirtue virtue={virtue} />
@@ -294,7 +297,7 @@ class CharacterCreateVirtues extends React.Component {
                   { virtue.special === true ?
                     <div>
                       <UniversalVirtue virtue={virtue} />
-                      <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
+                      {/* <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} /> */}
                     </div>
                     :
                     <UniversalVirtue virtue={virtue} />

@@ -3,7 +3,25 @@ import React from 'react';
 class UniqueVirtue extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      greatCharacteristics: [],
+      affinityWithAbility: [],
+      affinityWithArt: [],
+    };
+
+    this.test = this.test.bind(this);
   }
+
+  componentDidMount() {
+
+  }
+
+  test(e) {
+    console.log(this.props)
+    console.log(e.target.value)
+  }
+
 
   render () {
     const { currentCharacter, virtue } = this.props;
@@ -67,7 +85,11 @@ class UniqueVirtue extends React.Component {
       case "Great (Characteristic)":
         return (
           <>
-            Test
+            <select value={"something"} onChange={(e) => this.test(e)}>
+              <option value="strength">Strength</option>
+              <option value="intelligence">Intelligence</option>
+              <option value="stamina">Stamina</option>
+            </select>
             {/* {greatCharacteristics} */}
             {/* <select>
               {greatCharacteristics.forEach(characteristic => (

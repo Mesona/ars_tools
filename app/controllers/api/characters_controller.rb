@@ -7,7 +7,7 @@ class Api::CharactersController < ApplicationController
   end
 
   def show
-    @character = Character.includes(:abilities, :ability_associations).find(params[:id])
+    @character = Character.includes(:ability_associations, :virtue_associations).find(params[:id])
     if @character
       render :show
     else

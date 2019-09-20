@@ -8,3 +8,10 @@ json.ability_associations @character.ability_associations.each do |ability_assoc
   json.ability_description ability_association.ability_description
   json.experience ability_association.exp
 end
+
+json.virtue_associations @character.virtue_associations.each do |virtue_association|
+  json.virtue_id virtue_association.virtue.id
+  json.virtue_name virtue_association.virtue.name
+  json.special_one virtue_association.special_one
+  json.special_two virtue_association.special_two
+end
