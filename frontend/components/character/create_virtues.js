@@ -233,7 +233,7 @@ class CharacterCreateVirtues extends React.Component {
                     { virtue.special === true ?
                       <React.Fragment>
                         <UniversalVirtue virtue={virtue} />
-                        {/* <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} /> */}
+                        <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
                       </React.Fragment>
                       :
                       <UniversalVirtue virtue={virtue} />
@@ -257,7 +257,7 @@ class CharacterCreateVirtues extends React.Component {
                     { virtue.special === true ?
                       <>
                         <UniversalVirtue virtue={virtue} />
-                        {/* <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} /> */}
+                        <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
                       </>
                       :
                       <UniversalVirtue virtue={virtue} />
@@ -277,7 +277,7 @@ class CharacterCreateVirtues extends React.Component {
                   { virtue.special === true ?
                     <>
                       <UniversalVirtue virtue={virtue} />
-                      {/* <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} /> */}
+                      {/* <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} characterVirtues={currentCharacter.virtue_associations} /> */}
                     </>
                     :
                     <UniversalVirtue virtue={virtue} />
@@ -297,7 +297,7 @@ class CharacterCreateVirtues extends React.Component {
                   { virtue.special === true ?
                     <div>
                       <UniversalVirtue virtue={virtue} />
-                      {/* <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} /> */}
+                      <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
                     </div>
                     :
                     <UniversalVirtue virtue={virtue} />
