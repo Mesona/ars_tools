@@ -8,8 +8,8 @@ class UniqueVirtue extends React.Component {
       greatCharacteristics: [],
       affinityWithAbility: [],
       affinityWithArt: [],
-      special_one: null,
-      special_two: null,
+      special_one: this.props.special_one || "",
+      special_two: this.props.special_two || "",
     };
 
     this.test = this.test.bind(this);
@@ -40,9 +40,6 @@ class UniqueVirtue extends React.Component {
     
     let greatCharacteristics = {};
     let poorCharacteristics = {};
-    // console.log('/////')
-    // console.log(this.props)
-    // console.log('/////')
 
     // Stat checking for various virtues and flaws
     if (currentCharacter !== null) {
@@ -101,19 +98,30 @@ class UniqueVirtue extends React.Component {
           <>
 
             <label htmlFor="special_one">
-              {/* <select value={"something"} onChange={(e) => this.test(e)}> */}
-              <select value={"something"} onChange={(e) => this.setSpecial(e, "one")}>
-                <option name="special_one" className="special_one" value="strength">Strength</option>
+              <select value={this.state.special_one} onChange={(e) => this.setSpecial(e, "one")} onClick={(e) => this.props.handleClick(e, this.state)}>
+                <option name="special_one" value="">-- Select A Stat --</option>
                 <option name="special_one" value="intelligence">Intelligence</option>
+                <option name="special_one" value="perception">Perception</option>
+                <option name="special_one" value="strength">Strength</option>
                 <option name="special_one" value="stamina">Stamina</option>
+                <option name="special_one" value="presence">Presence</option>
+                <option name="special_one" value="communication">Communication</option>
+                <option name="special_one" value="dexterity">Dexterity</option>
+                <option name="special_one" value="quickness">Quickness</option>
               </select>
             </label>
 
             <label htmlFor="special_two" onChange={(e) => this.setSpecial(e, "two")}>
-              <select value={"something2"} onChange={(e) => this.test(e)}>
-                <option htmlFor="special_two" value="strength">Strength</option>
-                <option htmlFor="special_two" value="intelligence">Intelligence</option>
-                <option htmlFor="special_two" value="stamina">Stamina</option>
+              <select value={this.state.special_two} onChange={(e) => this.test(e)}>
+                <option name="special_two" value="">-- Select A Stat --</option>
+                <option name="special_two" value="intelligence">Intelligence</option>
+                <option name="special_two" value="perception">Perception</option>
+                <option name="special_two" value="strength">Strength</option>
+                <option name="special_two" value="stamina">Stamina</option>
+                <option name="special_two" value="presence">Presence</option>
+                <option name="special_two" value="communication">Communication</option>
+                <option name="special_two" value="dexterity">Dexterity</option>
+                <option name="special_two" value="quickness">Quickness</option>
               </select>
             </label>
 
