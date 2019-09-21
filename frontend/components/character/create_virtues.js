@@ -34,6 +34,7 @@ class CharacterCreateVirtues extends React.Component {
         .then((response) => {
           this.setState({
             currentCharacter: {...response.character},
+            currentVirtues: response.character.virtues,
             virtuePoints: (response.character.character_type === "mage" ? 10 : 
               response.character.character_type === "companion" ? 10 : 3),
             },
@@ -68,14 +69,24 @@ class CharacterCreateVirtues extends React.Component {
   }
 
   handleVirtue(e, virtue) {
-    console.log(this.state)
-    console.log("Props: ")
-    console.log(this.props)
+    // console.log(this.state)
+    // console.log("Props: ")
+    // console.log(this.props)
+    // console.log("eeeeeeeeeeeeeee")
+    // console.log(e.currentTarget)
+    // console.log(e.target)
+    // console.log("VIRTUUUUUUUUUUE")
+    // console.log(virtue)
+
     let checked = e.target.checked || null;
 
     let { currentVirtues } = this.state;
     if (checked) {
-      currentVirtues[virtue.id] = virtue;
+      currentVirtues[virtue.id] = {
+        name: virtue.name,
+        // special_one: virtue.special_one,
+        // special_two: virtue.special_two,
+      };
       this.setState({currentVirtues: currentVirtues});
     } else {
       let currentVirtueID = virtue.id;
@@ -277,7 +288,7 @@ class CharacterCreateVirtues extends React.Component {
                   { virtue.special === true ?
                     <>
                       <UniversalVirtue virtue={virtue} />
-                      {/* <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} characterVirtues={currentCharacter.virtue_associations} /> */}
+                      <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} />
                     </>
                     :
                     <UniversalVirtue virtue={virtue} />
