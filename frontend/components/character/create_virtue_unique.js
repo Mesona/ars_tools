@@ -14,11 +14,10 @@ class UniqueVirtue extends React.Component {
 
     this.test = this.test.bind(this);
     this.setSpecial = this.setSpecial.bind(this);
+    this.enableSpecial = this.enableSpecial.bind(this);
   }
 
   componentDidMount() {
-    console.log("PROPS: ")
-    console.log(this.props.virtue.name)
 
   }
 
@@ -33,6 +32,17 @@ class UniqueVirtue extends React.Component {
       this.setState({special_one: e.target.value});
     } else if (specialSpot === "two") {
       this.setState({special_two: e.target.value});
+    }
+  }
+
+  enableSpecial() {
+    let baseValidation = this.props.validateVirtue(this.props.virtue);
+
+    // If the virtue is not disabled by some "hard set" lock
+    if (baseValidation !== "disabled") {
+      if (this.state.special_one === "" || this.special_two === "") {
+        return "disabled";
+      }
     }
 
   }
@@ -98,7 +108,7 @@ class UniqueVirtue extends React.Component {
       case "Great (Characteristic)":
         return (
           <>
-            <input className="create-virtue-checkbox" type="checkbox" disabled={this.props.validateVirtue(this.props.virtue)}></input>
+            <input className="create-virtue-checkbox" type="checkbox" disabled={this.enableSpecial()}></input>
 
             { virtue.name }
 
