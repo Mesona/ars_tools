@@ -211,6 +211,7 @@ class CharacterCreateVirtues extends React.Component {
     console.log("child data: ")
     console.log(e.target)
     console.log(childData)
+    console.log("Specials: " + childData.special_one + ", " + childData.special_two)
   }
 
   render () {
