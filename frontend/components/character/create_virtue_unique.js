@@ -17,6 +17,8 @@ class UniqueVirtue extends React.Component {
   }
 
   componentDidMount() {
+    console.log("PROPS: ")
+    console.log(this.props.virtue.name)
 
   }
 
@@ -96,6 +98,9 @@ class UniqueVirtue extends React.Component {
       case "Great (Characteristic)":
         return (
           <>
+            <input className="create-virtue-checkbox" type="checkbox" disabled={this.props.validateVirtue(this.props.virtue)}></input>
+
+            { virtue.name }
 
             <label htmlFor="special_one">
               <select value={this.state.special_one} onChange={(e) => this.setSpecial(e, "one")} onClick={(e) => this.props.handleClick(e, this.state)}>

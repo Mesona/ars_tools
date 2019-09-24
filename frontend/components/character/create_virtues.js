@@ -153,34 +153,39 @@ class CharacterCreateVirtues extends React.Component {
 
     } else if (this.state.currentVirtues.covenfolk === true) {
       if (virtue.name === "Wealthy") {
-        return false;
+        return "disabled";
       }
 
     } else if (this.state.currentVirtues["Giant Blood"]=== true) {
       if (virtue.name === "Large") {
-        return false;
+        return "disabled";
       }
 
     } else if (this.state.currentVirtues["Large"] === true) {
       if (virtue.name === "Giant Blood") {
-        return false;
+        return "disabled";
       }
 
     } else if (this.state.currentFlaws.small_frame === true) {
       if (virtue.name === "Large" ||
         virtue.name === "Giant Blood") {
-        return false;
+        return "disabled";
       }
 
     } else if (this.state.currentFlaws.dwarf === true) {
       if (virtue.name === "Large" ||
       virtue.name === "Giant Blood") {
-        return false;
+        return "disabled";
       }
     }
 
     // Necessary validations
     // If have "Diedne Magic" need to have "Dark Secret"
+
+    // if ((virtue.special_one !== undefined && virtue.special_one === "") ||
+    //     (virtue.special_two !== undefined && virtue.special_two === "")) {
+    //       return "disabled";
+    // }
   }
 
   establishVirtues() {
@@ -292,22 +297,34 @@ class CharacterCreateVirtues extends React.Component {
           <div className="minor"><p>Minor Virtues:</p>
             {generalVirtues === undefined ? '' :
               generalVirtues.filter( e => e.major === false).map( virtue => 
-              // <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-              <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                <label>
-                  <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input>
-                  { virtue.special === true ?
-                    <>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                  <label>
+                    { virtue.special === true ?
+                      <>
+                        {/* <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} onClick={() => console.log(virtue)} ></input> */}
+                        {/* <UniversalVirtue virtue={virtue} /> */}
+                        <UniqueVirtue virtue={virtue} special_one={virtue.special_one} validateVirtue={this.validation} special_two={virtue.special_two} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleUniqueVirtue} />
+                      </>
+                      :
                       <UniversalVirtue virtue={virtue} />
-                      <UniqueVirtue virtue={virtue} special_one={virtue.special_one} special_two={virtue.special_two} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleUniqueVirtue} />
-                      {/* <UniqueVirtue virtue={virtue} special_one={virtue.special_one} special_two={virtue.special_two} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} onClick={(e) => this.handleVirtue(e, virtue, childData)} /> */}
-                    </>
-                    :
-                    <UniversalVirtue virtue={virtue} />
-                  }
-                  <hr></hr>
-                </label>
-              </div>
+                    }
+                    <hr></hr>
+                  </label>
+                </div>
+              // <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+              //   <label>
+              //     <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} onClick={() => console.log(virtue)} ></input>
+              //     { virtue.special === true ?
+              //       <>
+              //         <UniversalVirtue virtue={virtue} />
+              //         <UniqueVirtue virtue={virtue} special_one={virtue.special_one} special_two={virtue.special_two} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleUniqueVirtue} />
+              //       </>
+              //       :
+              //       <UniversalVirtue virtue={virtue} />
+              //     }
+              //     <hr></hr>
+              //   </label>
+              // </div>
             )}
           </div>
 
