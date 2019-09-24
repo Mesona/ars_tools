@@ -21,10 +21,10 @@ class UniqueVirtue extends React.Component {
 
   }
 
-  test(e) {
-    console.log(this.props)
-    console.log(e.currentTarget.className)
-    console.log(e.target.name)
+  test() {
+    // console.log(this.props)
+    console.log("TEST")
+    console.log(this.props.characterVirtues)
   }
 
   setSpecial(e, specialSpot) {
@@ -108,12 +108,12 @@ class UniqueVirtue extends React.Component {
       case "Great (Characteristic)":
         return (
           <>
-            <input className="create-virtue-checkbox" type="checkbox" disabled={this.enableSpecial()}></input>
+            <input className="create-virtue-checkbox" type="checkbox" disabled={this.enableSpecial()} onClick={(e) => this.props.handleClick(e, this.props.virtue, this.state)}></input>
 
             { virtue.name }
 
             <label htmlFor="special_one">
-              <select value={this.state.special_one} onChange={(e) => this.setSpecial(e, "one")} onClick={(e) => this.props.handleClick(e, this.state)}>
+              <select value={this.state.special_one} onChange={(e) => this.setSpecial(e, "one")} onMouseOver={() => this.test()} >
                 <option name="special_one" value="">-- Select A Stat --</option>
                 <option name="special_one" value="intelligence">Intelligence</option>
                 <option name="special_one" value="perception">Perception</option>

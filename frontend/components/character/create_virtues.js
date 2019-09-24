@@ -72,23 +72,26 @@ class CharacterCreateVirtues extends React.Component {
   handleVirtue(e, virtue, childData = null) {
     console.log("handling virtue")
     console.log(virtue)
-    // console.log(this.state)
-    // console.log("Props: ")
-    // console.log(this.props)
     // console.log("eeeeeeeeeeeeeee")
     // console.log(e.currentTarget)
     // console.log(e.target)
     // console.log("VIRTUUUUUUUUUUE")
     // console.log(virtue)
 
+    if (childData !== null) {
+      virtue.special_one = childData.special_one;
+      virtue.special_two = childData.special_two;
+    }
+
+    // console.log("Specials: " + childData.special_one + ", " + childData.special_two)
     let checked = e.target.checked || null;
 
     let { currentVirtues } = this.state;
     if (checked) {
       currentVirtues[virtue.id] = {
         name: virtue.name,
-        // special_one: virtue.special_one,
-        // special_two: virtue.special_two,
+        special_one: virtue.special_one,
+        special_two: virtue.special_two,
       };
       this.setState({currentVirtues: currentVirtues});
     } else {
@@ -301,9 +304,8 @@ class CharacterCreateVirtues extends React.Component {
                   <label>
                     { virtue.special === true ?
                       <>
-                        {/* <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} onClick={() => console.log(virtue)} ></input> */}
-                        {/* <UniversalVirtue virtue={virtue} /> */}
-                        <UniqueVirtue virtue={virtue} special_one={virtue.special_one} validateVirtue={this.validation} special_two={virtue.special_two} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleUniqueVirtue} />
+                        {/* <UniqueVirtue virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleUniqueVirtue} /> */}
+                        <UniqueVirtue virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} />
                       </>
                       :
                       <UniversalVirtue virtue={virtue} />
