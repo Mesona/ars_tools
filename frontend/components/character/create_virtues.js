@@ -27,7 +27,6 @@ class CharacterCreateVirtues extends React.Component {
    this.handleVirtue = this.handleVirtue.bind(this);
    this.validation = this.validation.bind(this);
    this.establishVirtues = this.establishVirtues.bind(this);
-   this.handleUniqueVirtue = this.handleUniqueVirtue.bind(this);
  } 
 
  componentDidMount() {
@@ -215,13 +214,6 @@ class CharacterCreateVirtues extends React.Component {
     }
   }
 
-  handleUniqueVirtue(e, childData) {
-    console.log("child data: ")
-    console.log(e.target)
-    console.log(childData)
-    console.log("Specials: " + childData.special_one + ", " + childData.special_two)
-  }
-
   render () {
 
     const { currentCharacter } = this.state;
@@ -304,7 +296,6 @@ class CharacterCreateVirtues extends React.Component {
                   <label>
                     { virtue.special === true ?
                       <>
-                        {/* <UniqueVirtue virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleUniqueVirtue} /> */}
                         <UniqueVirtue virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} />
                       </>
                       :
@@ -319,7 +310,6 @@ class CharacterCreateVirtues extends React.Component {
               //     { virtue.special === true ?
               //       <>
               //         <UniversalVirtue virtue={virtue} />
-              //         <UniqueVirtue virtue={virtue} special_one={virtue.special_one} special_two={virtue.special_two} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleUniqueVirtue} />
               //       </>
               //       :
               //       <UniversalVirtue virtue={virtue} />
