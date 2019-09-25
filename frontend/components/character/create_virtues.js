@@ -3,6 +3,7 @@ import CharacterCreateVirtue from './create_virtue';
 import CharacterCreateFlaw from './create_flaw';
 import UniversalVirtue from './create_virtue_universal';
 import UniqueVirtue from './create_virtue_unique';
+import UniqueVirtueContainer from './create_virtue_unique_container';
 
 
 class CharacterCreateVirtues extends React.Component {
@@ -184,10 +185,6 @@ class CharacterCreateVirtues extends React.Component {
     // Necessary validations
     // If have "Diedne Magic" need to have "Dark Secret"
 
-    // if ((virtue.special_one !== undefined && virtue.special_one === "") ||
-    //     (virtue.special_two !== undefined && virtue.special_two === "")) {
-    //       return "disabled";
-    // }
   }
 
   establishVirtues() {
@@ -296,7 +293,8 @@ class CharacterCreateVirtues extends React.Component {
                   <label>
                     { virtue.special === true ?
                       <>
-                        <UniqueVirtue virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} />
+                        {/* <UniqueVirtue virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} /> */}
+                        <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} />
                       </>
                       :
                       <UniversalVirtue virtue={virtue} />
@@ -304,19 +302,6 @@ class CharacterCreateVirtues extends React.Component {
                     <hr></hr>
                   </label>
                 </div>
-              // <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-              //   <label>
-              //     <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} onClick={() => console.log(virtue)} ></input>
-              //     { virtue.special === true ?
-              //       <>
-              //         <UniversalVirtue virtue={virtue} />
-              //       </>
-              //       :
-              //       <UniversalVirtue virtue={virtue} />
-              //     }
-              //     <hr></hr>
-              //   </label>
-              // </div>
             )}
           </div>
 
