@@ -8,7 +8,12 @@ const receiveVirtue = virtue => ({
   virtue,
 });
 
-const receiveVirtues = virtues => ({
+// const receiveAllVirtues = () => ({
+//   type: RECEIVE_VIRTUES,
+//   virtues,
+// });
+
+const receiveAllVirtues = (virtues) => ({
   type: RECEIVE_VIRTUES,
   virtues,
 });
@@ -24,17 +29,17 @@ const receiveFlaws = flaws => ({
 });
 
 export const storeVirtue = virtue => (
-  receiveVirtue(virtue)
+  dispatch(receiveVirtue(virtue))
 );
 
-export const storeVirtues = virtues => (
-  receiveVirtues(virtues)
+export const storeVirtues = (virtues) => (
+  dispatch(receiveAllVirtues(virtues))
 );
 
 export const storeFlaw = flaw => (
-  receiveFlaw(flaw)
+  dispatch(receiveFlaw(flaw))
 );
 
 export const storeFlaws = flaws => (
-  receiveFlaws(flaws)
+  dispatch(receiveFlaws(flaws))
 );

@@ -8,7 +8,7 @@ import NavBarContainer from "./nav_bar/nav_bar_container";
 import SideBarContainer from "./side_bar/side_bar_container";
 import HomeContainer from "./home/home_container";
 import CharacterShowContainer from "./character/show_container";
-import CharacterCreateContainer from "./character/create_container";
+import CharacterCreateContainer from "./character/creation/create_container";
 
 const App = () => {
 

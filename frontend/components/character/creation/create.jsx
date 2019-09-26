@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import CharacterCreateInitial from './create_initial';
 import CharacterCreateStats from './create_stats';
 import CharacterCreateVirtues from './create_virtues';
+import CharacterCreateVirtuesContainer from './create_virtues_container';
 
 class CharacterCreate extends React.Component {
   constructor(props) {
@@ -39,12 +40,13 @@ class CharacterCreate extends React.Component {
       );
     } else if ( this.props.page === "virtues" ) {
       return (
-        <CharacterCreateVirtues
+        <CharacterCreateVirtuesContainer
           characterId={characterId}
           requestCharacter={this.props.requestCharacter}
           updateCharacter={this.props.updateCharacter}
           requestAllVirtues={this.props.requestAllVirtues}
           requestAllFlaws={this.props.requestAllFlaws}
+          
         />
       )
     } else if ( this.props.page === "stats" ) {

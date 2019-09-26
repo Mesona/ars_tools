@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { storeVirtue, storeVirtues, storeFlaw, storeFlaws } from '../../actions/create_virtues_and_flaws_actions';
+import { storeVirtue, storeVirtues, storeFlaw, storeFlaws } from '../../../actions/create_virtues_and_flaws_actions';
 import UniqueVirtue from './create_virtue_unique';
 
 const mapStateToProps = (state) => ({

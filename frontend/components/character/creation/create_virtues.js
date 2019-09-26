@@ -1,6 +1,6 @@
 import React from 'react';
 import CharacterCreateVirtue from './create_virtue';
-import CharacterCreateFlaw from './create_flaw';
+import CharacterCreateFlaw from '../create_flaw';
 import UniversalVirtue from './create_virtue_universal';
 import UniqueVirtue from './create_virtue_unique';
 import UniqueVirtueContainer from './create_virtue_unique_container';
@@ -72,6 +72,7 @@ class CharacterCreateVirtues extends React.Component {
   handleVirtue(e, virtue, childData = null) {
     console.log("handling virtue")
     console.log(virtue)
+    console.log(this.props)
     // console.log("eeeeeeeeeeeeeee")
     // console.log(e.currentTarget)
     // console.log(e.target)
@@ -99,6 +100,8 @@ class CharacterCreateVirtues extends React.Component {
       delete currentVirtues[currentVirtueID];
       this.setState({currentVirtues: currentVirtues});
     }
+
+    // this.props.storeVirtues(this.state.currentVirtues);
   }
 
   validation(virtue) {

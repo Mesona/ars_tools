@@ -19,6 +19,7 @@ class UniqueVirtue extends React.Component {
   }
 
   componentDidMount() {
+    // this.props.receiveVirtues
 
   }
 
