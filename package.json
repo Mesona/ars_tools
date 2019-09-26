@@ -12,6 +12,7 @@
     "react-dropdown": "^1.6.4",
     "react-redux": "^6.0.1",
     "react-router-dom": "^5.0.0",
+    "react-select": "^3.0.5",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",

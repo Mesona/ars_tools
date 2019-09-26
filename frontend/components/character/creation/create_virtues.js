@@ -324,7 +324,8 @@ class CharacterCreateVirtues extends React.Component {
                     { virtue.special === true ?
                       <>
                         {/* <UniqueVirtue virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} /> */}
-                        <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} />
+                        {/* <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} /> */}
+                        <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
                       </>
                       :
                       <UniversalVirtue virtue={virtue} />

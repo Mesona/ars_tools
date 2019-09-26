@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { storeVirtue, deleteVirtue, storeVirtues, storeFlaw, deleteFlaw, storeFlaws } from '../../../actions/create_virtues_and_flaws_actions';
+// import { storeVirtue, deleteVirtue, storeVirtues, storeFlaw, deleteFlaw, storeFlaws } from '../../../actions/create_virtues_and_flaws_actions';
 import UniqueVirtue from './create_virtue_unique';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
+  currentCharacter: state.entities.characters[ownProps.match.params.characterId],
   currentVirtues: state.entities.createVirtuesAndFlaws,
 });
 

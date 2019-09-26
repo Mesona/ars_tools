@@ -15,22 +15,20 @@ class UniqueVirtue extends React.Component {
     this.test = this.test.bind(this);
     this.setSpecial = this.setSpecial.bind(this);
     this.enableSpecial = this.enableSpecial.bind(this);
-    this.validateSpecialOne = this.validateSpecialOne.bind(this);
+    this.specialValidation = this.specialValidation.bind(this);
   }
 
   componentDidMount() {
-    // this.props.receiveVirtues
 
   }
 
   test() {
-    const { currentCharacter, virtue, characterVirtues } = this.props;
+    const { currentVirtues } = this.props;
     
     console.log("character virtues")
-    // console.log(characterVirtues)
 
-    Object.keys(characterVirtues).length !== 0 ? Object.keys(characterVirtues).forEach((virtue) => {
-      let currentVirtue = characterVirtues[virtue];
+    Object.keys(currentVirtues).length !== 0 ? Object.keys(currentVirtues).forEach((virtue) => {
+      let currentVirtue = currentVirtues[virtue];
       switch (currentVirtue.name) {
         case "Great (Characteristic)":
           let special_one = currentVirtue.special_one;
@@ -38,16 +36,6 @@ class UniqueVirtue extends React.Component {
           greatCharacteristics[special_one] = true;
 
           this.setState({greatCharacteristics: greatCharacteristics});
-
-          // greatCharacteristics[virtue.special_one] = true;
-          // greatCharacteristics[virtue.special_two] = true;
-
-          // const doc = document.getElementsByClassName("great-characteristics-select");
-          // Array.from(doc).forEach((el) => {
-          //   console.log(el)
-          // })
-
-          // select.options[select.selectedIndex] = null;
           break;
         }
     })
@@ -74,13 +62,8 @@ class UniqueVirtue extends React.Component {
     }
   }
 
-  validateSpecialOne() {
-    if (e !== undefined) {
-      console.log("testing")
-      return false;
-    } else {
-      return "disabled"
-    }
+  specialValidation(e) {
+    return "disabled"
   }
 
   render () {
@@ -104,7 +87,7 @@ class UniqueVirtue extends React.Component {
     // "";
 
     // Stat checking for various virtues and flaws
-    if (currentCharacter !== null) {
+    if (currentCharacter !== null && currentCharacter !== undefined) {
       if (currentCharacter.intelligence >= 3 && currentCharacter.intelligence < 5) {
         greatCharacteristics["intelligence"] = currentCharacter.intelligence;
       } else if ( currentCharacter.intelligence <= -3 && currentCharacter.intelligence > -5) {
@@ -154,6 +137,8 @@ class UniqueVirtue extends React.Component {
       }
     }
 
+    let test = "disabled"
+
     switch (virtue.name) {
       case "Great (Characteristic)":
         return (
@@ -163,7 +148,7 @@ class UniqueVirtue extends React.Component {
             { virtue.name }
 
             <label htmlFor="special_one">
-              <select className="great-characteristics-select" value={this.state.special_one} onChange={(e) => this.setSpecial(e, "one")} onMouseOver={() => this.test()} >
+              <select value={this.state.special_one} onChange={(e) => this.setSpecial(e, "one")} onMouseOver={() => this.test()} >
                 <option name="special_one" value="">-- Select A Stat --</option>
                 <option name="special_one" value="intelligence">Intelligence</option>
                 <option name="special_one" value="perception">Perception</option>
@@ -176,8 +161,8 @@ class UniqueVirtue extends React.Component {
               </select>
             </label>
 
-            <label htmlFor="special_two" onChange={(e) => this.setSpecial(e, "two")}>
-              <select value={this.state.special_two} onChange={(e) => this.test(e)}>
+            <label htmlFor="special_two">
+              <select value={this.state.special_two} onChange={(e) => this.setSpecial(e, "two")} onMouseOver={() => this.test()} >
                 <option name="special_two" value="">-- Select A Stat --</option>
                 <option name="special_two" value="intelligence">Intelligence</option>
                 <option name="special_two" value="perception">Perception</option>
@@ -190,12 +175,6 @@ class UniqueVirtue extends React.Component {
               </select>
             </label>
 
-            {/* {greatCharacteristics} */}
-            {/* <select>
-              {greatCharacteristics.forEach(characteristic => (
-                <option value={characteristic}>{characteristic}</option>
-              ))}
-            </select> */}
           </>
         );
       case "Affinity With (Ability)":
