@@ -42,10 +42,10 @@ class CharacterCreate extends React.Component {
       return (
         <CharacterCreateVirtuesContainer
           characterId={characterId}
-          requestCharacter={this.props.requestCharacter}
-          updateCharacter={this.props.updateCharacter}
-          requestAllVirtues={this.props.requestAllVirtues}
-          requestAllFlaws={this.props.requestAllFlaws}
+          // requestCharacter={this.props.requestCharacter}
+          // updateCharacter={this.props.updateCharacter}
+          // requestAllVirtues={this.props.requestAllVirtues}
+          // requestAllFlaws={this.props.requestAllFlaws}
           
         />
       )

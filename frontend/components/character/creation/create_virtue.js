@@ -7,10 +7,6 @@ class CharacterCreateVirtue extends React.Component {
     super(props);
   }
 
-
-  // TODO: Delete this file, once "create_virtues" has been
-  // properly updated
-
   render () {
     const { currentCharacter, virtue } = this.props;
 

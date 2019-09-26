@@ -28,7 +28,12 @@ class CharacterCreateVirtues extends React.Component {
    this.handleVirtue = this.handleVirtue.bind(this);
    this.validation = this.validation.bind(this);
    this.establishVirtues = this.establishVirtues.bind(this);
+
+   this.test = this.test.bind(this)
  } 
+
+ test() {
+ }
 
  componentDidMount() {
       this.props.requestCharacter(this.props.characterId)
@@ -39,10 +44,12 @@ class CharacterCreateVirtues extends React.Component {
             virtuePoints: (response.character.character_type === "mage" ? 10 : 
               response.character.character_type === "companion" ? 10 : 3),
             },
+            // this.test
+            // this.props.storeVirtues(this.state.currentCharacter.virtues)
             // this.establishVirtues
           );
         }
-    );
+    ).then(this.establishVirtues);
 
     this.props.requestAllVirtues()
       .then((response) => this.setState({
@@ -84,24 +91,42 @@ class CharacterCreateVirtues extends React.Component {
       virtue.special_two = childData.special_two;
     }
 
-    // console.log("Specials: " + childData.special_one + ", " + childData.special_two)
+    // Checks if the virtue is already "checked," and if it
+    // it is, the virtue will be deleted rather than added
     let checked = e.target.checked || null;
 
-    let { currentVirtues } = this.state;
+    // let { currentVirtues } = this.state;
     if (checked) {
-      currentVirtues[virtue.id] = {
-        name: virtue.name,
-        special_one: virtue.special_one,
-        special_two: virtue.special_two,
-      };
-      this.setState({currentVirtues: currentVirtues});
+      // currentVirtue = {
+      //   name: virtue.name,
+      //   special_one: virtue.special_one,
+      //   special_two: virtue.special_two,
+      //   id: virtue.id,
+      // };
+      this.props.storeVirtue(virtue);
+      // this.setState({currentVirtues: currentVirtues});
     } else {
-      let currentVirtueID = virtue.id;
-      delete currentVirtues[currentVirtueID];
-      this.setState({currentVirtues: currentVirtues});
+      // let currentVirtue = virtue;
+      this.props.deleteVirtue(virtue)
+      // delete currentVirtues[currentVirtueID];
+      // this.setState({currentVirtues: currentVirtues});
     }
 
-    // this.props.storeVirtues(this.state.currentVirtues);
+    // console.log("Curent virtues:")
+    // console.log(currentVirtues)
+
+    // let newVirtue = {
+    //   name: virtue.name,
+    //   special_one: virtue.special_one,
+    //   special_two: virtue.special_two,
+    //   id: virtue.id
+    // }
+    // console.log("Curent virtue:")
+    // let test = currentVirtues[virtue.id];
+    // console.log(newVirtue)
+
+    // this.props.storeVirtue(test);
+    // this.props.storeVirtues(currentVirtues);
   }
 
   validation(virtue) {
@@ -191,6 +216,8 @@ class CharacterCreateVirtues extends React.Component {
   }
 
   establishVirtues() {
+    this.props.storeVirtues(this.state.currentCharacter.virtues)
+
     let character_type = this.state.currentCharacter.character_type;
     // TODO: Look up the actual virtue descriptions
     let universalVirtueText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "

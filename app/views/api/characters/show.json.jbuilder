@@ -19,6 +19,7 @@ json.set! "virtues" do
     virtue = virtue_association.virtue
     json.set! virtue.id do
       json.name virtue.name
+      json.id virtue.id
       json.special_one virtue_association.special_one
       json.special_two virtue_association.special_two
     end
