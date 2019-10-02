@@ -5,6 +5,37 @@ import UniversalVirtue from './create_virtue_universal';
 import UniqueVirtue from './create_virtue_unique';
 import UniqueVirtueContainer from './create_virtue_unique_container';
 
+const statOptions = [
+  { value: 'intelligence', label: 'Intelligence' },
+  { value: 'perception', label: 'Perception' },
+  { value: 'strength', label: 'Strength' },
+  { value: 'stamina', label: 'Stamina' },
+  { value: 'presence', label: 'Presence' },
+  { value: 'communication', label: 'Communication' },
+  { value: 'dexterity', label: 'Dexterity' },
+  { value: 'quickness', label: 'Quickness' },
+];
+
+const formOptions = [
+  { value: 'creo', label: 'Creo' },
+  { value: 'intelligo', label: 'Intelligo' },
+  { value: 'muto', label: 'Muto' },
+  { value: 'perdo', label: 'Perdo' },
+  { value: 'rego', label: 'Rego' },
+];
+
+const techniqueOptions = [
+  { value: 'animal', label: 'Animal' },
+  { value: 'aquam', label: 'Aquam' },
+  { value: 'auram', label: 'Auram' },
+  { value: 'corpus', label: 'Corpus' },
+  { value: 'herbam', label: 'Herbam' },
+  { value: 'ignem', label: 'Ignem' },
+  { value: 'imaginem', label: 'Imaginem' },
+  { value: 'mentem', label: 'Mentem' },
+  { value: 'terram', label: 'Terram' },
+  { value: 'vim', label: 'Vim' },
+];
 
 class CharacterCreateVirtues extends React.Component {
  constructor(props) {
@@ -325,7 +356,7 @@ class CharacterCreateVirtues extends React.Component {
                       <>
                         {/* <UniqueVirtue virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} /> */}
                         {/* <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} /> */}
-                        <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                        <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} statOptions={statOptions} formOptions={formOptions} techniqueOptions={techniqueOptions} />
                       </>
                       :
                       <UniversalVirtue virtue={virtue} />
