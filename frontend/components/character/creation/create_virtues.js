@@ -284,16 +284,14 @@ class CharacterCreateVirtues extends React.Component {
             {generalVirtues === undefined ? '' :
               generalVirtues.filter( e => e.major === false).map( virtue => 
                 <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <label>
-                    { virtue.special === true ?
-                      <>
-                        <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                      </>
-                      :
-                      <UniversalVirtue virtue={virtue} />
-                    }
-                    <hr></hr>
-                  </label>
+                  { virtue.special === true ?
+                    <>
+                      <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                    </>
+                    :
+                    <UniversalVirtue virtue={virtue} />
+                  }
+                  <hr></hr>
                 </div>
             )}
           </div>

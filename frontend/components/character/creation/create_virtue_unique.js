@@ -7,9 +7,10 @@ class UniqueVirtue extends React.Component {
 
     this.state = {
       greatCharacteristics: {},
+      statDupes: {},
       affinityWithAbility: [],
       affinityWithArt: [],
-      special_one: this.props.special_one || "",
+      special_one: this.props.special_one || null,
       special_two: this.props.special_two || "",
       disabled: "disabled",
       statOptions: [
@@ -47,10 +48,16 @@ class UniqueVirtue extends React.Component {
     this.setSpecial = this.setSpecial.bind(this);
     this.enableSpecial = this.enableSpecial.bind(this);
     this.generateOptions = this.generateOptions.bind(this);
+    this.checkLoopholes = this.checkLoopholes.bind(this);
   }
 
   componentDidMount() {
-
+    // Determines if the current virtue uses special_two or not
+    switch (this.props.virtue.name) {
+      case "Great (Characteristic)":
+        this.setState({special_two: null});
+        break;
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -61,29 +68,64 @@ class UniqueVirtue extends React.Component {
     }
   }
 
-  test(e) {
+  test() {
     console.log("STATE")
     console.log(this.state)
     console.log("PROPS")
-    console.log(this.props.currentVirtues)
+    console.log(this.props)
   }
 
   setSpecial(e, specialSpot) {
+
     if (specialSpot === "one") {
-      this.setState({special_one: e.value});
-      this.enableSpecial();
+      this.setState({special_one: e.value},
+        this.enableSpecial()
+      );
     } else if (specialSpot === "two") {
-      this.setState({special_two: e.value});
-      this.enableSpecial();
+      this.setState({special_two: e.value},
+        this.enableSpecial()
+      );
     }
+
+    this.test();
+  }
+
+  checkLoopholes() {
+    const statDupes = this.state.statDupes;
+    switch (this.props.virtue.name) {
+      case "Great (Characteristic)":
+        console.log("NOW HERE")
+        console.log(this.state.statDupes)
+
+        // Object.keys(this.props.currentVirtues).forEach((currentVirtue) => {
+        //   let virtue = this.props.currentVirtues[currentVirtue];
+        //   if ((virtue.name === "Great (Characteristic)") && (currentVirtue !== this.props.virtue.id)) {
+        //     let stat = virtue.special_one;
+        //     if (statDupes[stat] === undefined) {
+        //       statDupes[stat] = 1;
+        //     } else {
+        //       statDupes[stat]++;
+        //       if (statDupes[stat] > 2) {
+        //         return  false
+        //       } 
+        //     }
+        //   }
+        // });
+
+    }
+
   }
 
   enableSpecial() {
     let baseValidation = this.props.validateVirtue(this.props.virtue);
 
+    // Checks things like someone triple checking a stat
+    // let validation = this.checkLoopholes();
+
     // If the virtue is not disabled by some "hard set" lock
     if (baseValidation !== "disabled") {
-      if (this.state.special_one === "" || this.special_two === "") {
+      // if (this.state.special_one === "" || this.special_two === "") {
+      if (this.special_two === "") {
         this.setState({disabled: "disabled"})
       } else {
         this.setState({disabled: ""})
@@ -93,28 +135,40 @@ class UniqueVirtue extends React.Component {
 
   generateOptions(virtueName) {
     const theseStats = [...this.state.statOptions];
-    let statDupes = [];
+    let statDupes = {};
+    // console.log("STATDUPES")
+    // console.log(statDupes)
     let formDupes = [];
     let techniqueDupes = [];
 
     switch (virtueName) {
       case "Great (Characteristic)":
-        Object.keys(this.props.currentVirtues).forEach((currentVirtue) => {
-          let virtue = this.props.currentVirtues[currentVirtue]
-          if ((virtue.name === "Great (Characteristic)") && (currentVirtue !== this.props.virtue.id)) {
-            statDupes.push(virtue.special_one)
-            statDupes.push(virtue.special_two)
-          }
-        })
 
-        Object.keys(theseStats).forEach((statIndex) => {
-          let stat = theseStats[statIndex];
-          if (statDupes.includes(stat.value)) {
-            stat["isDisabled"] = true;
+        Object.keys(this.props.currentVirtues).forEach((currentVirtue) => {
+          let virtue = this.props.currentVirtues[currentVirtue];
+          if ((virtue.name === "Great (Characteristic)") && (currentVirtue !== this.props.virtue.id)) {
+            let stat = virtue.special_one;
+            if (statDupes[stat] === undefined) {
+              statDupes[stat] = 1;
+            } else {
+              statDupes[stat]++;
+            }
           }
         });
 
-        this.setState({statOptions: theseStats})
+        Object.keys(theseStats).forEach((statIndex) => {
+          let stat = theseStats[statIndex];
+          if (statDupes[stat.value] >= 2) {
+            stat["isDisabled"] = true;
+          } else {
+            stat["isDisabled"] = false;
+          }
+        });
+
+        this.setState({
+          statOptions: theseStats,
+          statDupes: statDupes,
+         }, this.checkLoopholes());
     }
   }
 
@@ -123,58 +177,58 @@ class UniqueVirtue extends React.Component {
 
 
     
-    let { greatCharacteristics } = this.state;
+    // let { greatCharacteristics } = this.state;
 
-    // Stat checking for various virtues and flaws
-    if (currentCharacter !== null && currentCharacter !== undefined) {
-      if (currentCharacter.intelligence >= 3 && currentCharacter.intelligence < 5) {
-        greatCharacteristics["intelligence"] = currentCharacter.intelligence;
-      } else if ( currentCharacter.intelligence <= -3 && currentCharacter.intelligence > -5) {
-        poorCharacteristics["intelligence"] = currentCharacter.intelligence;
-      }
+    // // Stat checking for various virtues and flaws
+    // if (currentCharacter !== null && currentCharacter !== undefined) {
+    //   if (currentCharacter.intelligence >= 3 && currentCharacter.intelligence < 5) {
+    //     greatCharacteristics["intelligence"] = currentCharacter.intelligence;
+    //   } else if ( currentCharacter.intelligence <= -3 && currentCharacter.intelligence > -5) {
+    //     poorCharacteristics["intelligence"] = currentCharacter.intelligence;
+    //   }
 
-      if (currentCharacter.perception >= 3 && currentCharacter.perception < 5) {
-        greatCharacteristics["perception"] = currentCharacter.perception;
-      } else if ( currentCharacter.perception <= -3 && currentCharacter.perception > -5) {
-        poorCharacteristics["perception"] = currentCharacter.perception;
-      }
+    //   if (currentCharacter.perception >= 3 && currentCharacter.perception < 5) {
+    //     greatCharacteristics["perception"] = currentCharacter.perception;
+    //   } else if ( currentCharacter.perception <= -3 && currentCharacter.perception > -5) {
+    //     poorCharacteristics["perception"] = currentCharacter.perception;
+    //   }
 
-      if (currentCharacter.strength >= 3 && currentCharacter.strength < 5) {
-        greatCharacteristics["strength"] = currentCharacter.strength;
-      } else if ( currentCharacter.strength <= -3 && currentCharacter.strength > -5) {
-        poorCharacteristics["strength"] = currentCharacter.strength;
-      }
+    //   if (currentCharacter.strength >= 3 && currentCharacter.strength < 5) {
+    //     greatCharacteristics["strength"] = currentCharacter.strength;
+    //   } else if ( currentCharacter.strength <= -3 && currentCharacter.strength > -5) {
+    //     poorCharacteristics["strength"] = currentCharacter.strength;
+    //   }
 
-      if (currentCharacter.stamina >= 3 && currentCharacter.stamina < 5) {
-        greatCharacteristics["stamina"] = currentCharacter.stamina;
-      } else if ( currentCharacter.stamina <= -3 && currentCharacter.stamina > -5) {
-        poorCharacteristics["stamina"] = currentCharacter.stamina;
-      }
+    //   if (currentCharacter.stamina >= 3 && currentCharacter.stamina < 5) {
+    //     greatCharacteristics["stamina"] = currentCharacter.stamina;
+    //   } else if ( currentCharacter.stamina <= -3 && currentCharacter.stamina > -5) {
+    //     poorCharacteristics["stamina"] = currentCharacter.stamina;
+    //   }
 
-      if (currentCharacter.presence >= 3 && currentCharacter.presence < 5) {
-        greatCharacteristics["presence"] = currentCharacter.presence;
-      } else if ( currentCharacter.presence <= -3 && currentCharacter.presence > -5) {
-        poorCharacteristics["presence"] = currentCharacter.presence;
-      }
+    //   if (currentCharacter.presence >= 3 && currentCharacter.presence < 5) {
+    //     greatCharacteristics["presence"] = currentCharacter.presence;
+    //   } else if ( currentCharacter.presence <= -3 && currentCharacter.presence > -5) {
+    //     poorCharacteristics["presence"] = currentCharacter.presence;
+    //   }
 
-      if (currentCharacter.communication >= 3 && currentCharacter.communication < 5) {
-        greatCharacteristics["communication"] = currentCharacter.communication;
-      } else if ( currentCharacter.communication <= -3 && currentCharacter.communication > -5) {
-        poorCharacteristics["communication"] = currentCharacter.communication;
-      }
+    //   if (currentCharacter.communication >= 3 && currentCharacter.communication < 5) {
+    //     greatCharacteristics["communication"] = currentCharacter.communication;
+    //   } else if ( currentCharacter.communication <= -3 && currentCharacter.communication > -5) {
+    //     poorCharacteristics["communication"] = currentCharacter.communication;
+    //   }
 
-      if (currentCharacter.dexterity >= 3 && currentCharacter.dexterity < 5) {
-        greatCharacteristics["dexterity"] = currentCharacter.dexterity;
-      } else if ( currentCharacter.dexterity <= -3 && currentCharacter.dexterity > -5) {
-        poorCharacteristics["dexterity"] = currentCharacter.dexterity;
-      }
+    //   if (currentCharacter.dexterity >= 3 && currentCharacter.dexterity < 5) {
+    //     greatCharacteristics["dexterity"] = currentCharacter.dexterity;
+    //   } else if ( currentCharacter.dexterity <= -3 && currentCharacter.dexterity > -5) {
+    //     poorCharacteristics["dexterity"] = currentCharacter.dexterity;
+    //   }
 
-      if (currentCharacter.quickness >= 3 && currentCharacter.quickness < 5) {
-        greatCharacteristics["quickness"] = currentCharacter.quickness;
-      } else if ( currentCharacter.quickness <= -3 && currentCharacter.quickness > -5) {
-        poorCharacteristics["quickness"] = currentCharacter.quickness;
-      }
-    }
+    //   if (currentCharacter.quickness >= 3 && currentCharacter.quickness < 5) {
+    //     greatCharacteristics["quickness"] = currentCharacter.quickness;
+    //   } else if ( currentCharacter.quickness <= -3 && currentCharacter.quickness > -5) {
+    //     poorCharacteristics["quickness"] = currentCharacter.quickness;
+    //   }
+    // }
 
     switch (virtue.name) {
       case "Great (Characteristic)":
@@ -184,36 +238,7 @@ class UniqueVirtue extends React.Component {
 
             { virtue.name }
 
-            {/* <label htmlFor="special_one">
-              <select name="" value={this.state.special_one} onChange={(e) => this.setSpecial(e, "one")} onMouseOver={() => this.test()} >
-                <option name="special_one" value="">-- Select A Stat --</option>
-                <option name="special_one" value="intelligence">Intelligence</option>
-                <option name="special_one" value="perception">Perception</option>
-                <option name="special_one" value="strength">Strength</option>
-                <option name="special_one" value="stamina">Stamina</option>
-                <option name="special_one" value="presence">Presence</option>
-                <option name="special_one" value="communication">Communication</option>
-                <option name="special_one" value="dexterity">Dexterity</option>
-                <option name="special_one" value="quickness">Quickness</option>
-              </select>
-            </label>
-
-            <label htmlFor="special_two">
-              <select value={this.state.special_two} onChange={(e) => this.setSpecial(e, "two")} onMouseOver={() => this.test()} >
-                <option name="special_two" value="">-- Select A Stat --</option>
-                <option name="special_two" value="intelligence">Intelligence</option>
-                <option name="special_two" value="perception">Perception</option>
-                <option name="special_two" value="strength">Strength</option>
-                <option name="special_two" value="stamina">Stamina</option>
-                <option name="special_two" value="presence">Presence</option>
-                <option name="special_two" value="communication">Communication</option>
-                <option name="special_two" value="dexterity">Dexterity</option>
-                <option name="special_two" value="quickness">Quickness</option>
-              </select>
-            </label> */}
-
             <Select options={this.state.statOptions} onChange={(e) => this.setSpecial(e, "one")} />
-            <Select options={this.state.statOptions} onChange={(e) => this.setSpecial(e, "two")} />
 
           </>
         );
@@ -230,12 +255,6 @@ class UniqueVirtue extends React.Component {
           </>
         )
     } 
-    // return (
-    //   <div>
-    //     {/* <UniversalVirtue virtue={virtue} /> */}
-    //     Oops
-    //   </div>
-    // )
   }
 
 }
