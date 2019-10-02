@@ -1,29 +1,6 @@
 import React from 'react';
 import Select from 'react-select'
 
-
-
-// const formOptions = [
-//   { value: 'creo', label: 'Creo' },
-//   { value: 'intelligo', label: 'Intelligo' },
-//   { value: 'muto', label: 'Muto' },
-//   { value: 'perdo', label: 'Perdo' },
-//   { value: 'rego', label: 'Rego' },
-// ];
-
-// const techniqueOptions = [
-//   { value: 'animal', label: 'Animal' },
-//   { value: 'aquam', label: 'Aquam' },
-//   { value: 'auram', label: 'Auram' },
-//   { value: 'corpus', label: 'Corpus' },
-//   { value: 'herbam', label: 'Herbam' },
-//   { value: 'ignem', label: 'Ignem' },
-//   { value: 'imaginem', label: 'Imaginem' },
-//   { value: 'mentem', label: 'Mentem' },
-//   { value: 'terram', label: 'Terram' },
-//   { value: 'vim', label: 'Vim' },
-// ];
-
 class UniqueVirtue extends React.Component {
   constructor(props) {
     super(props);
@@ -34,6 +11,7 @@ class UniqueVirtue extends React.Component {
       affinityWithArt: [],
       special_one: this.props.special_one || "",
       special_two: this.props.special_two || "",
+      disabled: "disabled",
       statOptions: [
         { value: 'intelligence', label: 'Intelligence' },
         { value: 'perception', label: 'Perception' },
@@ -44,12 +22,30 @@ class UniqueVirtue extends React.Component {
         { value: 'dexterity', label: 'Dexterity' },
         { value: 'quickness', label: 'Quickness' },
       ],
+      techniqueOptions: [
+        { value: 'animal', label: 'Animal' },
+        { value: 'aquam', label: 'Aquam' },
+        { value: 'auram', label: 'Auram' },
+        { value: 'corpus', label: 'Corpus' },
+        { value: 'herbam', label: 'Herbam' },
+        { value: 'ignem', label: 'Ignem' },
+        { value: 'imaginem', label: 'Imaginem' },
+        { value: 'mentem', label: 'Mentem' },
+        { value: 'terram', label: 'Terram' },
+        { value: 'vim', label: 'Vim' },
+      ],
+      formOptions: [
+        { value: 'creo', label: 'Creo' },
+        { value: 'intelligo', label: 'Intelligo' },
+        { value: 'muto', label: 'Muto' },
+        { value: 'perdo', label: 'Perdo' },
+        { value: 'rego', label: 'Rego' },
+      ],
     };
 
     this.test = this.test.bind(this);
     this.setSpecial = this.setSpecial.bind(this);
     this.enableSpecial = this.enableSpecial.bind(this);
-    this.specialValidation = this.specialValidation.bind(this);
     this.generateOptions = this.generateOptions.bind(this);
   }
 
@@ -66,41 +62,19 @@ class UniqueVirtue extends React.Component {
   }
 
   test(e) {
-    // const { currentVirtues } = this.props;
-    
-    // console.log("character virtues")
-
-    // Object.keys(currentVirtues).length !== 0 ? Object.keys(currentVirtues).forEach((virtue) => {
-    //   let currentVirtue = currentVirtues[virtue];
-    //   switch (currentVirtue.name) {
-    //     case "Great (Characteristic)":
-    //       let special_one = currentVirtue.special_one;
-    //       let greatCharacteristics = this.state.greatCharacteristics;
-    //       greatCharacteristics[currentVirtue.id] = currentVirtue;
-
-    //       this.setState({greatCharacteristics: greatCharacteristics});
-    //       break;
-    //     }
-    // })
-    // :
-    // "";
-
-    // console.log(this.state.greatCharacteristics);
-    // console.log("TEST HERE")
-    // console.log(e.target)
-    // return "disabled";
-    // return false;
     console.log("STATE")
-    console.log(this.state.statOptions)
+    console.log(this.state)
     console.log("PROPS")
     console.log(this.props.currentVirtues)
   }
 
   setSpecial(e, specialSpot) {
     if (specialSpot === "one") {
-      this.setState({special_one: e.target.value});
+      this.setState({special_one: e.value});
+      this.enableSpecial();
     } else if (specialSpot === "two") {
-      this.setState({special_two: e.target.value});
+      this.setState({special_two: e.value});
+      this.enableSpecial();
     }
   }
 
@@ -110,15 +84,11 @@ class UniqueVirtue extends React.Component {
     // If the virtue is not disabled by some "hard set" lock
     if (baseValidation !== "disabled") {
       if (this.state.special_one === "" || this.special_two === "") {
-        return "disabled";
+        this.setState({disabled: "disabled"})
+      } else {
+        this.setState({disabled: ""})
       }
     }
-  }
-
-  specialValidation() {
-    console.log("SPECIAL VALIDATION")
-    // console.log(e.target)
-    // return false 
   }
 
   generateOptions(virtueName) {
@@ -126,18 +96,14 @@ class UniqueVirtue extends React.Component {
     let statDupes = [];
     let formDupes = [];
     let techniqueDupes = [];
+
     switch (virtueName) {
       case "Great (Characteristic)":
         Object.keys(this.props.currentVirtues).forEach((currentVirtue) => {
           let virtue = this.props.currentVirtues[currentVirtue]
           if ((virtue.name === "Great (Characteristic)") && (currentVirtue !== this.props.virtue.id)) {
-            // console.log(virtue.name)
-            // console.log(this.props.virtue.id)
-            // console.log(this.props.virtue.name)
             statDupes.push(virtue.special_one)
             statDupes.push(virtue.special_two)
-          } else if ((virtue.name === "Great (Characteristic")) {
-            console.log("ITS A MATCH WOOOO")
           }
         })
 
@@ -147,54 +113,17 @@ class UniqueVirtue extends React.Component {
             stat["isDisabled"] = true;
           }
         });
-        // console.log([...theseStats])
+
         this.setState({statOptions: theseStats})
-        // console.log("TEST")
-        // console.log(this.state.statOptions)
-        // return theseStats;
-        // return this.state.statOptions;
     }
-    //     let greatCharacteristics = this.state.greatCharacteristics;
-    //     let currentOptions = statOptions.slice(0);
-    //     let duplicateStats = [];
-    //     Object.keys(greatCharacteristics).forEach((greatCharacteristic) => {
-    //       let gC = greatCharacteristics[greatCharacteristic];
-    //       duplicateStats.push(gC.special_one);
-    //       duplicateStats.push(gC.special_two);
-    //     });
-
-    //     currentOptions.forEach((option) => {
-    //       if (duplicateStats.includes(option.value)) {
-    //         option.disabled = true;
-    //       }
-    //     });
-
-    //     return currentOptions;
-    // }
-
   }
 
   render () {
-    const { currentCharacter, virtue, characterVirtues } = this.props;
+    const { currentCharacter, virtue } = this.props;
 
 
     
     let { greatCharacteristics } = this.state;
-
-    // Object.keys(characterVirtues).length !== 0 ? Object.keys(characterVirtues).forEach((virtue) => {
-    //   switch (characterVirtues[virtue].name) {
-    //     case "Great (Characteristic)":
-    //       // greatCharacteristics[virtue.special_one] = true;
-    //       // greatCharacteristics[virtue.special_two] = true;
-    //       var select = document.getElementsByClassName("great-characteristics-select");
-    //       console.log("SELECT HERE")
-    //       console.log(select.options)
-    //       // select.options[select.selectedIndex] = null;
-    //       break;
-    //     }
-    // })
-    // :
-    // "";
 
     // Stat checking for various virtues and flaws
     if (currentCharacter !== null && currentCharacter !== undefined) {
@@ -247,17 +176,15 @@ class UniqueVirtue extends React.Component {
       }
     }
 
-    // let test = "disabled"
-
     switch (virtue.name) {
       case "Great (Characteristic)":
         return (
           <>
-            <input className="create-virtue-checkbox" type="checkbox" disabled={this.enableSpecial()} onClick={(e) => this.props.handleClick(e, this.props.virtue, this.state)}></input>
+            <input className="create-virtue-checkbox" type="checkbox" disabled={this.state.disabled} onClick={(e) => this.props.handleClick(e, this.props.virtue, this.state)}></input>
 
             { virtue.name }
 
-            <label htmlFor="special_one">
+            {/* <label htmlFor="special_one">
               <select name="" value={this.state.special_one} onChange={(e) => this.setSpecial(e, "one")} onMouseOver={() => this.test()} >
                 <option name="special_one" value="">-- Select A Stat --</option>
                 <option name="special_one" value="intelligence">Intelligence</option>
@@ -283,10 +210,10 @@ class UniqueVirtue extends React.Component {
                 <option name="special_two" value="dexterity">Dexterity</option>
                 <option name="special_two" value="quickness">Quickness</option>
               </select>
-            </label>
+            </label> */}
 
-            {/* <Select options={this.generateOptions()} /> */}
-            <Select options={this.state.statOptions} />
+            <Select options={this.state.statOptions} onChange={(e) => this.setSpecial(e, "one")} />
+            <Select options={this.state.statOptions} onChange={(e) => this.setSpecial(e, "two")} />
 
           </>
         );

@@ -5,38 +5,6 @@ import UniversalVirtue from './create_virtue_universal';
 import UniqueVirtue from './create_virtue_unique';
 import UniqueVirtueContainer from './create_virtue_unique_container';
 
-const statOptions = [
-  { value: 'intelligence', label: 'Intelligence' },
-  { value: 'perception', label: 'Perception' },
-  { value: 'strength', label: 'Strength' },
-  { value: 'stamina', label: 'Stamina' },
-  { value: 'presence', label: 'Presence' },
-  { value: 'communication', label: 'Communication' },
-  { value: 'dexterity', label: 'Dexterity' },
-  { value: 'quickness', label: 'Quickness' },
-];
-
-const formOptions = [
-  { value: 'creo', label: 'Creo' },
-  { value: 'intelligo', label: 'Intelligo' },
-  { value: 'muto', label: 'Muto' },
-  { value: 'perdo', label: 'Perdo' },
-  { value: 'rego', label: 'Rego' },
-];
-
-const techniqueOptions = [
-  { value: 'animal', label: 'Animal' },
-  { value: 'aquam', label: 'Aquam' },
-  { value: 'auram', label: 'Auram' },
-  { value: 'corpus', label: 'Corpus' },
-  { value: 'herbam', label: 'Herbam' },
-  { value: 'ignem', label: 'Ignem' },
-  { value: 'imaginem', label: 'Imaginem' },
-  { value: 'mentem', label: 'Mentem' },
-  { value: 'terram', label: 'Terram' },
-  { value: 'vim', label: 'Vim' },
-];
-
 class CharacterCreateVirtues extends React.Component {
  constructor(props) {
    super(props);
@@ -108,15 +76,7 @@ class CharacterCreateVirtues extends React.Component {
   }
 
   handleVirtue(e, virtue, childData = null) {
-    console.log("handling virtue")
-    console.log(virtue)
-    console.log(this.props)
-    // console.log("eeeeeeeeeeeeeee")
-    // console.log(e.currentTarget)
-    // console.log(e.target)
-    // console.log("VIRTUUUUUUUUUUE")
-    // console.log(virtue)
-
+ 
     if (childData !== null) {
       virtue.special_one = childData.special_one;
       virtue.special_two = childData.special_two;
@@ -126,38 +86,11 @@ class CharacterCreateVirtues extends React.Component {
     // it is, the virtue will be deleted rather than added
     let checked = e.target.checked || null;
 
-    // let { currentVirtues } = this.state;
     if (checked) {
-      // currentVirtue = {
-      //   name: virtue.name,
-      //   special_one: virtue.special_one,
-      //   special_two: virtue.special_two,
-      //   id: virtue.id,
-      // };
       this.props.storeVirtue(virtue);
-      // this.setState({currentVirtues: currentVirtues});
     } else {
-      // let currentVirtue = virtue;
       this.props.deleteVirtue(virtue)
-      // delete currentVirtues[currentVirtueID];
-      // this.setState({currentVirtues: currentVirtues});
     }
-
-    // console.log("Curent virtues:")
-    // console.log(currentVirtues)
-
-    // let newVirtue = {
-    //   name: virtue.name,
-    //   special_one: virtue.special_one,
-    //   special_two: virtue.special_two,
-    //   id: virtue.id
-    // }
-    // console.log("Curent virtue:")
-    // let test = currentVirtues[virtue.id];
-    // console.log(newVirtue)
-
-    // this.props.storeVirtue(test);
-    // this.props.storeVirtues(currentVirtues);
   }
 
   validation(virtue) {
@@ -354,9 +287,7 @@ class CharacterCreateVirtues extends React.Component {
                   <label>
                     { virtue.special === true ?
                       <>
-                        {/* <UniqueVirtue virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} /> */}
-                        {/* <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} currentCharacter={currentCharacter} characterVirtues={this.state.currentVirtues} handleClick={this.handleVirtue} /> */}
-                        <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} statOptions={statOptions} formOptions={formOptions} techniqueOptions={techniqueOptions} />
+                        <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
                       </>
                       :
                       <UniversalVirtue virtue={virtue} />
