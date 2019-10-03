@@ -27,12 +27,7 @@ class CharacterCreateVirtues extends React.Component {
    this.handleVirtue = this.handleVirtue.bind(this);
    this.validation = this.validation.bind(this);
    this.establishVirtues = this.establishVirtues.bind(this);
-
-   this.test = this.test.bind(this)
  } 
-
- test() {
- }
 
  componentDidMount() {
       this.props.requestCharacter(this.props.characterId)
@@ -42,10 +37,7 @@ class CharacterCreateVirtues extends React.Component {
             currentVirtues: response.character.virtues,
             virtuePoints: (response.character.character_type === "mage" ? 10 : 
               response.character.character_type === "companion" ? 10 : 3),
-            },
-            // this.test
-            // this.props.storeVirtues(this.state.currentCharacter.virtues)
-            // this.establishVirtues
+            }
           );
         }
     ).then(this.establishVirtues);
@@ -59,6 +51,8 @@ class CharacterCreateVirtues extends React.Component {
       .then((response) => this.setState({
         flaws: response.flaws,
     }));
+
+    this.props.requestAllAbilities();
   }
 
  handleSubmit(e) {
@@ -84,13 +78,10 @@ class CharacterCreateVirtues extends React.Component {
 
     // Checks if the virtue is already "checked," and if it
     // it is, the virtue will be deleted rather than added
-    // let checked = e.target.checked || null;
-    // let checked = targetData || null;
-
     if (checkBox) {
       this.props.storeVirtue(virtue);
     } else {
-      this.props.deleteVirtue(virtue)
+      this.props.deleteVirtue(virtue);
     }
   }
 
@@ -264,19 +255,18 @@ class CharacterCreateVirtues extends React.Component {
           <div className="major"><p>Major Virtues:</p>
             {generalVirtues === undefined ? '' : 
               generalVirtues.filter( e => e.major === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                  <label>
-                    <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} ></input>
-                    { virtue.special === true ?
-                      <>
-                        <UniversalVirtue virtue={virtue} />
-                        <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
-                      </>
-                      :
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                  { virtue.special === true ?
+                    <>
+                      <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                    </>
+                    :
+                    <>
+                      <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} onChange={(e) => this.handleVirtue(e.target.checked, virtue)}></input>
                       <UniversalVirtue virtue={virtue} />
-                    }
-                    <hr></hr>
-                  </label>
+                    </>
+                  }
+                  <hr></hr>
                 </div>
             )}
           </div>
@@ -290,7 +280,10 @@ class CharacterCreateVirtues extends React.Component {
                       <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
                     </>
                     :
-                    <UniversalVirtue virtue={virtue} />
+                    <>
+                      <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} onChange={(e) => this.handleVirtue(e.target.checked, virtue)}></input>
+                      <UniversalVirtue virtue={virtue} />
+                    </>
                   }
                   <hr></hr>
                 </div>

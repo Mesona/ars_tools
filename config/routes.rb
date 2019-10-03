@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     resources :characters, except: [:index]
     resources :virtues, only: [:index, :show]
     resources :flaws, only: [:index, :show]
+    resources :abilities, only: [:index]
   end
   
   root to: 'root#root'

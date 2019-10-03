@@ -43,6 +43,9 @@ class UniqueVirtue extends React.Component {
         { value: 'perdo', label: 'Perdo' },
         { value: 'rego', label: 'Rego' },
       ],
+      abilityOptions: [
+
+      ],
     };
 
     this.test = this.test.bind(this);
@@ -188,11 +191,21 @@ class UniqueVirtue extends React.Component {
     const { virtue } = this.props;
 
     switch (virtue.name) {
+      case "Affinity With (Ability)":
+        return (
+          <>
+            <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
+
+            { virtue.name }
+
+            <Select options={this.state.statOptions} onChange={(e) => this.setSpecial(e, "one")} />
+          </>
+        );
       case "Great (Characteristic)":
         return (
           <>
 
-            <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
+            <input onMouseOver={() => this.test()} className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
 
             { virtue.name }
 
@@ -200,12 +213,6 @@ class UniqueVirtue extends React.Component {
 
           </>
         );
-      case "Affinity With (Ability)":
-        return (
-          <>
-            Affinity Test
-          </>
-        )
       default:
         return (
           <>

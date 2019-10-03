@@ -7,6 +7,7 @@ import UniqueVirtue from './create_virtue_unique';
 const mapStateToProps = (state, ownProps) => ({
   currentCharacter: state.entities.characters[ownProps.match.params.characterId],
   currentVirtues: state.entities.createVirtuesAndFlaws,
+  abilities: state.entities.abilities,
 });
 
 const mapDispatchToProps = dispatch => ({
