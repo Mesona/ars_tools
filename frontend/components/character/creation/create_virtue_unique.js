@@ -6,10 +6,8 @@ class UniqueVirtue extends React.Component {
     super(props);
 
     this.state = {
-      greatCharacteristics: {},
       statDupes: {},
-      affinityWithAbility: [],
-      affinityWithArt: [],
+      affinityDupes: {},
       special_one: this.props.special_one || null,
       special_two: this.props.special_two || "",
       disabled: "disabled",
@@ -43,24 +41,29 @@ class UniqueVirtue extends React.Component {
         { value: 'perdo', label: 'Perdo' },
         { value: 'rego', label: 'Rego' },
       ],
-      abilityOptions: [
-
-      ],
+      abilityOptions: [{value: "TEST", label: "TEST"}],
     };
 
     this.test = this.test.bind(this);
     this.setSpecial = this.setSpecial.bind(this);
     this.enableSpecial = this.enableSpecial.bind(this);
+    this.generateAbilities = this.generateAbilities.bind(this);
     this.generateOptions = this.generateOptions.bind(this);
     this.checkLoopholes = this.checkLoopholes.bind(this);
     this.uncheckBox = this.uncheckBox.bind(this);
   }
 
   componentDidMount() {
-    // Determines if the current virtue uses special_two or not
+    // Determines if the current virtue uses special_two or not, as well as if
+    // any other startup methods need to be called
     switch (this.props.virtue.name) {
       case "Great (Characteristic)":
         this.setState({special_two: null});
+        break;
+      case "Affinity With (Ability)":
+        this.setState({special_two: null});
+        this.generateAbilities();
+        console.log("Mount successful")
         break;
     }
   }
@@ -110,6 +113,24 @@ class UniqueVirtue extends React.Component {
         this.setState({disabled: ""})
       }
     }
+  }
+
+  generateAbilities() {
+    let abilities = [...this.props.abilities]
+    let returnedAbilities = [];
+    Object.keys(abilities).forEach((abilityKey) => {
+      let ability = abilities[abilityKey].name.split(' ');
+      let label = [];
+      let value = [];
+      ability.forEach((word) => {
+        let modifiedWord = word.toLowerCase();
+        value.push(modifiedWord);
+        label.push(modifiedWord.charAt(0).toUpperCase() + modifiedWord.slice(1));
+      });
+      returnedAbilities.push({"value": value.join(' '), "label": label.join(' ')})
+    });
+
+    this.setState({abilities: returnedAbilities});
   }
 
   generateOptions(virtueName) {
@@ -198,14 +219,14 @@ class UniqueVirtue extends React.Component {
 
             { virtue.name }
 
-            <Select options={this.state.statOptions} onChange={(e) => this.setSpecial(e, "one")} />
+            <Select options={this.state.abilityOptions} onChange={(e) => this.setSpecial(e, "one")} />
           </>
         );
       case "Great (Characteristic)":
         return (
           <>
 
-            <input onMouseOver={() => this.test()} className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
+            <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
 
             { virtue.name }
 
