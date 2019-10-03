@@ -50,6 +50,7 @@ class UniqueVirtue extends React.Component {
     this.enableSpecial = this.enableSpecial.bind(this);
     this.generateOptions = this.generateOptions.bind(this);
     this.checkLoopholes = this.checkLoopholes.bind(this);
+    this.uncheckBox = this.uncheckBox.bind(this);
   }
 
   componentDidMount() {
@@ -62,6 +63,8 @@ class UniqueVirtue extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // The componenet was not updating automatically, even though it was registering the
+    // props changes
     if (prevProps.currentVirtues !== this.props.currentVirtues) {
       if (this.props.virtue.name === "Great (Characteristic)") {
         this.generateOptions("Great (Characteristic)");
@@ -77,6 +80,9 @@ class UniqueVirtue extends React.Component {
   }
 
   setSpecial(e, specialSpot) {
+
+    // Dechecks the checkbox if a user changes the dropdown after selecting the virtue
+    this.uncheckBox();
 
     if (specialSpot === "one") {
       this.setState({special_one: e.value},
@@ -120,13 +126,6 @@ class UniqueVirtue extends React.Component {
               statDupes[stat] = 1;
             } else {
               statDupes[stat]++;
-              // if (statDupes[stat] > 2 && currentVirtue === this.state.thisID) {
-              // if (statDupes[stat] > 2) {
-              //   console.log("HONK")
-              //   let thisID = `create-virtue-checkbox-${this.state.thisID}`;
-              //   let thisCheckbox = document.getElementById(thisID);
-              //   thisCheckbox.checked = false;
-              // }
             }
           }
         });
@@ -135,12 +134,6 @@ class UniqueVirtue extends React.Component {
           let stat = theseStats[statIndex];
           if (statDupes[stat.value] >= 2) {
             stat["isDisabled"] = true;
-          // } else if (statDupes[stat.value] > 2) {
-          //   stat["isDisabled"] = true;
-          //   this.setState({disabled: "disabled"});
-          //   // let thisID = `create-virtue-checkbox-${this.state.thisID}`;
-          //   // let thisCheckbox = document.getElementById(thisID);
-          //   // thisCheckbox.checked = false;
           } else {
             stat["isDisabled"] = false;
           }
@@ -162,93 +155,44 @@ class UniqueVirtue extends React.Component {
       switch (this.props.virtue.name) {
         case "Great (Characteristic)":
   
+          // Validates a possible exploit where a user could select a stat
+          // 3 times before checking the checkboxes, and then check all three
+          // bypassing the limit of 2
           Object.keys(statDupes).forEach((statDup) => {
             let stat = statDupes[statDup];
-            if (stat >= 2) {
-              let thisID = `create-virtue-checkbox-${this.state.thisID}`;
-              let thisCheckbox = document.getElementById(thisID);
-              // checkbox = false;
-              console.log("THIS CHECKBOX")
-              console.log(thisCheckbox)
-              // thisCheckbox.checked = false;
-              checkBox = false;
+            if (stat >= 2 && this.state.special_one === statDup) {
+              this.uncheckBox();
               looped = true;
-              this.setState({disabled: "disabled"}, console.log("HONK"))
+              this.setState({disabled: "disabled"});
             }
           });
       }
   
       if (looped === false) {
+        this.setState({disabled: false});
         this.props.handleClick(checkBox, this.props.virtue, this.state);
       }
     }
   }
 
+  uncheckBox() {
+    let thisID = `create-virtue-checkbox-${this.state.thisID}`;
+    let thisCheckbox = document.getElementById(thisID);
+    if (thisCheckbox.checked === true) {
+      thisCheckbox.checked = false;
+      this.props.handleClick(false, this.props.virtue, this.state);
+    }
+  }
+
   render () {
-    const { currentCharacter, virtue } = this.props;
-
-
-    
-    // let { greatCharacteristics } = this.state;
-
-    // // Stat checking for various virtues and flaws
-    // if (currentCharacter !== null && currentCharacter !== undefined) {
-    //   if (currentCharacter.intelligence >= 3 && currentCharacter.intelligence < 5) {
-    //     greatCharacteristics["intelligence"] = currentCharacter.intelligence;
-    //   } else if ( currentCharacter.intelligence <= -3 && currentCharacter.intelligence > -5) {
-    //     poorCharacteristics["intelligence"] = currentCharacter.intelligence;
-    //   }
-
-    //   if (currentCharacter.perception >= 3 && currentCharacter.perception < 5) {
-    //     greatCharacteristics["perception"] = currentCharacter.perception;
-    //   } else if ( currentCharacter.perception <= -3 && currentCharacter.perception > -5) {
-    //     poorCharacteristics["perception"] = currentCharacter.perception;
-    //   }
-
-    //   if (currentCharacter.strength >= 3 && currentCharacter.strength < 5) {
-    //     greatCharacteristics["strength"] = currentCharacter.strength;
-    //   } else if ( currentCharacter.strength <= -3 && currentCharacter.strength > -5) {
-    //     poorCharacteristics["strength"] = currentCharacter.strength;
-    //   }
-
-    //   if (currentCharacter.stamina >= 3 && currentCharacter.stamina < 5) {
-    //     greatCharacteristics["stamina"] = currentCharacter.stamina;
-    //   } else if ( currentCharacter.stamina <= -3 && currentCharacter.stamina > -5) {
-    //     poorCharacteristics["stamina"] = currentCharacter.stamina;
-    //   }
-
-    //   if (currentCharacter.presence >= 3 && currentCharacter.presence < 5) {
-    //     greatCharacteristics["presence"] = currentCharacter.presence;
-    //   } else if ( currentCharacter.presence <= -3 && currentCharacter.presence > -5) {
-    //     poorCharacteristics["presence"] = currentCharacter.presence;
-    //   }
-
-    //   if (currentCharacter.communication >= 3 && currentCharacter.communication < 5) {
-    //     greatCharacteristics["communication"] = currentCharacter.communication;
-    //   } else if ( currentCharacter.communication <= -3 && currentCharacter.communication > -5) {
-    //     poorCharacteristics["communication"] = currentCharacter.communication;
-    //   }
-
-    //   if (currentCharacter.dexterity >= 3 && currentCharacter.dexterity < 5) {
-    //     greatCharacteristics["dexterity"] = currentCharacter.dexterity;
-    //   } else if ( currentCharacter.dexterity <= -3 && currentCharacter.dexterity > -5) {
-    //     poorCharacteristics["dexterity"] = currentCharacter.dexterity;
-    //   }
-
-    //   if (currentCharacter.quickness >= 3 && currentCharacter.quickness < 5) {
-    //     greatCharacteristics["quickness"] = currentCharacter.quickness;
-    //   } else if ( currentCharacter.quickness <= -3 && currentCharacter.quickness > -5) {
-    //     poorCharacteristics["quickness"] = currentCharacter.quickness;
-    //   }
-    // }
+    const { virtue } = this.props;
 
     switch (virtue.name) {
       case "Great (Characteristic)":
         return (
           <>
-            {/* <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.props.handleClick(e, this.props.virtue, this.state)}></input> */}
+
             <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
-            {/* <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={this.checkLoopholes}></input> */}
 
             { virtue.name }
 
