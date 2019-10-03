@@ -41,7 +41,7 @@ class UniqueVirtue extends React.Component {
         { value: 'perdo', label: 'Perdo' },
         { value: 'rego', label: 'Rego' },
       ],
-      abilityOptions: [{value: "TEST", label: "TEST"}],
+      abilityOptions: [],
     };
 
     this.test = this.test.bind(this);
@@ -63,7 +63,6 @@ class UniqueVirtue extends React.Component {
       case "Affinity With (Ability)":
         this.setState({special_two: null});
         this.generateAbilities();
-        console.log("Mount successful")
         break;
     }
   }
@@ -125,12 +124,17 @@ class UniqueVirtue extends React.Component {
       ability.forEach((word) => {
         let modifiedWord = word.toLowerCase();
         value.push(modifiedWord);
-        label.push(modifiedWord.charAt(0).toUpperCase() + modifiedWord.slice(1));
+        if (modifiedWord.charAt(0).match(/[a-z]/i)) {
+          label.push(modifiedWord.charAt(0).toUpperCase() + modifiedWord.slice(1));
+        } else {
+          label.push(modifiedWord.charAt(0) + modifiedWord.charAt(1).toUpperCase() + modifiedWord.slice(2));
+        }
       });
       returnedAbilities.push({"value": value.join(' '), "label": label.join(' ')})
     });
 
-    this.setState({abilities: returnedAbilities});
+    // this.setState({abilityOptions: [...returnedAbilities]});
+    this.setState({abilityOptions: returnedAbilities});
   }
 
   generateOptions(virtueName) {
