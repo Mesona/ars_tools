@@ -75,7 +75,7 @@ class CharacterCreateVirtues extends React.Component {
     };
   }
 
-  handleVirtue(e, virtue, childData = null) {
+  handleVirtue(checkBox, virtue, childData = null) {
  
     if (childData !== null) {
       virtue.special_one = childData.special_one;
@@ -84,9 +84,10 @@ class CharacterCreateVirtues extends React.Component {
 
     // Checks if the virtue is already "checked," and if it
     // it is, the virtue will be deleted rather than added
-    let checked = e.target.checked || null;
+    // let checked = e.target.checked || null;
+    // let checked = targetData || null;
 
-    if (checked) {
+    if (checkBox) {
       this.props.storeVirtue(virtue);
     } else {
       this.props.deleteVirtue(virtue)

@@ -13,6 +13,7 @@ class UniqueVirtue extends React.Component {
       special_one: this.props.special_one || null,
       special_two: this.props.special_two || "",
       disabled: "disabled",
+      thisID: this.props.virtue.id,
       statOptions: [
         { value: 'intelligence', label: 'Intelligence' },
         { value: 'perception', label: 'Perception' },
@@ -86,41 +87,10 @@ class UniqueVirtue extends React.Component {
         this.enableSpecial()
       );
     }
-
-    this.test();
-  }
-
-  checkLoopholes() {
-    const statDupes = this.state.statDupes;
-    switch (this.props.virtue.name) {
-      case "Great (Characteristic)":
-        console.log("NOW HERE")
-        console.log(this.state.statDupes)
-
-        // Object.keys(this.props.currentVirtues).forEach((currentVirtue) => {
-        //   let virtue = this.props.currentVirtues[currentVirtue];
-        //   if ((virtue.name === "Great (Characteristic)") && (currentVirtue !== this.props.virtue.id)) {
-        //     let stat = virtue.special_one;
-        //     if (statDupes[stat] === undefined) {
-        //       statDupes[stat] = 1;
-        //     } else {
-        //       statDupes[stat]++;
-        //       if (statDupes[stat] > 2) {
-        //         return  false
-        //       } 
-        //     }
-        //   }
-        // });
-
-    }
-
   }
 
   enableSpecial() {
     let baseValidation = this.props.validateVirtue(this.props.virtue);
-
-    // Checks things like someone triple checking a stat
-    // let validation = this.checkLoopholes();
 
     // If the virtue is not disabled by some "hard set" lock
     if (baseValidation !== "disabled") {
@@ -136,8 +106,6 @@ class UniqueVirtue extends React.Component {
   generateOptions(virtueName) {
     const theseStats = [...this.state.statOptions];
     let statDupes = {};
-    // console.log("STATDUPES")
-    // console.log(statDupes)
     let formDupes = [];
     let techniqueDupes = [];
 
@@ -152,6 +120,13 @@ class UniqueVirtue extends React.Component {
               statDupes[stat] = 1;
             } else {
               statDupes[stat]++;
+              // if (statDupes[stat] > 2 && currentVirtue === this.state.thisID) {
+              // if (statDupes[stat] > 2) {
+              //   console.log("HONK")
+              //   let thisID = `create-virtue-checkbox-${this.state.thisID}`;
+              //   let thisCheckbox = document.getElementById(thisID);
+              //   thisCheckbox.checked = false;
+              // }
             }
           }
         });
@@ -160,6 +135,12 @@ class UniqueVirtue extends React.Component {
           let stat = theseStats[statIndex];
           if (statDupes[stat.value] >= 2) {
             stat["isDisabled"] = true;
+          // } else if (statDupes[stat.value] > 2) {
+          //   stat["isDisabled"] = true;
+          //   this.setState({disabled: "disabled"});
+          //   // let thisID = `create-virtue-checkbox-${this.state.thisID}`;
+          //   // let thisCheckbox = document.getElementById(thisID);
+          //   // thisCheckbox.checked = false;
           } else {
             stat["isDisabled"] = false;
           }
@@ -169,6 +150,37 @@ class UniqueVirtue extends React.Component {
           statOptions: theseStats,
           statDupes: statDupes,
          }, this.checkLoopholes());
+    }
+  }
+
+  checkLoopholes(e) {
+    if (e) {
+      e.stopPropagation();
+      const statDupes = this.state.statDupes;
+      let looped = false;
+      let checkBox = e.target.checked;
+      switch (this.props.virtue.name) {
+        case "Great (Characteristic)":
+  
+          Object.keys(statDupes).forEach((statDup) => {
+            let stat = statDupes[statDup];
+            if (stat >= 2) {
+              let thisID = `create-virtue-checkbox-${this.state.thisID}`;
+              let thisCheckbox = document.getElementById(thisID);
+              // checkbox = false;
+              console.log("THIS CHECKBOX")
+              console.log(thisCheckbox)
+              // thisCheckbox.checked = false;
+              checkBox = false;
+              looped = true;
+              this.setState({disabled: "disabled"}, console.log("HONK"))
+            }
+          });
+      }
+  
+      if (looped === false) {
+        this.props.handleClick(checkBox, this.props.virtue, this.state);
+      }
     }
   }
 
@@ -234,7 +246,9 @@ class UniqueVirtue extends React.Component {
       case "Great (Characteristic)":
         return (
           <>
-            <input className="create-virtue-checkbox" type="checkbox" disabled={this.state.disabled} onClick={(e) => this.props.handleClick(e, this.props.virtue, this.state)}></input>
+            {/* <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.props.handleClick(e, this.props.virtue, this.state)}></input> */}
+            <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
+            {/* <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={this.checkLoopholes}></input> */}
 
             { virtue.name }
 
