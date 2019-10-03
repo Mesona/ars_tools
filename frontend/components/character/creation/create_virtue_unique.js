@@ -7,7 +7,7 @@ class UniqueVirtue extends React.Component {
 
     this.state = {
       statDupes: {},
-      affinityDupes: {},
+      abilityDupes: {},
       special_one: this.props.special_one || null,
       special_two: this.props.special_two || "",
       disabled: "disabled",
@@ -41,7 +41,7 @@ class UniqueVirtue extends React.Component {
         { value: 'perdo', label: 'Perdo' },
         { value: 'rego', label: 'Rego' },
       ],
-      abilityOptions: [],
+      abilityOptions: [{}],
     };
 
     this.test = this.test.bind(this);
@@ -139,6 +139,7 @@ class UniqueVirtue extends React.Component {
 
   generateOptions(virtueName) {
     const theseStats = [...this.state.statOptions];
+    const theseAbilities = [...this.state.abilityOptions];
     let statDupes = {};
     let formDupes = [];
     let techniqueDupes = [];
@@ -170,7 +171,31 @@ class UniqueVirtue extends React.Component {
         this.setState({
           statOptions: theseStats,
           statDupes: statDupes,
-         }, this.checkLoopholes());
+        }, this.checkLoopholes());
+        break;
+
+      case "Affinity With (Ability)":
+        Object.keys(this.props.currentVirtues).forEach((currentVirtue) => {
+          let virtue = this.props.currentVirtues[currentVirtue];
+          if ((virtue.name === "Affinity With (Ability)") && (currentVirtue !== this.props.virtue.id)) {
+            let ability = virtue.special_one;
+            if (abilityDupes[ability] === undefined) {
+              abilityDupes[ability] = 1;
+            } else {
+              abilityDupes[ability]++;
+            }
+          }
+        });
+        
+        Object.keys(theseAbilities).foEach((abilityIndex) => {
+          let ability = theseAbilities[abilityIndex];
+          if (abilityDupes[ability.value] >= 1) {
+            ability["isDisabled"] = true;
+          } else {
+            ability["isDisabled"] = false;
+          }
+        });
+        break;
     }
   }
 
