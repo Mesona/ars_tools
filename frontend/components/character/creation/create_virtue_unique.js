@@ -71,8 +71,13 @@ class UniqueVirtue extends React.Component {
     // The componenet was not updating automatically, even though it was registering the
     // props changes
     if (prevProps.currentVirtues !== this.props.currentVirtues) {
-      if (this.props.virtue.name === "Great (Characteristic)") {
-        this.generateOptions("Great (Characteristic)");
+      switch (this.props.virtue.name) {
+        case "Great (Characteristic)":
+          this.generateOptions("Great (Characteristic)");
+          break;
+        case "Affinity With (Ability)":
+          this.generateOptions("Affinity With (Ability)");
+          break;
       }
     }
   }
@@ -141,6 +146,7 @@ class UniqueVirtue extends React.Component {
     const theseStats = [...this.state.statOptions];
     const theseAbilities = [...this.state.abilityOptions];
     let statDupes = {};
+    let abilityDupes = {};
     let formDupes = [];
     let techniqueDupes = [];
 
@@ -186,8 +192,8 @@ class UniqueVirtue extends React.Component {
             }
           }
         });
-        
-        Object.keys(theseAbilities).foEach((abilityIndex) => {
+
+        Object.keys(theseAbilities).forEach((abilityIndex) => {
           let ability = theseAbilities[abilityIndex];
           if (abilityDupes[ability.value] >= 1) {
             ability["isDisabled"] = true;
@@ -195,6 +201,11 @@ class UniqueVirtue extends React.Component {
             ability["isDisabled"] = false;
           }
         });
+
+        this.setState({
+          abilityOptions: theseAbilities,
+          abilityDupes: abilityDupes,
+        }, this.checkLoopholes());
         break;
     }
   }
