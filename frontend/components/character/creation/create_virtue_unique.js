@@ -149,49 +149,35 @@ class UniqueVirtue extends React.Component {
   generateOptions() {
     let theseOptions;
     let capacity;
-    const theseStats = [...this.state.statOptions];
-    const theseAbilities = [...this.state.abilityOptions];
     let dupes = this.calculateDupes();
 
-      switch (this.props.virtue.name) {
-        case "Great (Characteristic)":
-          theseOptions = [...this.state.statOptions];
-          capacity = 2;
-          Object.keys(theseOptions).forEach((optionsIndex) => {
-            let option = theseOptions[optionsIndex];
-            // console.log("OPTION CHECK")
-            // console.log(option.value)
-            // console.log(dupes[option.value])
-            if (dupes[option.value] >= capacity) {
-              option["isDisabled"] = true;
-            } else {
-              option["isDisabled"] = false;
-            }
-          });
+    switch (this.props.virtue.name) {
+      case "Great (Characteristic)":
+        theseOptions = [...this.state.statOptions];
+        capacity = 2;
 
-          this.setState({
-            statOptions: theseOptions,
-            dupes: dupes,
-          }, function() {
-            this.checkLoopholes();
-          });
-          break;
-        case "Affinity With (Ability)":
-          Object.keys(theseAbilities).forEach((abilityIndex) => {
-            let ability = theseAbilities[abilityIndex];
-            if (dupes[ability.value] >= 1) {
-              ability["isDisabled"] = true;
-            } else {
-              ability["isDisabled"] = false;
-            }
-          });
-  
-          this.setState({
-            abilityOptions: theseAbilities,
-            dupes: dupes,
-          }, this.checkLoopholes());
-          break;
+        break;
+      case "Affinity With (Ability)":
+        theseOptions = [...this.state.abilityOptions];
+        capacity = 1;
+        break;
+    }
+
+    Object.keys(theseOptions).forEach((optionsIndex) => {
+      let option = theseOptions[optionsIndex];
+      if (dupes[option.value] >= capacity) {
+        option["isDisabled"] = true;
+      } else {
+        option["isDisabled"] = false;
       }
+    });
+    
+    this.setState({
+      statOptions: theseOptions,
+      dupes: dupes,
+    }, function() {
+      this.checkLoopholes();
+    });
   }
 
   calculateDupes() {
