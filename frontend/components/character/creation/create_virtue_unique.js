@@ -247,36 +247,6 @@ class UniqueVirtue extends React.Component {
     }
   }
 
-  // FUNCTIONAL, BUT NOT GENERALIZED
-  // checkLoopholes(e) {
-  //   if (e) {
-  //     e.stopPropagation();
-  //     const dupes = this.state.dupes;
-  //     let looped = false;
-  //     let checkBox = e.target.checked;
-  //     switch (this.props.virtue.name) {
-  //       case "Great (Characteristic)":
-  
-  //         // Validates a possible exploit where a user could select a stat
-  //         // 3 times before checking the checkboxes, and then check all three
-  //         // bypassing the limit of 2
-  //         Object.keys(dupes).forEach((statDup) => {
-  //           let stat = dupes[statDup];
-  //           if (stat >= 2 && this.state.special_one === statDup) {
-  //             this.uncheckBox();
-  //             looped = true;
-  //             this.setState({disabled: "disabled"});
-  //           }
-  //         });
-  //     }
-  
-  //     if (looped === false) {
-  //       this.setState({disabled: false});
-  //       this.props.handleClick(checkBox, this.props.virtue, this.state);
-  //     }
-  //   }
-  // }
-
   uncheckBox() {
     let thisID = `create-virtue-checkbox-${this.state.thisID}`;
     let thisCheckbox = document.getElementById(thisID);
