@@ -112,9 +112,9 @@ class UniqueVirtue extends React.Component {
     if (baseValidation !== "disabled") {
       // if (this.state.special_one === "" || this.special_two === "") {
       if (this.special_two === "") {
-        this.setState({disabled: "disabled"})
+        this.setState({disabled: "disabled"});
       } else {
-        this.setState({disabled: ""})
+        this.setState({disabled: ""});
       }
     }
   }
@@ -135,10 +135,9 @@ class UniqueVirtue extends React.Component {
           label.push(modifiedWord.charAt(0) + modifiedWord.charAt(1).toUpperCase() + modifiedWord.slice(2));
         }
       });
-      returnedAbilities.push({"value": value.join(' '), "label": label.join(' ')})
+      returnedAbilities.push({"value": value.join(' '), "label": label.join(' ')});
     });
 
-    // this.setState({abilityOptions: [...returnedAbilities]});
     this.setState({abilityOptions: returnedAbilities});
   }
 
@@ -146,7 +145,6 @@ class UniqueVirtue extends React.Component {
     const theseStats = [...this.state.statOptions];
     const theseAbilities = [...this.state.abilityOptions];
     let dupes = {};
-    let techniqueDupes = [];
 
     switch (virtueName) {
 
@@ -259,36 +257,49 @@ class UniqueVirtue extends React.Component {
   render () {
     const { virtue } = this.props;
 
-    switch (virtue.name) {
-      case "Affinity With (Ability)":
-        return (
-          <>
-            <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
+    if (virtue.special === false) {
+      return (
+        <React.Fragment>
 
-            { virtue.name }
+          <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" onClick={(e) => this.checkLoopholes(e)}></input>
 
-            <Select options={this.state.abilityOptions} onChange={(e) => this.setSpecial(e, "one")} />
-          </>
-        );
-      case "Great (Characteristic)":
-        return (
-          <>
+          { virtue.name }
 
-            <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
+        </React.Fragment>
+      )
+    } else {
 
-            { virtue.name }
+      switch (virtue.name) {
+        case "Affinity With (Ability)":
+          return (
+            <>
+              <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
 
-            <Select options={this.state.statOptions} onChange={(e) => this.setSpecial(e, "one")} />
+              { virtue.name }
 
-          </>
-        );
-      default:
-        return (
-          <>
-            SOMETHING WENT WRONG
-          </>
-        )
-    } 
+              <Select options={this.state.abilityOptions} onChange={(e) => this.setSpecial(e, "one")} />
+            </>
+          );
+        case "Great (Characteristic)":
+          return (
+            <>
+
+              <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
+
+              { virtue.name }
+
+              <Select options={this.state.statOptions} onChange={(e) => this.setSpecial(e, "one")} />
+
+            </>
+          );
+        default:
+          return (
+            <>
+              SOMETHING WENT WRONG
+            </>
+          )
+      } 
+    }
   }
 
 }
