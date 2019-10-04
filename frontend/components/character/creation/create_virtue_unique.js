@@ -6,8 +6,7 @@ class UniqueVirtue extends React.Component {
     super(props);
 
     this.state = {
-      statDupes: {},
-      abilityDupes: {},
+      dupes: {},
       special_one: this.props.special_one || null,
       special_two: this.props.special_two || "",
       disabled: "disabled",
@@ -50,6 +49,7 @@ class UniqueVirtue extends React.Component {
     this.generateAbilities = this.generateAbilities.bind(this);
     this.generateOptions = this.generateOptions.bind(this);
     this.checkLoopholes = this.checkLoopholes.bind(this);
+    this.dupeCheck = this.dupeCheck.bind(this);
     this.uncheckBox = this.uncheckBox.bind(this);
   }
 
@@ -120,7 +120,7 @@ class UniqueVirtue extends React.Component {
   }
 
   generateAbilities() {
-    let abilities = [...this.props.abilities]
+    let abilities = [...this.props.abilities];
     let returnedAbilities = [];
     Object.keys(abilities).forEach((abilityKey) => {
       let ability = abilities[abilityKey].name.split(' ');
@@ -145,29 +145,27 @@ class UniqueVirtue extends React.Component {
   generateOptions(virtueName) {
     const theseStats = [...this.state.statOptions];
     const theseAbilities = [...this.state.abilityOptions];
-    let statDupes = {};
-    let abilityDupes = {};
-    let formDupes = [];
+    let dupes = {};
     let techniqueDupes = [];
 
     switch (virtueName) {
-      case "Great (Characteristic)":
 
+      case "Great (Characteristic)":
         Object.keys(this.props.currentVirtues).forEach((currentVirtue) => {
           let virtue = this.props.currentVirtues[currentVirtue];
           if ((virtue.name === "Great (Characteristic)") && (currentVirtue !== this.props.virtue.id)) {
             let stat = virtue.special_one;
-            if (statDupes[stat] === undefined) {
-              statDupes[stat] = 1;
+            if (dupes[stat] === undefined) {
+              dupes[stat] = 1;
             } else {
-              statDupes[stat]++;
+              dupes[stat]++;
             }
           }
         });
 
         Object.keys(theseStats).forEach((statIndex) => {
           let stat = theseStats[statIndex];
-          if (statDupes[stat.value] >= 2) {
+          if (dupes[stat.value] >= 2) {
             stat["isDisabled"] = true;
           } else {
             stat["isDisabled"] = false;
@@ -176,7 +174,7 @@ class UniqueVirtue extends React.Component {
 
         this.setState({
           statOptions: theseStats,
-          statDupes: statDupes,
+          dupes: dupes,
         }, this.checkLoopholes());
         break;
 
@@ -185,17 +183,17 @@ class UniqueVirtue extends React.Component {
           let virtue = this.props.currentVirtues[currentVirtue];
           if ((virtue.name === "Affinity With (Ability)") && (currentVirtue !== this.props.virtue.id)) {
             let ability = virtue.special_one;
-            if (abilityDupes[ability] === undefined) {
-              abilityDupes[ability] = 1;
+            if (dupes[ability] === undefined) {
+              dupes[ability] = 1;
             } else {
-              abilityDupes[ability]++;
+              dupes[ability]++;
             }
           }
         });
 
         Object.keys(theseAbilities).forEach((abilityIndex) => {
           let ability = theseAbilities[abilityIndex];
-          if (abilityDupes[ability.value] >= 1) {
+          if (dupes[ability.value] >= 1) {
             ability["isDisabled"] = true;
           } else {
             ability["isDisabled"] = false;
@@ -204,7 +202,7 @@ class UniqueVirtue extends React.Component {
 
         this.setState({
           abilityOptions: theseAbilities,
-          abilityDupes: abilityDupes,
+          dupes: dupes,
         }, this.checkLoopholes());
         break;
     }
@@ -213,24 +211,21 @@ class UniqueVirtue extends React.Component {
   checkLoopholes(e) {
     if (e) {
       e.stopPropagation();
-      const statDupes = this.state.statDupes;
+      const dupes = this.state.dupes;
       let looped = false;
       let checkBox = e.target.checked;
-      switch (this.props.virtue.name) {
-        case "Great (Characteristic)":
-  
-          // Validates a possible exploit where a user could select a stat
-          // 3 times before checking the checkboxes, and then check all three
-          // bypassing the limit of 2
-          Object.keys(statDupes).forEach((statDup) => {
-            let stat = statDupes[statDup];
-            if (stat >= 2 && this.state.special_one === statDup) {
-              this.uncheckBox();
-              looped = true;
-              this.setState({disabled: "disabled"});
-            }
-          });
-      }
+
+      Object.keys(dupes).forEach((dupe) => {
+        let stat = dupes[dupe];
+        switch (this.props.virtue.name) {
+          case "Great (Characteristic)":
+            looped = this.dupeCheck(stat, dupe, 2);
+            break;
+          case "Affinity With (Ability)":
+            looped = this.dupeCheck(stat, dupe, 1);
+            break;
+          }
+        });
   
       if (looped === false) {
         this.setState({disabled: false});
@@ -238,6 +233,49 @@ class UniqueVirtue extends React.Component {
       }
     }
   }
+
+  dupeCheck(stat, dupe, cap) {
+    // Validates a possible exploit where a user could select an option
+    // multiple times before checking the checkboxes, and then check them all,
+    // bypassing the default limi
+    if (stat >= cap && this.state.special_one === dupe) {
+      this.uncheckBox();
+      this.setState({disabled: "disabled"})
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // FUNCTIONAL, BUT NOT GENERALIZED
+  // checkLoopholes(e) {
+  //   if (e) {
+  //     e.stopPropagation();
+  //     const dupes = this.state.dupes;
+  //     let looped = false;
+  //     let checkBox = e.target.checked;
+  //     switch (this.props.virtue.name) {
+  //       case "Great (Characteristic)":
+  
+  //         // Validates a possible exploit where a user could select a stat
+  //         // 3 times before checking the checkboxes, and then check all three
+  //         // bypassing the limit of 2
+  //         Object.keys(dupes).forEach((statDup) => {
+  //           let stat = dupes[statDup];
+  //           if (stat >= 2 && this.state.special_one === statDup) {
+  //             this.uncheckBox();
+  //             looped = true;
+  //             this.setState({disabled: "disabled"});
+  //           }
+  //         });
+  //     }
+  
+  //     if (looped === false) {
+  //       this.setState({disabled: false});
+  //       this.props.handleClick(checkBox, this.props.virtue, this.state);
+  //     }
+  //   }
+  // }
 
   uncheckBox() {
     let thisID = `create-virtue-checkbox-${this.state.thisID}`;
