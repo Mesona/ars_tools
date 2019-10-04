@@ -7,10 +7,12 @@ class UniqueVirtue extends React.Component {
 
     this.state = {
       dupes: {},
+      maxDupes: 0,
       special_one: this.props.special_one || null,
       special_two: this.props.special_two || "",
       disabled: "disabled",
       thisID: this.props.virtue.id,
+      theseOptions: [{}],
       statOptions: [
         { value: 'intelligence', label: 'Intelligence' },
         { value: 'perception', label: 'Perception' },
@@ -59,11 +61,20 @@ class UniqueVirtue extends React.Component {
     // any other startup methods need to be called
     switch (this.props.virtue.name) {
       case "Great (Characteristic)":
-        this.setState({special_two: null});
+        this.setState({
+          maxDupes: 2,
+          special_two: null,
+          theseOptions: [...this.state.statOptions],
+        });
         break;
       case "Affinity With (Ability)":
-        this.setState({special_two: null});
-        this.generateAbilities();
+        this.setState({
+          maxDupes: 1,
+          special_two: null,
+          theseOptions: [...this.state.abilityOptions],
+        }, function() {
+          this.generateAbilities();
+        });
         break;
     }
   }
@@ -143,35 +154,22 @@ class UniqueVirtue extends React.Component {
       returnedAbilities.push({"value": value.join(' '), "label": label.join(' ')});
     });
 
-    this.setState({abilityOptions: returnedAbilities});
+    this.setState({theseOptions: returnedAbilities});
   }
 
   generateOptions() {
-    let theseOptions;
-    let capacity;
+    let theseOptions = [...this.state.theseOptions];
     let dupes = this.calculateDupes();
-
-    switch (this.props.virtue.name) {
-      case "Great (Characteristic)":
-        theseOptions = [...this.state.statOptions];
-        capacity = 2;
-
-        break;
-      case "Affinity With (Ability)":
-        theseOptions = [...this.state.abilityOptions];
-        capacity = 1;
-        break;
-    }
 
     Object.keys(theseOptions).forEach((optionsIndex) => {
       let option = theseOptions[optionsIndex];
-      if (dupes[option.value] >= capacity) {
+      if (dupes[option.value] >= this.state.maxDupes) {
         option["isDisabled"] = true;
       } else {
         option["isDisabled"] = false;
       }
     });
-    
+
     this.setState({
       statOptions: theseOptions,
       dupes: dupes,
@@ -181,34 +179,18 @@ class UniqueVirtue extends React.Component {
   }
 
   calculateDupes() {
-    let virtueName = this.props.virtue.name;
     let dupes = {};
 
     Object.keys(this.props.currentVirtues).forEach((currentVirtue) => {
       let virtue = this.props.currentVirtues[currentVirtue];
-      switch (virtueName) {
-        case "Great (Characteristic)":
-          if ((virtue.name === "Great (Characteristic)") && (currentVirtue !== this.props.virtue.id)) {
-            let stat = virtue.special_one;
-            if (dupes[stat] === undefined) {
-              dupes[stat] = 1;
-            } else {
-              dupes[stat]++;
-            }
-          }
-          break;
-
-          case "Affinity With (Ability)":
-          if ((virtue.name === "Affinity With (Ability)") && (currentVirtue !== this.props.virtue.id)) {
-            let ability = virtue.special_one;
-            if (dupes[ability] === undefined) {
-              dupes[ability] = 1;
-            } else {
-              dupes[ability]++;
-            }
-          }
-          break;
-
+      let value = virtue.special_one;
+      // Don't want to add the current virtue twice
+      if (currentVirtue !== this.props.virtue.id && value !== null) {
+        if (dupes[value] === undefined) {
+          dupes[value] = 1;
+        } else {
+          dupes[value]++;
+        }
       }
     });
 
@@ -318,12 +300,6 @@ class UniqueVirtue extends React.Component {
     // Validates a possible exploit where a user could select an option
     // multiple times before checking the checkboxes, and then check them all,
     // bypassing the default limit
-    console.log("STAT: " + stat)
-    console.log("SPECIAL_ONE: " + this.state.special_one)
-    console.log("DUPE: " + dupe)
-    console.log("CAP: " + cap)
-    console.log(stat >= cap)
-    console.log(this.state.special_one === dupe)
     if (stat >= cap && this.state.special_one === dupe) {
       // Undoes the addition of the "offending" virtue
       this.uncheckBox();
@@ -367,7 +343,8 @@ class UniqueVirtue extends React.Component {
 
               { virtue.name }
 
-              <Select options={this.state.abilityOptions} onChange={(e) => this.setSpecial(e, "one")} />
+              {/* <Select options={this.state.abilityOptions} onChange={(e) => this.setSpecial(e, "one")} /> */}
+              <Select options={this.state.theseOptions} onChange={(e) => this.setSpecial(e, "one")} />
             </>
           );
         case "Great (Characteristic)":
