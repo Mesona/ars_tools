@@ -20,35 +20,30 @@ module Virtues
     description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
     book: "Core",
     virtue_type: "General",
-    special: true,
     major: false)
 
   affinity_with_ability_two = Virtue.create!(name: "Affinity With (Ability)",
     description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
     book: "Core",
     virtue_type: "General",
-    special: true,
     major: false)
 
   affinity_with_ability_three = Virtue.create!(name: "Affinity With (Ability)",
     description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
     book: "Core",
     virtue_type: "General",
-    special: true,
     major: false)
 
   affinity_with_ability_four = Virtue.create!(name: "Affinity With (Ability)",
     description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
     book: "Core",
     virtue_type: "General",
-    special: true,
     major: false)
 
   affinity_with_ability_five = Virtue.create!(name: "Affinity With (Ability)",
     description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
     book: "Core",
     virtue_type: "General",
-    special: true,
     major: false)
 
   affinity_with_art = Virtue.create!(name: "Affinity With (Art)",
@@ -317,35 +312,30 @@ module Virtues
     description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   great_characteristic_two = Virtue.create!(name: "Great (Characteristic)",
     description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   great_characteristic_three = Virtue.create!(name: "Great (Characteristic)",
     description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   great_characteristic_four = Virtue.create!(name: "Great (Characteristic)",
     description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   great_characteristic_five = Virtue.create!(name: "Great (Characteristic)",
     description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   greater_immunity = Virtue.create!(name: "Greater Immunity",
@@ -490,49 +480,42 @@ module Virtues
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   learn_ability_from_mistakes_two = Virtue.create!(name: "Learn (Ability) From Mistakes",
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   learn_ability_from_mistakes_three = Virtue.create!(name: "Learn (Ability) From Mistakes",
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   learn_ability_from_mistakes_four = Virtue.create!(name: "Learn (Ability) From Mistakes",
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   learn_ability_from_mistakes_five = Virtue.create!(name: "Learn (Ability) From Mistakes",
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
-    special: true,
     major: false)
 
   lesser_immunity = Virtue.create!(name: "Lesser Immunity",
     description: "You are immune to some hazard which is either rare, or not deadly, or both. See “Greater Immunity,” page 43.",
     virtue_type: "Supernatural",
     book: "Core",
-    special: true,
     major: false)
 
   lesser_purifying_touch = Virtue.create!(name: "Lesser Purifying Touch",
     description: "You can, with a touch and the expenditure of a Fatigue level, heal a specific illness. This illness should be one that people often recover from on their own, or one that is not particularly serious. You can only choose an illness, not an injury or other misfortune. See page 180 for rules on diseases.",
     virtue_type: "Supernatural",
     book: "Core",
-    special: true,
     major: false)
 
   life_boost = Virtue.create!(name: "Life Boost",
@@ -600,7 +583,6 @@ module Virtues
       A character can have only one Magical Focus, either major or minor, regardless of the source of the focus.",
     virtue_type: "Hermetic",
     book: "Core",
-    special: true,
     major: true)
 
   mastered_spells_one = Virtue.create!(name: "Mastered Spells",

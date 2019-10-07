@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_27_181515) do
+ActiveRecord::Schema.define(version: 2019_10_07_165208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,7 +94,6 @@ ActiveRecord::Schema.define(version: 2019_09_27_181515) do
     t.boolean "major"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "special", default: false
     t.index ["book"], name: "index_flaws_on_book"
     t.index ["flaw_type"], name: "index_flaws_on_flaw_type"
     t.index ["major"], name: "index_flaws_on_major"
@@ -132,7 +131,6 @@ ActiveRecord::Schema.define(version: 2019_09_27_181515) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "free", default: false
-    t.boolean "special", default: false
     t.index ["book"], name: "index_virtues_on_book"
     t.index ["major"], name: "index_virtues_on_major"
     t.index ["virtue_type"], name: "index_virtues_on_virtue_type"
