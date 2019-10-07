@@ -8,6 +8,8 @@ class UniqueVirtue extends React.Component {
     this.state = {
       dupes: {},
       maxDupes: 0,
+      special_one_text: "",
+      special_two_text: "",
       special_one: this.props.special_one || null,
       special_two: this.props.special_two || "",
       numberOfSpecials: 0,
@@ -58,12 +60,18 @@ class UniqueVirtue extends React.Component {
   }
 
   componentDidMount() {
+    const SELECT_AN_ABILITY = "Select an ability . . .";
+    const SELECT_AN_ART = "Select an art . . .";
+    const SELECT_AN_ATTRIBUTE = "Select an attribute . . .";
+    const SELECT_A_FORM = "Select a form . . .";
+
     // Determines if the current virtue uses special_two or not, as well as if
     // any other startup methods need to be called
     switch (this.props.virtue.name) {
       case "Great (Characteristic)":
         this.setState({
           maxDupes: 2,
+          special_one_text: SELECT_AN_ATTRIBUTE,
           special_two: null,
           numberOfSpecials: 1,
           theseOptions: [...this.state.statOptions],
@@ -72,6 +80,7 @@ class UniqueVirtue extends React.Component {
       case "Affinity With (Ability)":
         this.setState({
           maxDupes: 1,
+          special_one_text: SELECT_AN_ABILITY,
           special_two: null,
           numberOfSpecials: 1,
           theseOptions: [...this.state.abilityOptions],
@@ -263,7 +272,11 @@ class UniqueVirtue extends React.Component {
       return (
         <React.Fragment>
 
-          <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" onClick={(e) => this.checkLoopholes(e)}></input>
+          <input
+            className="create-virtue-checkbox"
+            id={`create-virtue-checkbox-${this.state.thisID}`}
+            type="checkbox" onClick={(e) => this.checkLoopholes(e)}>
+          </input>
 
           { virtue.name }
 
@@ -275,22 +288,45 @@ class UniqueVirtue extends React.Component {
         case 1:
           return (
             <>
-              <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
+              <input
+                className="create-virtue-checkbox"
+                id={`create-virtue-checkbox-${this.state.thisID}`}
+                type="checkbox" disabled={this.state.disabled}
+                onClick={(e) => this.checkLoopholes(e)}>
+              </input>
 
               { virtue.name }
 
-              <Select options={this.state.theseOptions} onChange={(e) => this.setSpecial(e, "one")} />
+              <Select
+                placeholder={<>{this.state.special_one_text}</>}
+                options={this.state.theseOptions}
+                onChange={(e) => this.setSpecial(e, "one")}
+              />
             </>
           );
         case 2:
           return (
             <>
-              <input className="create-virtue-checkbox" id={`create-virtue-checkbox-${this.state.thisID}`} type="checkbox" disabled={this.state.disabled} onClick={(e) => this.checkLoopholes(e)}></input>
+              <input
+                className="create-virtue-checkbox"
+                id={`create-virtue-checkbox-${this.state.thisID}`}
+                type="checkbox" disabled={this.state.disabled}
+                onClick={(e) => this.checkLoopholes(e)}>
+              </input>
 
               { virtue.name }
 
-              <Select options={this.state.theseOptions} onChange={(e) => this.setSpecial(e, "one")} />
-              <Select options={this.state.theseOptions} onChange={(e) => this.setSpecial(e, "two")} />
+              <Select
+                placeholder={<>{this.state.special_one_text}</>}
+                options={this.state.theseOptions}
+                onChange={(e) => this.setSpecial(e, "one")}
+              />
+
+              <Select
+                placeholder={<>{this.state.special_two_text}</>}
+                options={this.state.theseOptions}
+                onChange={(e) => this.setSpecial(e, "two")}
+              />
             </>
           );
         default:

@@ -490,42 +490,49 @@ module Virtues
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   learn_ability_from_mistakes_two = Virtue.create!(name: "Learn (Ability) From Mistakes",
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   learn_ability_from_mistakes_three = Virtue.create!(name: "Learn (Ability) From Mistakes",
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   learn_ability_from_mistakes_four = Virtue.create!(name: "Learn (Ability) From Mistakes",
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   learn_ability_from_mistakes_five = Virtue.create!(name: "Learn (Ability) From Mistakes",
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
+    special: true,
     major: false)
 
   lesser_immunity = Virtue.create!(name: "Lesser Immunity",
     description: "You are immune to some hazard which is either rare, or not deadly, or both. See “Greater Immunity,” page 43.",
     virtue_type: "Supernatural",
     book: "Core",
+    special: true,
     major: false)
 
   lesser_purifying_touch = Virtue.create!(name: "Lesser Purifying Touch",
     description: "You can, with a touch and the expenditure of a Fatigue level, heal a specific illness. This illness should be one that people often recover from on their own, or one that is not particularly serious. You can only choose an illness, not an injury or other misfortune. See page 180 for rules on diseases.",
     virtue_type: "Supernatural",
     book: "Core",
+    special: true,
     major: false)
 
   life_boost = Virtue.create!(name: "Life Boost",
@@ -593,6 +600,7 @@ module Virtues
       A character can have only one Magical Focus, either major or minor, regardless of the source of the focus.",
     virtue_type: "Hermetic",
     book: "Core",
+    special: true,
     major: true)
 
   mastered_spells_one = Virtue.create!(name: "Mastered Spells",
