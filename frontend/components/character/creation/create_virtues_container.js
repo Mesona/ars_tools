@@ -10,6 +10,8 @@ import CharacterCreateVirtues from './create_virtues';
 
 const mapStateToProps = (state, ownProps) => ({
   currentVirtues: state.entities.createVirtuesAndFlaws,
+  // TODO: Maybe fix this to make flaws separate
+  currentFlaws: state.entities.createVirtuesAndFlaws,
   currentCharacter: state.entities.characters[ownProps.match.params.characterId],
 });
 

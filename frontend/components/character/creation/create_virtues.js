@@ -87,7 +87,7 @@ class CharacterCreateVirtues extends React.Component {
 
   validation(virtue) {
     const { currentCharacter } = this.state;
-    if (currentCharacter !== null) {
+    if (currentCharacter !== null && virtue !== undefined) {
 
       // Character validations
       if (currentCharacter.character_type === "grog") {
@@ -118,14 +118,14 @@ class CharacterCreateVirtues extends React.Component {
     }
 
     // Conditional validations
-    if (this.state.currentVirtues.wealthy === true) {
+    if (this.props.currentVirtues.wealthy === true) {
       if (virtue.name === "Custos" ||
         virtue.name === "Covenfolk"
       ) {
         return "disabled";
       }
 
-    } else if (this.state.currentFlaws.poor === true) {
+    } else if (this.props.currentFlaws.poor === true) {
       if (virtue.name === "Wealthy" ||
         virtue.name === "Custos" ||
         virtue.name === "Covenfolk"
@@ -133,33 +133,33 @@ class CharacterCreateVirtues extends React.Component {
         return "disabled";
       }
 
-    } else if (this.state.currentVirtues.custos === true) {
+    } else if (this.props.currentVirtues.custos === true) {
       if (virtue.name === "Wealthy") {
         return "disabled";
       }
 
-    } else if (this.state.currentVirtues.covenfolk === true) {
+    } else if (this.props.currentVirtues.covenfolk === true) {
       if (virtue.name === "Wealthy") {
         return "disabled";
       }
 
-    } else if (this.state.currentVirtues["Giant Blood"]=== true) {
+    } else if (this.props.currentVirtues["Giant Blood"]=== true) {
       if (virtue.name === "Large") {
         return "disabled";
       }
 
-    } else if (this.state.currentVirtues["Large"] === true) {
+    } else if (this.props.currentVirtues["Large"] === true) {
       if (virtue.name === "Giant Blood") {
         return "disabled";
       }
 
-    } else if (this.state.currentFlaws.small_frame === true) {
+    } else if (this.props.currentFlaws.small_frame === true) {
       if (virtue.name === "Large" ||
         virtue.name === "Giant Blood") {
         return "disabled";
       }
 
-    } else if (this.state.currentFlaws.dwarf === true) {
+    } else if (this.props.currentFlaws.dwarf === true) {
       if (virtue.name === "Large" ||
       virtue.name === "Giant Blood") {
         return "disabled";

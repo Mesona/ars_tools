@@ -23,7 +23,11 @@ const CreateVirtuesAndFlawsReducer = (state = {}, action) => {
       delete newState[action.virtue.id];
       return newState;
     case RECEIVE_VIRTUES:
-      return action.virtues;
+      if (action.virtues !== undefined) {
+        return action.virtues;
+      } else {
+        return state;
+      }
     case RECEIVE_FLAW:
       flaw = action.flaw;
       return merge({}, state, { [action.flaw]: flaw});

@@ -267,76 +267,72 @@ class UniqueVirtue extends React.Component {
 
   render () {
     const { virtue } = this.props;
+    switch (this.state.numberOfSpecials) {
+      case 0:
+        return (
+          <React.Fragment>
+  
+            <input
+              className="create-virtue-checkbox"
+              id={`create-virtue-checkbox-${this.state.thisID}`}
+              type="checkbox" onClick={(e) => this.checkLoopholes(e)}>
+            </input>
+  
+            { virtue.name }
+  
+          </React.Fragment>
+        )
+      case 1:
+        return (
+          <>
+            <input
+              className="create-virtue-checkbox"
+              id={`create-virtue-checkbox-${this.state.thisID}`}
+              type="checkbox" disabled={this.state.disabled}
+              onClick={(e) => this.checkLoopholes(e)}>
+            </input>
 
-    if (virtue.special === false) {
-      return (
-        <React.Fragment>
+            { virtue.name }
 
-          <input
-            className="create-virtue-checkbox"
-            id={`create-virtue-checkbox-${this.state.thisID}`}
-            type="checkbox" onClick={(e) => this.checkLoopholes(e)}>
-          </input>
+            <Select
+              placeholder={<>{this.state.special_one_text}</>}
+              options={this.state.theseOptions}
+              onChange={(e) => this.setSpecial(e, "one")}
+            />
+          </>
+        );
+      case 2:
+        return (
+          <>
+            <input
+              className="create-virtue-checkbox"
+              id={`create-virtue-checkbox-${this.state.thisID}`}
+              type="checkbox" disabled={this.state.disabled}
+              onClick={(e) => this.checkLoopholes(e)}>
+            </input>
 
-          { virtue.name }
+            { virtue.name }
 
-        </React.Fragment>
-      )
-    } else {
+            <Select
+              placeholder={<>{this.state.special_one_text}</>}
+              options={this.state.theseOptions}
+              onChange={(e) => this.setSpecial(e, "one")}
+            />
 
-      switch (this.state.numberOfSpecials) {
-        case 1:
-          return (
-            <>
-              <input
-                className="create-virtue-checkbox"
-                id={`create-virtue-checkbox-${this.state.thisID}`}
-                type="checkbox" disabled={this.state.disabled}
-                onClick={(e) => this.checkLoopholes(e)}>
-              </input>
-
-              { virtue.name }
-
-              <Select
-                placeholder={<>{this.state.special_one_text}</>}
-                options={this.state.theseOptions}
-                onChange={(e) => this.setSpecial(e, "one")}
-              />
-            </>
-          );
-        case 2:
-          return (
-            <>
-              <input
-                className="create-virtue-checkbox"
-                id={`create-virtue-checkbox-${this.state.thisID}`}
-                type="checkbox" disabled={this.state.disabled}
-                onClick={(e) => this.checkLoopholes(e)}>
-              </input>
-
-              { virtue.name }
-
-              <Select
-                placeholder={<>{this.state.special_one_text}</>}
-                options={this.state.theseOptions}
-                onChange={(e) => this.setSpecial(e, "one")}
-              />
-
-              <Select
-                placeholder={<>{this.state.special_two_text}</>}
-                options={this.state.theseOptions}
-                onChange={(e) => this.setSpecial(e, "two")}
-              />
-            </>
-          );
-        default:
-          return (
-            <>
-              SOMETHING WENT WRONG
-            </>
-          )
-      } 
-    }
+            <Select
+              placeholder={<>{this.state.special_two_text}</>}
+              options={this.state.theseOptions}
+              onChange={(e) => this.setSpecial(e, "two")}
+            />
+          </>
+        );
+      default:
+        return (
+          <>
+            SOMETHING WENT WRONG
+          </>
+        )
+    } 
   }
 
 }
