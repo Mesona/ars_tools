@@ -41,6 +41,10 @@
     "type": "git",
     "url": "git+https://github.com/Mesona/ars_tools.git"
   },
+  "engines": {
+    "node": "10.13.0",
+    "npm": "6.4.1"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
