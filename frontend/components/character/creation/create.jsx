@@ -35,6 +35,7 @@ class CharacterCreate extends React.Component {
             createCharacter={this.props.createCharacter}
             requestCharacter={this.props.requestCharacter}
             updateCharacter={this.props.updateCharacter}
+            storeVirtue={this.props.storeVirtue}
           />
         </section>
       );

@@ -53,6 +53,7 @@ class CharacterCreateVirtues extends React.Component {
     }));
 
     this.props.requestAllAbilities();
+
   }
 
  handleSubmit(e) {
@@ -115,6 +116,10 @@ class CharacterCreateVirtues extends React.Component {
           return "disabled";
         }
       }
+    }
+
+    if (virtue.name === "The Gift") {
+      return "disabled";
     }
 
     // Conditional validations
@@ -231,18 +236,9 @@ class CharacterCreateVirtues extends React.Component {
 
           <div className="major">
             {specialVirtues === undefined ? '' : specialVirtues.map( virtue => 
-              <div className="create-virtue-hover" key={virtue.id}>
-                  <label>
-                    <input className="create-virtue-checkbox" type="checkbox" disabled={this.validation(virtue)} onChange={(e) => this.handleVirtue(e, virtue)}></input>
-                    { virtue.special === true ?
-                      <React.Fragment>
-                        <UniversalVirtue virtue={virtue} />
-                        <UniqueVirtue virtue={virtue} currentCharacter={currentCharacter} />
-                      </React.Fragment>
-                      :
-                      <UniversalVirtue virtue={virtue} />
-                    }
-                  </label>
+              <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                <hr></hr>
               </div>
             )}
           </div>

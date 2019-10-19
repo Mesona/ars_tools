@@ -57,6 +57,7 @@ class UniqueVirtue extends React.Component {
     this.calculateDupes = this.calculateDupes.bind(this);
     this.dupeCheck = this.dupeCheck.bind(this);
     this.uncheckBox = this.uncheckBox.bind(this);
+    this.checkBox = this.checkBox.bind(this);
   }
 
   componentDidMount() {
@@ -64,10 +65,19 @@ class UniqueVirtue extends React.Component {
     const SELECT_AN_ART = "Select an art . . .";
     const SELECT_AN_ATTRIBUTE = "Select an attribute . . .";
     const SELECT_A_FORM = "Select a form . . .";
+    // console.log("Character below")
+    // console.log(this.props.currentCharacter)
+    // console.log(this.props.currentCharacter.character_type === "mage")
+    // console.log(this.props.virtue.name)
 
     // Determines if the current virtue uses special_two or not, as well as if
     // any other startup methods need to be called
     switch (this.props.virtue.name) {
+      case "The Gift":
+        if (this.props.currentCharacter.character_type === "mage") {
+          this.checkBox();
+        }
+        break;
       case "Great (Characteristic)":
         this.setState({
           maxDupes: 2,
@@ -264,6 +274,15 @@ class UniqueVirtue extends React.Component {
       this.props.handleClick(false, this.props.virtue, this.state);
     }
   }
+  
+  // Used in special cases where a virtue needs to be checked and cannot, under any
+  // circumstance, be unchecked. Primarily used by "The Gift"
+  checkBox() {
+    let thisID = `create-virtue-checkbox-${this.state.thisID}`;
+    let thisCheckbox = document.getElementById(thisID);
+    thisCheckbox.checked = true;
+    this.props.handleClick(true, this.props.virtue, this.state);
+  }
 
   render () {
     const { virtue } = this.props;
@@ -275,6 +294,7 @@ class UniqueVirtue extends React.Component {
             <input
               className="create-virtue-checkbox"
               id={`create-virtue-checkbox-${this.state.thisID}`}
+              disabled={this.props.validateVirtue(virtue)}
               type="checkbox" onClick={(e) => this.checkLoopholes(e)}>
             </input>
   
