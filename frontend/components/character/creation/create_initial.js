@@ -116,11 +116,11 @@ class CharacterCreateInitial extends React.Component {
         {/* TODO: Region born, background bio, still in apprenticeship, house association, all will be done in another page */}
 
         <div>
-          <span onClick={this.handleSubmit}>Next</span>
+          <span onClick={this.handleSubmit} className="fake-url">Next</span>
         </div>
 
         <Link to={`/`}>
-          Back
+          <span className="fake-url">Back</span>
         </Link>
 
       </form>
