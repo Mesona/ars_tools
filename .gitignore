@@ -47,5 +47,4 @@ test/
 node_modules/
 bundle.js
 bundle.js.map
-Gemfile.lock
 package-lock.json
