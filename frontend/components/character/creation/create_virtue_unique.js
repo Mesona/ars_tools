@@ -46,6 +46,14 @@ class UniqueVirtue extends React.Component {
         { value: 'perdo', label: 'Perdo' },
         { value: 'rego', label: 'Rego' },
       ],
+      faerieOptions: [
+        { value: 'dwarf', label: 'Dwarf Blood' },
+        { value: 'gobling', label: 'Goblin Blood' },
+        { value: 'satyr', label: 'Satyr Blood' },
+        { value: 'sidhe', label: 'Sidhe Blood' },
+        { value: 'undine', label: 'Undine Blood' },
+        { value: 'custom', label: 'Custom' },
+      ],
       abilityOptions: [{}],
     };
 
@@ -67,15 +75,12 @@ class UniqueVirtue extends React.Component {
     const SELECT_AN_ART = "Select an art . . .";
     const SELECT_AN_ATTRIBUTE = "Select an attribute . . .";
     const SELECT_A_FORM = "Select a form . . .";
-    // console.log("Character below")
-    // console.log(this.props.currentCharacter)
-    // console.log(this.props.currentCharacter.character_type === "mage")
-    // console.log(this.props.virtue.name)
 
     // Determines if the current virtue uses special_two or not, as well as if
     // any other startup methods need to be called
     switch (this.props.virtue.name) {
       case "The Gift":
+      case "Hermetic Magus":
         if (this.props.currentCharacter.character_type === "mage") {
           this.checkBox();
         }
@@ -113,9 +118,99 @@ class UniqueVirtue extends React.Component {
       case "Cyclic Magic (Positive)":
         this.setState({
           numberOfSpecials: 3,
-          special_one: "",
+          special_one_text: "Choose a Natural Cycle . . .",
           special_two: null,
-       });
+        });
+        break;
+      case "Death Prophecy":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Death Prophecy . . .",
+          special_two: null,
+        });
+        break;
+      case "Deft Form":
+        this.setState({
+          special_one_text: SELECT_A_FORM,
+          special_two: null,
+          numberOfSpecials: 1,
+          theseOptions: [...this.state.formOptions],
+        });
+        break;
+      case "Faerie Blood":
+        this.setState({
+          special_one_text: "Faerie Blood Type . . .",
+          special_two: null,
+          numberOfSpecials: 1,
+          theseOptions: [...this.state.faerieOptions],
+        });
+        break;
+      case "Famous":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose a Reputation . . .",
+          special_two: null,
+        });
+        break;
+      case "Greater Immunity":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose One Hazard . . .",
+          special_two: null,
+        });
+        break;
+      case "Greater Purifying Touch":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose One Disease . . .",
+          special_two: null,
+        });
+        break;
+      case "Hermetic Prestige":
+      case "Protection":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose One Reputation . . .",
+          special_two: null,
+        });
+        break;
+      case "Learn (Ability) From Mistakes":
+        this.setState({
+          special_one_text: SELECT_AN_ABILITY,
+          special_two: null,
+          numberOfSpecials: 1,
+          theseOptions: [...this.state.abilityOptions],
+        }, function() {
+          this.generateAbilities();
+        });
+        break;
+      case "Lesser Immunity":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose One Hazard . . .",
+          special_two: null,
+        });
+        break;
+      case "Lesser Purifying Touch":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose One Disease . . .",
+          special_two: null,
+        });
+        break;
+      case "Major Magical Focus":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose One Focus . . .",
+          special_two: null,
+        });
+        break;
+      case "Minor Magical Focus":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose One Focus . . .",
+          special_two: null,
+        });
         break;
     }
   }
@@ -148,8 +243,6 @@ class UniqueVirtue extends React.Component {
     this.uncheckBox();
 
     if (specialSpot === "one") {
-      // console.log(this.state.special_one)
-      console.log(e.currentTarget.value)
       this.setState({special_one: e.value},
         function() {
           this.enableSpecial();
@@ -392,6 +485,7 @@ class UniqueVirtue extends React.Component {
 
             <input
               type="string"
+              placeholder={this.state.special_one_text}
               defaultValue={this.state.special_one}
               onChange={(e) => this.setSpecial(e, "three")}
             />

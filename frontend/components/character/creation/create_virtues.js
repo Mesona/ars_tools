@@ -271,7 +271,7 @@ class CharacterCreateVirtues extends React.Component {
           <div className="free"><p>Free Virtues:</p>
             {generalVirtues === undefined ? '' :
               generalVirtues.filter( e => e.free === true).map( virtue => 
-                <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
                   <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
                   <hr></hr>
                 </div>
@@ -285,7 +285,7 @@ class CharacterCreateVirtues extends React.Component {
           <div className="major"><p>Major Virtues:</p>
             {hermeticVirtues === undefined ? '' : 
               hermeticVirtues.filter( e => e.major === true).map( virtue => 
-                <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
                   <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
                   <hr></hr>
                 </div>
@@ -295,7 +295,7 @@ class CharacterCreateVirtues extends React.Component {
           <div className="minor"><p>Minor Virtues:</p>
             {hermeticVirtues === undefined ? '' :
               hermeticVirtues.filter( e => e.major === false).map( virtue => 
-                <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
                   <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
                   <hr></hr>
                 </div>
@@ -305,7 +305,7 @@ class CharacterCreateVirtues extends React.Component {
           <div className="free"><p>Free Virtues:</p>
             {hermeticVirtues === undefined ? '' :
               hermeticVirtues.filter( e => e.free === true).map( virtue => 
-                <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
                   <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
                   <hr></hr>
                 </div>
@@ -319,36 +319,30 @@ class CharacterCreateVirtues extends React.Component {
           <div className="major"><p>Major Virtues:</p>
             {supernaturalVirtues === undefined ? '' : 
               supernaturalVirtues.filter( e => e.major === true).map( virtue => 
-                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                <label>
-                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
-                </label>
-              </div>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                  <hr></hr>
+                </div>
             )}
           </div>
 
           <div className="minor"><p>Minor Virtues:</p>
             {supernaturalVirtues === undefined ? '' :
               supernaturalVirtues.filter( e => e.major === false).map( virtue => 
-                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                <label>
-                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
-                </label>
-              </div>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                  <hr></hr>
+                </div>
             )}
           </div>
 
           <div className="free"><p>Free Virtues:</p>
             {supernaturalVirtues === undefined ? '' :
               supernaturalVirtues.filter( e => e.free === true).map( virtue => 
-                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                <label>
-                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
-                </label>
-              </div>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                  <hr></hr>
+                </div>
             )}
           </div>
         </div>
@@ -359,36 +353,30 @@ class CharacterCreateVirtues extends React.Component {
           <div className="major"><p>Major Virtues:</p>
             {socialStatusVirtues === undefined ? '' : 
               socialStatusVirtues.filter( e => e.major === true).map( virtue => 
-                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                <label>
-                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
-                </label>
-              </div>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                  <hr></hr>
+                </div>
             )}
           </div>
 
           <div className="minor"><p>Minor Virtues:</p>
             {socialStatusVirtues === undefined ? '' :
               socialStatusVirtues.filter( e => e.major === false).map( virtue => 
-                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                <label>
-                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
-                </label>
-              </div>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                  <hr></hr>
+                </div>
             )}
           </div>
 
           <div className="free"><p>Free Virtues:</p>
             {socialStatusVirtues === undefined ? '' :
               socialStatusVirtues.filter( e => e.free === true).map( virtue => 
-                <div className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                <label>
-                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
-                </label>
-              </div>
+                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                  <hr></hr>
+                </div>
             )}
           </div>
         </div>
