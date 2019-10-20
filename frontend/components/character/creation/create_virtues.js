@@ -245,7 +245,7 @@ class CharacterCreateVirtues extends React.Component {
 
         </div>
 
-        <p>General:</p>
+        <p onClick={() => console.log(generalVirtues)}>General:</p>
         <hr></hr>
         <div className="create-virtues-parent">
           <div className="major"><p>Major Virtues:</p>

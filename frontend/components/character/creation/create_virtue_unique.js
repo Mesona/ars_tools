@@ -27,6 +27,13 @@ class UniqueVirtue extends React.Component {
         { value: 'dexterity', label: 'Dexterity' },
         { value: 'quickness', label: 'Quickness' },
       ],
+      formOptions: [
+        { value: 'creo', label: 'Creo' },
+        { value: 'intelligo', label: 'Intelligo' },
+        { value: 'muto', label: 'Muto' },
+        { value: 'perdo', label: 'Perdo' },
+        { value: 'rego', label: 'Rego' },
+      ],
       techniqueOptions: [
         { value: 'animal', label: 'Animal' },
         { value: 'aquam', label: 'Aquam' },
@@ -39,13 +46,6 @@ class UniqueVirtue extends React.Component {
         { value: 'terram', label: 'Terram' },
         { value: 'vim', label: 'Vim' },
       ],
-      formOptions: [
-        { value: 'creo', label: 'Creo' },
-        { value: 'intelligo', label: 'Intelligo' },
-        { value: 'muto', label: 'Muto' },
-        { value: 'perdo', label: 'Perdo' },
-        { value: 'rego', label: 'Rego' },
-      ],
       faerieOptions: [
         { value: 'dwarf', label: 'Dwarf Blood' },
         { value: 'gobling', label: 'Goblin Blood' },
@@ -53,6 +53,12 @@ class UniqueVirtue extends React.Component {
         { value: 'sidhe', label: 'Sidhe Blood' },
         { value: 'undine', label: 'Undine Blood' },
         { value: 'custom', label: 'Custom' },
+      ],
+      realmOptions: [
+        { value: 'divine', label: 'Divine' },
+        { value: 'faerie', label: 'Faerie' },
+        { value: 'infernal', label: 'Infernal' },
+        { value: 'magic', label: 'Magic' },
       ],
       abilityOptions: [{}],
     };
@@ -75,6 +81,8 @@ class UniqueVirtue extends React.Component {
     const SELECT_AN_ART = "Select an art . . .";
     const SELECT_AN_ATTRIBUTE = "Select an attribute . . .";
     const SELECT_A_FORM = "Select a form . . .";
+    const SELECT_A_REALM = "Select a realm . . .";
+    const artOptions = this.state.formOptions.concat(this.state.techniqueOptions);
 
     // Determines if the current virtue uses special_two or not, as well as if
     // any other startup methods need to be called
@@ -210,6 +218,80 @@ class UniqueVirtue extends React.Component {
           numberOfSpecials: 3,
           special_one_text: "Choose One Focus . . .",
           special_two: null,
+        });
+        break;
+      case "Puissant (Ability)":
+        this.setState({
+          maxDupes: 1,
+          special_one_text: SELECT_AN_ABILITY,
+          special_two: null,
+          numberOfSpecials: 1,
+          theseOptions: [...this.state.abilityOptions],
+        }, function() {
+          this.generateAbilities();
+        });
+        break;
+      case "Puissant (Art)":
+        this.setState({
+          special_one_text: SELECT_AN_ART,
+          special_two: null,
+          numberOfSpecials: 1,
+          theseOptions: [...artOptions],
+        });
+        break;
+      case "Relic":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose A Relic . . .",
+          special_two: null,
+        });
+        break;
+      case "Relic":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose A Side Effect . . .",
+          special_two: null,
+        });
+        break;
+      case "Skinchanger":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose A Magical Item . . .",
+          special_two: null,
+        });
+        break;
+      case "Special Circumstances":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one_text: "Choose An Uncommon Situation . . .",
+          special_two: null,
+        });
+        break;
+      case "Strong Faerie Blood":
+        this.setState({
+          special_one_text: "Faerie Blood Type . . .",
+          special_two: null,
+          numberOfSpecials: 1,
+          theseOptions: [...this.state.faerieOptions],
+        });
+        break;
+      case "Student of (Realm)":
+        this.setState({
+          maxDupes: 1,
+          special_one_text: SELECT_A_REALM,
+          special_two: null,
+          numberOfSpecials: 1,
+          theseOptions: [...this.state.realmOptions],
+        });
+        break;
+      // TODO: Get dupe checking for Ways of the Land to work, but since it's an RP
+      // virtue that cannot be progrmatically enforced, it's a low priority
+      case "Ways of the (Land)":
+        this.setState({
+          maxDupes: 1,
+          special_one_text: "Land Type . . .",
+          special_two: null,
+          numberOfSpecials: 3,
         });
         break;
     }
