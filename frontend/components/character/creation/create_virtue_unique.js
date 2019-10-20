@@ -12,6 +12,7 @@ class UniqueVirtue extends React.Component {
       special_two_text: "",
       special_one: this.props.special_one || null,
       special_two: this.props.special_two || "",
+      // numberOfSpecials 3 is for virtues with custom specials
       numberOfSpecials: 0,
       disabled: "disabled",
       thisID: this.props.virtue.id,
@@ -51,6 +52,7 @@ class UniqueVirtue extends React.Component {
     this.test = this.test.bind(this);
     this.setSpecial = this.setSpecial.bind(this);
     this.enableSpecial = this.enableSpecial.bind(this);
+    this.customSpecial = this.customSpecial.bind(this);
     this.generateAbilities = this.generateAbilities.bind(this);
     this.generateOptions = this.generateOptions.bind(this);
     this.checkLoopholes = this.checkLoopholes.bind(this);
@@ -98,6 +100,23 @@ class UniqueVirtue extends React.Component {
           this.generateAbilities();
         });
         break;
+      case "Cautios With (Ability)":
+        this.setState({
+          special_one_text: SELECT_AN_ABILITY,
+          special_two: null,
+          numberOfSpecials: 1,
+          theseOptions: [...this.state.abilityOptions],
+        }, function() {
+          this.generateAbilities();
+        });
+        break;
+      case "Cyclic Magic (Positive)":
+        this.setState({
+          numberOfSpecials: 3,
+          special_one: "",
+          special_two: null,
+       });
+        break;
     }
   }
 
@@ -129,6 +148,8 @@ class UniqueVirtue extends React.Component {
     this.uncheckBox();
 
     if (specialSpot === "one") {
+      // console.log(this.state.special_one)
+      console.log(e.currentTarget.value)
       this.setState({special_one: e.value},
         function() {
           this.enableSpecial();
@@ -136,6 +157,12 @@ class UniqueVirtue extends React.Component {
       );
     } else if (specialSpot === "two") {
       this.setState({special_two: e.value},
+        function() {
+          this.enableSpecial();
+        }
+      );
+    } else if (specialSpot === "three") {
+      this.setState({special_one: e.currentTarget.value},
         function() {
           this.enableSpecial();
         }
@@ -155,6 +182,10 @@ class UniqueVirtue extends React.Component {
         this.setState({disabled: ""});
       }
     }
+  }
+
+  customSpecial() {
+
   }
 
   generateAbilities() {
@@ -234,11 +265,11 @@ class UniqueVirtue extends React.Component {
 
       Object.keys(dupes).forEach((dupe) => {
         let stat = dupes[dupe];
-        switch (this.props.virtue.name) {
-          case "Great (Characteristic)":
+        switch (this.state.maxDupes) {
+          case 2:
             looped = this.dupeCheck(stat, dupe, 2);
             break;
-          case "Affinity With (Ability)":
+          case 1:
             looped = this.dupeCheck(stat, dupe, 1);
             break;
           }
@@ -298,7 +329,7 @@ class UniqueVirtue extends React.Component {
               type="checkbox" onClick={(e) => this.checkLoopholes(e)}>
             </input>
   
-            { virtue.name }
+            { virtue.name } <span className="virtueInfo">?</span>
   
           </React.Fragment>
         )
@@ -312,7 +343,7 @@ class UniqueVirtue extends React.Component {
               onClick={(e) => this.checkLoopholes(e)}>
             </input>
 
-            { virtue.name }
+            { virtue.name } <span className="virtueInfo">?</span>
 
             <Select
               placeholder={<>{this.state.special_one_text}</>}
@@ -331,7 +362,8 @@ class UniqueVirtue extends React.Component {
               onClick={(e) => this.checkLoopholes(e)}>
             </input>
 
-            { virtue.name }
+            { virtue.name } <span className="virtueInfo">?</span>
+            {/* TODO: On "?" click, show virtue.description in new "popup" div, close when clicked outside */}
 
             <Select
               placeholder={<>{this.state.special_one_text}</>}
@@ -343,6 +375,25 @@ class UniqueVirtue extends React.Component {
               placeholder={<>{this.state.special_two_text}</>}
               options={this.state.theseOptions}
               onChange={(e) => this.setSpecial(e, "two")}
+            />
+          </>
+        );
+      case 3:
+        return (
+          <>
+            <input
+              className="create-virtue-checkbox"
+              id={`create-virtue-checkbox-${this.state.thisID}`}
+              type="checkbox" disabled={this.state.disabled}
+              onClick={(e) => this.checkLoopholes(e)}>
+            </input>
+
+            { virtue.name } <span className="virtueInfo">?</span>
+
+            <input
+              type="string"
+              defaultValue={this.state.special_one}
+              onChange={(e) => this.setSpecial(e, "three")}
             />
           </>
         );

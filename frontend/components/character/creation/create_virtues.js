@@ -286,11 +286,9 @@ class CharacterCreateVirtues extends React.Component {
             {hermeticVirtues === undefined ? '' : 
               hermeticVirtues.filter( e => e.major === true).map( virtue => 
                 <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                <label>
-                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
-                </label>
-              </div>
+                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                  <hr></hr>
+                </div>
             )}
           </div>
 
@@ -298,11 +296,9 @@ class CharacterCreateVirtues extends React.Component {
             {hermeticVirtues === undefined ? '' :
               hermeticVirtues.filter( e => e.major === false).map( virtue => 
                 <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                <label>
-                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
-                </label>
-              </div>
+                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                  <hr></hr>
+                </div>
             )}
           </div>
 
@@ -310,11 +306,9 @@ class CharacterCreateVirtues extends React.Component {
             {hermeticVirtues === undefined ? '' :
               hermeticVirtues.filter( e => e.free === true).map( virtue => 
                 <div tabIndex={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id} onClick={ (e) => this.handleVirtue(e, virtue)}>
-                <label>
-                  <input type="checkbox" disabled={this.validation(virtue)} ></input>
-                  <CharacterCreateVirtue virtue={virtue} />
-                </label>
-              </div>
+                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                  <hr></hr>
+                </div>
             )}
           </div>
         </div>
