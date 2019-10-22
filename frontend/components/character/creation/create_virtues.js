@@ -57,7 +57,7 @@ class CharacterCreateVirtues extends React.Component {
 
  handleSubmit(e) {
     e.preventDefault();
-    this.props.history.push(`/characters/new/flaws/${currentCharacter.id}`);
+    this.props.history.push(`/characters/new/flaws/${this.state.currentCharacter.id}`);
     // const currentCharacter = Object.assign({}, this.state);
     // this.props.createCharacter(currentCharacter)
       // .then((response) => this.props.history.push(`/character/new/virtues/${response.character.id}`));

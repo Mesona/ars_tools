@@ -34,7 +34,7 @@ const App = () => {
 
           <Route
             path="/characters/new/flaws/:characterId"
-            render={(props) => <CharacterCreateContainer {...props} page="stats" />}
+            render={(props) => <CharacterCreateContainer {...props} page="flaws" />}
           />
 
           <Route

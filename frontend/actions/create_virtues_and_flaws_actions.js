@@ -30,7 +30,7 @@ const removeFlaw = flaw => ({
   flaw,
 });
 
-const receiveFlaws = flaws => ({
+const receiveAllFlaws = flaws => ({
   type: RECEIVE_FLAWS,
   flaws,
 });
@@ -48,7 +48,7 @@ export const storeVirtues = (virtues) => (
 );
 
 export const storeFlaw = flaw => (
-  dispatch(receiveFlaw(flaw))
+  receiveFlaw(flaw)
 );
 
 export const deleteFlaw = flaw => (
@@ -56,5 +56,5 @@ export const deleteFlaw = flaw => (
 );
 
 export const storeFlaws = flaws => (
-  dispatch(receiveFlaws(flaws))
+  receiveAllFlaws(flaws)
 );

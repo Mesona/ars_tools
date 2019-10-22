@@ -1,8 +1,10 @@
 import React from 'react';
-import UniqueVirtueContainer from './create_virtue_unique_container';
+import UniqueFlawContainer from './create_flaw_unique_container';
 import { Link } from 'react-router-dom';
 
-class CharacterCreateVirtues extends React.Component {
+// TODO: Create template to reduce redundancy in 
+// CreateFlaws and CreateVirtues
+class CharacterCreateFlaws extends React.Component {
  constructor(props) {
    super(props);
 
@@ -12,19 +14,20 @@ class CharacterCreateVirtues extends React.Component {
     flaws: null,
     virtuePoints: 0,
     currentVirtuePoints: 0,
+    currentFlawPoints: 0,
     flawPoints: 0,
-    minorVirtues: 0,
+    minorFlaws: 0,
     currentVirtues: {},
     currentFlaws: {},
-    virtuePointText: "",
+    flawPointText: "",
     show: [],
    };
 
    this.handleSubmit = this.handleSubmit.bind(this);
    this.update = this.update.bind(this);
-   this.handleVirtue = this.handleVirtue.bind(this);
+   this.handleFlaw = this.handleFlaw.bind(this);
    this.validation = this.validation.bind(this);
-   this.establishVirtues = this.establishVirtues.bind(this);
+   this.establishFlaws = this.establishFlaws.bind(this);
    this.handleShow = this.handleShow.bind(this);
  } 
 
@@ -34,17 +37,20 @@ class CharacterCreateVirtues extends React.Component {
           this.setState({
             currentCharacter: {...response.character},
             currentVirtues: response.character.virtues,
+            currentFlaws: response.character.flaws,
             virtuePoints: (response.character.character_type === "mage" ? 10 : 
               response.character.character_type === "companion" ? 10 : 3),
+            // TODO: Fix flawPoints
+            flawPoints: 10,
             }
           );
         }
-    ).then(this.establishVirtues);
+    ).then(this.establishFlaws);
 
-    this.props.requestAllVirtues()
-      .then((response) => this.setState({
-        virtues: response.virtues,
-    }));
+    // this.props.requestAllVirtues()
+    //   .then((response) => this.setState({
+    //     virtues: response.virtues,
+    // }));
 
     this.props.requestAllFlaws()
       .then((response) => this.setState({
@@ -70,55 +76,55 @@ class CharacterCreateVirtues extends React.Component {
     };
   }
 
-  handleVirtue(checkBox, virtue, childData = null) {
+  handleFlaw(checkBox, flaw, childData = null) {
  
     if (childData !== null) {
-      virtue.special_one = childData.special_one;
-      virtue.special_two = childData.special_two;
+      flaw.special_one = childData.special_one;
+      flaw.special_two = childData.special_two;
     }
 
     // Checks if the virtue is already "checked," and if it
     // it is, the virtue will be deleted rather than added
     if (checkBox) {
-      this.props.storeVirtue(virtue);
+      this.props.storeFlaw(flaw);
     } else {
-      this.props.deleteVirtue(virtue);
+      this.props.deleteFlaw(flaw);
     }
   }
 
-  validation(virtue) {
+  validation(flaw) {
     const { currentCharacter } = this.state;
-    if (currentCharacter !== null && virtue !== undefined) {
+    if (currentCharacter !== null && flaw !== undefined) {
 
       // Character validations
       if (currentCharacter.character_type === "grog") {
-        if (virtue.major === true ||
-          virtue.name === "The Gift"
+        if (flaw.major === true ||
+          flaw.name === "The Gift"
         ) {
           return "disabled";
         }
 
       } else if (currentCharacter.character_type === "npc") {
-        if (virtue.name === "The Gift" 
+        if (flaw.name === "The Gift" 
         ) {
           return "disabled";
         }
 
       } else if (currentCharacter.character_type === "companion") {
-        if (virtue.name === "The Gift"
+        if (flaw.name === "The Gift"
         ) {
           return "disabled";
         }
 
       } else if (currentCharacter.character_type === "mage") {
 
-        if (virtue.name === "Wealthy") {
+        if (flaw.name === "Wealthy") {
           return "disabled";
         }
       }
     }
 
-    if (virtue.name === "The Gift") {
+    if (flaw.name === "The Gift") {
       return "disabled";
     }
 
@@ -176,28 +182,29 @@ class CharacterCreateVirtues extends React.Component {
 
   }
 
-  establishVirtues() {
-    this.props.storeVirtues(this.state.currentCharacter.virtues)
+  establishFlaws() {
+    this.props.storeFlaws(this.state.currentCharacter.virtues)
 
     let character_type = this.state.currentCharacter.character_type;
-    // TODO: Look up the actual virtue descriptions
-    let universalVirtueText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
+    // TODO: Look up the actual flaw descriptions, currently it is
+    // just a dupe of the (also incorrect) virtue texts
+    let universalFlawText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
     switch (character_type) {
       case "mage":
-        let mageVirtueText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
-        this.setState({virtuePointText: universalVirtueText + mageVirtueText});
+        let mageFlawText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
+        this.setState({flawPointText: universalFlawText + mageFlawText});
         break;
       case "grog":
-        let grogVirtueText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
-        this.setState({virtuePointText: universalVirtueText + grogVirtueText});
+        let grogFlawText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
+        this.setState({flawPointText: universalFlawText + grogFlawText});
         break;
       case "companion":
-        let companionVirtueText = "Companions are things that can be created";
-        this.setState({virtuePointText: universalVirtueText + companionVirtueText});
+        let companionFlawText = "Companions are things that can be created";
+        this.setState({flawPointText: universalFlawText + companionFlawText});
         break;
       case "other":
-        let otherVirtueText = "There are several that are free and can be taken with no penalty."
-        this.setState({virtuePointText: universalVirtueText + otherVirtueText});
+        let otherFlawText = "There are several that are free and can be taken with no penalty."
+        this.setState({flawPointText: universalFlawText + otherFlawText});
         break;
     }
   }
@@ -219,27 +226,29 @@ class CharacterCreateVirtues extends React.Component {
   render () {
 
     const { currentCharacter } = this.state;
-    let generalVirtues;
-    let hermeticVirtues;
-    let specialVirtues;
-    let supernaturalVirtues;
-    let socialStatusVirtues;
 
-    let grogCheck; 
-    let validationCheck;
+    let generalFlaws;
+    let supernaturalFlaws;
+    let personalityFlaws;
+    let storyFlaws;
+    let hermeticFlaws;
+    let socialStatusFlaws;
 
-    if (this.state.virtues !== null) {
-      specialVirtues = this.state.virtues.filter( e => e.virtue_type === "Special");
-      generalVirtues = this.state.virtues.filter( e => e.virtue_type === "General");
-      hermeticVirtues = this.state.virtues.filter( e => e.virtue_type === "Hermetic");
-      supernaturalVirtues = this.state.virtues.filter( e => e.virtue_type === "Supernatural");
-      socialStatusVirtues = this.state.virtues.filter(e => e.virtue_type === "Social Status");
+    if (this.state.flaws !== null) {
+      generalFlaws = this.state.flaws.filter( e => e.flaw_type === "General");
+      supernaturalFlaws = this.state.flaws.filter( e => e.flaw_type === "Supernatural");
+      personalityFlaws = this.state.flaws.filter( e => e.flaw_type === "Personality");
+      storyFlaws = this.state.flaws.filter(e => e.flaw_type === "Story");
+      hermeticFlaws = this.state.flaws.filter(e => e.flaw_type === "Hermetic");
+      socialStatusFlaws = this.state.flaws.filter(e => e.flaw_type === "Social Status");
     }
 
     return (
       <div>
-        {/* <img src="" title={virtuePointText}></img> */}
-        <p title={this.state.virtuePointText}>Remaining Virtue Points Allowed: {this.state.virtuePoints - this.state.currentVirtuePoints}</p>
+        {/* <img src="" title={flawPointText}></img> */}
+        <p title={this.state.flawPointText}>Remaining Flaw Points Required: {this.state.flawPoints - this.state.currentFlawPoints}</p>
+        {/* TODO: Flaw Points Max needs some math */}
+        <p title={this.state.flawPointText}>Flaw Points Maximum Available: {this.state.flawPoints - this.state.currentFlawPoints}</p>
         <div>
           <span onClick={this.handleSubmit} className="fake-url">Next</span>
         </div>
@@ -249,57 +258,39 @@ class CharacterCreateVirtues extends React.Component {
         </Link>
 
         <br></br>
-        <p>Virtues</p>
+        <p>Flaws:</p>
         <hr></hr>
 
-        <p>Special:</p>
-        <span onClick={() => this.handleShow("special")}>Show</span>
-        <hr></hr>
-        <div className="create-virtues-parent">
-          { this.state.show.includes("special") ? (
-            <div className="major">
-              {specialVirtues === undefined ? '' : specialVirtues.map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-              )}
-            </div>
-          ) : (
-            null
-          )} 
-        </div>
-
-        <p onClick={() => console.log(generalVirtues)}>General:</p>
+        <p>General:</p>
         <span onClick={() => this.handleShow("general")}>Show</span>
         <hr></hr>
         { this.state.show.includes("general") ? (
-          <div className="create-virtues-parent">
-            <div className="major"><p>Major Virtues:</p>
-              {generalVirtues === undefined ? '' : 
-                generalVirtues.filter( e => e.major === true).map( virtue => 
-                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                    <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+          <div className="create-flaws-parent">
+            <div className="major"><p>Major Flaws:</p>
+              {generalFlaws === undefined ? '' : 
+                generalFlaws.filter( e => e.major === true).map( flaw => 
+                  <div id={flaw.id} className={ `create-flaw-hover ${this.validation(flaw)}` } key={flaw.id}>
+                    <UniqueFlawContainer flaw={flaw} validateFlaw={this.validation} handleClick={this.handleFlaw} />
                     <hr></hr>
                   </div>
               )}
             </div>
 
-            <div className="minor"><p>Minor Virtues:</p>
-              {generalVirtues === undefined ? '' :
-                generalVirtues.filter( e => e.major === false).map( virtue => 
-                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                    <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+            <div className="minor"><p>Minor Flaws:</p>
+              {generalFlaws === undefined ? '' :
+                generalFlaws.filter( e => e.major === false).map( flaw => 
+                  <div id={flaw.id} className={ `create-flaw-hover ${this.validation(flaw)}` } key={flaw.id}>
+                    <UniqueFlawContainer flaw={flaw} validateFlaw={this.validation} handleClick={this.handleFlaw} />
                     <hr></hr>
                   </div>
               )}
             </div>
 
-            <div className="free"><p>Free Virtues:</p>
-              {generalVirtues === undefined ? '' :
-                generalVirtues.filter( e => e.free === true).map( virtue => 
-                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                    <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+            <div className="free"><p>Free Flaws:</p>
+              {generalFlaws === undefined ? '' :
+                generalFlaws.filter( e => e.free === true).map( flaw => 
+                  <div id={flaw.id} className={ `create-flaw-hover ${this.validation(flaw)}` } key={flaw.id}>
+                    <UniqueFlawContainer flaw={flaw} validateFlaw={this.validation} handleClick={this.handleFlaw} />
                     <hr></hr>
                   </div>
               )}
@@ -309,111 +300,9 @@ class CharacterCreateVirtues extends React.Component {
           null
         )}
 
-        <p>Hermetic:</p>
-        <hr></hr>
-        <div className="create-virtues-parent">
-          <div className="major"><p>Major Virtues:</p>
-            {hermeticVirtues === undefined ? '' : 
-              hermeticVirtues.filter( e => e.major === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
-
-          <div className="minor"><p>Minor Virtues:</p>
-            {hermeticVirtues === undefined ? '' :
-              hermeticVirtues.filter( e => e.major === false).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
-
-          <div className="free"><p>Free Virtues:</p>
-            {hermeticVirtues === undefined ? '' :
-              hermeticVirtues.filter( e => e.free === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
-        </div>
-
-        <p>Supernatural:</p>
-        <hr></hr>
-        <div className="create-virtues-parent">
-          <div className="major"><p>Major Virtues:</p>
-            {supernaturalVirtues === undefined ? '' : 
-              supernaturalVirtues.filter( e => e.major === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
-
-          <div className="minor"><p>Minor Virtues:</p>
-            {supernaturalVirtues === undefined ? '' :
-              supernaturalVirtues.filter( e => e.major === false).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
-
-          <div className="free"><p>Free Virtues:</p>
-            {supernaturalVirtues === undefined ? '' :
-              supernaturalVirtues.filter( e => e.free === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
-        </div>
-
-        <p>Social Status:</p>
-        <hr></hr>
-        <div className="create-virtues-parent">
-          <div className="major"><p>Major Virtues:</p>
-            {socialStatusVirtues === undefined ? '' : 
-              socialStatusVirtues.filter( e => e.major === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
-
-          <div className="minor"><p>Minor Virtues:</p>
-            {socialStatusVirtues === undefined ? '' :
-              socialStatusVirtues.filter( e => e.major === false).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
-
-          <div className="free"><p>Free Virtues:</p>
-            {socialStatusVirtues === undefined ? '' :
-              socialStatusVirtues.filter( e => e.free === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
-        </div>
-
       </div>
     )
   }
 };
 
-export default CharacterCreateVirtues;
+export default CharacterCreateFlaws;

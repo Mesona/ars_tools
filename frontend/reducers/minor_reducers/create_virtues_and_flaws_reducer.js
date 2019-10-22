@@ -36,7 +36,11 @@ const CreateVirtuesAndFlawsReducer = (state = {}, action) => {
       delete newState[action.flaw.id];
       return newState;
     case RECEIVE_FLAWS:
-      return action.flaws;
+      if (action.flaws !== undefined) {
+        return action.flaws;
+      } else {
+        return state;
+      }
     default:
       return state;
   }

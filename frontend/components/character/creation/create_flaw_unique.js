@@ -1,7 +1,9 @@
 import React from 'react';
 import Select from 'react-select'
 
-class UniqueVirtue extends React.Component {
+// TODO: Create template to reduce redundancy in unique
+// virtue and flaw components 
+class UniqueFlaw extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,7 +17,7 @@ class UniqueVirtue extends React.Component {
       // numberOfSpecials 3 is for virtues with custom specials
       numberOfSpecials: 0,
       disabled: "disabled",
-      thisID: this.props.virtue.id,
+      thisID: this.props.flaw.id,
       theseOptions: [{}],
       statOptions: [
         { value: 'intelligence', label: 'Intelligence' },
@@ -85,232 +87,230 @@ class UniqueVirtue extends React.Component {
 
     // Determines if the current virtue uses special_two or not, as well as if
     // any other startup methods need to be called
-    switch (this.props.virtue.name) {
-      case "The Gift":
-      case "Hermetic Magus":
-        if (this.props.currentCharacter.character_type === "mage") {
-          this.checkBox();
-        }
-        break;
-      case "Great (Characteristic)":
-        this.setState({
-          maxDupes: 2,
-          special_one_text: SELECT_AN_ATTRIBUTE,
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...this.state.statOptions],
-        });
-        break;
-      case "Affinity With (Ability)":
-        this.setState({
-          maxDupes: 1,
-          special_one_text: SELECT_AN_ABILITY,
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...this.state.abilityOptions],
-        }, function() {
-          this.generateAbilities();
-        });
-        break;
-      case "Cautios With (Ability)":
-        this.setState({
-          special_one_text: SELECT_AN_ABILITY,
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...this.state.abilityOptions],
-        }, function() {
-          this.generateAbilities();
-        });
-        break;
-      case "Cyclic Magic (Positive)":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose a Natural Cycle . . .",
-          special_two: null,
-        });
-        break;
-      case "Death Prophecy":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Death Prophecy . . .",
-          special_two: null,
-        });
-        break;
-      case "Deft Form":
-        this.setState({
-          special_one_text: SELECT_A_FORM,
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...this.state.formOptions],
-        });
-        break;
-      case "Faerie Blood":
-        this.setState({
-          special_one_text: "Faerie Blood Type . . .",
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...this.state.faerieOptions],
-        });
-        break;
-      case "Famous":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose a Reputation . . .",
-          special_two: null,
-        });
-        break;
-      case "Greater Immunity":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose One Hazard . . .",
-          special_two: null,
-        });
-        break;
-      case "Greater Purifying Touch":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose One Disease . . .",
-          special_two: null,
-        });
-        break;
-      case "Hermetic Prestige":
-      case "Protection":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose One Reputation . . .",
-          special_two: null,
-        });
-        break;
-      case "Learn (Ability) From Mistakes":
-        this.setState({
-          special_one_text: SELECT_AN_ABILITY,
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...this.state.abilityOptions],
-        }, function() {
-          this.generateAbilities();
-        });
-        break;
-      case "Lesser Immunity":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose One Hazard . . .",
-          special_two: null,
-        });
-        break;
-      case "Lesser Purifying Touch":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose One Disease . . .",
-          special_two: null,
-        });
-        break;
-      case "Major Magical Focus":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose One Focus . . .",
-          special_two: null,
-        });
-        break;
-      case "Minor Magical Focus":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose One Focus . . .",
-          special_two: null,
-        });
-        break;
-      case "Puissant (Ability)":
-        this.setState({
-          maxDupes: 1,
-          special_one_text: SELECT_AN_ABILITY,
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...this.state.abilityOptions],
-        }, function() {
-          this.generateAbilities();
-        });
-        break;
-      case "Puissant (Art)":
-        this.setState({
-          special_one_text: SELECT_AN_ART,
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...artOptions],
-        });
-        break;
-      case "Relic":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose A Relic . . .",
-          special_two: null,
-        });
-        break;
-      case "Relic":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose A Side Effect . . .",
-          special_two: null,
-        });
-        break;
-      case "Skinchanger":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose A Magical Item . . .",
-          special_two: null,
-        });
-        break;
-      case "Special Circumstances":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose An Uncommon Situation . . .",
-          special_two: null,
-        });
-        break;
-      case "Strong Faerie Blood":
-        this.setState({
-          special_one_text: "Faerie Blood Type . . .",
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...this.state.faerieOptions],
-        });
-        break;
-      case "Student of (Realm)":
-        this.setState({
-          maxDupes: 1,
-          special_one_text: SELECT_A_REALM,
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...this.state.realmOptions],
-        });
-        break;
-      // TODO: Get dupe checking for Ways of the Land to work, but since it's an RP
-      // virtue that cannot be progrmatically enforced, it's a low priority
-      case "Ways of the (Land)":
-        this.setState({
-          maxDupes: 1,
-          special_one_text: "Land Type . . .",
-          special_two: null,
-          numberOfSpecials: 3,
-        });
-        break;
+    switch (this.props.flaw.name) {
+    //   case "The Gift":
+    //   case "Hermetic Magus":
+    //     if (this.props.currentCharacter.character_type === "mage") {
+    //       this.checkBox();
+    //     }
+    //     break;
+    //   case "Great (Characteristic)":
+    //     this.setState({
+    //       maxDupes: 2,
+    //       special_one_text: SELECT_AN_ATTRIBUTE,
+    //       special_two: null,
+    //       numberOfSpecials: 1,
+    //       theseOptions: [...this.state.statOptions],
+    //     });
+    //     break;
+    //   case "Affinity With (Ability)":
+    //     this.setState({
+    //       maxDupes: 1,
+    //       special_one_text: SELECT_AN_ABILITY,
+    //       special_two: null,
+    //       numberOfSpecials: 1,
+    //       theseOptions: [...this.state.abilityOptions],
+    //     }, function() {
+    //       this.generateAbilities();
+    //     });
+    //     break;
+    //   case "Cautios With (Ability)":
+    //     this.setState({
+    //       special_one_text: SELECT_AN_ABILITY,
+    //       special_two: null,
+    //       numberOfSpecials: 1,
+    //       theseOptions: [...this.state.abilityOptions],
+    //     }, function() {
+    //       this.generateAbilities();
+    //     });
+    //     break;
+    //   case "Cyclic Magic (Positive)":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose a Natural Cycle . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Death Prophecy":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Death Prophecy . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Deft Form":
+    //     this.setState({
+    //       special_one_text: SELECT_A_FORM,
+    //       special_two: null,
+    //       numberOfSpecials: 1,
+    //       theseOptions: [...this.state.formOptions],
+    //     });
+    //     break;
+    //   case "Faerie Blood":
+    //     this.setState({
+    //       special_one_text: "Faerie Blood Type . . .",
+    //       special_two: null,
+    //       numberOfSpecials: 1,
+    //       theseOptions: [...this.state.faerieOptions],
+    //     });
+    //     break;
+    //   case "Famous":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose a Reputation . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Greater Immunity":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose One Hazard . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Greater Purifying Touch":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose One Disease . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Hermetic Prestige":
+    //   case "Protection":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose One Reputation . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Learn (Ability) From Mistakes":
+    //     this.setState({
+    //       special_one_text: SELECT_AN_ABILITY,
+    //       special_two: null,
+    //       numberOfSpecials: 1,
+    //       theseOptions: [...this.state.abilityOptions],
+    //     }, function() {
+    //       this.generateAbilities();
+    //     });
+    //     break;
+    //   case "Lesser Immunity":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose One Hazard . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Lesser Purifying Touch":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose One Disease . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Major Magical Focus":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose One Focus . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Minor Magical Focus":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose One Focus . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Puissant (Ability)":
+    //     this.setState({
+    //       maxDupes: 1,
+    //       special_one_text: SELECT_AN_ABILITY,
+    //       special_two: null,
+    //       numberOfSpecials: 1,
+    //       theseOptions: [...this.state.abilityOptions],
+    //     }, function() {
+    //       this.generateAbilities();
+    //     });
+    //     break;
+    //   case "Puissant (Art)":
+    //     this.setState({
+    //       special_one_text: SELECT_AN_ART,
+    //       special_two: null,
+    //       numberOfSpecials: 1,
+    //       theseOptions: [...artOptions],
+    //     });
+    //     break;
+    //   case "Relic":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose A Relic . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Relic":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose A Side Effect . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Skinchanger":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose A Magical Item . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Special Circumstances":
+    //     this.setState({
+    //       numberOfSpecials: 3,
+    //       special_one_text: "Choose An Uncommon Situation . . .",
+    //       special_two: null,
+    //     });
+    //     break;
+    //   case "Strong Faerie Blood":
+    //     this.setState({
+    //       special_one_text: "Faerie Blood Type . . .",
+    //       special_two: null,
+    //       numberOfSpecials: 1,
+    //       theseOptions: [...this.state.faerieOptions],
+    //     });
+    //     break;
+    //   case "Student of (Realm)":
+    //     this.setState({
+    //       maxDupes: 1,
+    //       special_one_text: SELECT_A_REALM,
+    //       special_two: null,
+    //       numberOfSpecials: 1,
+    //       theseOptions: [...this.state.realmOptions],
+    //     });
+    //     break;
+    //   // TODO: Get dupe checking for Ways of the Land to work, but since it's an RP
+    //   // virtue that cannot be progrmatically enforced, it's a low priority
+    //   case "Ways of the (Land)":
+    //     this.setState({
+    //       maxDupes: 1,
+    //       special_one_text: "Land Type . . .",
+    //       special_two: null,
+    //       numberOfSpecials: 3,
+    //     });
+    //     break;
     }
   }
 
   componentDidUpdate(prevProps) {
     // The component was not updating automatically, even though it was registering the
     // props changes
-    // TODO: Check if this is still necessary
-    // other virtues seem to be updating just fine
-    if (prevProps.currentVirtues !== this.props.currentVirtues) {
-      switch (this.props.virtue.name) {
-        case "Great (Characteristic)":
-          this.generateOptions();
-          break;
-        case "Affinity With (Ability)":
-          this.generateOptions();
-          break;
-      }
-    }
+    // if (prevProps.currentFlaws !== this.props.currentFlaws) {
+    //   switch (this.props.flaw.name) {
+    //     case "Great (Characteristic)":
+    //       this.generateOptions();
+    //       break;
+    //     case "Affinity With (Ability)":
+    //       this.generateOptions();
+    //       break;
+    //   }
+    // }
   }
 
   test() {
@@ -347,7 +347,7 @@ class UniqueVirtue extends React.Component {
   }
 
   enableSpecial() {
-    let baseValidation = this.props.validateVirtue(this.props.virtue);
+    let baseValidation = this.props.validateFlaw(this.props.flaw);
 
     // If the virtue is not disabled by some "hard set" lock
     if (baseValidation !== "disabled") {
@@ -406,11 +406,11 @@ class UniqueVirtue extends React.Component {
   calculateDupes() {
     let dupes = {};
 
-    Object.keys(this.props.currentVirtues).forEach((currentVirtue) => {
-      let virtue = this.props.currentVirtues[currentVirtue];
-      let value = virtue.special_one;
+    Object.keys(this.props.currentFlaws).forEach((currentFlaw) => {
+      let flaw = this.props.currentFlaws[currentFlaw];
+      let value = flaw.special_one;
       // Don't want to add the current virtue twice
-      if (currentVirtue !== this.props.virtue.id && value !== null) {
+      if (currentFlaw !== this.props.flaw.id && value !== null) {
         if (dupes[value] === undefined) {
           dupes[value] = 1;
         } else {
@@ -430,7 +430,7 @@ class UniqueVirtue extends React.Component {
       let checkBox = e.target.checked;
 
       if (checkBox === false) {
-        this.props.handleClick(false, this.props.virtue, this.state);
+        this.props.handleClick(false, this.props.flaw, this.state);
       } else {
 
       const dupes = this.state.dupes;
@@ -449,7 +449,7 @@ class UniqueVirtue extends React.Component {
   
       if (looped === false) {
         this.setState({disabled: false});
-        this.props.handleClick(checkBox, this.props.virtue, this.state);
+        this.props.handleClick(checkBox, this.props.flaw, this.state);
       }
     }
   }
@@ -470,38 +470,38 @@ class UniqueVirtue extends React.Component {
   }
 
   uncheckBox() {
-    let thisID = `create-virtue-checkbox-${this.state.thisID}`;
+    let thisID = `create-flaw-checkbox-${this.state.thisID}`;
     let thisCheckbox = document.getElementById(thisID);
     if (thisCheckbox.checked === true) {
       thisCheckbox.checked = false;
-      this.props.handleClick(false, this.props.virtue, this.state);
+      this.props.handleClick(false, this.props.flaw, this.state);
     }
   }
   
   // Used in special cases where a virtue needs to be checked and cannot, under any
   // circumstance, be unchecked. Primarily used by "The Gift"
   checkBox() {
-    let thisID = `create-virtue-checkbox-${this.state.thisID}`;
+    let thisID = `create-flaw-checkbox-${this.state.thisID}`;
     let thisCheckbox = document.getElementById(thisID);
     thisCheckbox.checked = true;
-    this.props.handleClick(true, this.props.virtue, this.state);
+    this.props.handleClick(true, this.props.flaw, this.state);
   }
 
   render () {
-    const { virtue } = this.props;
+    const { flaw } = this.props;
     switch (this.state.numberOfSpecials) {
       case 0:
         return (
           <React.Fragment>
   
             <input
-              className="create-virtue-checkbox"
-              id={`create-virtue-checkbox-${this.state.thisID}`}
-              disabled={this.props.validateVirtue(virtue)}
+              className="create-flaw-checkbox"
+              id={`create-flaw-checkbox-${this.state.thisID}`}
+              disabled={this.props.validateFlaw(flaw)}
               type="checkbox" onClick={(e) => this.checkLoopholes(e)}>
             </input>
   
-            { virtue.name } <span className="virtueInfo">?</span>
+            { flaw.name } <span className="flawInfo">?</span>
   
           </React.Fragment>
         )
@@ -509,13 +509,13 @@ class UniqueVirtue extends React.Component {
         return (
           <>
             <input
-              className="create-virtue-checkbox"
-              id={`create-virtue-checkbox-${this.state.thisID}`}
+              className="create-flaw-checkbox"
+              id={`create-flaw-checkbox-${this.state.thisID}`}
               type="checkbox" disabled={this.state.disabled}
               onClick={(e) => this.checkLoopholes(e)}>
             </input>
 
-            { virtue.name } <span className="virtueInfo">?</span>
+            { flaw.name } <span className="flawInfo">?</span>
 
             <Select
               placeholder={<>{this.state.special_one_text}</>}
@@ -528,13 +528,13 @@ class UniqueVirtue extends React.Component {
         return (
           <>
             <input
-              className="create-virtue-checkbox"
-              id={`create-virtue-checkbox-${this.state.thisID}`}
+              className="create-flaw-checkbox"
+              id={`create-flaw-checkbox-${this.state.thisID}`}
               type="checkbox" disabled={this.state.disabled}
               onClick={(e) => this.checkLoopholes(e)}>
             </input>
 
-            { virtue.name } <span className="virtueInfo">?</span>
+            { flaw.name } <span className="flawInfo">?</span>
             {/* TODO: On "?" click, show virtue.description in new "popup" div, close when clicked outside */}
 
             <Select
@@ -554,13 +554,13 @@ class UniqueVirtue extends React.Component {
         return (
           <>
             <input
-              className="create-virtue-checkbox"
-              id={`create-virtue-checkbox-${this.state.thisID}`}
+              className="create-flaw-checkbox"
+              id={`create-flaw-checkbox-${this.state.thisID}`}
               type="checkbox" disabled={this.state.disabled}
               onClick={(e) => this.checkLoopholes(e)}>
             </input>
 
-            { virtue.name } <span className="virtueInfo">?</span>
+            { flaw.name } <span className="flawInfo">?</span>
 
             <input
               type="string"
@@ -581,4 +581,4 @@ class UniqueVirtue extends React.Component {
 
 }
 
-export default UniqueVirtue;
+export default UniqueFlaw;
