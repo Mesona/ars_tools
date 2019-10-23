@@ -17,7 +17,7 @@ class CharacterCreateVirtues extends React.Component {
     currentVirtues: {},
     currentFlaws: {},
     virtuePointText: "",
-    show: [],
+    show: ["general", "hermetic", "special", "social", "supernatural"],
    };
 
    this.handleSubmit = this.handleSubmit.bind(this);
@@ -253,7 +253,7 @@ class CharacterCreateVirtues extends React.Component {
         <hr></hr>
 
         <p>Special:</p>
-        <span onClick={() => this.handleShow("special")}>Show</span>
+        <span onClick={() => this.handleShow("special")}>Show/Hide</span>
         <hr></hr>
         <div className="create-virtues-parent">
           { this.state.show.includes("special") ? (
@@ -271,7 +271,7 @@ class CharacterCreateVirtues extends React.Component {
         </div>
 
         <p>General:</p>
-        <span onClick={() => this.handleShow("general")}>Show</span>
+        <span onClick={() => this.handleShow("general")}>Show/Hide</span>
         <hr></hr>
         { this.state.show.includes("general") ? (
           <div className="create-virtues-parent">
@@ -310,106 +310,122 @@ class CharacterCreateVirtues extends React.Component {
         )}
 
         <p>Hermetic:</p>
+        <span onClick={() => this.handleShow("hermetic")}>Show/Hide</span>
         <hr></hr>
-        <div className="create-virtues-parent">
-          <div className="major"><p>Major Virtues:</p>
-            {hermeticVirtues === undefined ? '' : 
-              hermeticVirtues.filter( e => e.major === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
+        { this.state.show.includes("hermetic") ? (
+          <div className="create-virtues-parent">
+            <div className="major"><p>Major Virtues:</p>
+              {hermeticVirtues === undefined ? '' : 
+                hermeticVirtues.filter( e => e.major === true).map( virtue => 
+                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                    <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
+                    <hr></hr>
+                  </div>
+              )}
+            </div>
 
-          <div className="minor"><p>Minor Virtues:</p>
-            {hermeticVirtues === undefined ? '' :
-              hermeticVirtues.filter( e => e.major === false).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
+            <div className="minor"><p>Minor Virtues:</p>
+              {hermeticVirtues === undefined ? '' :
+                hermeticVirtues.filter( e => e.major === false).map( virtue => 
+                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                    <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
+                    <hr></hr>
+                  </div>
+              )}
+            </div>
 
-          <div className="free"><p>Free Virtues:</p>
-            {hermeticVirtues === undefined ? '' :
-              hermeticVirtues.filter( e => e.free === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
+            <div className="free"><p>Free Virtues:</p>
+              {hermeticVirtues === undefined ? '' :
+                hermeticVirtues.filter( e => e.free === true).map( virtue => 
+                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                    <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
+                    <hr></hr>
+                  </div>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          null
+        )}
 
+        {/* TODO: Discover why first virtue is always checked now */}
         <p>Supernatural:</p>
+        <span onClick={() => this.handleShow("supernatural")}>Show/Hide</span>
         <hr></hr>
-        <div className="create-virtues-parent">
-          <div className="major"><p>Major Virtues:</p>
-            {supernaturalVirtues === undefined ? '' : 
-              supernaturalVirtues.filter( e => e.major === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
+        { this.state.show.includes("supernatural") ? (
+          <div className="create-virtues-parent">
+            <div className="major"><p>Major Virtues:</p>
+              {supernaturalVirtues === undefined ? '' : 
+                supernaturalVirtues.filter( e => e.major === true).map( virtue => 
+                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                    <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
+                    <hr></hr>
+                  </div>
+              )}
+            </div>
 
-          <div className="minor"><p>Minor Virtues:</p>
-            {supernaturalVirtues === undefined ? '' :
-              supernaturalVirtues.filter( e => e.major === false).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
+            <div className="minor"><p>Minor Virtues:</p>
+              {supernaturalVirtues === undefined ? '' :
+                supernaturalVirtues.filter( e => e.major === false).map( virtue => 
+                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                    <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
+                    <hr></hr>
+                  </div>
+              )}
+            </div>
 
-          <div className="free"><p>Free Virtues:</p>
-            {supernaturalVirtues === undefined ? '' :
-              supernaturalVirtues.filter( e => e.free === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
+            <div className="free"><p>Free Virtues:</p>
+              {supernaturalVirtues === undefined ? '' :
+                supernaturalVirtues.filter( e => e.free === true).map( virtue => 
+                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                    <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
+                    <hr></hr>
+                  </div>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          null
+        )}
 
         <p>Social Status:</p>
+        <span onClick={() => this.handleShow("social")}>Show/Hide</span>
         <hr></hr>
-        <div className="create-virtues-parent">
-          <div className="major"><p>Major Virtues:</p>
-            {socialStatusVirtues === undefined ? '' : 
-              socialStatusVirtues.filter( e => e.major === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
+        { this.state.show.includes("social") ? (
+          <div className="create-virtues-parent">
+            <div className="major"><p>Major Virtues:</p>
+              {socialStatusVirtues === undefined ? '' : 
+                socialStatusVirtues.filter( e => e.major === true).map( virtue => 
+                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                    <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
+                    <hr></hr>
+                  </div>
+              )}
+            </div>
 
-          <div className="minor"><p>Minor Virtues:</p>
-            {socialStatusVirtues === undefined ? '' :
-              socialStatusVirtues.filter( e => e.major === false).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
-          </div>
+            <div className="minor"><p>Minor Virtues:</p>
+              {socialStatusVirtues === undefined ? '' :
+                socialStatusVirtues.filter( e => e.major === false).map( virtue => 
+                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                    <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
+                    <hr></hr>
+                  </div>
+              )}
+            </div>
 
-          <div className="free"><p>Free Virtues:</p>
-            {socialStatusVirtues === undefined ? '' :
-              socialStatusVirtues.filter( e => e.free === true).map( virtue => 
-                <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
-                  <hr></hr>
-                </div>
-            )}
+            <div className="free"><p>Free Virtues:</p>
+              {socialStatusVirtues === undefined ? '' :
+                socialStatusVirtues.filter( e => e.free === true).map( virtue => 
+                  <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                    <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
+                    <hr></hr>
+                  </div>
+              )}
+            </div>
           </div>
-        </div>
+        ) : (
+          null
+        )}
 
       </div>
     )

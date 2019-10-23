@@ -17,7 +17,7 @@ class UniquePerk extends React.Component {
       // numberOfSpecials 3 is for virtues with custom specials
       numberOfSpecials: 0,
       disabled: "disabled",
-      thisID: null,
+      thisID: this.props.perk.id,
       theseOptions: [{}],
       statOptions: [
         { value: 'intelligence', label: 'Intelligence' },
@@ -84,17 +84,6 @@ class UniquePerk extends React.Component {
     const SELECT_A_FORM = "Select a form . . .";
     const SELECT_A_REALM = "Select a realm . . .";
     const artOptions = this.state.formOptions.concat(this.state.techniqueOptions);
-
-    if (this.props.perk !== undefined) {
-      this.setState({ thisID: this.props.perk.id });
-      // TODO: Remove when rest of template is done and know, for sure
-      // this is no longer needed
-      // if (this.props.perk.virtue_type !== undefined) {
-      //   this.setState({ thisID: this.props.perk.id });
-      // } else if (this.props.perk.flaw_type !== undefined) {
-      //   this.setState({ thisID: this.props.perk.id });
-      // }
-    }
 
     // Determines if the current perk uses special_two or not, as well as if
     // any other startup methods need to be called
