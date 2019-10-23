@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 // TODO: Create template to reduce redundancy in 
 // CreateFlaws and CreateVirtues
-class CharacterCreateFlaws extends React.Component {
+class CharacterCreatePerks extends React.Component {
  constructor(props) {
    super(props);
 
@@ -13,17 +13,20 @@ class CharacterCreateFlaws extends React.Component {
     virtues: null,
     flaws: null,
     virtuePoints: 0,
+    // TODO: Get rid of virtue/flaw point state variables and
+    // calculate from currentVirtues & currentFlaws
     currentVirtuePoints: 0,
     currentFlawPoints: 0,
     flawPoints: 0,
     minorFlaws: 0,
     currentVirtues: {},
     currentFlaws: {},
-    flawPointText: "",
+    perkPointText: "",
     show: [],
+
+    perkType: this.props.perkType,
    };
 
-   this.handleSubmit = this.handleSubmit.bind(this);
    this.update = this.update.bind(this);
    this.handleFlaw = this.handleFlaw.bind(this);
    this.validation = this.validation.bind(this);
@@ -45,29 +48,22 @@ class CharacterCreateFlaws extends React.Component {
             }
           );
         }
-    ).then(this.establishFlaws);
+    ).then(this.establishPerks);
 
-    // this.props.requestAllVirtues()
-    //   .then((response) => this.setState({
-    //     virtues: response.virtues,
-    // }));
-
-    this.props.requestAllFlaws()
-      .then((response) => this.setState({
-        flaws: response.flaws,
-    }));
+    if (this.state.perkType === "virtue") {
+      this.props.requestAllVirtues()
+        .then((response) => this.setState({
+          virtues: response.virtues,
+      }));
+    } else if (this.state.perkType === "flaw") {
+      this.props.requestAllFlaws()
+        .then((response) => this.setState({
+          flaws: response.flaws,
+      }));
+    }
 
     this.props.requestAllAbilities();
 
-  }
-
- handleSubmit(e) {
-    e.preventDefault();
-    this.props.history.push(`/characters/new/flaws/${currentCharacter.id}`);
-    // const currentCharacter = Object.assign({}, this.state);
-    // this.props.createCharacter(currentCharacter)
-      // .then((response) => this.props.history.push(`/character/new/virtues/${response.character.id}`));
-      // .then((response) => this.props.history.push(`/test/${response.character.id}`));
   }
 
   update(field) {
@@ -76,23 +72,32 @@ class CharacterCreateFlaws extends React.Component {
     };
   }
 
-  handleFlaw(checkBox, flaw, childData = null) {
+  handlePerk(checkBox, perk, childData = null) {
+    let storePerk, deletePerk;
+    if (this.state.perkType === "virtue") {
+      // TODO: Not sure if these need to be called
+      storePerk = this.props.storeVirtue;
+      deletePerk = this.props.deleteVirtue;
+    } else if (this.state.perkType === "flaw") {
+      storePerk = this.props.storeFlaw;
+      deletePerk = this.props.deleteFlaw;
+    }
  
     if (childData !== null) {
-      flaw.special_one = childData.special_one;
-      flaw.special_two = childData.special_two;
+      perk.special_one = childData.special_one;
+      perk.special_two = childData.special_two;
     }
 
     // Checks if the virtue is already "checked," and if it
     // it is, the virtue will be deleted rather than added
     if (checkBox) {
-      this.props.storeFlaw(flaw);
+      storePerk(perk);
     } else {
-      this.props.deleteFlaw(flaw);
+      deletePerk(perk);
     }
   }
 
-  validation(flaw) {
+  validation(perk) {
     const { currentCharacter } = this.state;
     if (currentCharacter !== null && flaw !== undefined) {
 
@@ -182,29 +187,47 @@ class CharacterCreateFlaws extends React.Component {
 
   }
 
-  establishFlaws() {
-    this.props.storeFlaws(this.state.currentCharacter.virtues)
+  establishPerks() {
+    // TODO: Don't remember why this is here, remove once everything is working?
+    // this.props.storeFlaws(this.state.currentCharacter.flaws)
 
     let character_type = this.state.currentCharacter.character_type;
     // TODO: Look up the actual flaw descriptions, currently it is
     // just a dupe of the (also incorrect) virtue texts
-    let universalFlawText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
+    let universalPerkText;
+    let magePerkText;
+    let grogPerkText;
+    let companionPerkText;
+    let otherPerkText;
+    if (this.state.perkType === "virtue") {
+      // TODO: Actual text, currently it's mostly placeholder
+      universalPerkText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
+      magePerkText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
+      grogPerkText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
+      companionPerkText = "Companions are things that can be created";
+      otherPerkText = "There are several that are free and can be taken with no penalty."
+    } else if (this.state.perkType === "flaw") {
+      universalPerkText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
+      magePerkText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
+      grogPerkText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
+      companionPerkText = "Companions are things that can be created";
+      otherPerkText = "There are several that are free and can be taken with no penalty."
+    }
     switch (character_type) {
       case "mage":
-        let mageFlawText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
-        this.setState({flawPointText: universalFlawText + mageFlawText});
+        this.setState({perkPointText: universalPerkText + magePerkText});
         break;
       case "grog":
         let grogFlawText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
-        this.setState({flawPointText: universalFlawText + grogFlawText});
+        this.setState({perkPointText: universalPerkText + grogPerkText});
         break;
       case "companion":
         let companionFlawText = "Companions are things that can be created";
-        this.setState({flawPointText: universalFlawText + companionFlawText});
+        this.setState({perkPointText: universalPerkText + companionPerkText});
         break;
       case "other":
         let otherFlawText = "There are several that are free and can be taken with no penalty."
-        this.setState({flawPointText: universalFlawText + otherFlawText});
+        this.setState({perkPointText: universalPerkText + otherPerkText});
         break;
     }
   }
@@ -250,7 +273,7 @@ class CharacterCreateFlaws extends React.Component {
         {/* TODO: Flaw Points Max needs some math */}
         <p title={this.state.flawPointText}>Flaw Points Maximum Available: {this.state.flawPoints - this.state.currentFlawPoints}</p>
         <div>
-          <span onClick={this.handleSubmit} className="fake-url">Next</span>
+          <span onClick={this.props.handleSubmit} className="fake-url">Next</span>
         </div>
 
         <Link to={`/character/new`}>
@@ -305,4 +328,4 @@ class CharacterCreateFlaws extends React.Component {
   }
 };
 
-export default CharacterCreateFlaws;
+export default CharacterCreatePerks;

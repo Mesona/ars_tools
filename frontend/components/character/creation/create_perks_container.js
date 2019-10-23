@@ -6,7 +6,7 @@ import { requestAllVirtues } from '../../../actions/virtue_actions';
 import { requestAllFlaws } from '../../../actions/flaw_actions';
 import { storeVirtue, deleteVirtue, storeVirtues, storeFlaw, deleteFlaw, storeFlaws } from '../../../actions/create_virtues_and_flaws_actions';
 import { requestAllAbilities } from '../../../actions/ability_actions';
-import CharacterCreateVirtues from './create_virtues';
+import CharacterCreatePerks from './create_perks';
 
 const mapStateToProps = (state, ownProps) => ({
   currentVirtues: state.entities.createVirtuesAndFlaws,
@@ -28,4 +28,4 @@ const mapDispatchToProps = dispatch => ({
   requestAllAbilities: () => dispatch(requestAllAbilities()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CharacterCreateVirtues));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CharacterCreatePerks));

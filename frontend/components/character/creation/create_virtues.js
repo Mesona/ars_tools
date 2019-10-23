@@ -1,5 +1,5 @@
 import React from 'react';
-import UniquePerkContainer from './create_virtue_flaw_template_container';
+import UniquePerkContainer from './create_unique_perk_container';
 import { Link } from 'react-router-dom';
 
 class CharacterCreateVirtues extends React.Component {

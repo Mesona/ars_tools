@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import UniquePerk from './create_virtue_flaw_template';
+import UniquePerk from './create_unique_perk';
 
 const mapStateToProps = (state, ownProps) => ({
   currentCharacter: state.entities.characters[ownProps.match.params.characterId],
