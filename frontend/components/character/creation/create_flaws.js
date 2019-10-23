@@ -1,5 +1,4 @@
 import React from 'react';
-import UniqueFlawContainer from './create_flaw_unique_container';
 import UniquePerkContainer from './create_virtue_flaw_template_container';
 import { Link } from 'react-router-dom';
 
