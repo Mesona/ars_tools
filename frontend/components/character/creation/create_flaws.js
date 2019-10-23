@@ -1,5 +1,6 @@
 import React from 'react';
 import UniqueFlawContainer from './create_flaw_unique_container';
+import UniquePerkContainer from './create_virtue_flaw_template_container';
 import { Link } from 'react-router-dom';
 
 // TODO: Create template to reduce redundancy in 
@@ -258,7 +259,7 @@ class CharacterCreateFlaws extends React.Component {
         </Link>
 
         <br></br>
-        <p>Flaws:</p>
+        <p>Flaws 222:</p>
         <hr></hr>
 
         <p>General:</p>
@@ -270,7 +271,7 @@ class CharacterCreateFlaws extends React.Component {
               {generalFlaws === undefined ? '' : 
                 generalFlaws.filter( e => e.major === true).map( flaw => 
                   <div id={flaw.id} className={ `create-flaw-hover ${this.validation(flaw)}` } key={flaw.id}>
-                    <UniqueFlawContainer flaw={flaw} validateFlaw={this.validation} handleClick={this.handleFlaw} />
+                    <UniquePerkContainer perk={flaw} validate={this.validation} handleClick={this.handleFlaw} />
                     <hr></hr>
                   </div>
               )}
@@ -280,7 +281,7 @@ class CharacterCreateFlaws extends React.Component {
               {generalFlaws === undefined ? '' :
                 generalFlaws.filter( e => e.major === false).map( flaw => 
                   <div id={flaw.id} className={ `create-flaw-hover ${this.validation(flaw)}` } key={flaw.id}>
-                    <UniqueFlawContainer flaw={flaw} validateFlaw={this.validation} handleClick={this.handleFlaw} />
+                    <UniquePerkContainer perk={flaw} validate={this.validation} handleClick={this.handleFlaw} />
                     <hr></hr>
                   </div>
               )}
@@ -290,7 +291,7 @@ class CharacterCreateFlaws extends React.Component {
               {generalFlaws === undefined ? '' :
                 generalFlaws.filter( e => e.free === true).map( flaw => 
                   <div id={flaw.id} className={ `create-flaw-hover ${this.validation(flaw)}` } key={flaw.id}>
-                    <UniqueFlawContainer flaw={flaw} validateFlaw={this.validation} handleClick={this.handleFlaw} />
+                    <UniquePerkContainer perk={flaw} validate={this.validation} handleClick={this.handleFlaw} />
                     <hr></hr>
                   </div>
               )}

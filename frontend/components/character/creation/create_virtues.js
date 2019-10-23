@@ -1,5 +1,6 @@
 import React from 'react';
 import UniqueVirtueContainer from './create_virtue_unique_container';
+import UniquePerkContainer from './create_virtue_flaw_template_container';
 import { Link } from 'react-router-dom';
 
 class CharacterCreateVirtues extends React.Component {
@@ -260,7 +261,7 @@ class CharacterCreateVirtues extends React.Component {
             <div className="major">
               {specialVirtues === undefined ? '' : specialVirtues.map( virtue => 
                 <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
-                  <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
+                  <UniquePerkContainer perk={virtue} validate={this.validation} handleClick={this.handleVirtue} />
                   <hr></hr>
                 </div>
               )}
@@ -299,6 +300,7 @@ class CharacterCreateVirtues extends React.Component {
               {generalVirtues === undefined ? '' :
                 generalVirtues.filter( e => e.free === true).map( virtue => 
                   <div id={virtue.id} className={ `create-virtue-hover ${this.validation(virtue)}` } key={virtue.id}>
+                    {/* validateVirtue to be changed to validate, virtue/flaw changed to perk= */}
                     <UniqueVirtueContainer virtue={virtue} validateVirtue={this.validation} handleClick={this.handleVirtue} />
                     <hr></hr>
                   </div>

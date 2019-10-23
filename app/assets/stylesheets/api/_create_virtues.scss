@@ -8,6 +8,17 @@
   border: 1px solid green;
 }
 
+.create-perks-parent{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.create-perk-input {
+  display: flex;
+  border: 1px solid green;
+}
+
+
 // .create-virtue-hover:focus {
 //   background-color: blue;
 // }
