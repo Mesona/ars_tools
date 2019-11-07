@@ -22,14 +22,6 @@ class CharacterCreateInitial extends React.Component {
    this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
  } 
 
- componentDidMount() {
-    this.props.characterId === null  ? '' :
-      this.props.requestCharacter(this.props.characterId)
-        .then((response) => this.setState({
-          currentCharacter: response.character,
-    }));
-  }
-
  handleSubmit(e) {
     e.preventDefault();
     const currentCharacter = Object.assign({}, this.state.currentCharacter);

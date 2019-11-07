@@ -2,16 +2,12 @@ import React from 'react';
 import UniquePerkContainer from './create_unique_perk_container';
 import { Link } from 'react-router-dom';
 
-// TODO: Create template to reduce redundancy in 
-// CreateFlaws and CreateVirtues
 class CharacterCreatePerks extends React.Component {
  constructor(props) {
    super(props);
 
    this.state = {
     currentCharacter: null,
-    virtues: null,
-    flaws: null,
     virtuePoints: 0,
     // TODO: Get rid of virtue/flaw point state variables and
     // calculate from currentVirtues & currentFlaws
@@ -23,47 +19,45 @@ class CharacterCreatePerks extends React.Component {
     currentFlaws: {},
     perkPointText: "",
     show: [],
-
-    perkType: this.props.perkType,
    };
 
    this.update = this.update.bind(this);
-   this.handleFlaw = this.handleFlaw.bind(this);
+   this.handlePerk = this.handlePerk.bind(this);
    this.validation = this.validation.bind(this);
-   this.establishFlaws = this.establishFlaws.bind(this);
+   this.establishPerks = this.establishPerks.bind(this);
    this.handleShow = this.handleShow.bind(this);
+   this.showAll = this.showAll.bind(this);
+   this.test = this.test.bind(this);
  } 
 
- componentDidMount() {
-      this.props.requestCharacter(this.props.characterId)
-        .then((response) => {
-          this.setState({
-            currentCharacter: {...response.character},
-            currentVirtues: response.character.virtues,
-            currentFlaws: response.character.flaws,
-            virtuePoints: (response.character.character_type === "mage" ? 10 : 
-              response.character.character_type === "companion" ? 10 : 3),
-            // TODO: Fix flawPoints
-            flawPoints: 10,
-            }
-          );
-        }
+  componentDidMount() {
+    this.props.requestCharacter(this.props.match.params.characterId)
+      .then((response) => {
+        this.setState({
+          currentCharacter: {...response.character},
+          currentVirtues: response.character.virtues,
+          currentFlaws: response.character.flaws,
+          virtuePoints: (response.character.character_type === "mage" ? 10 : 
+            response.character.character_type === "companion" ? 10 : 3),
+          // TODO: Fix flawPoints
+          flawPoints: 10,
+          }
+        );
+      }
     ).then(this.establishPerks);
 
-    if (this.state.perkType === "virtue") {
-      this.props.requestAllVirtues()
-        .then((response) => this.setState({
-          virtues: response.virtues,
-      }));
-    } else if (this.state.perkType === "flaw") {
-      this.props.requestAllFlaws()
-        .then((response) => this.setState({
-          flaws: response.flaws,
-      }));
-    }
+    let allClassifications = this.props.classifications;
+    this.setState({ show: allClassifications });
+    // this.showAll();
 
     this.props.requestAllAbilities();
+  }
 
+  componentDidUpdate(prevProps) {
+    // Necessary to automatically expand every "Perk" field
+    if (prevProps.classifications !== this.props.classifications) {
+      this.showAll();
+    }
   }
 
   update(field) {
@@ -74,11 +68,11 @@ class CharacterCreatePerks extends React.Component {
 
   handlePerk(checkBox, perk, childData = null) {
     let storePerk, deletePerk;
-    if (this.state.perkType === "virtue") {
+    if (this.props.perkType === "virtue") {
       // TODO: Not sure if these need to be called
       storePerk = this.props.storeVirtue;
       deletePerk = this.props.deleteVirtue;
-    } else if (this.state.perkType === "flaw") {
+    } else if (this.props.perkType === "flaw") {
       storePerk = this.props.storeFlaw;
       deletePerk = this.props.deleteFlaw;
     }
@@ -99,37 +93,37 @@ class CharacterCreatePerks extends React.Component {
 
   validation(perk) {
     const { currentCharacter } = this.state;
-    if (currentCharacter !== null && flaw !== undefined) {
+    if (currentCharacter !== null && perk !== undefined) {
 
       // Character validations
       if (currentCharacter.character_type === "grog") {
-        if (flaw.major === true ||
-          flaw.name === "The Gift"
+        if (perk.major === true ||
+          perk.name === "The Gift"
         ) {
           return "disabled";
         }
 
       } else if (currentCharacter.character_type === "npc") {
-        if (flaw.name === "The Gift" 
+        if (perk.name === "The Gift" 
         ) {
           return "disabled";
         }
 
       } else if (currentCharacter.character_type === "companion") {
-        if (flaw.name === "The Gift"
+        if (perk.name === "The Gift"
         ) {
           return "disabled";
         }
 
       } else if (currentCharacter.character_type === "mage") {
 
-        if (flaw.name === "Wealthy") {
+        if (perk.name === "Wealthy") {
           return "disabled";
         }
       }
     }
 
-    if (flaw.name === "The Gift") {
+    if (perk.name === "The Gift") {
       return "disabled";
     }
 
@@ -188,6 +182,7 @@ class CharacterCreatePerks extends React.Component {
   }
 
   establishPerks() {
+    // this.setPerkType();
     // TODO: Don't remember why this is here, remove once everything is working?
     // this.props.storeFlaws(this.state.currentCharacter.flaws)
 
@@ -199,14 +194,14 @@ class CharacterCreatePerks extends React.Component {
     let grogPerkText;
     let companionPerkText;
     let otherPerkText;
-    if (this.state.perkType === "virtue") {
+    if (this.props.perkType === "virtue") {
       // TODO: Actual text, currently it's mostly placeholder
       universalPerkText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
       magePerkText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
       grogPerkText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
       companionPerkText = "Companions are things that can be created";
       otherPerkText = "There are several that are free and can be taken with no penalty."
-    } else if (this.state.perkType === "flaw") {
+    } else if (this.props.perkType === "flaw") {
       universalPerkText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
       magePerkText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
       grogPerkText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
@@ -243,29 +238,30 @@ class CharacterCreatePerks extends React.Component {
       shownSections.push(section);
       this.setState({ show: shownSections });
     }
+  }
 
+  showAll() {
+    this.setState({ show: this.props.classifications });
+  }
+
+  test(type, classification) {
+    // let testVirtues = this.props.perks.filter(e => e.virtueType === classification)
+    this.props.perks.filter( perk => (perk.virtue_type === undefined ? perk.flaw_type === classification : perk.virtue_type === classification) && perk.major === true ).map( perk => {
+      console.log(perk)
+      // console.log("WWWWWWWWW")
+    })
+    // console.log(testVirtues)
   }
 
   render () {
-
-    const { currentCharacter } = this.state;
-
-    let generalFlaws;
-    let supernaturalFlaws;
-    let personalityFlaws;
-    let storyFlaws;
-    let hermeticFlaws;
-    let socialStatusFlaws;
-
-    if (this.state.flaws !== null) {
-      generalFlaws = this.state.flaws.filter( e => e.flaw_type === "General");
-      supernaturalFlaws = this.state.flaws.filter( e => e.flaw_type === "Supernatural");
-      personalityFlaws = this.state.flaws.filter( e => e.flaw_type === "Personality");
-      storyFlaws = this.state.flaws.filter(e => e.flaw_type === "Story");
-      hermeticFlaws = this.state.flaws.filter(e => e.flaw_type === "Hermetic");
-      socialStatusFlaws = this.state.flaws.filter(e => e.flaw_type === "Social Status");
-    }
-
+    if (this.props.perks === undefined) { 
+      return (
+        <div>
+          stuff
+        </div>
+      )}
+    else { 
+    
     return (
       <div>
         {/* <img src="" title={flawPointText}></img> */}
@@ -283,48 +279,47 @@ class CharacterCreatePerks extends React.Component {
         <br></br>
         <p>Flaws 222:</p>
         <hr></hr>
+          {this.props.classifications.map(classification => 
+            <React.Fragment key={classification}>
+              <p>{classification}</p>
+              <span onClick={() => this.handleShow(classification)}>Show/Hide</span>
+              <hr></hr>
+                <div className="create-perks-parent">
 
-        <p>General:</p>
-        <span onClick={() => this.handleShow("general")}>Show</span>
-        <hr></hr>
-        { this.state.show.includes("general") ? (
-          <div className="create-flaws-parent">
-            <div className="major"><p>Major Flaws:</p>
-              {generalFlaws === undefined ? '' : 
-                generalFlaws.filter( e => e.major === true).map( flaw => 
-                  <div id={flaw.id} className={ `create-flaw-hover ${this.validation(flaw)}` } key={flaw.id}>
-                    <UniquePerkContainer perk={flaw} validate={this.validation} handleClick={this.handleFlaw} />
-                    <hr></hr>
+                  <div className="major"><p onClick={() => this.test("major", classification)}>Major {this.props.perkType}</p>
+                    {this.props.perks.filter( perks => (perks.virtue_type === undefined ? perks.flaw_type === classification : perks.virtue_type === classification) && perks.major === true ).map( perk => 
+                      <div id={perk.id} className={ `create-perk-hover ${this.validation(perk)}` } key={perk.id}>
+                        <UniquePerkContainer perk={perk} validate={this.validation} handleClick={this.handlePerk} />
+                        <hr></hr>
+                      </div>
+                    )}
                   </div>
-              )}
-            </div>
 
-            <div className="minor"><p>Minor Flaws:</p>
-              {generalFlaws === undefined ? '' :
-                generalFlaws.filter( e => e.major === false).map( flaw => 
-                  <div id={flaw.id} className={ `create-flaw-hover ${this.validation(flaw)}` } key={flaw.id}>
-                    <UniquePerkContainer perk={flaw} validate={this.validation} handleClick={this.handleFlaw} />
-                    <hr></hr>
+                  <div className="minor"><p>Minor {this.props.perkType}</p>
+                    {this.props.perks.filter( perks => (perks.virtue_type === undefined ? perks.flaw_type === classification : perks.virtue_type === classification) && perks.major === false && perks.free === false).map( perk => 
+                      <div id={perk.id} className={ `create-perk-hover ${this.validation(perk)}` } key={perk.id}>
+                        <UniquePerkContainer perk={perk} validate={this.validation} handleClick={this.handlePerk} />
+                        <hr></hr>
+                      </div>
+                    )}
                   </div>
-              )}
-            </div>
 
-            <div className="free"><p>Free Flaws:</p>
-              {generalFlaws === undefined ? '' :
-                generalFlaws.filter( e => e.free === true).map( flaw => 
-                  <div id={flaw.id} className={ `create-flaw-hover ${this.validation(flaw)}` } key={flaw.id}>
-                    <UniquePerkContainer perk={flaw} validate={this.validation} handleClick={this.handleFlaw} />
-                    <hr></hr>
+                  <div className="free"><p>Free {this.props.perkType}</p>
+                    {this.props.perks.filter((e) => (e.free === true && (e.virtue_type === classification || e.flaw_type === classification))).map( perk => {
+                      <div id={perk.id} className={ `create-perk-hover ${this.validation(perk)}` } key={perk.id}>
+                        <UniquePerkContainer perk={perk} validate={this.validation} handleClick={this.handlePerk} />
+                        <hr></hr>
+                      </div>
+                    })}
                   </div>
-              )}
-            </div>
-          </div>
-        ) : (
-          null
-        )}
 
+                </div>
+            </React.Fragment>
+          )
+        }
       </div>
     )
+    }
   }
 };
 

@@ -346,6 +346,9 @@ class UniquePerk extends React.Component {
   }
 
   generateAbilities() {
+    console.log("~~~~~~~~~~~~~~")
+    console.log(this.props.abilities)
+    console.log("~~~~~~~~~~~~~~")
     let abilities = [...this.props.abilities];
     let returnedAbilities = [];
     Object.keys(abilities).forEach((abilityKey) => {
@@ -563,7 +566,6 @@ class UniquePerk extends React.Component {
         )
     } 
   }
-
 }
 
 export default UniquePerk;

@@ -9,6 +9,7 @@ import SideBarContainer from "./side_bar/side_bar_container";
 import HomeContainer from "./home/home_container";
 import CharacterShowContainer from "./character/show_container";
 import CharacterCreateContainer from "./character/creation/create_container";
+import CharacterCreateVirtuesContainer from './character/creation/test_virtues_container';
 
 const App = () => {
 
@@ -29,8 +30,13 @@ const App = () => {
 
           <Route
             path="/characters/new/virtues/:characterId"
-            render={(props) => <CharacterCreateContainer {...props} page="virtues" />}
+            render={(props) => <CharacterCreateVirtuesContainer />}
           />
+
+          {/* <Route
+            path="/characters/new/virtues/:characterId"
+            render={(props) => <CharacterCreateContainer {...props} page="virtues" />}
+          /> */}
 
           <Route
             path="/characters/new/flaws/:characterId"

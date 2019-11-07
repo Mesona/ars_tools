@@ -10,7 +10,6 @@ class CharacterCreateVirtues extends React.Component {
    this.state = {
     currentCharacter: null,
     virtues: null,
-    flaws: null,
     virtuePoints: 0,
     currentVirtuePoints: 0,
     flawPoints: 0,
@@ -18,12 +17,33 @@ class CharacterCreateVirtues extends React.Component {
     currentVirtues: {},
     currentFlaws: {},
     virtuePointText: "",
-    show: ["general", "hermetic", "special", "social", "supernatural"],
+    classifications: [],
    };
 
    this.handleSubmit = this.handleSubmit.bind(this);
-
+   this.setClassifications = this.setClassifications.bind(this)
  } 
+
+ componentDidMount() {
+  this.props.requestAllVirtues()
+    .then((response) => this.setState({
+      virtues: response.virtues,
+  }))
+  .then(this.setClassifications);
+
+  this.props.requestAllAbilities();
+ }
+
+ setClassifications() {
+    let classifications = [];
+    this.state.virtues.forEach((virtue) => {
+      if (!classifications.includes(virtue.virtue_type) && virtue.virtue_type !== "") {
+        classifications.push(virtue.virtue_type);
+      }      
+    });
+
+    this.setState({ classifications: classifications });
+ }
 
 
   handleSubmit(e) {
@@ -36,13 +56,19 @@ class CharacterCreateVirtues extends React.Component {
   }
 
   render () {
+    console.log("CLASSIFICATION: " + this.state.classifications)
     return (
       <>
-        <CharacterCreatePerks
-          characterID={this.props.characterID}
-          perkType={"virtue"}
-          handleSubmit={this.handleSubmit}
-        />
+        { this.state.virtues === null ?
+          null
+        :
+          <CharacterCreatePerks
+            perkType={"virtue"}
+            handleSubmit={this.handleSubmit}
+            perks={this.state.virtues}
+            classifications={this.state.classifications}
+          />
+        }
       </>
     )
   }

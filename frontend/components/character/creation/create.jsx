@@ -3,7 +3,9 @@ import { withRouter } from 'react-router-dom';
 
 import CharacterCreateInitial from './create_initial';
 import CharacterCreateStats from './create_stats';
-import CharacterCreateVirtuesContainer from './create_virtues_container';
+// import CharacterCreateVirtuesContainer from './create_virtues_container';
+// import CharacterCreatePerksContainer from './create_perks_container';
+import CharacterCreateVirtuesContainer from './test_virtues_container';
 import CharacterCreateFlawsContainer from './create_flaws_container';
 
 class CharacterCreate extends React.Component {
@@ -31,16 +33,15 @@ class CharacterCreate extends React.Component {
         <section className="new-character">
           <CharacterCreateInitial
             currentUser={this.props.currentUser}
-            characterId={characterId}
             createCharacter={this.props.createCharacter}
-            requestCharacter={this.props.requestCharacter}
-            updateCharacter={this.props.updateCharacter}
-            storeVirtue={this.props.storeVirtue}
           />
         </section>
       );
     } else if ( this.props.page === "virtues" ) {
       return (
+        // <CharacterCreatePerksContainer
+        //   characterId={characterId}
+        // />
         <CharacterCreateVirtuesContainer
           characterId={characterId}
         />
