@@ -7,7 +7,6 @@ class CharacterCreatePerks extends React.Component {
    super(props);
 
    this.state = {
-    currentCharacter: null,
     virtuePoints: 0,
     // TODO: Get rid of virtue/flaw point state variables and
     // calculate from currentVirtues & currentFlaws
@@ -31,26 +30,36 @@ class CharacterCreatePerks extends React.Component {
  } 
 
   componentDidMount() {
-    this.props.requestCharacter(this.props.match.params.characterId)
-      .then((response) => {
-        this.setState({
-          currentCharacter: {...response.character},
-          currentVirtues: response.character.virtues,
-          currentFlaws: response.character.flaws,
-          virtuePoints: (response.character.character_type === "mage" ? 10 : 
-            response.character.character_type === "companion" ? 10 : 3),
-          // TODO: Fix flawPoints
-          flawPoints: 10,
-          }
-        );
-      }
-    ).then(this.establishPerks);
+    // this.props.requestCharacter(this.props.match.params.characterId)
+    //   .then((response) => {
+    //     this.setState({
+    //       currentCharacter: {...response.character},
+    //       currentVirtues: response.character.virtues,
+    //       currentFlaws: response.character.flaws,
+    //       virtuePoints: (response.character.character_type === "mage" ? 10 : 
+    //         response.character.character_type === "companion" ? 10 : 3),
+    //       // TODO: Fix flawPoints
+    //       flawPoints: 10,
+    //       }
+    //     );
+    //   }
+    // ).then(this.establishPerks);
+    let { currentCharacter } = this.props;
+
+    this.setState({
+      currentVirtues: currentCharacter.virtues,
+      currentFlaws: currentCharacter.flaws,
+    });
+
+    this.establishPerks();
 
     let allClassifications = this.props.classifications;
     this.setState({ show: allClassifications });
     // this.showAll();
 
     this.props.requestAllAbilities();
+
+    // this.props.requestCharacter(this.props.match.params.characterId);
   }
 
   componentDidUpdate(prevProps) {
@@ -92,34 +101,32 @@ class CharacterCreatePerks extends React.Component {
   }
 
   validation(perk) {
-    const { currentCharacter } = this.state;
-    if (currentCharacter !== null && perk !== undefined) {
+    const { currentCharacter } = this.props;
+    
+    // Character validations
+    if (currentCharacter.character_type === "grog") {
+      if (perk.major === true ||
+        perk.name === "The Gift"
+      ) {
+        return "disabled";
+      }
 
-      // Character validations
-      if (currentCharacter.character_type === "grog") {
-        if (perk.major === true ||
-          perk.name === "The Gift"
-        ) {
-          return "disabled";
-        }
+    } else if (currentCharacter.character_type === "npc") {
+      if (perk.name === "The Gift" 
+      ) {
+        return "disabled";
+      }
 
-      } else if (currentCharacter.character_type === "npc") {
-        if (perk.name === "The Gift" 
-        ) {
-          return "disabled";
-        }
+    } else if (currentCharacter.character_type === "companion") {
+      if (perk.name === "The Gift"
+      ) {
+        return "disabled";
+      }
 
-      } else if (currentCharacter.character_type === "companion") {
-        if (perk.name === "The Gift"
-        ) {
-          return "disabled";
-        }
+    } else if (currentCharacter.character_type === "mage") {
 
-      } else if (currentCharacter.character_type === "mage") {
-
-        if (perk.name === "Wealthy") {
-          return "disabled";
-        }
+      if (perk.name === "Wealthy") {
+        return "disabled";
       }
     }
 
@@ -186,7 +193,7 @@ class CharacterCreatePerks extends React.Component {
     // TODO: Don't remember why this is here, remove once everything is working?
     // this.props.storeFlaws(this.state.currentCharacter.flaws)
 
-    let character_type = this.state.currentCharacter.character_type;
+    let character_type = this.props.currentCharacter.character_type;
     // TODO: Look up the actual flaw descriptions, currently it is
     // just a dupe of the (also incorrect) virtue texts
     let universalPerkText;
@@ -194,6 +201,7 @@ class CharacterCreatePerks extends React.Component {
     let grogPerkText;
     let companionPerkText;
     let otherPerkText;
+
     if (this.props.perkType === "virtue") {
       // TODO: Actual text, currently it's mostly placeholder
       universalPerkText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
@@ -213,15 +221,12 @@ class CharacterCreatePerks extends React.Component {
         this.setState({perkPointText: universalPerkText + magePerkText});
         break;
       case "grog":
-        let grogFlawText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
         this.setState({perkPointText: universalPerkText + grogPerkText});
         break;
       case "companion":
-        let companionFlawText = "Companions are things that can be created";
         this.setState({perkPointText: universalPerkText + companionPerkText});
         break;
       case "other":
-        let otherFlawText = "There are several that are free and can be taken with no penalty."
         this.setState({perkPointText: universalPerkText + otherPerkText});
         break;
     }
@@ -305,12 +310,12 @@ class CharacterCreatePerks extends React.Component {
                   </div>
 
                   <div className="free"><p>Free {this.props.perkType}</p>
-                    {this.props.perks.filter((e) => (e.free === true && (e.virtue_type === classification || e.flaw_type === classification))).map( perk => {
+                    {this.props.perks.filter( perks => (perks.virtue_type === undefined ? perks.flaw_type === classification : perks.virtue_type === classification) && perks.free === true).map( perk => 
                       <div id={perk.id} className={ `create-perk-hover ${this.validation(perk)}` } key={perk.id}>
                         <UniquePerkContainer perk={perk} validate={this.validation} handleClick={this.handlePerk} />
                         <hr></hr>
                       </div>
-                    })}
+                    )}
                   </div>
 
                 </div>

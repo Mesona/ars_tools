@@ -1,6 +1,6 @@
 import React from 'react';
 import UniquePerkContainer from './create_unique_perk_container';
-import CharacterCreatePerks from './create_perks_container';
+import CharacterCreatePerksContainer from './create_perks_container';
 import { Link } from 'react-router-dom';
 
 class CharacterCreateVirtues extends React.Component {
@@ -32,6 +32,9 @@ class CharacterCreateVirtues extends React.Component {
   .then(this.setClassifications);
 
   this.props.requestAllAbilities();
+
+  this.props.requestCharacter(this.props.match.params.characterId)
+    .then( response => this.setState({ currentCharacter: response.character }));
  }
 
  setClassifications() {
@@ -56,18 +59,17 @@ class CharacterCreateVirtues extends React.Component {
   }
 
   render () {
-    console.log("CLASSIFICATION: " + this.state.classifications)
     return (
       <>
-        { this.state.virtues === null ?
-          null
-        :
-          <CharacterCreatePerks
+        { this.state.virtues !== null && this.state.currentCharacter !== undefined ?
+          <CharacterCreatePerksContainer
             perkType={"virtue"}
             handleSubmit={this.handleSubmit}
             perks={this.state.virtues}
             classifications={this.state.classifications}
           />
+        :
+          null
         }
       </>
     )
