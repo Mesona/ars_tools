@@ -69,7 +69,7 @@ class UniquePerk extends React.Component {
     this.setSpecial = this.setSpecial.bind(this);
     this.enableSpecial = this.enableSpecial.bind(this);
     this.generateAbilities = this.generateAbilities.bind(this);
-    this.generateOptions = this.generateOptions.bind(this);
+    this.updateOptionsWithDupes = this.updateOptionsWithDupes.bind(this);
     this.checkLoopholes = this.checkLoopholes.bind(this);
     this.calculateDupes = this.calculateDupes.bind(this);
     this.dupeCheck = this.dupeCheck.bind(this);
@@ -298,6 +298,14 @@ class UniquePerk extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    // The component was not updating automatically, even though it was registering the
+    // props changes
+    if (prevProps.currentPerks !== this.props.currentPerks) {
+      this.updateOptionsWithDupes();
+    }
+  }
+
   test() {
     console.log("STATE")
     console.log(this.state)
@@ -346,9 +354,6 @@ class UniquePerk extends React.Component {
   }
 
   generateAbilities() {
-    console.log("~~~~~~~~~~~~~~")
-    console.log(this.props.abilities)
-    console.log("~~~~~~~~~~~~~~")
     let abilities = [...this.props.abilities];
     let returnedAbilities = [];
     Object.keys(abilities).forEach((abilityKey) => {
@@ -367,10 +372,12 @@ class UniquePerk extends React.Component {
       returnedAbilities.push({"value": value.join(' '), "label": label.join(' ')});
     });
 
-    this.setState({theseOptions: returnedAbilities});
+    this.setState({
+      theseOptions: returnedAbilities,
+    });
   }
 
-  generateOptions() {
+  updateOptionsWithDupes() {
     let theseOptions = [...this.state.theseOptions];
     let dupes = this.calculateDupes();
 
@@ -416,6 +423,13 @@ class UniquePerk extends React.Component {
       e.stopPropagation();
       let looped = false;
       let checkBox = e.target.checked;
+
+
+      // console.log("~~~~~~~~~~")
+      // console.log(e)
+      // console.log(checkBox)
+      // console.log(this.state.dupes)
+      // console.log("~~~~~~~~~~")
 
       if (checkBox === false) {
         this.props.handleClick(false, this.props.perk, this.state);

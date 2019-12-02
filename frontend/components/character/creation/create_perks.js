@@ -10,6 +10,7 @@ class CharacterCreatePerks extends React.Component {
     virtuePoints: 0,
     // TODO: Get rid of virtue/flaw point state variables and
     // calculate from currentVirtues & currentFlaws
+    // TODO: Fix transition from character name to virtues
     currentVirtuePoints: 0,
     currentFlawPoints: 0,
     flawPoints: 0,
