@@ -73,3 +73,5 @@ const App = () => {
 };
 
 export default App;
+
+// TODO: All pages should redirect to login if no current user

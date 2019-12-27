@@ -131,7 +131,8 @@ class CharacterCreatePerks extends React.Component {
       }
     }
 
-    if (perk.name === "The Gift") {
+    // These are required for Mages, and as thus, are enabled with no option to disable
+    if (perk.name === "The Gift" || perk.name == "Hermetic Magus") {
       return "disabled";
     }
 
@@ -263,7 +264,7 @@ class CharacterCreatePerks extends React.Component {
     if (this.props.perks === undefined) { 
       return (
         <div>
-          stuff
+          Loading . . .
         </div>
       )}
     else { 
@@ -271,9 +272,10 @@ class CharacterCreatePerks extends React.Component {
     return (
       <div>
         {/* <img src="" title={flawPointText}></img> */}
+        <p title={this.state.flawPointText}>Total Virtue Point Accumulation: {this.state.flawPoints - this.state.currentFlawPoints}</p>
         <p title={this.state.flawPointText}>Remaining Flaw Points Required: {this.state.flawPoints - this.state.currentFlawPoints}</p>
         {/* TODO: Flaw Points Max needs some math */}
-        <p title={this.state.flawPointText}>Flaw Points Maximum Available: {this.state.flawPoints - this.state.currentFlawPoints}</p>
+        {/* TODO: Hover question marks that explain the point distribution */}
         <div>
           <span onClick={this.props.handleSubmit} className="fake-url">Next</span>
         </div>
@@ -283,7 +285,6 @@ class CharacterCreatePerks extends React.Component {
         </Link>
 
         <br></br>
-        <p>Flaws 222:</p>
         <hr></hr>
           {this.props.classifications.map(classification => 
             <React.Fragment key={classification}>
