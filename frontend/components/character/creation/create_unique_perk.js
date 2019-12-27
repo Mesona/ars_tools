@@ -424,13 +424,6 @@ class UniquePerk extends React.Component {
       let looped = false;
       let checkBox = e.target.checked;
 
-
-      // console.log("~~~~~~~~~~")
-      // console.log(e)
-      // console.log(checkBox)
-      // console.log(this.state.dupes)
-      // console.log("~~~~~~~~~~")
-
       if (checkBox === false) {
         this.props.handleClick(false, this.props.perk, this.state);
       } else {
@@ -481,7 +474,8 @@ class UniquePerk extends React.Component {
   }
   
   // Used in special cases where a virtue needs to be checked and cannot, under any
-  // circumstance, be unchecked. Primarily used by "The Gift"
+  // circumstance, be unchecked. Primarily used by Virtues & Flaws granted to
+  // Mages and their chosen House
   checkBox() {
     let thisID = `create-perk-checkbox-${this.state.thisID}`;
     let thisCheckbox = document.getElementById(thisID);

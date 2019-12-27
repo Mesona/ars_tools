@@ -105,6 +105,24 @@ class CharacterCreateInitial extends React.Component {
           </label>
         </div>
 
+        {this.state.character_type === "mage" ? 
+          <div>
+            <label>Hermetic House:
+              <select 
+                // TODO: Add hermetic house to character model
+                defaultValue={currentCharacter.house} 
+                required
+                onChange={this.update('gender')}>
+                <option value="" disabled defaultValue>Pick One</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </label>
+          </div>
+        :
+          null
+        }
+
         {/* TODO: Region born, background bio, still in apprenticeship, house association, all will be done in another page */}
 
         <div>
