@@ -355,10 +355,10 @@ class UniquePerk extends React.Component {
 
   generateAbilities() {
     let abilities;
-    if (this.props.abilities !== undefined) {
-      abilities = [...this.props.abilities];
-    } else {
+    if (this.props.abilities === undefined) {
       abilities = [];
+    } else {
+      abilities = [...this.props.abilities];
     }
     let returnedAbilities = [];
     Object.keys(abilities).forEach((abilityKey) => {
