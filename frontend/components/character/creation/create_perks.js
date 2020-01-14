@@ -28,6 +28,8 @@ class CharacterCreatePerks extends React.Component {
    this.handleShow = this.handleShow.bind(this);
    this.showAll = this.showAll.bind(this);
    this.test = this.test.bind(this);
+   this.calculateVirtuePoints = this.calculateVirtuePoints.bind(this);
+   this.calculateFlawPoints = this.calculateFlawPoints.bind(this);
  } 
 
   componentDidMount() {
@@ -67,6 +69,10 @@ class CharacterCreatePerks extends React.Component {
     // Necessary to automatically expand every "Perk" field
     if (prevProps.classifications !== this.props.classifications) {
       this.showAll();
+    }
+
+    if (prevProps.currentVirtues !== this.props.currentVirtues) {
+      this.calculateVirtuePoints();
     }
   }
 
@@ -260,6 +266,33 @@ class CharacterCreatePerks extends React.Component {
     // console.log(testVirtues)
   }
 
+  calculateVirtuePoints() {
+    let majorVirtues = 0;
+    let minorVirtues = 0;
+    if (this.props.currentVirtues !== undefined ) {
+      let currentVirtues = this.props.currentVirtues;
+      Object.keys(currentVirtues).forEach( virtueIndex => {
+        let virtue = currentVirtues[virtueIndex];
+        if (virtue.free === false) {
+          if (virtue.major === true) {
+            majorVirtues++;
+          } else if (virtue.free === false) {
+            minorVirtues++;
+          }
+
+        }
+      });
+
+      let virtuePoints = (majorVirtues * 3) + minorVirtues;
+      this.setState({ virtuePoints: virtuePoints });
+    }
+
+  }
+
+  calculateFlawPoints() {
+
+  }
+
   render () {
     if (this.props.perks === undefined) { 
       return (
@@ -273,8 +306,7 @@ class CharacterCreatePerks extends React.Component {
       <div>
         {/* <img src="" title={flawPointText}></img> */}
         <p title={this.state.flawPointText}>
-          Total Virtue Point Accumulation:{" "}
-          {this.state.flawPoints - this.state.currentFlawPoints}
+          Total Virtue Point Accumulation:{this.state.virtuePoints}
         </p>
         <p title={this.state.flawPointText}>
           Remaining Flaw Points Required:{" "}
