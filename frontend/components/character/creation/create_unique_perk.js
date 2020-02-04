@@ -94,15 +94,6 @@ class UniquePerk extends React.Component {
           this.checkBox();
         }
         break;
-      case "Great (Characteristic)":
-        this.setState({
-          maxDupes: 2,
-          special_one_text: SELECT_AN_ATTRIBUTE,
-          special_two: null,
-          numberOfSpecials: 1,
-          theseOptions: [...this.state.statOptions],
-        });
-        break;
       case "Affinity With (Ability)":
         this.setState({
           maxDupes: 1,
@@ -161,6 +152,15 @@ class UniquePerk extends React.Component {
           special_two: null,
         });
         break;
+      case "Great (Characteristic)":
+        this.setState({
+          maxDupes: 2,
+          special_one_text: SELECT_AN_ATTRIBUTE,
+          special_two: null,
+          numberOfSpecials: 1,
+          theseOptions: [...this.state.statOptions],
+        });
+        break;
       case "Greater Immunity":
         this.setState({
           numberOfSpecials: 3,
@@ -176,7 +176,6 @@ class UniquePerk extends React.Component {
         });
         break;
       case "Hermetic Prestige":
-      case "Protection":
         this.setState({
           numberOfSpecials: 3,
           special_one_text: "Choose One Reputation . . .",
@@ -248,17 +247,18 @@ class UniquePerk extends React.Component {
           special_two: null,
         });
         break;
-      case "Relic":
-        this.setState({
-          numberOfSpecials: 3,
-          special_one_text: "Choose A Side Effect . . .",
-          special_two: null,
-        });
-        break;
       case "Skinchanger":
         this.setState({
           numberOfSpecials: 3,
           special_one_text: "Choose A Magical Item . . .",
+          special_two: null,
+        });
+        break;
+      case "Social Contacts":
+        this.setState({
+          maxDupes: 1,
+          numberOfSpecials: 3,
+          special_one_text: "Choose A Social Circle . . .",
           special_two: null,
         });
         break;
@@ -286,8 +286,6 @@ class UniquePerk extends React.Component {
           theseOptions: [...this.state.realmOptions],
         });
         break;
-      // TODO: Get dupe checking for Ways of the Land to work, but since it's an RP
-      // virtue that cannot be progrmatically enforced, it's a low priority
       case "Ways of the (Land)":
         this.setState({
           maxDupes: 1,

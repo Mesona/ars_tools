@@ -616,12 +616,6 @@ module Virtues
     book: "Core",
     major: false)
 
-  mastered_spells = Virtue.create!(name: "Mastered Spells",
-    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
-    virtue_type: "Hermetic",
-    book: "Core",
-    major: false)
-
   mendicant_friar = Virtue.create!(name: "Mendicant Friar",
     description: "You are a follower of St. Francis or St. Dominic, going among the rich and poor, spreading the word of God and giving comfort to the sick, homeless, hungry, or dying. You are sworn to serve the Church for the rest of your life, but your wandering habits are considered suspect by the local bishop and parish clergy, and you lack political influence within the organization. Like all clerics, however, you are only subject to canon law.
       Due to your training, you may take Academic Abilities during character generation. If you wish, you may be an ordained priest and may officiate at marriages, baptisms, funerals, and the Mass, though the parish clergy may resent your interfering on their “turf.” You do not need to take the Priest Virtue in addition to this one if you do want to be ordained.
@@ -984,8 +978,8 @@ module Virtues
     major: false)
 
   temporal_influence = Virtue.create!(name: "Temporal Influence",
-    description: "General",
-    virtue_type: "",
+    description: "Through blood or a position of trust, you enjoy some political weight in society. You have the ear of a leader and may yourself lead common folk at times, if they respect your position. The more influence you have, the more responsibility, and the harder it is to work unopposed with magi. Grogs may not take this Virtue.",
+    virtue_type: "General",
     book: "Core",
     major: false)
 

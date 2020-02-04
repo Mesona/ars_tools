@@ -175,6 +175,7 @@ class CharacterCreatePerks extends React.Component {
 
     // Necessary validations
     // If have "Diedne Magic" need to have "Dark Secret"
+    // If you take inoffensive to animals hermetic, the general also gets applied (but doesn't add 2 virtues to virtue score)
 
     } else if (this.props.perkType === "flaw") {
 
