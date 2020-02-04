@@ -8,11 +8,6 @@ class CharacterCreatePerks extends React.Component {
 
    this.state = {
     virtuePoints: 0,
-    // TODO: Get rid of virtue/flaw point state variables and
-    // calculate from currentVirtues & currentFlaws
-    // TODO: Fix transition from character name to virtues
-    currentVirtuePoints: 0,
-    currentFlawPoints: 0,
     flawPoints: 0,
     minorFlaws: 0,
     currentVirtues: {},
@@ -33,36 +28,21 @@ class CharacterCreatePerks extends React.Component {
  } 
 
   componentDidMount() {
-    // this.props.requestCharacter(this.props.match.params.characterId)
-    //   .then((response) => {
-    //     this.setState({
-    //       currentCharacter: {...response.character},
-    //       currentVirtues: response.character.virtues,
-    //       currentFlaws: response.character.flaws,
-    //       virtuePoints: (response.character.character_type === "mage" ? 10 : 
-    //         response.character.character_type === "companion" ? 10 : 3),
-    //       // TODO: Fix flawPoints
-    //       flawPoints: 10,
-    //       }
-    //     );
-    //   }
-    // ).then(this.establishPerks);
     let { currentCharacter } = this.props;
 
-    this.setState({
-      currentVirtues: currentCharacter.virtues,
-      currentFlaws: currentCharacter.flaws,
-    });
+    if (currentCharacter) {
+      this.setState({
+        currentVirtues: currentCharacter.virtues,
+        currentFlaws: currentCharacter.flaws,
+      });
+    }
 
     this.establishPerks();
 
     let allClassifications = this.props.classifications;
     this.setState({ show: allClassifications });
-    // this.showAll();
 
     this.props.requestAllAbilities();
-
-    // this.props.requestCharacter(this.props.match.params.characterId);
   }
 
   componentDidUpdate(prevProps) {
@@ -85,7 +65,6 @@ class CharacterCreatePerks extends React.Component {
   handlePerk(checkBox, perk, childData = null) {
     let storePerk, deletePerk;
     if (this.props.perkType === "virtue") {
-      // TODO: Not sure if these need to be called
       storePerk = this.props.storeVirtue;
       deletePerk = this.props.deleteVirtue;
     } else if (this.props.perkType === "flaw") {
@@ -110,97 +89,102 @@ class CharacterCreatePerks extends React.Component {
   validation(perk) {
     const { currentCharacter } = this.props;
     
-    // Character validations
-    if (currentCharacter.character_type === "grog") {
-      if (perk.major === true ||
-        perk.name === "The Gift"
-      ) {
+    // Virtue validations
+    if (this.props.perkType === "virtue") {
+
+      // Character type validations
+      if (currentCharacter.character_type === "grog") {
+        if (perk.major === true ||
+          perk.name === "The Gift"
+        ) {
+          return "disabled";
+        }
+  
+      } else if (currentCharacter.character_type === "npc") {
+        if (perk.name === "The Gift" 
+        ) {
+          return "disabled";
+        }
+  
+      } else if (currentCharacter.character_type === "companion") {
+        if (perk.name === "The Gift"
+        ) {
+          return "disabled";
+        }
+  
+      } else if (currentCharacter.character_type === "mage") {
+  
+        if (perk.name === "Wealthy") {
+          return "disabled";
+        }
+      }
+      
+      // These are required for Mages, and as thus, are enabled with no option to disable
+      if (perk.name === "The Gift" || perk.name == "Hermetic Magus") {
         return "disabled";
       }
 
-    } else if (currentCharacter.character_type === "npc") {
-      if (perk.name === "The Gift" 
-      ) {
-        return "disabled";
-      }
-
-    } else if (currentCharacter.character_type === "companion") {
-      if (perk.name === "The Gift"
-      ) {
-        return "disabled";
-      }
-
-    } else if (currentCharacter.character_type === "mage") {
-
-      if (perk.name === "Wealthy") {
-        return "disabled";
-      }
-    }
-
-    // These are required for Mages, and as thus, are enabled with no option to disable
-    if (perk.name === "The Gift" || perk.name == "Hermetic Magus") {
-      return "disabled";
-    }
-
-    // Conditional validations
-    if (this.props.currentVirtues.wealthy === true) {
-      if (virtue.name === "Custos" ||
-        virtue.name === "Covenfolk"
-      ) {
-        return "disabled";
-      }
-
-    } else if (this.props.currentFlaws.poor === true) {
-      if (virtue.name === "Wealthy" ||
-        virtue.name === "Custos" ||
-        virtue.name === "Covenfolk"
-      ) {
-        return "disabled";
-      }
-
-    } else if (this.props.currentVirtues.custos === true) {
-      if (virtue.name === "Wealthy") {
-        return "disabled";
-      }
-
-    } else if (this.props.currentVirtues.covenfolk === true) {
-      if (virtue.name === "Wealthy") {
-        return "disabled";
-      }
-
-    } else if (this.props.currentVirtues["Giant Blood"]=== true) {
-      if (virtue.name === "Large") {
-        return "disabled";
-      }
-
-    } else if (this.props.currentVirtues["Large"] === true) {
-      if (virtue.name === "Giant Blood") {
-        return "disabled";
-      }
-
-    } else if (this.props.currentFlaws.small_frame === true) {
-      if (virtue.name === "Large" ||
+      // Conditional validations
+      if (this.props.currentVirtues.wealthy === true) {
+        if (virtue.name === "Custos" ||
+          virtue.name === "Covenfolk"
+        ) {
+          return "disabled";
+        }
+  
+      } else if (this.props.currentFlaws.poor === true) {
+        if (virtue.name === "Wealthy" ||
+          virtue.name === "Custos" ||
+          virtue.name === "Covenfolk"
+        ) {
+          return "disabled";
+        }
+  
+      } else if (this.props.currentVirtues.custos === true) {
+        if (virtue.name === "Wealthy") {
+          return "disabled";
+        }
+  
+      } else if (this.props.currentVirtues.covenfolk === true) {
+        if (virtue.name === "Wealthy") {
+          return "disabled";
+        }
+  
+      } else if (this.props.currentVirtues["Giant Blood"]=== true) {
+        if (virtue.name === "Large") {
+          return "disabled";
+        }
+  
+      } else if (this.props.currentVirtues["Large"] === true) {
+        if (virtue.name === "Giant Blood") {
+          return "disabled";
+        }
+  
+      } else if (this.props.currentFlaws.small_frame === true) {
+        if (virtue.name === "Large" ||
+          virtue.name === "Giant Blood") {
+          return "disabled";
+        }
+  
+      } else if (this.props.currentFlaws.dwarf === true) {
+        if (virtue.name === "Large" ||
         virtue.name === "Giant Blood") {
-        return "disabled";
+          return "disabled";
+        }
       }
-
-    } else if (this.props.currentFlaws.dwarf === true) {
-      if (virtue.name === "Large" ||
-      virtue.name === "Giant Blood") {
-        return "disabled";
-      }
-    }
 
     // Necessary validations
     // If have "Diedne Magic" need to have "Dark Secret"
 
+    } else if (this.props.perkType === "flaw") {
+
+      // Character validations
+      // Conditional validations
+
+    }
   }
 
   establishPerks() {
-    // this.setPerkType();
-    // TODO: Don't remember why this is here, remove once everything is working?
-    // this.props.storeFlaws(this.state.currentCharacter.flaws)
-
     let character_type = this.props.currentCharacter.character_type;
     // TODO: Look up the actual flaw descriptions, currently it is
     // just a dupe of the (also incorrect) virtue texts
@@ -266,6 +250,7 @@ class CharacterCreatePerks extends React.Component {
     // console.log(testVirtues)
   }
 
+  // TODO: Templatize calculateVirtuePoints and calculateFlawPoints
   calculateVirtuePoints() {
     let majorVirtues = 0;
     let minorVirtues = 0;
@@ -290,6 +275,26 @@ class CharacterCreatePerks extends React.Component {
   }
 
   calculateFlawPoints() {
+    let majorFlaws = 0;
+    let minorFlaws = 0;
+    if (this.props.currentFlaws !== undefined ) {
+      let currentFlaws = this.props.currentFlaws;
+      Object.keys(currentFlaws).forEach( flawIndex => {
+        let flaw = currentFlaws[flawIndex];
+        if (flaw.free === false) {
+          if (flaw.major === true) {
+            majorFlaws++;
+          } else if (flaw.free === false) {
+            minorFlaws++;
+          }
+
+        }
+      });
+
+      let flawPoints = (majorFlaws * 3) + minorFlaws;
+      this.setState({ flawPoints: flawPoints });
+    }
+
 
   }
 
@@ -304,13 +309,12 @@ class CharacterCreatePerks extends React.Component {
     
     return (
       <div>
-        {/* <img src="" title={flawPointText}></img> */}
-        <p title={this.state.flawPointText}>
+        <p>
           Total Virtue Point Accumulation:{this.state.virtuePoints}
         </p>
-        <p title={this.state.flawPointText}>
-          Remaining Flaw Points Required:{" "}
-          {this.state.flawPoints - this.state.currentFlawPoints}
+        <p>
+          Remaining Flaw Points Required:
+          {this.state.virtuePoints - this.state.flawPoints}
         </p>
         {/* TODO: Flaw Points Max needs some math */}
         {/* TODO: Hover question marks that explain the point distribution */}

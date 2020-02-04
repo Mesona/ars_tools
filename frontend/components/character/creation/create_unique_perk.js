@@ -234,6 +234,7 @@ class UniquePerk extends React.Component {
         break;
       case "Puissant (Art)":
         this.setState({
+          maxDupes: 1,
           special_one_text: SELECT_AN_ART,
           special_two: null,
           numberOfSpecials: 1,
