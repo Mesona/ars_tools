@@ -14,6 +14,7 @@ class CharacterCreatePerks extends React.Component {
     currentFlaws: {},
     perkPointText: "",
     show: [],
+    perks: "",
    };
 
    this.update = this.update.bind(this);
@@ -25,24 +26,41 @@ class CharacterCreatePerks extends React.Component {
    this.test = this.test.bind(this);
    this.calculateVirtuePoints = this.calculateVirtuePoints.bind(this);
    this.calculateFlawPoints = this.calculateFlawPoints.bind(this);
+   this.disablePerks = this.disablePerks.bind(this);
+   this.disablePerkType = this.disablePerkType.bind(this);
+   this.initialPerkStateUpdate = this.initialPerkStateUpdate.bind(this);
  } 
 
   componentDidMount() {
     let { currentCharacter } = this.props;
 
-    if (currentCharacter) {
+    // The perks check is just to make sure this doesn't run multiple times
+    if (currentCharacter && this.state.perks === "") {
       this.setState({
         currentVirtues: currentCharacter.virtues,
         currentFlaws: currentCharacter.flaws,
       });
+
+      this.establishPerks();
+
+      let allClassifications = this.props.classifications;
+      this.setState({ show: allClassifications });
+
+      this.props.requestAllAbilities();
+
+      let local_perks = this.props.perks;
+      for (let i = 0; i < local_perks.length; i++) {
+        local_perks[i].disabled = false;
+        // Included array idx to speed up lookup
+        // TODO: is this actually necessary after the rewrites?
+        local_perks[i].idx = i;
+      }
+
+      this.setState({ perks: local_perks, });
+
+      this.initialPerkStateUpdate();
+
     }
-
-    this.establishPerks();
-
-    let allClassifications = this.props.classifications;
-    this.setState({ show: allClassifications });
-
-    this.props.requestAllAbilities();
   }
 
   componentDidUpdate(prevProps) {
@@ -53,6 +71,34 @@ class CharacterCreatePerks extends React.Component {
 
     if (prevProps.currentVirtues !== this.props.currentVirtues) {
       this.calculateVirtuePoints();
+    }
+  }
+
+  disablePerks() {
+    const { perks } = this.state;
+    let perk;
+
+    // For some reason, disablePerks is being called once upon initialization
+    // with no argument, so the typeof check prevents a break
+    if (arguments.length > 0 && typeof arguments[0] !== "string") {
+      for (let i = 0; i < arguments.length; i++) {
+        perk = perks.find( perk => perk.name === arguments[i]);
+
+        perk.disabled = true;
+        perks[perk.idx] = perk;
+      }
+
+      this.setState({ perks: perks });
+    }
+  }
+
+  disablePerkType(field, value, perk) {
+    const { perks } = this.state;
+
+    if (perk[field] === value) {
+      perk.disabled = true;
+      perks[perk.idx] = perk;
+      this.setState({ perks: perks });
     }
   }
 
@@ -77,6 +123,10 @@ class CharacterCreatePerks extends React.Component {
       perk.special_two = childData.special_two;
     }
 
+    console.log('Giant Blood' in this.props.currentVirtues)
+    console.log(this.props.currentVirtues)
+    console.log(this.props.perks.find(perk => perk.name === "Large"))
+
     // Checks if the virtue is already "checked," and if it
     // it is, the virtue will be deleted rather than added
     if (checkBox) {
@@ -86,103 +136,69 @@ class CharacterCreatePerks extends React.Component {
     }
   }
 
+  initialPerkStateUpdate() {
+    const { currentCharacter, currentPerks } = this.props;
+
+    // Character type validations, always disabled
+    if (currentCharacter.character_type === "grog") {
+      this.disablePerks("The Gift",
+                       "Temporal Influence");
+
+      this.disablePerkType("major", true, perk);
+
+    } else if (currentCharacter.character_type === "npc") {
+      this.disablePerks("TheGift");
+
+    } else if (currentCharacter.character_type === "companion") {
+      this.disablePerks("TheGift");
+
+    } else if (currentCharacter.character_type === "mage") {
+      this.disablePerks("The Gift",
+                       "Hermetic Magus",
+                       "Covenfolk",
+                       "Craftsman",
+                       "Wanderer",
+                       "Merchant",
+                       "Peasant");
+    }
+
+    // Perks disabled upon load based on already established Perks
+    for (let i = 0; i < currentPerks.length; i++) {
+      this.validation(currentPerks[i]);
+    }
+  }
+
   validation(perk) {
-    const { currentCharacter } = this.props;
-    
-    // Virtue validations
-    if (this.props.perkType === "virtue") {
+    // Conditional validations
+    if (perk.name === "Wealthy") {
+      this.disablePerks("Custos", "Covenfolk");
 
-      // Character type validations
-      if (currentCharacter.character_type === "grog") {
-        if (perk.major === true ||
-          perk.name === "The Gift"
-        ) {
-          return "disabled";
-        }
-  
-      } else if (currentCharacter.character_type === "npc") {
-        if (perk.name === "The Gift" 
-        ) {
-          return "disabled";
-        }
-  
-      } else if (currentCharacter.character_type === "companion") {
-        if (perk.name === "The Gift"
-        ) {
-          return "disabled";
-        }
-  
-      } else if (currentCharacter.character_type === "mage") {
-  
-        if (perk.name === "Wealthy") {
-          return "disabled";
-        }
-      }
-      
-      // These are required for Mages, and as thus, are enabled with no option to disable
-      if (perk.name === "The Gift" || perk.name == "Hermetic Magus") {
-        return "disabled";
-      }
+    } else if (perk.name === 'Poor') {
+      this.disablePerks("Wealthy", "Custos", "Covenfolk");
 
-      // Conditional validations
-      if (this.props.currentVirtues.wealthy === true) {
-        if (virtue.name === "Custos" ||
-          virtue.name === "Covenfolk"
-        ) {
-          return "disabled";
-        }
-  
-      } else if (this.props.currentFlaws.poor === true) {
-        if (virtue.name === "Wealthy" ||
-          virtue.name === "Custos" ||
-          virtue.name === "Covenfolk"
-        ) {
-          return "disabled";
-        }
-  
-      } else if (this.props.currentVirtues.custos === true) {
-        if (virtue.name === "Wealthy") {
-          return "disabled";
-        }
-  
-      } else if (this.props.currentVirtues.covenfolk === true) {
-        if (virtue.name === "Wealthy") {
-          return "disabled";
-        }
-  
-      } else if (this.props.currentVirtues["Giant Blood"]=== true) {
-        if (virtue.name === "Large") {
-          return "disabled";
-        }
-  
-      } else if (this.props.currentVirtues["Large"] === true) {
-        if (virtue.name === "Giant Blood") {
-          return "disabled";
-        }
-  
-      } else if (this.props.currentFlaws.small_frame === true) {
-        if (virtue.name === "Large" ||
-          virtue.name === "Giant Blood") {
-          return "disabled";
-        }
-  
-      } else if (this.props.currentFlaws.dwarf === true) {
-        if (virtue.name === "Large" ||
-        virtue.name === "Giant Blood") {
-          return "disabled";
-        }
-      }
+    } else if (perk.name === 'Custos') {
+      this.disablePerks("Wealthy");
+
+    } else if (perk.name === 'Covenfolk') {
+      this.disablePerks("Wealthy");
+
+    } else if (perk.name === 'Giant Blood') {
+      this.disablePerks("Large", "Dwarf", "Small Frame");
+
+    } else if (perk.name === 'Large') {
+      this.disablePerks("Giant Blood", "Dwarf", "Small Frame");
+
+    } else if (perk.name === "Small Frame") {
+      this.disablePerks("Large", "Giant Blood", "Dwarf");
+
+    } else if (perk.name === "Dwarf") {
+      this.disablePerks("Large", "Giant Blood", "Small Frame");
+
+    }
 
     // Necessary validations
     // If have "Diedne Magic" need to have "Dark Secret"
     // If you take inoffensive to animals hermetic, the general also gets applied (but doesn't add 2 virtues to virtue score)
-
-    } else if (this.props.perkType === "flaw") {
-
-      // Character validations
-      // Conditional validations
-
-    }
   }
 
   establishPerks() {
@@ -300,7 +316,7 @@ class CharacterCreatePerks extends React.Component {
   }
 
   render () {
-    if (this.props.perks === undefined) { 
+    if (this.props.currentCharacter === undefined) { 
       return (
         <div>
           Loading . . .
@@ -317,7 +333,6 @@ class CharacterCreatePerks extends React.Component {
           Remaining Flaw Points Required:
           {this.state.virtuePoints - this.state.flawPoints}
         </p>
-        {/* TODO: Flaw Points Max needs some math */}
         {/* TODO: Hover question marks that explain the point distribution */}
         <div>
           <span onClick={this.props.handleSubmit} className="fake-url">
@@ -359,6 +374,7 @@ class CharacterCreatePerks extends React.Component {
                           className={`create-perk-hover ${this.validation(
                             perk
                           )}`}
+                          className={`create-perk-hover`}
                           key={perk.id}
                         >
                           <UniquePerkContainer

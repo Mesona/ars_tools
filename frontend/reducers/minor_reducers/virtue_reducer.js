@@ -13,7 +13,7 @@ const VirtuesReducer = (state = {}, action) => {
       return action.virtues;
     case RECEIVE_VIRTUE:
       virtue = action.virtue;
-      return merge({}, state, { [action.virtue.id]: virtue });
+      return merge({}, state, { [action.virtue.name]: virtue });
     default:
       return state;
   }

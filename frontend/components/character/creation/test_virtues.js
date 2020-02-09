@@ -1,45 +1,40 @@
 import React from 'react';
-import UniquePerkContainer from './create_unique_perk_container';
 import CharacterCreatePerksContainer from './create_perks_container';
-import { Link } from 'react-router-dom';
 
 class CharacterCreateVirtues extends React.Component {
- constructor(props) {
-   super(props);
+  constructor(props) {
+    super(props);
 
-   this.state = {
-    currentCharacter: null,
-    virtues: null,
-    virtuePoints: 0,
-    currentVirtuePoints: 0,
-    flawPoints: 0,
-    minorVirtues: 0,
-    currentVirtues: {},
-    currentFlaws: {},
-    virtuePointText: "",
-    classifications: [],
-   };
+    this.state = {
+      currentCharacter: null,
+      virtues: null,
+      classifications: [],
+    };
 
-   this.handleSubmit = this.handleSubmit.bind(this);
-   this.setClassifications = this.setClassifications.bind(this)
- } 
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.setClassifications = this.setClassifications.bind(this)
+  } 
 
- componentDidMount() {
+  componentDidMount() {
   this.props.requestAllVirtues()
-    .then((response) => this.setState({
-      virtues: response.virtues,
-  }))
-  .then(this.setClassifications);
+    .then(response => this.setClassifications(response));
 
   this.props.requestAllAbilities();
 
   this.props.requestCharacter(this.props.match.params.characterId)
     .then( response => this.setState({ currentCharacter: response.character }));
- }
+  }
 
- setClassifications() {
+  setClassifications(response) {
+    let virtues_array = [];
+    for (let i = 0; i < response.virtues.length; i++) {
+      virtues_array.push(response.virtues[i]);
+    }
+    this.setState({ virtues: virtues_array });
+    // this.setState({ virtues: response.virtues });
+
     let classifications = [];
-    this.state.virtues.forEach((virtue) => {
+    response.virtues.forEach((virtue) => {
       if (!classifications.includes(virtue.virtue_type) && virtue.virtue_type !== "") {
         classifications.push(virtue.virtue_type);
       }      
