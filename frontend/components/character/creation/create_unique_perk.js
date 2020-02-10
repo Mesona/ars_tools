@@ -339,7 +339,8 @@ class UniquePerk extends React.Component {
   }
 
   enableSpecial() {
-    let baseValidation = this.props.validate(this.props.perk);
+    // let baseValidation = this.props.validate(this.props.perk);
+    let baseValidation = this.props.perk.disabled;
 
     // If the virtue is not disabled by some "hard set" lock
     if (baseValidation !== "disabled") {
@@ -432,27 +433,27 @@ class UniquePerk extends React.Component {
         this.props.handleClick(false, this.props.perk, this.state);
       } else {
 
-      const dupes = this.state.dupes;
+        const dupes = this.state.dupes;
 
-      Object.keys(dupes).forEach((dupe) => {
-        let stat = dupes[dupe];
-        switch (this.state.maxDupes) {
-          case 2:
-            looped = this.dupeCheck(stat, dupe, 2);
-            break;
-          case 1:
-            looped = this.dupeCheck(stat, dupe, 1);
-            break;
-          }
-        });
-  
-      if (looped === false) {
-        this.setState({disabled: false});
-        this.props.handleClick(checkBox, this.props.perk, this.state);
+        Object.keys(dupes).forEach((dupe) => {
+          let stat = dupes[dupe];
+          switch (this.state.maxDupes) {
+            case 2:
+              looped = this.dupeCheck(stat, dupe, 2);
+              break;
+            case 1:
+              looped = this.dupeCheck(stat, dupe, 1);
+              break;
+            }
+          });
+    
+        if (looped === false) {
+          this.setState({disabled: false});
+          this.props.handleClick(checkBox, this.props.perk, this.state);
+        }
       }
     }
   }
-}
 
   dupeCheck(stat, dupe, cap) {
     // Validates a possible exploit where a user could select an option
@@ -497,7 +498,7 @@ class UniquePerk extends React.Component {
             <input
               className="create-perk-checkbox"
               id={`create-perk-checkbox-${this.state.thisID}`}
-              disabled={this.props.validate(perk)}
+              disabled={this.props.perk.disabled}
               type="checkbox" onClick={(e) => this.checkLoopholes(e)}>
             </input>
   

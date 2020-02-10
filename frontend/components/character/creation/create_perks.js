@@ -3,39 +3,42 @@ import UniquePerkContainer from './create_unique_perk_container';
 import { Link } from 'react-router-dom';
 
 class CharacterCreatePerks extends React.Component {
- constructor(props) {
-   super(props);
+  constructor(props) {
+    super(props);
 
-   this.state = {
-    virtuePoints: 0,
-    flawPoints: 0,
-    minorFlaws: 0,
-    currentVirtues: {},
-    currentFlaws: {},
-    perkPointText: "",
-    show: [],
-    perks: "",
-   };
+    this.state = {
+      virtuePoints: 0,
+      flawPoints: 0,
+      minorFlaws: 0,
+      currentVirtues: {},
+      currentFlaws: {},
+      perkPointText: "",
+      show: [],
+      perks: [],
+    };
 
-   this.update = this.update.bind(this);
-   this.handlePerk = this.handlePerk.bind(this);
-   this.validation = this.validation.bind(this);
-   this.establishPerks = this.establishPerks.bind(this);
-   this.handleShow = this.handleShow.bind(this);
-   this.showAll = this.showAll.bind(this);
-   this.test = this.test.bind(this);
-   this.calculateVirtuePoints = this.calculateVirtuePoints.bind(this);
-   this.calculateFlawPoints = this.calculateFlawPoints.bind(this);
-   this.disablePerks = this.disablePerks.bind(this);
-   this.disablePerkType = this.disablePerkType.bind(this);
-   this.initialPerkStateUpdate = this.initialPerkStateUpdate.bind(this);
- } 
+    this.update = this.update.bind(this);
+    this.handlePerk = this.handlePerk.bind(this);
+    this.validation = this.validation.bind(this);
+    this.establishPerks = this.establishPerks.bind(this);
+    this.handleShow = this.handleShow.bind(this);
+    this.showAll = this.showAll.bind(this);
+    this.test = this.test.bind(this);
+    this.calculateVirtuePoints = this.calculateVirtuePoints.bind(this);
+    this.calculateFlawPoints = this.calculateFlawPoints.bind(this);
+    this.disablePerks = this.disablePerks.bind(this);
+    this.disablePerkType = this.disablePerkType.bind(this);
+    this.initialPerkStateUpdate = this.initialPerkStateUpdate.bind(this);
+    this.generatePerkFields = this.generatePerkFields.bind(this);
+  } 
 
   componentDidMount() {
     let { currentCharacter } = this.props;
 
+
     // The perks check is just to make sure this doesn't run multiple times
-    if (currentCharacter && this.state.perks === "") {
+    if (currentCharacter) {
+    // if (currentCharacter && this.state.perks === []) {
       this.setState({
         currentVirtues: currentCharacter.virtues,
         currentFlaws: currentCharacter.flaws,
@@ -48,18 +51,7 @@ class CharacterCreatePerks extends React.Component {
 
       this.props.requestAllAbilities();
 
-      let local_perks = this.props.perks;
-      for (let i = 0; i < local_perks.length; i++) {
-        local_perks[i].disabled = false;
-        // Included array idx to speed up lookup
-        // TODO: is this actually necessary after the rewrites?
-        local_perks[i].idx = i;
-      }
-
-      this.setState({ perks: local_perks, });
-
-      this.initialPerkStateUpdate();
-
+      this.generatePerkFields()
     }
   }
 
@@ -77,14 +69,29 @@ class CharacterCreatePerks extends React.Component {
   disablePerks() {
     const { perks } = this.state;
     let perk;
+    let undo = false;
+    let passedPerks = [...arguments];
 
-    // For some reason, disablePerks is being called once upon initialization
-    // with no argument, so the typeof check prevents a break
-    if (arguments.length > 0 && typeof arguments[0] !== "string") {
-      for (let i = 0; i < arguments.length; i++) {
-        perk = perks.find( perk => perk.name === arguments[i]);
+    if (passedPerks[0] === "undo") {
+      undo = "undo";
+      passedPerks.shift();
+    }
 
-        perk.disabled = true;
+    if (passedPerks !== undefined) {
+    // if (passedPerks !== undefined && typeof perks === "object") {
+      for (let i = 0; i < passedPerks.length; i++) {
+        perk = perks.find( perk => perk.name === passedPerks[i]);
+
+        if (undo === false) {
+          perk.disabled = "disabled";
+          perk.disabled_count++;
+        } else {
+          perk.disabled_count--;
+          if (perk.disabled_count === 0) {
+            perk.disabled = false;
+          }
+        }
+
         perks[perk.idx] = perk;
       }
 
@@ -96,7 +103,7 @@ class CharacterCreatePerks extends React.Component {
     const { perks } = this.state;
 
     if (perk[field] === value) {
-      perk.disabled = true;
+      perk.disabled = "disabled";
       perks[perk.idx] = perk;
       this.setState({ perks: perks });
     }
@@ -122,10 +129,6 @@ class CharacterCreatePerks extends React.Component {
       perk.special_one = childData.special_one;
       perk.special_two = childData.special_two;
     }
-
-    console.log('Giant Blood' in this.props.currentVirtues)
-    console.log(this.props.currentVirtues)
-    console.log(this.props.perks.find(perk => perk.name === "Large"))
 
     // Checks if the virtue is already "checked," and if it
     // it is, the virtue will be deleted rather than added
@@ -168,31 +171,47 @@ class CharacterCreatePerks extends React.Component {
     }
   }
 
-  validation(perk) {
+  generatePerkFields() {
+    let local_perks = this.props.perks;
+
+    for (let i = 0; i < local_perks.length; i++) {
+      local_perks[i].disabled = false;
+      // Included array idx to speed up lookup
+      // TODO: is this actually necessary after the rewrites?
+      local_perks[i].idx = i;
+      local_perks[i].disabled_count = 0;
+    }
+
+    this.setState({ perks: local_perks }, function () {
+      this.initialPerkStateUpdate();
+    });
+  }
+
+  validation(perk, undo=false) {
     // Conditional validations
     if (perk.name === "Wealthy") {
-      this.disablePerks("Custos", "Covenfolk");
+      this.disablePerks(undo, "Custos", "Covenfolk");
 
     } else if (perk.name === 'Poor') {
-      this.disablePerks("Wealthy", "Custos", "Covenfolk");
+      this.disablePerks(undo, "Wealthy", "Custos", "Covenfolk");
 
     } else if (perk.name === 'Custos') {
-      this.disablePerks("Wealthy");
+      this.disablePerks(undo, "Wealthy");
 
     } else if (perk.name === 'Covenfolk') {
-      this.disablePerks("Wealthy");
+      this.disablePerks(undo, "Wealthy");
 
     } else if (perk.name === 'Giant Blood') {
-      this.disablePerks("Large", "Dwarf", "Small Frame");
+      this.disablePerks(undo, "Large", "Dwarf", "Small Frame");
 
     } else if (perk.name === 'Large') {
-      this.disablePerks("Giant Blood", "Dwarf", "Small Frame");
+      this.disablePerks(undo, "Giant Blood", "Dwarf", "Small Frame");
 
     } else if (perk.name === "Small Frame") {
-      this.disablePerks("Large", "Giant Blood", "Dwarf");
+      this.disablePerks(undo, "Large", "Giant Blood", "Dwarf");
 
     } else if (perk.name === "Dwarf") {
-      this.disablePerks("Large", "Giant Blood", "Small Frame");
+      this.disablePerks(undo, "Large", "Giant Blood", "Small Frame");
 
     }
 
@@ -261,10 +280,7 @@ class CharacterCreatePerks extends React.Component {
   test(type, classification) {
     // let testVirtues = this.props.perks.filter(e => e.virtueType === classification)
     this.props.perks.filter( perk => (perk.virtue_type === undefined ? perk.flaw_type === classification : perk.virtue_type === classification) && perk.major === true ).map( perk => {
-      console.log(perk)
-      // console.log("WWWWWWWWW")
     })
-    // console.log(testVirtues)
   }
 
   // TODO: Templatize calculateVirtuePoints and calculateFlawPoints
@@ -371,10 +387,10 @@ class CharacterCreatePerks extends React.Component {
                       .map(perk => (
                         <div
                           id={perk.id}
-                          className={`create-perk-hover ${this.validation(
-                            perk
-                          )}`}
-                          className={`create-perk-hover`}
+                          className={`create-perk-hover ${perk.disabled}`}
+                          // className={`create-perk-hover ${this.validation(
+                          //   perk
+                          // )}`}
                           key={perk.id}
                         >
                           <UniquePerkContainer
@@ -401,9 +417,10 @@ class CharacterCreatePerks extends React.Component {
                       .map(perk => (
                         <div
                           id={perk.id}
-                          className={`create-perk-hover ${this.validation(
-                            perk
-                          )}`}
+                          className={`create-perk-hover ${perk.disabled}`}
+                          // className={`create-perk-hover ${this.validation(
+                          //   perk
+                          // )}`}
                           key={perk.id}
                         >
                           <UniquePerkContainer
@@ -429,9 +446,10 @@ class CharacterCreatePerks extends React.Component {
                       .map(perk => (
                         <div
                           id={perk.id}
-                          className={`create-perk-hover ${this.validation(
-                            perk
-                          )}`}
+                          className={`create-perk-hover ${perk.disabled}`}
+                          // className={`create-perk-hover ${this.validation(
+                          //   perk
+                          // )}`}
                           key={perk.id}
                         >
                           <UniquePerkContainer

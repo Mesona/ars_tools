@@ -16,13 +16,13 @@ class CharacterCreateVirtues extends React.Component {
   } 
 
   componentDidMount() {
-  this.props.requestAllVirtues()
-    .then(response => this.setClassifications(response));
+    this.props.requestAllVirtues()
+      .then(response => this.setClassifications(response));
 
-  this.props.requestAllAbilities();
+    this.props.requestAllAbilities();
 
-  this.props.requestCharacter(this.props.match.params.characterId)
-    .then( response => this.setState({ currentCharacter: response.character }));
+    this.props.requestCharacter(this.props.match.params.characterId)
+      .then( response => this.setState({ currentCharacter: response.character }));
   }
 
   setClassifications(response) {
