@@ -33,11 +33,47 @@ class CharacterCreatePerks extends React.Component {
   } 
 
   componentDidMount() {
-    let { currentCharacter } = this.props;
+    // TODO: Would rather have the initial setup here instead of DidUpdate, as a point
+    // of minor optimization, but sometimes currentCharacter would fail to load
+    // and I don't feel like diagnosing that at the moment
+
+    // let { currentCharacter } = this.props;
 
     // The perks check is just to make sure this doesn't run multiple times
-    if (currentCharacter) {
+    // if (currentCharacter) {
 
+    //   this.setState({
+    //     currentVirtues: currentCharacter.virtues,
+    //     currentFlaws: currentCharacter.flaws,
+    //   }, function () {
+    //     this.generatePerkFields();
+    //   });
+
+    //   this.establishPerks();
+
+    //   let allClassifications = this.props.classifications;
+    //   this.setState({ show: allClassifications });
+
+    //   this.props.requestAllAbilities();
+    // }
+  }
+
+  componentDidUpdate(prevProps) {
+    // Necessary to automatically expand every "Perk" field
+    if (prevProps.classifications !== this.props.classifications) {
+      this.showAll();
+    }
+
+    if (prevProps.currentVirtues !== this.props.currentVirtues) {
+      this.calculateVirtuePoints();
+    }
+
+    if (prevProps.currentFlaws !== this.props.currentFlaws) {
+      this.calculateFlawPoints();
+    }
+
+    if (prevProps.currentCharacter === undefined && this.props.currentCharacter !== undefined) {
+      let { currentCharacter } = this.props;
       this.setState({
         currentVirtues: currentCharacter.virtues,
         currentFlaws: currentCharacter.flaws,
@@ -51,17 +87,7 @@ class CharacterCreatePerks extends React.Component {
       this.setState({ show: allClassifications });
 
       this.props.requestAllAbilities();
-    }
-  }
 
-  componentDidUpdate(prevProps) {
-    // Necessary to automatically expand every "Perk" field
-    if (prevProps.classifications !== this.props.classifications) {
-      this.showAll();
-    }
-
-    if (prevProps.currentVirtues !== this.props.currentVirtues) {
-      this.calculateVirtuePoints();
     }
   }
 
@@ -74,7 +100,7 @@ class CharacterCreatePerks extends React.Component {
 
     for (let i = 0; i < passedPerks.length; i++) {
       try {
-        perk = perks.find( perk => perk.name === passedPerks[i]);
+        perk = perks.find( thisPerk => thisPerk.name === passedPerks[i]);
   
         if (undo === false) {
           perk.disabled = "disabled";
@@ -145,26 +171,28 @@ class CharacterCreatePerks extends React.Component {
 
     // Character type validations, always disabled
     if (currentCharacter.character_type === "grog") {
-      this.disablePerks("The Gift",
-                       "Temporal Influence");
+      this.disablePerks(false,
+                        "The Gift",
+                        "Temporal Influence");
 
       this.disablePerkType("major", true, perk);
 
     } else if (currentCharacter.character_type === "npc") {
-      this.disablePerks("TheGift");
+      this.disablePerks(false, "TheGift");
 
     } else if (currentCharacter.character_type === "companion") {
-      this.disablePerks("TheGift");
+      this.disablePerks(false, "TheGift");
 
     } else if (currentCharacter.character_type === "mage") {
       console.log('and here')
-      this.disablePerks("The Gift",
-                       "Hermetic Magus",
-                       "Covenfolk",
-                       "Craftsman",
-                       "Wanderer",
-                       "Merchant",
-                       "Peasant");
+      this.disablePerks(false,
+                        "The Gift",
+                        "Hermetic Magus",
+                         "Covenfolk",
+                        "Craftsman",
+                        "Wanderer",
+                        "Merchant",
+                        "Peasant");
     }
 
     // Perks disabled upon load based on already established Perks
