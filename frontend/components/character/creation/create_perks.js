@@ -35,13 +35,14 @@ class CharacterCreatePerks extends React.Component {
   componentDidMount() {
     let { currentCharacter } = this.props;
 
-
     // The perks check is just to make sure this doesn't run multiple times
     if (currentCharacter) {
-    // if (currentCharacter && this.state.perks === []) {
+
       this.setState({
         currentVirtues: currentCharacter.virtues,
         currentFlaws: currentCharacter.flaws,
+      }, function () {
+        this.generatePerkFields();
       });
 
       this.establishPerks();
@@ -50,8 +51,6 @@ class CharacterCreatePerks extends React.Component {
       this.setState({ show: allClassifications });
 
       this.props.requestAllAbilities();
-
-      this.generatePerkFields()
     }
   }
 
@@ -68,20 +67,15 @@ class CharacterCreatePerks extends React.Component {
 
   disablePerks() {
     const { perks } = this.state;
+
     let perk;
-    let undo = false;
     let passedPerks = [...arguments];
+    let undo = passedPerks.shift();
 
-    if (passedPerks[0] === "undo") {
-      undo = "undo";
-      passedPerks.shift();
-    }
-
-    if (passedPerks !== undefined) {
-    // if (passedPerks !== undefined && typeof perks === "object") {
-      for (let i = 0; i < passedPerks.length; i++) {
+    for (let i = 0; i < passedPerks.length; i++) {
+      try {
         perk = perks.find( perk => perk.name === passedPerks[i]);
-
+  
         if (undo === false) {
           perk.disabled = "disabled";
           perk.disabled_count++;
@@ -91,12 +85,16 @@ class CharacterCreatePerks extends React.Component {
             perk.disabled = false;
           }
         }
-
+  
         perks[perk.idx] = perk;
       }
-
-      this.setState({ perks: perks });
+      catch(TypeError) {
+        // We don't want this to error out when it tried to load flaws on the
+        // virtue page, or virtues on the flaws page
+      }
     }
+
+    this.setState({ perks: perks });
   }
 
   disablePerkType(field, value, perk) {
@@ -134,13 +132,16 @@ class CharacterCreatePerks extends React.Component {
     // it is, the virtue will be deleted rather than added
     if (checkBox) {
       storePerk(perk);
+      this.validation(perk)
     } else {
       deletePerk(perk);
+      this.validation(perk, true)
     }
   }
 
   initialPerkStateUpdate() {
     const { currentCharacter, currentPerks } = this.props;
+    console.log('here')
 
     // Character type validations, always disabled
     if (currentCharacter.character_type === "grog") {
@@ -156,6 +157,7 @@ class CharacterCreatePerks extends React.Component {
       this.disablePerks("TheGift");
 
     } else if (currentCharacter.character_type === "mage") {
+      console.log('and here')
       this.disablePerks("The Gift",
                        "Hermetic Magus",
                        "Covenfolk",
@@ -177,9 +179,13 @@ class CharacterCreatePerks extends React.Component {
     for (let i = 0; i < local_perks.length; i++) {
       local_perks[i].disabled = false;
       // Included array idx to speed up lookup
-      // TODO: is this actually necessary after the rewrites?
       local_perks[i].idx = i;
       local_perks[i].disabled_count = 0;
+      if (this.props.perkType === "virtue") {
+        local_perks[i].perk_type = local_perks[i].virtue_type;
+      } else {
+        local_perks[i].perk_type = local_perks[i].flaw_type;
+      }
     }
 
     this.setState({ perks: local_perks }, function () {
@@ -332,7 +338,7 @@ class CharacterCreatePerks extends React.Component {
   }
 
   render () {
-    if (this.props.currentCharacter === undefined) { 
+    if (this.props.currentCharacter === undefined || this.props.perks === undefined) { 
       return (
         <div>
           Loading . . .
@@ -340,134 +346,130 @@ class CharacterCreatePerks extends React.Component {
       )}
     else { 
     
-    return (
-      <div>
-        <p>
-          Total Virtue Point Accumulation:{this.state.virtuePoints}
-        </p>
-        <p>
-          Remaining Flaw Points Required:
-          {this.state.virtuePoints - this.state.flawPoints}
-        </p>
-        {/* TODO: Hover question marks that explain the point distribution */}
+      return (
         <div>
-          <span onClick={this.props.handleSubmit} className="fake-url">
-            Next
-          </span>
-        </div>
-
-        <Link to={`/character/new`}>
-          <span className="fake-url">Back</span>
-        </Link>
-
-        <br></br>
-        <hr></hr>
-        {this.props.classifications.map(classification => (
-          <React.Fragment key={classification}>
-            <p>{classification}</p>
-            <span onClick={() => this.handleShow(classification)}>
-              Show/Hide
+          <p>
+            Total Virtue Point Accumulation:{this.state.virtuePoints}
+          </p>
+          <p>
+            Remaining Flaw Points Required:
+            {this.state.virtuePoints - this.state.flawPoints}
+          </p>
+          {/* TODO: Hover question marks that explain the point distribution */}
+          <div>
+            <span onClick={this.props.handleSubmit} className="fake-url">
+              Next
             </span>
-            <hr></hr>
-            <div className="create-perks-parent">
-              {this.state.show.includes(classification) ? (
-                <>
-                  <div className="major">
-                    <p onClick={() => this.test("major", classification)}>
-                      Major {this.props.perkType}
-                    </p>
-                    {this.props.perks
-                      .filter(
-                        perks =>
-                          (perks.virtue_type === undefined
-                            ? perks.flaw_type === classification
-                            : perks.virtue_type === classification) &&
-                          perks.major === true
-                      )
-                      .map(perk => (
-                        <div
-                          id={perk.id}
-                          className={`create-perk-hover ${perk.disabled}`}
-                          // className={`create-perk-hover ${this.validation(
-                          //   perk
-                          // )}`}
-                          key={perk.id}
-                        >
-                          <UniquePerkContainer
-                            perk={perk}
-                            validate={this.validation}
-                            handleClick={this.handlePerk}
-                          />
-                          <hr></hr>
-                        </div>
-                      ))}
-                  </div>
+          </div>
 
-                  <div className="minor">
-                    <p>Minor {this.props.perkType}</p>
-                    {this.props.perks
-                      .filter(
-                        perks =>
-                          (perks.virtue_type === undefined
-                            ? perks.flaw_type === classification
-                            : perks.virtue_type === classification) &&
-                          perks.major === false &&
-                          perks.free === false
-                      )
-                      .map(perk => (
-                        <div
-                          id={perk.id}
-                          className={`create-perk-hover ${perk.disabled}`}
-                          // className={`create-perk-hover ${this.validation(
-                          //   perk
-                          // )}`}
-                          key={perk.id}
-                        >
-                          <UniquePerkContainer
-                            perk={perk}
-                            validate={this.validation}
-                            handleClick={this.handlePerk}
-                          />
-                          <hr></hr>
-                        </div>
-                      ))}
-                  </div>
+          <Link to={`/character/new`}>
+            <span className="fake-url">Back</span>
+          </Link>
 
-                  <div className="free">
-                    <p>Free {this.props.perkType}</p>
-                    {this.props.perks
-                      .filter(
-                        perks =>
-                          (perks.virtue_type === undefined
-                            ? perks.flaw_type === classification
-                            : perks.virtue_type === classification) &&
-                          perks.free === true
-                      )
-                      .map(perk => (
-                        <div
-                          id={perk.id}
-                          className={`create-perk-hover ${perk.disabled}`}
-                          // className={`create-perk-hover ${this.validation(
-                          //   perk
-                          // )}`}
-                          key={perk.id}
-                        >
-                          <UniquePerkContainer
-                            perk={perk}
-                            validate={this.validation}
-                            handleClick={this.handlePerk}
-                          />
-                          <hr></hr>
-                        </div>
-                      ))}
-                  </div>
-                </>
-              ) : null}
-            </div>
-          </React.Fragment>
-        ))}
-      </div>
-    );
+          <br></br>
+          <hr></hr>
+          {this.props.classifications.map(classification => (
+            <React.Fragment key={classification}>
+              <p>{classification}</p>
+              <span onClick={() => this.handleShow(classification)}>
+                Show/Hide
+              </span>
+              <hr></hr>
+              <div className="create-perks-parent">
+                {this.state.show.includes(classification) ? (
+                  <>
+                    <div className="major">
+                      <p onClick={() => this.test("major", classification)}>
+                        Major {this.props.perkType}
+                      </p>
+                      {this.state.perks
+                        .filter(
+                          // perks =>
+                          //   (perks.virtue_type === undefined
+                          //     ? perks.flaw_type === classification
+                          //     : perks.virtue_type === classification) &&
+                          //   perks.major === true
+                          // )
+                          perks => (
+                            perks.perk_type === classification &&
+                            perks.major === true
+                          )
+                        )
+                        .map(perk => (
+                          <div
+                            id={perk.id}
+                            className={`create-perk-hover ${perk.disabled}`}
+                            key={perk.id}
+                          >
+                            <UniquePerkContainer
+                              perk={perk}
+                              validate={this.validation}
+                              handleClick={this.handlePerk}
+                            />
+                            <hr></hr>
+                          </div>
+                        ))}
+                    </div>
+
+                    <div className="minor">
+                      <p>Minor {this.props.perkType}</p>
+                      {this.props.perks
+                        .filter(
+                          perks =>
+                            (perks.virtue_type === undefined
+                              ? perks.flaw_type === classification
+                              : perks.virtue_type === classification) &&
+                            perks.major === false &&
+                            perks.free === false
+                        )
+                        .map(perk => (
+                          <div
+                            id={perk.id}
+                            className={`create-perk-hover ${perk.disabled}`}
+                            key={perk.id}
+                          >
+                            <UniquePerkContainer
+                              perk={perk}
+                              validate={this.validation}
+                              handleClick={this.handlePerk}
+                            />
+                            <hr></hr>
+                          </div>
+                        ))}
+                    </div>
+
+                    <div className="free">
+                      <p>Free {this.props.perkType}</p>
+                      {this.props.perks
+                        .filter(
+                          perks =>
+                            (perks.virtue_type === undefined
+                              ? perks.flaw_type === classification
+                              : perks.virtue_type === classification) &&
+                            perks.free === true
+                        )
+                        .map(perk => (
+                          <div
+                            id={perk.id}
+                            className={`create-perk-hover ${perk.disabled}`}
+                            key={perk.id}
+                          >
+                            <UniquePerkContainer
+                              perk={perk}
+                              validate={this.validation}
+                              handleClick={this.handlePerk}
+                            />
+                            <hr></hr>
+                          </div>
+                        ))}
+                    </div>
+                  </>
+                ) : null}
+              </div>
+            </React.Fragment>
+          ))}
+        </div>
+      );
     }
   }
 };

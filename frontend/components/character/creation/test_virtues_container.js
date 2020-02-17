@@ -8,8 +8,6 @@ import { requestAllAbilities } from '../../../actions/ability_actions';
 import CharacterCreateVirtues from './test_virtues';
 
 const mapStateToProps = (state, ownProps) => ({
-  currentVirtues: state.entities.createVirtuesAndFlaws,
-  currentFlaws: state.entities.createVirtuesAndFlaws,
 });
 
 const mapDispatchToProps = dispatch => ({
