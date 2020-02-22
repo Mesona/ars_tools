@@ -70,7 +70,7 @@ class CharacterCreatePerks extends React.Component {
                         "The Gift",
                         "Temporal Influence");
 
-      this.disablePerkType("major", true, perk);
+      this.disablePerkType("major", true);
 
     } else if (currentCharacter.character_type === "npc") {
       this.disablePerks(false, "TheGift");
@@ -127,15 +127,17 @@ class CharacterCreatePerks extends React.Component {
     this.setState({ perks: perks });
   }
 
-  disablePerkType(field, value, perk) {
-    const { perks } = this.state;
+  disablePerkType(field, value) {
+    let { perks } = this.state;
 
-    if (perk[field] === value) {
-      perk.disabled = "disabled";
-      perk.disabled_count++;
-      perks[perk.idx] = perk;
-      this.setState({ perks: perks });
-    }
+    perks.forEach((perk) => {
+      if (perk[field] === value) {
+        perk.disabled = "disabled";
+        perk.disabled_count++;
+        perks[perk.idx] = perk;
+      }
+    })
+    this.setState({ perks: perks });
   }
 
   establishPerkHelperText() {
