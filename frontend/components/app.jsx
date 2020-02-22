@@ -27,6 +27,7 @@ const App = () => {
             exact path="/characters/:characterId"
             component={CharacterShowContainer}
           />
+          {/* CURRENT TODO: Simplify routing by putting all "create" under one subrouter */}
 
           <Route
             path="/characters/new/virtues/:characterId"
@@ -40,7 +41,8 @@ const App = () => {
 
           <Route
             path="/characters/new/flaws/:characterId"
-            render={(props) => <CharacterCreateContainer {...props} page="flaws" />}
+            render={(props) => <CharacterCreateVirtuesContainer />}
+            // render={(props) => <CharacterCreateContainer {...props} page="flaws" />}
           />
 
           <Route

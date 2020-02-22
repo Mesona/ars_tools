@@ -128,6 +128,7 @@ class CharacterCreatePerks extends React.Component {
 
     if (perk[field] === value) {
       perk.disabled = "disabled";
+      perk.disabled_count++;
       perks[perk.idx] = perk;
       this.setState({ perks: perks });
     }
@@ -167,7 +168,6 @@ class CharacterCreatePerks extends React.Component {
 
   initialPerkStateUpdate() {
     const { currentCharacter, currentPerks } = this.props;
-    console.log('here')
 
     // Character type validations, always disabled
     if (currentCharacter.character_type === "grog") {
@@ -246,6 +246,11 @@ class CharacterCreatePerks extends React.Component {
 
     } else if (perk.name === "Dwarf") {
       this.disablePerks(undo, "Large", "Giant Blood", "Small Frame");
+
+    // TODO: Make sure players cannot accidentally take both "Inoffensive
+    // to Animals" virtues. 
+    // } else if (perk.name === "Inoffensive to Animals") {
+    //   this.disablePerks(undo, "Inoffensive to Animals");
 
     }
 
@@ -390,9 +395,15 @@ class CharacterCreatePerks extends React.Component {
             </span>
           </div>
 
-          <Link to={`/character/new`}>
-            <span className="fake-url">Back</span>
-          </Link>
+          { this.props.perkType === "virtue" ? 
+            <Link to={`/character/new`}>
+              <span className="fake-url">Back</span>
+            </Link>
+          :
+            <Link to={`/characters/new/virtues/${this.props.currentCharacter.id}`}>
+              <span className="fake-url">Back</span>
+            </Link>
+          }
 
           <br></br>
           <hr></hr>

@@ -12,6 +12,7 @@ class CharacterCreateVirtues extends React.Component {
       virtueClassifications: [],
       flawClassifications: [],
       combinedPerks: [],
+      perkType: null,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,16 +22,27 @@ class CharacterCreateVirtues extends React.Component {
   } 
 
   componentDidMount() {
-    this.props.requestAllVirtues()
-      .then(response => this.setClassifications(response, "virtues"));
+    if (this.props.history.location.pathname.includes('virtues')) {
+      this.setState({perkType: "virtues"});
+      this.props.requestAllVirtues()
+        .then(response => this.setClassifications(response, "virtues"));
 
-    this.props.requestAllFlaws()
-      .then(response => this.setClassifications(response, "flaws"));
+    } else if (this.props.history.location.pathname.includes('flaws')) {
+      this.setState({perkType: "flaws"});
+      this.props.requestAllFlaws()
+        .then(response => this.setClassifications(response, "flaws"));
+
+    }
 
     this.props.requestAllAbilities();
 
     this.props.requestCharacter(this.props.match.params.characterId)
       .then( response => this.setState({ currentCharacter: response.character }));
+
+    console.log("----------------------")
+    console.log(this.state.perks)
+    console.log("----------------------")
+
   }
 
   setClassifications(response, perkType) {
@@ -75,7 +87,13 @@ class CharacterCreateVirtues extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.history.push(`/characters/new/flaws/${currentCharacter.id}`);
+    const {currentCharacter} = this.state;
+    if (this.state.perkType === "virtues") {
+      this.props.history.push(`/characters/new/flaws/${currentCharacter.id}`);
+    } else if (this.state.perkType === "flaws") {
+      this.props.history.push(`/characters/new/stats/${currentCharacter.id}`);
+
+    }
   // const currentCharacter = Object.assign({}, this.state);
   // this.props.createCharacter(currentCharacter)
     // .then((response) => this.props.history.push(`/character/new/virtues/${response.character.id}`));
@@ -102,6 +120,7 @@ class CharacterCreateVirtues extends React.Component {
     else { 
       return (
         <>
+          {/* { this.state.perkType === "virtues" ? */}
           { this.state.virtues !== null ?
             <CharacterCreatePerksContainer
               currentCharacter={this.state.currentCharacter}
@@ -112,6 +131,7 @@ class CharacterCreateVirtues extends React.Component {
               classifications={this.state.virtueClassifications}
             />
           :
+            // this.state.perkType === "flaws" ?
             this.state.flaws !== null ?
               <CharacterCreatePerksContainer
                 perkType={"flaw"}
