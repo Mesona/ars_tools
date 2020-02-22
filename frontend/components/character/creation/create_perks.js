@@ -10,84 +10,88 @@ class CharacterCreatePerks extends React.Component {
       virtuePoints: 0,
       flawPoints: 0,
       minorFlaws: 0,
-      currentVirtues: {},
-      currentFlaws: {},
+      currentVirtues: this.props.currentCharacter.virtues || {},
+      currentFlaws: this.props.currentCharacter.flaws || {},
       perkPointText: "",
-      show: [],
+      show: this.props.classifications,
       perks: [],
+      currentCharacter: this.props.currentCharacter,
     };
+
+    this.generatePerkFields = this.generatePerkFields.bind(this);
+    this.initialPerkStateUpdate = this.initialPerkStateUpdate.bind(this);
+    this.disablePerks = this.disablePerks.bind(this);
+    this.disablePerkType = this.disablePerkType.bind(this);
+    this.establishPerkHelperText = this.establishPerkHelperText.bind(this);
 
     this.update = this.update.bind(this);
     this.handlePerk = this.handlePerk.bind(this);
     this.validation = this.validation.bind(this);
-    this.establishPerks = this.establishPerks.bind(this);
     this.handleShow = this.handleShow.bind(this);
-    this.showAll = this.showAll.bind(this);
     this.test = this.test.bind(this);
-    this.calculateVirtuePoints = this.calculateVirtuePoints.bind(this);
-    this.calculateFlawPoints = this.calculateFlawPoints.bind(this);
-    this.disablePerks = this.disablePerks.bind(this);
-    this.disablePerkType = this.disablePerkType.bind(this);
-    this.initialPerkStateUpdate = this.initialPerkStateUpdate.bind(this);
-    this.generatePerkFields = this.generatePerkFields.bind(this);
+    this.calculatePerkPoints = this.calculatePerkPoints.bind(this);
   } 
 
   componentDidMount() {
-    // TODO: Would rather have the initial setup here instead of DidUpdate, as a point
-    // of minor optimization, but sometimes currentCharacter would fail to load
-    // and I don't feel like diagnosing that at the moment
+    this.generatePerkFields();
 
-    // let { currentCharacter } = this.props;
+    this.establishPerkHelperText();
 
-    // The perks check is just to make sure this doesn't run multiple times
-    // if (currentCharacter) {
-
-    //   this.setState({
-    //     currentVirtues: currentCharacter.virtues,
-    //     currentFlaws: currentCharacter.flaws,
-    //   }, function () {
-    //     this.generatePerkFields();
-    //   });
-
-    //   this.establishPerks();
-
-    //   let allClassifications = this.props.classifications;
-    //   this.setState({ show: allClassifications });
-
-    //   this.props.requestAllAbilities();
-    // }
+    this.props.requestAllAbilities();
   }
 
-  componentDidUpdate(prevProps) {
-    // Necessary to automatically expand every "Perk" field
-    if (prevProps.classifications !== this.props.classifications) {
-      this.showAll();
+  generatePerkFields() {
+    let local_perks = this.props.perks;
+
+    for (let i = 0; i < local_perks.length; i++) {
+      local_perks[i].disabled = false;
+      // Included array idx to speed up lookup
+      local_perks[i].idx = i;
+      local_perks[i].disabled_count = 0;
+      if (this.props.perkType === "virtue") {
+        local_perks[i].perk_type = local_perks[i].virtue_type;
+      } else {
+        local_perks[i].perk_type = local_perks[i].flaw_type;
+      }
     }
 
-    if (prevProps.currentVirtues !== this.props.currentVirtues) {
-      this.calculateVirtuePoints();
+    this.setState({ perks: local_perks }, function () {
+      this.initialPerkStateUpdate();
+    });
+  }
+
+  initialPerkStateUpdate() {
+    const { currentPerks } = this.props;
+    const { currentCharacter } = this.state; 
+
+    // Character type validations, always disabled
+    if (currentCharacter.character_type === "grog") {
+      this.disablePerks(false,
+                        "The Gift",
+                        "Temporal Influence");
+
+      this.disablePerkType("major", true, perk);
+
+    } else if (currentCharacter.character_type === "npc") {
+      this.disablePerks(false, "TheGift");
+
+    } else if (currentCharacter.character_type === "companion") {
+      this.disablePerks(false, "TheGift");
+
+    } else if (currentCharacter.character_type === "mage") {
+      this.disablePerks(false,
+                        "The Gift",
+                        "Hermetic Magus",
+                         "Covenfolk",
+                        "Craftsman",
+                        "Wanderer",
+                        "Merchant",
+                        "Peasant");
     }
 
-    if (prevProps.currentFlaws !== this.props.currentFlaws) {
-      this.calculateFlawPoints();
-    }
-
-    if (prevProps.currentCharacter === undefined && this.props.currentCharacter !== undefined) {
-      let { currentCharacter } = this.props;
-      this.setState({
-        currentVirtues: currentCharacter.virtues,
-        currentFlaws: currentCharacter.flaws,
-      }, function () {
-        this.generatePerkFields();
-      });
-
-      this.establishPerks();
-
-      let allClassifications = this.props.classifications;
-      this.setState({ show: allClassifications });
-
-      this.props.requestAllAbilities();
-
+    // Perks disabled upon load based on already established Perks
+    for (let i = 0; i < currentPerks.length; i++) {
+      this.validation(currentPerks[i]);
     }
   }
 
@@ -134,6 +138,46 @@ class CharacterCreatePerks extends React.Component {
     }
   }
 
+  establishPerkHelperText() {
+    let character_type = this.state.currentCharacter.character_type;
+    // TODO: Look up the actual flaw descriptions, currently it is
+    // just a dupe of the (also incorrect) virtue texts
+    let universalPerkText;
+    let magePerkText;
+    let grogPerkText;
+    let companionPerkText;
+    let otherPerkText;
+
+    if (this.props.perkType === "virtue") {
+      // TODO: Actual text, currently it's mostly placeholder
+      universalPerkText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
+      magePerkText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
+      grogPerkText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
+      companionPerkText = "Companions are things that can be created";
+      otherPerkText = "There are several that are free and can be taken with no penalty."
+    } else if (this.props.perkType === "flaw") {
+      universalPerkText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
+      magePerkText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
+      grogPerkText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
+      companionPerkText = "Companions are things that can be created";
+      otherPerkText = "There are several that are free and can be taken with no penalty."
+    }
+    switch (character_type) {
+      case "mage":
+        this.setState({perkPointText: universalPerkText + magePerkText});
+        break;
+      case "grog":
+        this.setState({perkPointText: universalPerkText + grogPerkText});
+        break;
+      case "companion":
+        this.setState({perkPointText: universalPerkText + companionPerkText});
+        break;
+      case "other":
+        this.setState({perkPointText: universalPerkText + otherPerkText});
+        break;
+    }
+  }
+
   update(field) {
     return (e) => {
       this.setState({[field]: e.currentTarget.value});
@@ -166,60 +210,6 @@ class CharacterCreatePerks extends React.Component {
     }
   }
 
-  initialPerkStateUpdate() {
-    const { currentCharacter, currentPerks } = this.props;
-
-    // Character type validations, always disabled
-    if (currentCharacter.character_type === "grog") {
-      this.disablePerks(false,
-                        "The Gift",
-                        "Temporal Influence");
-
-      this.disablePerkType("major", true, perk);
-
-    } else if (currentCharacter.character_type === "npc") {
-      this.disablePerks(false, "TheGift");
-
-    } else if (currentCharacter.character_type === "companion") {
-      this.disablePerks(false, "TheGift");
-
-    } else if (currentCharacter.character_type === "mage") {
-      console.log('and here')
-      this.disablePerks(false,
-                        "The Gift",
-                        "Hermetic Magus",
-                         "Covenfolk",
-                        "Craftsman",
-                        "Wanderer",
-                        "Merchant",
-                        "Peasant");
-    }
-
-    // Perks disabled upon load based on already established Perks
-    for (let i = 0; i < currentPerks.length; i++) {
-      this.validation(currentPerks[i]);
-    }
-  }
-
-  generatePerkFields() {
-    let local_perks = this.props.perks;
-
-    for (let i = 0; i < local_perks.length; i++) {
-      local_perks[i].disabled = false;
-      // Included array idx to speed up lookup
-      local_perks[i].idx = i;
-      local_perks[i].disabled_count = 0;
-      if (this.props.perkType === "virtue") {
-        local_perks[i].perk_type = local_perks[i].virtue_type;
-      } else {
-        local_perks[i].perk_type = local_perks[i].flaw_type;
-      }
-    }
-
-    this.setState({ perks: local_perks }, function () {
-      this.initialPerkStateUpdate();
-    });
-  }
 
   validation(perk, undo=false) {
     // Conditional validations
@@ -259,45 +249,6 @@ class CharacterCreatePerks extends React.Component {
     // If you take inoffensive to animals hermetic, the general also gets applied (but doesn't add 2 virtues to virtue score)
   }
 
-  establishPerks() {
-    let character_type = this.props.currentCharacter.character_type;
-    // TODO: Look up the actual flaw descriptions, currently it is
-    // just a dupe of the (also incorrect) virtue texts
-    let universalPerkText;
-    let magePerkText;
-    let grogPerkText;
-    let companionPerkText;
-    let otherPerkText;
-
-    if (this.props.perkType === "virtue") {
-      // TODO: Actual text, currently it's mostly placeholder
-      universalPerkText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
-      magePerkText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
-      grogPerkText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
-      companionPerkText = "Companions are things that can be created";
-      otherPerkText = "There are several that are free and can be taken with no penalty."
-    } else if (this.props.perkType === "flaw") {
-      universalPerkText = "Most virtues cost a number of virtue points to obtain. Major virtues cost 3, while minor virtues cost 1. "
-      magePerkText = "Mages get the special virtue 'The Gift' for free, and MUST take X, Y, or Z";
-      grogPerkText = "Grogs cannot take major virtues, and are limited to X Y OR Z";
-      companionPerkText = "Companions are things that can be created";
-      otherPerkText = "There are several that are free and can be taken with no penalty."
-    }
-    switch (character_type) {
-      case "mage":
-        this.setState({perkPointText: universalPerkText + magePerkText});
-        break;
-      case "grog":
-        this.setState({perkPointText: universalPerkText + grogPerkText});
-        break;
-      case "companion":
-        this.setState({perkPointText: universalPerkText + companionPerkText});
-        break;
-      case "other":
-        this.setState({perkPointText: universalPerkText + otherPerkText});
-        break;
-    }
-  }
 
   handleShow(section) {
     // removes the section from view if it already exist
@@ -312,62 +263,45 @@ class CharacterCreatePerks extends React.Component {
     }
   }
 
-  showAll() {
-    this.setState({ show: this.props.classifications });
-  }
-
   test(type, classification) {
     // let testVirtues = this.props.perks.filter(e => e.virtueType === classification)
     this.props.perks.filter( perk => (perk.virtue_type === undefined ? perk.flaw_type === classification : perk.virtue_type === classification) && perk.major === true ).map( perk => {
     })
   }
 
-  // TODO: Templatize calculateVirtuePoints and calculateFlawPoints
-  calculateVirtuePoints() {
+  calculatePerkPoints() {
     let majorVirtues = 0;
     let minorVirtues = 0;
-    if (this.props.currentVirtues !== undefined ) {
-      let currentVirtues = this.props.currentVirtues;
-      Object.keys(currentVirtues).forEach( virtueIndex => {
-        let virtue = currentVirtues[virtueIndex];
+    let majorFlaws = 0;
+    let minorFlaws = 0;
+    let currentPerks = this.props.currentPerks;
+
+    Object.keys(currentPerks).forEach( perkIndex => {
+      let perk = currentPerks[perkIndex];
+      if (perk.virtueIndex !== undefined) {
         if (virtue.free === false) {
           if (virtue.major === true) {
             majorVirtues++;
           } else if (virtue.free === false) {
             minorVirtues++;
           }
-
         }
-      });
+      } else if (perk.flawIndex !== undefined) {
+        if (flaw.major === true) {
+          majorFlaws++;
+        } else if (flaw.free === false) {
+          minorFlaws++;
+        }
+      }
+    });
 
+    if (minorVirtues + majorVirtues > 0) {
       let virtuePoints = (majorVirtues * 3) + minorVirtues;
       this.setState({ virtuePoints: virtuePoints });
-    }
-
-  }
-
-  calculateFlawPoints() {
-    let majorFlaws = 0;
-    let minorFlaws = 0;
-    if (this.props.currentFlaws !== undefined ) {
-      let currentFlaws = this.props.currentFlaws;
-      Object.keys(currentFlaws).forEach( flawIndex => {
-        let flaw = currentFlaws[flawIndex];
-        if (flaw.free === false) {
-          if (flaw.major === true) {
-            majorFlaws++;
-          } else if (flaw.free === false) {
-            minorFlaws++;
-          }
-
-        }
-      });
-
+    } else if (minorFlaws + majorFlaws > 0) {
       let flawPoints = (majorFlaws * 3) + minorFlaws;
       this.setState({ flawPoints: flawPoints });
     }
-
-
   }
 
   render () {
@@ -423,12 +357,6 @@ class CharacterCreatePerks extends React.Component {
                       </p>
                       {this.state.perks
                         .filter(
-                          // perks =>
-                          //   (perks.virtue_type === undefined
-                          //     ? perks.flaw_type === classification
-                          //     : perks.virtue_type === classification) &&
-                          //   perks.major === true
-                          // )
                           perks => (
                             perks.perk_type === classification &&
                             perks.major === true

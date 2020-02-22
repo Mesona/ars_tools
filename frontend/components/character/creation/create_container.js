@@ -11,6 +11,7 @@ const mapStateToProps = (state, ownProps) => ({
   currentUser: state.session.currentUser,
   currentCharacter: state.entities.characters[ownProps.match.params.characterId],
   page: ownProps.page,
+  match: ownProps.match,
 });
 
 const mapDispatchToProps = dispatch => ({

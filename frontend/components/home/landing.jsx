@@ -45,7 +45,7 @@ class Landing extends React.Component {
           <div className="show-characters-button" />
           { this.state.showCharacters ? (
             <div className="show-users-characters">
-              <Link to={`/character/new`}>
+              <Link to={`/characters/new/gen`}>
                 <ul>
                   <li>
                     <img src={window.images.blankCharacter} className="blank-character-png"></img>

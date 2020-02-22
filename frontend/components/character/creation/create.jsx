@@ -1,10 +1,8 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Route, Router, browserHistory } from 'react-router-dom';
 
 import CharacterCreateInitial from './create_initial';
 import CharacterCreateStats from './create_stats';
-// import CharacterCreateVirtuesContainer from './create_virtues_container';
-// import CharacterCreatePerksContainer from './create_perks_container';
 import CharacterCreateVirtuesContainer from './test_virtues_container';
 import CharacterCreateFlawsContainer from './create_flaws_container';
 
@@ -13,76 +11,91 @@ class CharacterCreate extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    // console.log("#####")
-    // console.log(this.props)
-    // console.log("#####")
-    // console.log(this.state)
-    // console.log("#####")
-  }
-
   render () {
+    const { match } = this.props;
 
-    let characterId;
-    this.props.match.params.characterId === undefined ?
-      characterId = null :
-      characterId = this.props.match.params.characterId;
+    return (
+      <>
+        <Route
+          exact path={`${match.path}/gen`}
+          render={() => (
+            <CharacterCreateInitial
+              createCharacter={this.props.createCharacter}
+              currentUser={this.props.currentUser}
+            />
+          )}
+        />
+
+        <Route
+          path={`${match.path}/virtues/:characterId`}
+          component={CharacterCreateVirtuesContainer}
+        />
+
+        <Route
+          path={`${match.path}/flaws/:characterId`}
+          component={CharacterCreateFlawsContainer}
+        />
+      </>
+
+    )
+
+    // let page = this.props.history.location.pathname;
     
-    if ( this.props.page === "new-character" || this.props.page === undefined ) {
-      return (
-        <section className="new-character">
-          <CharacterCreateInitial
-            currentUser={this.props.currentUser}
-            createCharacter={this.props.createCharacter}
-          />
-        </section>
-      );
-    } else if ( this.props.page === "virtues" ) {
-      return (
-        // <CharacterCreatePerksContainer
-        //   characterId={characterId}
-        // />
-        <CharacterCreateVirtuesContainer
-          characterId={characterId}
-        />
-      );
-    } else if ( this.props.page === "flaws" ) {
-      return (
-        <CharacterCreateFlawsContainer
-          characterId={characterId}
-        />
-      );
-    } else if ( this.props.page === "stats" ) {
-      return (
-        <CharacterCreateStats
-          characterId={characterId}
-          requestCharacter={this.props.requestCharacter}
-          updateCharacter={this.props.updateCharacter}
-        />
-      )
+    // if ( page.includes("new-character") || this.props.page === undefined ) {
+    //   return (
+    //     <section className="new-character">
+    //       <CharacterCreateInitial
+    //         currentUser={this.props.currentUser}
+    //         createCharacter={this.props.createCharacter}
+    //       />
+    //     </section>
+    //   );
+    // } else if ( page.includes("virtues") ) {
+    //   return (
+    //     // <CharacterCreatePerksContainer
+    //     //   characterId={characterId}
+    //     // />
+    //     <CharacterCreateVirtuesContainer
+    //       characterId={characterId}
+    //     />
+    //   );
+    // } else if ( page.includes("flaws") ) {
+    //   return (
+    //     <CharacterCreateFlawsContainer
+    //       characterId={characterId}
+    //     />
+    //   );
+    // } else if ( page.includes("stats") ) {
+    //   return (
+    //     <CharacterCreateStats
+    //       characterId={characterId}
+    //       requestCharacter={this.props.requestCharacter}
+    //       updateCharacter={this.props.updateCharacter}
+    //     />
+    //   )
 
-    } else if ( this.props.page === "early" ) {
-      return (
-        <p>Early</p>
-      )
-    } else if ( this.props.page === "pre-apprenticeship" ) {
-      return (
-        <p>Pre Apprentice</p>
-      )
-    } else if ( this.props.page === "apprenticeship" ) {
-      return (
-        <p>Apprenticeship</p>
-      )
-    } else if ( this.props.page === "advanced" ) {
-      return (
-        <p>Advanced</p>
-      )
-    } else {
-      console.log(this.props)
-      return (
-        <p>Wrong Page</p>
-      )
-    }
+    // } else if ( this.props.page === "early" ) {
+    //   return (
+    //     <p>Early</p>
+    //   )
+    // } else if ( this.props.page === "pre-apprenticeship" ) {
+    //   return (
+    //     <p>Pre Apprentice</p>
+    //   )
+    // } else if ( this.props.page === "apprenticeship" ) {
+    //   return (
+    //     <p>Apprenticeship</p>
+    //   )
+    // } else if ( this.props.page === "advanced" ) {
+    //   return (
+    //     <p>Advanced</p>
+    //   )
+    // } else {
+    //   console.log(this.props)
+    //   return (
+    //     <p>Wrong Page</p>
+    //   )
+    // }
 
   }
 };

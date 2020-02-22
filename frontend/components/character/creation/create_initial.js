@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-
 class CharacterCreateInitial extends React.Component {
  constructor(props) {
    super(props);
@@ -24,7 +23,7 @@ class CharacterCreateInitial extends React.Component {
 
  handleSubmit(e) {
     e.preventDefault();
-    const currentCharacter = Object.assign({}, this.state.currentCharacter);
+    let currentCharacter = Object.assign({}, this.state.currentCharacter);
     this.props.createCharacter(currentCharacter)
       .then((response) => this.props.history.push(`/characters/new/virtues/${response.character.id}`));
   }
@@ -32,18 +31,18 @@ class CharacterCreateInitial extends React.Component {
   update(field) {
     return (e) => {
       this.setState({currentCharacter: {...this.state.currentCharacter, [field]: e.currentTarget.value}});
-      if (field === "character_type") {
-        if (e.currentTarget.value === "mage") {
-          this.setState({
-            pages: ["stats", "virtues", "early", "pre-apprenticeship", "apprenticeship", "advanced"],
-          });
-        } else {
-          this.setState({
-            pages: ["stats", "virtues", "early", "advanced"],
-          });
-        }
-      }
-    };
+      // if (field === "character_type") {
+      //   if (e.currentTarget.value === "mage") {
+      //     this.setState({
+      //       pages: ["stats", "virtues", "early", "pre-apprenticeship", "apprenticeship", "advanced"],
+      //     });
+      //   } else {
+      //     this.setState({
+      //       pages: ["stats", "virtues", "early", "advanced"],
+      //     });
+      //   }
+      // }
+    }
   }
 
   showDropdownMenu(e) {
@@ -66,7 +65,7 @@ class CharacterCreateInitial extends React.Component {
     return (
       <form className="new-character-setup-form" onSubmit={this.handleSubmit}>
 
-        {/* TODO: Sanitize character name input */}
+        {/* FIXME: Sanitize character name input */}
         <div>
           <label>Character Name: 
             <input
@@ -109,7 +108,7 @@ class CharacterCreateInitial extends React.Component {
           <div>
             <label>Hermetic House:
               <select 
-                // TODO: Add hermetic house to character model
+                // FIXME: Add hermetic house to character model
                 defaultValue={currentCharacter.house} 
                 required
                 onChange={this.update('gender')}>
@@ -126,7 +125,8 @@ class CharacterCreateInitial extends React.Component {
         {/* TODO: Region born, background bio, still in apprenticeship, house association, all will be done in another page */}
 
         <div>
-          <span onClick={this.handleSubmit} className="fake-url">Next</span>
+          {/* <span onClick={this.handleSubmit} className="fake-url">Next</span> */}
+          <Link to={`/${this.props.match.path}/virtues/:characterId`} onClick={this.handleSubmit}>Next</Link>
         </div>
 
         <Link to={`/`}>

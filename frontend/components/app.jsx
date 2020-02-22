@@ -27,43 +27,10 @@ const App = () => {
             exact path="/characters/:characterId"
             component={CharacterShowContainer}
           />
-          {/* CURRENT TODO: Simplify routing by putting all "create" under one subrouter */}
 
           <Route
-            path="/characters/new/virtues/:characterId"
-            render={(props) => <CharacterCreateVirtuesContainer />}
-          />
-
-          {/* <Route
-            path="/characters/new/virtues/:characterId"
-            render={(props) => <CharacterCreateContainer {...props} page="virtues" />}
-          /> */}
-
-          <Route
-            path="/characters/new/flaws/:characterId"
-            render={(props) => <CharacterCreateVirtuesContainer />}
-            // render={(props) => <CharacterCreateContainer {...props} page="flaws" />}
-          />
-
-          <Route
-            path="/characters/new/stats/:characterId"
-            render={(props) => <CharacterCreateContainer {...props} page="stats" />}
-          />
-
-          {/* <Route
-            exact path="/character/new/:characterId"
-            render={(props) => <CharacterCreateContainer {...props} page="new-character" />}
-          /> */}
-
-          <Route
-          // TODO
-          // FOR SOME REASON, PATH="/characters/new" DOES NOT WORK
-          // I'M TIRED OF TROUBLESHOOTING SO USING THIS TEMPORARY FIX
-            exact path="/character/new"
-            // component={CharacterCreateContainer}
-            // page="stats"
-            // page="new-character"
-            render={(props) => <CharacterCreateContainer {...props} page="new-character" />}
+            path="/characters/new"
+            component={CharacterCreateContainer}
           />
 
           <Redirect from="*" to="/" />

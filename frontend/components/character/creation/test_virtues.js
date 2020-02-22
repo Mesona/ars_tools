@@ -7,18 +7,14 @@ class CharacterCreateVirtues extends React.Component {
 
     this.state = {
       currentCharacter: null,
-      virtues: null,
-      flaws: null,
-      virtueClassifications: [],
-      flawClassifications: [],
-      combinedPerks: [],
+      perks: null,
+      classifications: [],
       perkType: null,
+      unpause: false,
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.setClassifications = this.setClassifications.bind(this);
-    // this.concatPerks = this.concatPerks.bind(this);
-    // TODO: Separate this out so virtues doesn't load all virtues and flaws at once
+    this.unpauseRender = this.unpauseRender.bind(this);
   } 
 
   componentDidMount() {
@@ -34,14 +30,8 @@ class CharacterCreateVirtues extends React.Component {
 
     }
 
-    this.props.requestAllAbilities();
-
     this.props.requestCharacter(this.props.match.params.characterId)
       .then( response => this.setState({ currentCharacter: response.character }));
-
-    console.log("----------------------")
-    console.log(this.state.perks)
-    console.log("----------------------")
 
   }
 
@@ -51,13 +41,9 @@ class CharacterCreateVirtues extends React.Component {
 
     
     if (perkType === "virtues") {
-      // this.concatPerks(response.virtues);
-      
       for (let i = 0; i < response.virtues.length; i++) {
         perksArray.push(response.virtues[i]);
       }
-
-      this.setState({ virtues: perksArray });
 
       response.virtues.forEach((virtue) => {
         if (!classifications.includes(virtue.virtue_type) && virtue.virtue_type !== "") {
@@ -65,53 +51,36 @@ class CharacterCreateVirtues extends React.Component {
         }      
       });
 
-      this.setState({ virtueClassifications: classifications });
+      this.setState({ classifications: classifications });
     } else {
-      // this.concatPerks(response.flaws);
       for (let i = 0; i < response.flaws.length; i++) {
         perksArray.push(response.flaws[i]);
       }
-
-      this.setState({ flaws: perksArray });
 
       response.flaws.forEach((flaw) => {
         if (!classifications.includes(flaw.flaw_type) && flaw.flaw_type !== "") {
           classifications.push(flaw.flaw_type);
         }      
       });
-
-      this.setState({ flawClassifications: classifications });
     }
+    
+    this.setState({
+      perks: perksArray,
+      classifications: classifications
+    }, () => {
+      this.unpauseRender();
+    });
  }
 
-
-  handleSubmit(e) {
-    e.preventDefault();
-    const {currentCharacter} = this.state;
-    if (this.state.perkType === "virtues") {
-      this.props.history.push(`/characters/new/flaws/${currentCharacter.id}`);
-    } else if (this.state.perkType === "flaws") {
-      this.props.history.push(`/characters/new/stats/${currentCharacter.id}`);
-
-    }
-  // const currentCharacter = Object.assign({}, this.state);
-  // this.props.createCharacter(currentCharacter)
-    // .then((response) => this.props.history.push(`/character/new/virtues/${response.character.id}`));
-    // .then((response) => this.props.history.push(`/test/${response.character.id}`));
-  }
-
-  // concatPerks(perks) {
-  //   let these_perks = this.state.combinedPerks.concat(perks);
-
-  //   if (these_perks[0] === undefined) {
-  //     these_perks.shift();
-  //   }
-
-  //   this.setState({ combinedPerks: these_perks })
-  // }
+ unpauseRender() {
+  //  This is a dumb function that prevents the child components
+  // from rendering too soon, causing all kinds of errors because
+  // setState is asynchronous
+   this.setState({ unpause: true });
+ }
 
   render () {
-    if (this.state.currentCharacter === undefined)  { 
+    if (this.state.unpause === false) {
       return (
         <>
           Loaaaaaaaaaading . . .
@@ -120,29 +89,20 @@ class CharacterCreateVirtues extends React.Component {
     else { 
       return (
         <>
-          {/* { this.state.perkType === "virtues" ? */}
-          { this.state.virtues !== null ?
+          {this.state.perkType === "virtues" ?
             <CharacterCreatePerksContainer
               currentCharacter={this.state.currentCharacter}
               perkType={"virtue"}
-              handleSubmit={this.handleSubmit}
-              perks={this.state.virtues}
-              // perks={this.state.combinedPerks}
-              classifications={this.state.virtueClassifications}
+              perks={this.state.perks}
+              classifications={this.state.classifications}
             />
           :
-            // this.state.perkType === "flaws" ?
-            this.state.flaws !== null ?
-              <CharacterCreatePerksContainer
-                perkType={"flaw"}
-                handleSubmit={this.handleSubmit}
-                perks={this.state.flaws}
-                // perks={this.state.combinedPerks}
-                classifications={this.state.flawClassifications}
-              />
-              :
-              null
-            
+            <CharacterCreatePerksContainer
+              currentCharacter={this.state.currentCharacter}
+              perkType={"flaw"}
+              perks={this.state.perks}
+              classifications={this.state.classifications}
+            />
           }
         </>
       )
