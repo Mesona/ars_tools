@@ -10,8 +10,8 @@ class CharacterCreatePerks extends React.Component {
       virtuePoints: 0,
       flawPoints: 0,
       minorFlaws: 0,
-      currentVirtues: this.props.currentCharacter.virtues || {},
-      currentFlaws: this.props.currentCharacter.flaws || {},
+      currentVirtues: {},
+      currentFlaws: {},
       perkPointText: "",
       show: this.props.classifications,
       perks: [],
@@ -24,20 +24,38 @@ class CharacterCreatePerks extends React.Component {
     this.disablePerkType = this.disablePerkType.bind(this);
     this.establishPerkHelperText = this.establishPerkHelperText.bind(this);
 
-    this.update = this.update.bind(this);
+    // this.update = this.update.bind(this);
     this.handlePerk = this.handlePerk.bind(this);
     this.validation = this.validation.bind(this);
     this.handleShow = this.handleShow.bind(this);
     this.test = this.test.bind(this);
     this.calculatePerkPoints = this.calculatePerkPoints.bind(this);
+    this.updateDisabledTypes = this.updateDisabledTypes.bind(this);
   } 
 
   componentDidMount() {
+    // In case someone loads the virtues page on an incomplete character
+    // that got through initial generation but never finalized
+    if (this.props.currentCharacter === undefined) {
+      this.props.requestCharacter(this.props.match.params.characterId)
+      .then( response => this.setState({  currentCharacter: response.character,
+                                          currentVirtues: response.character.virtues,
+                                          currentFlaws: response.character.flaws,
+                                        }));
+    }
+
     this.generatePerkFields();
 
     this.establishPerkHelperText();
 
     this.props.requestAllAbilities();
+  }
+
+  componentDidUpdate(prevProps) {
+    // Best way I found to enforce synchronise calue updating
+    if (prevProps.currentPerks !== this.props.currentPerks) {
+      this.calculatePerkPoints();
+    }
   }
 
   generatePerkFields() {
@@ -93,6 +111,10 @@ class CharacterCreatePerks extends React.Component {
     for (let i = 0; i < currentPerks.length; i++) {
       this.validation(currentPerks[i]);
     }
+
+    if (this.props.currentVirtuesAndFlaws !== undefined) {
+      this.calculatePerkPoints();
+    }
   }
 
   disablePerks() {
@@ -127,16 +149,29 @@ class CharacterCreatePerks extends React.Component {
     this.setState({ perks: perks });
   }
 
-  disablePerkType(field, value) {
+  disablePerkType(field, value, undo="") {
     let { perks } = this.state;
 
     perks.forEach((perk) => {
-      if (perk[field] === value) {
-        perk.disabled = "disabled";
-        perk.disabled_count++;
-        perks[perk.idx] = perk;
+      // TODO: Move somewhere for easy access, because this WILL be needed
+      // Small snippet to create an object with a variable for its name
+      // var this_perk = perk.name,
+      //   obj = { [this_perk]: perk};
+      if (perk[field] === value &&
+          ! (perk.id in this.props.currentPerks)) {
+            if (undo === "") {
+              perk.disabled = "disabled";
+              perk.disabled_count++;
+              perks[perk.idx] = perk;
+            } else {
+              perk.disabled_count--;
+              if (perk.disabled_count === 0) {
+                perk.disabled = false;
+              }
+              perks[perk.idx] = perk;
+            }
       }
-    })
+    });
     this.setState({ perks: perks });
   }
 
@@ -180,11 +215,11 @@ class CharacterCreatePerks extends React.Component {
     }
   }
 
-  update(field) {
-    return (e) => {
-      this.setState({[field]: e.currentTarget.value});
-    };
-  }
+  // update(field) {
+  //   return (e) => {
+  //     this.setState({[field]: e.currentTarget.value});
+  //   };
+  // }
 
   handlePerk(checkBox, perk, childData = null) {
     let storePerk, deletePerk;
@@ -205,10 +240,12 @@ class CharacterCreatePerks extends React.Component {
     // it is, the virtue will be deleted rather than added
     if (checkBox) {
       storePerk(perk);
-      this.validation(perk)
+      this.validation(perk);
     } else {
+      console.log("SHOULD BE DELETED")
+      console.log(perk)
       deletePerk(perk);
-      this.validation(perk, true)
+      this.validation(perk, true);
     }
   }
 
@@ -254,6 +291,8 @@ class CharacterCreatePerks extends React.Component {
 
   handleShow(section) {
     // removes the section from view if it already exist
+    // TODO: Visually hide the section so it doesn't need to rerender
+    // when "show" is reactivated
     let shownSections = [...this.state.show];
     if (shownSections.includes(section)) {
       let sectionIndex = shownSections.indexOf(section);
@@ -272,6 +311,7 @@ class CharacterCreatePerks extends React.Component {
   }
 
   calculatePerkPoints() {
+    // FIXME: visually lags one state behind
     let majorVirtues = 0;
     let minorVirtues = 0;
     let majorFlaws = 0;
@@ -280,29 +320,111 @@ class CharacterCreatePerks extends React.Component {
 
     Object.keys(currentPerks).forEach( perkIndex => {
       let perk = currentPerks[perkIndex];
-      if (perk.virtueIndex !== undefined) {
-        if (virtue.free === false) {
-          if (virtue.major === true) {
+      if (perk.virtue_type !== undefined) {
+        if (perk.free === false) {
+          if (perk.major === true) {
             majorVirtues++;
-          } else if (virtue.free === false) {
+          } else if (perk.free === false) {
             minorVirtues++;
           }
         }
-      } else if (perk.flawIndex !== undefined) {
-        if (flaw.major === true) {
+      } else if (perk.flaw_type !== undefined) {
+        if (perk.major === true) {
           majorFlaws++;
-        } else if (flaw.free === false) {
+        } else if (perk.free === false) {
           minorFlaws++;
         }
       }
     });
 
-    if (minorVirtues + majorVirtues > 0) {
-      let virtuePoints = (majorVirtues * 3) + minorVirtues;
-      this.setState({ virtuePoints: virtuePoints });
-    } else if (minorFlaws + majorFlaws > 0) {
-      let flawPoints = (majorFlaws * 3) + minorFlaws;
-      this.setState({ flawPoints: flawPoints });
+    let totalVirtues = minorVirtues + (majorVirtues * 3);
+    let totalFlaws = minorFlaws + (majorFlaws * 3);
+    console.log("CALC POINTS")
+    console.log(totalVirtues)
+    console.log(this.props.currentPerks)
+    console.log("CALC POINTS END")
+
+    if (this.props.perkType === "virtue") {
+      this.updateDisabledTypes(totalVirtues, "virtues");
+    } else if (this.props.perkType === "flaw") {
+      this.updateDisabledTypes(totalFlaws, "flaws");
+    }
+    // if (totalVirtues > 7) {
+      // let virtuePoints = (majorVirtues * 3) + minorVirtues;
+      // this.setState({ virtuePoints: totalVirtues }, () => {
+      //   this.updateDisabledTypes(totalVirtues);
+      // });
+    // } else if (totalFlaws > 7) {
+      // let flawPoints = (majorFlaws * 3) + minorFlaws;
+      // this.setState({ flawPoints: totalFlaws }, () => {
+      //   this.updateDisabledTypes(totalFlaws);
+      // });
+    // }
+  }
+
+  updateDisabledTypes(value, perkType) {
+    // console.log(totalVirtues)
+    // console.log(minorVirtues)
+    // TODO: Simplify this ugliness
+    if (perkType === "virtues") {
+      console.log('test')
+      let virtuePoints = this.state.virtuePoints;
+      console.log(virtuePoints)
+      // If we have added a non-free virtue
+      if (value > virtuePoints && value > 7) {
+        if (value > 9) {
+          this.setState({ virtuePoints: value }, () => {
+            this.disablePerkType("major", false);
+            this.disablePerkType("major", true);
+          });
+        } else {
+          this.setState({ virtuePoints: value }, () => {
+            this.disablePerkType("major", true);
+          });
+        }
+      } else if (value < virtuePoints && virtuePoints > 7) {
+        console.log("ya")
+        if (value < 7) {
+          this.setState({ virtuePoints: value }, () => {
+            this.disablePerkType("major", false, 'undo');
+            this.disablePerkType("major", true, 'undo');
+          });
+        } else {
+          this.setState({ virtuePoints: value }, () => {
+            this.disablePerkType("major", false, 'undo');
+          });
+        }
+      } else {
+        this.setState({ virtuePoints: value });
+      }
+    } else if (perkType === "flaws") {
+      let flawPoints = this.state.flawPoints;
+      // If we have added a non-free virtue
+      if (value > flawPoints && value > 7) {
+        if (value > 9) {
+          this.setState({ flawPoints: value }, () => {
+            this.disablePerkType("major", false);
+            this.disablePerkType("major", true);
+          });
+        } else {
+          this.setState({ flawPoints: value }, () => {
+            this.disablePerkType("major", true);
+          });
+        }
+      } else if (value < flawPoints && flawPoints > 7) {
+        if (value < 7) {
+          this.setState({ flawPoints: value }, () => {
+            this.disablePerkType("major", false, 'undo');
+            this.disablePerkType("major", true, 'undo');
+          });
+        } else {
+          this.setState({ flawPoints: value }, () => {
+            this.disablePerkType("major", false, 'undo');
+          });
+        }
+      } else {
+        this.setState({ flawPoints: value });
+      }
     }
   }
 

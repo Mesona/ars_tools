@@ -17,10 +17,12 @@ const CreateVirtuesAndFlawsReducer = (state = {}, action) => {
   switch (action.type) {
     case RECEIVE_VIRTUE:
       virtue = action.virtue;
-      return merge({}, state, { [action.virtue.name]: virtue});
+      // return merge({}, state, { [action.virtue.name]: virtue});
+      return merge({}, state, { [action.virtue.id]: virtue});
     case REMOVE_VIRTUE:
       newState = merge({}, state);
-      delete newState[action.virtue.name];
+      delete newState[action.virtue.id];
+      // delete newState[action.virtue.name];
       return newState;
     case RECEIVE_VIRTUES:
       if (action.virtues !== undefined) {
