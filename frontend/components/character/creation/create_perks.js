@@ -41,14 +41,12 @@ class CharacterCreatePerks extends React.Component {
       .then( response => this.setState({  currentCharacter: response.character,
                                           currentVirtues: response.character.virtues,
                                           currentFlaws: response.character.flaws,
+                                        }, function () {
+                                          this.establishPerkHelperText();
+                                          this.generatePerkFields();
+                                          this.props.requestAllAbilities();
                                         }));
     }
-
-    this.generatePerkFields();
-
-    this.establishPerkHelperText();
-
-    this.props.requestAllAbilities();
   }
 
   componentDidUpdate(prevProps) {
