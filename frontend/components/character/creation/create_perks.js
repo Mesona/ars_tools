@@ -428,7 +428,7 @@ class CharacterCreatePerks extends React.Component {
   }
 
   render () {
-    if (this.props.currentCharacter === undefined || this.props.perks === undefined) { 
+    if (this.props.currentCharacter === undefined && this.props.perks === undefined) { 
       return (
         <div>
           Loading . . .
