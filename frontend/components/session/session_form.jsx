@@ -57,6 +57,8 @@ class SessionForm extends React.Component {
 
   // TODO: Fix the moving text for the login and signup modal, it currently only
   // moves the first field modified
+  // FIXME: New account signup errors no longer appear
+  // FIXME: Tests to prevent regression
   render () {
     return (
       <div className="session-form" onClick={()=>{this.setState({active: false})}}>
