@@ -52,4 +52,5 @@ This is going to be a series of tools to aid with the running of, and participat
 1. run `rails s`
 1. in a separate tab, run `npm run start`
 1. the local webserver can be accessed at `http://localhost:3000/`
-1. develop
+1. develop (Make your own account or use the existing demo account)
+1. Demo account details: email: "demo@email.com", password: "password"
