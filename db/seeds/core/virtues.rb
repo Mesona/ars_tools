@@ -17,34 +17,11 @@ module Virtues
     virtue_type: "Hermetic",
     major: false)
 
-  affinity_with_ability_one = Virtue.create!(name: "Affinity With (Ability)",
+  affinity_with_ability = Virtue.create!(name: "Affinity With (Ability)",
     description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
     book: "Core",
     virtue_type: "General",
-    major: false)
-
-  affinity_with_ability_two = Virtue.create!(name: "Affinity With (Ability)",
-    description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
-    book: "Core",
-    virtue_type: "General",
-    major: false)
-
-  affinity_with_ability_three = Virtue.create!(name: "Affinity With (Ability)",
-    description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
-    book: "Core",
-    virtue_type: "General",
-    major: false)
-
-  affinity_with_ability_four = Virtue.create!(name: "Affinity With (Ability)",
-    description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
-    book: "Core",
-    virtue_type: "General",
-    major: false)
-
-  affinity_with_ability_five = Virtue.create!(name: "Affinity With (Ability)",
-    description: "All Study Totals for one Ability are increased by half, as are any experience points you put in that Ability at character creation. You may only take this Virtue once for a given Ability, but may take it again for different Abilities. If you take this Virtue for an Ability, you may exceed the normal age-based cap during character generation (see page 31) by two points for that Ability.",
-    book: "Core",
-    virtue_type: "General",
+    creation_max: 5,
     major: false)
 
   affinity_with_art = Virtue.create!(name: "Affinity With (Art)",
@@ -309,34 +286,11 @@ module Virtues
     book: "Core",
     major: false)
 
-  great_characteristic_one = Virtue.create!(name: "Great (Characteristic)",
+  great_characteristic = Virtue.create!(name: "Great (Characteristic)",
     description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
     virtue_type: "General",
     book: "Core",
-    major: false)
-
-  great_characteristic_two = Virtue.create!(name: "Great (Characteristic)",
-    description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  great_characteristic_three = Virtue.create!(name: "Great (Characteristic)",
-    description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  great_characteristic_four = Virtue.create!(name: "Great (Characteristic)",
-    description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  great_characteristic_five = Virtue.create!(name: "Great (Characteristic)",
-    description: "You may raise any Characteristic that already has a score of at least +3 by one point, to no more than +5. Make sure you describe what it is about you that causes that increase (such as sheer bulk, a lean build, or extreme charisma). You may take this Virtue twice for the same Characteristic, and for more than one Characteristic.",
-    virtue_type: "General",
-    book: "Core",
+    creation_max: 5,
     major: false)
 
   greater_immunity = Virtue.create!(name: "Greater Immunity",
@@ -384,34 +338,11 @@ module Virtues
     book: "Core",
     major: false)
 
-  improved_characteristics_one = Virtue.create!(name: "Improved Characteristics",
+  improved_characteristics = Virtue.create!(name: "Improved Characteristics",
     description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
     virtue_type: "General",
     book: "Core",
-    major: false)
-
-  improved_characteristics_two = Virtue.create!(name: "Improved Characteristics",
-    description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  improved_characteristics_three = Virtue.create!(name: "Improved Characteristics",
-    description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  improved_characteristics_four = Virtue.create!(name: "Improved Characteristics",
-    description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  improved_characteristics_five = Virtue.create!(name: "Improved Characteristics",
-    description: "You have an additional three points to spend on buying Characteristics, but you are still limited to a maximum score of +3 in any single Characteristic unless you take the Virtue Great Characteristic. You may take this Virtue multiple times.",
-    virtue_type: "General",
-    book: "Core",
+    creation_max: 5,
     major: false)
 
   inoffensive_to_animals_general = Virtue.create!(name: "Inoffensive To Animals",
@@ -477,34 +408,11 @@ module Virtues
     book: "Core",
     major: false)
 
-  learn_ability_from_mistakes_one = Virtue.create!(name: "Learn (Ability) From Mistakes",
+  learn_ability_from_mistakes = Virtue.create!(name: "Learn (Ability) From Mistakes",
     description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
     virtue_type: "General",
     book: "Core",
-    major: false)
-
-  learn_ability_from_mistakes_two = Virtue.create!(name: "Learn (Ability) From Mistakes",
-    description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  learn_ability_from_mistakes_three = Virtue.create!(name: "Learn (Ability) From Mistakes",
-    description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  learn_ability_from_mistakes_four = Virtue.create!(name: "Learn (Ability) From Mistakes",
-    description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  learn_ability_from_mistakes_five = Virtue.create!(name: "Learn (Ability) From Mistakes",
-    description: "You are able to improve a particular Ability through the expedient of repeated failure. The first time in a given game session that you botch a roll or fail by exactly one point, you gain five experience points in the Ability. The roll must have come up naturally in the course of the story. You may take this Virtue several times, once for each Ability chosen.",
-    virtue_type: "General",
-    book: "Core",
+    creation_max: 5,
     major: false)
 
   lesser_immunity = Virtue.create!(name: "Lesser Immunity",
@@ -586,34 +494,11 @@ module Virtues
     book: "Core",
     major: true)
 
-  mastered_spells_one = Virtue.create!(name: "Mastered Spells",
+  mastered_spells = Virtue.create!(name: "Mastered Spells",
     description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
     virtue_type: "Hermetic",
     book: "Core",
-    major: false)
-
-  mastered_spells_two = Virtue.create!(name: "Mastered Spells",
-    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
-    virtue_type: "Hermetic",
-    book: "Core",
-    major: false)
-
-  mastered_spells_three = Virtue.create!(name: "Mastered Spells",
-    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
-    virtue_type: "Hermetic",
-    book: "Core",
-    major: false)
-
-  mastered_spells_four = Virtue.create!(name: "Mastered Spells",
-    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
-    virtue_type: "Hermetic",
-    book: "Core",
-    major: false)
-
-  mastered_spells_five = Virtue.create!(name: "Mastered Spells",
-    description: "You have fifty experience points to spend on mastering spells that you know. (See page 86 for rules on mastering spells.) You may take this Virtue if you also have Flawless Magic, to give you more experience points to spend on mastering your spells. You may take this Virtue multiple times.",
-    virtue_type: "Hermetic",
-    book: "Core",
+    creation_max: 5,
     major: false)
 
   mendicant_friar = Virtue.create!(name: "Mendicant Friar",
@@ -727,60 +612,26 @@ module Virtues
     book: "Core",
     major: false)
 
-  puissant_ability_one = Virtue.create!(name: "Puissant (Ability)",
+  puissant_ability = Virtue.create!(name: "Puissant (Ability)",
     description: "You are particularly adept with one Ability, and add 2 to its value whenever you use it. Note that you do not, in general, use an Ability when learning it, teaching it, or writing about it. You may only take this Virtue once for a given Ability, but may take it more than once for different Abilities.",
     virtue_type: "General",
     book: "Core",
+    creation_max: 5,
     major: false)
 
-  puissant_ability_two = Virtue.create!(name: "Puissant (Ability)",
-    description: "You are particularly adept with one Ability, and add 2 to its value whenever you use it. Note that you do not, in general, use an Ability when learning it, teaching it, or writing about it. You may only take this Virtue once for a given Ability, but may take it more than once for different Abilities.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  puissant_ability_three = Virtue.create!(name: "Puissant (Ability)",
-    description: "You are particularly adept with one Ability, and add 2 to its value whenever you use it. Note that you do not, in general, use an Ability when learning it, teaching it, or writing about it. You may only take this Virtue once for a given Ability, but may take it more than once for different Abilities.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  puissant_ability_four = Virtue.create!(name: "Puissant (Ability)",
-    description: "You are particularly adept with one Ability, and add 2 to its value whenever you use it. Note that you do not, in general, use an Ability when learning it, teaching it, or writing about it. You may only take this Virtue once for a given Ability, but may take it more than once for different Abilities.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  puissant_ability_five = Virtue.create!(name: "Puissant (Ability)",
-    description: "You are particularly adept with one Ability, and add 2 to its value whenever you use it. Note that you do not, in general, use an Ability when learning it, teaching it, or writing about it. You may only take this Virtue once for a given Ability, but may take it more than once for different Abilities.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  puissant_art_one = Virtue.create!(name: "Puissant (Art)",
+  puissant_art = Virtue.create!(name: "Puissant (Art)",
     description: "You add 3 to the value of one Art whenever you use it. This means all totals in which the score of the Art is part of the total. It does not apply to Study Totals. You may take this Virtue twice, for two different Arts. If a spell has requisites, include the bonus from Puissant Art with that Art when calculating which Art is higher. If the Puissant Art is higher, the bonus does not apply to the requisite.",
     virtue_type: "Hermetic",
     book: "Core",
+    creation_max: 2,
     major: false)
 
-  puissant_art_two = Virtue.create!(name: "Puissant (Art)",
-    description: "You add 3 to the value of one Art whenever you use it. This means all totals in which the score of the Art is part of the total. It does not apply to Study Totals. You may take this Virtue twice, for two different Arts. If a spell has requisites, include the bonus from Puissant Art with that Art when calculating which Art is higher. If the Puissant Art is higher, the bonus does not apply to the requisite.",
-    virtue_type: "Hermetic",
-    book: "Core",
-    major: false)
-
-  quiet_magic_one = Virtue.create!(name: "Quiet Magic",
+  quiet_magic = Virtue.create!(name: "Quiet Magic",
     description: "You can cast spells using only a soft voice at no penalty, and at only a –5 penalty if you do not speak at all. You gain no benefits from using your voice normally but gain the normal benefit for using a booming voice. The range of Voice Range spells is determined normally, based on how loud your voice is.
       You may take this Virtue twice, and eliminate the penalty altogether.",
     virtue_type: "Hermetic",
     book: "Core",
-    major: false)
-
-  quiet_magic_two = Virtue.create!(name: "Quiet Magic",
-    description: "You can cast spells using only a soft voice at no penalty, and at only a –5 penalty if you do not speak at all. You gain no benefits from using your voice normally but gain the normal benefit for using a booming voice. The range of Voice Range spells is determined normally, based on how loud your voice is.
-      You may take this Virtue twice, and eliminate the penalty altogether.",
-    virtue_type: "Hermetic",
-    book: "Core",
+    creation_max: 2,
     major: false)
 
   rapid_covalescence = Virtue.create!(name: "Rapid Covalescence",
@@ -863,64 +714,18 @@ module Virtues
     book: "Core",
     major: false)
 
-  social_contacts_one = Virtue.create!(name: "Social Contacts",
+  social_contacts = Virtue.create!(name: "Social Contacts",
     description: "You have a broad range of acquaintances in a specific social circle (specified when this Virtue is purchased), accumulated over years of travel and socializing. Almost everywhere you go, you meet someone you know, or can get in touch with someone who can help you. Whenever you are somewhere new, you can contact someone on a simple Presence roll against an Ease Factor of 6. The storyguide may modify this target number upward for very small areas or areas where it is extremely unlikely that you would know someone. You may purchase this Virtue more than once, each time specifying a different social group.",
     virtue_type: "General",
     book: "Core",
+    creation_max: 5,
     major: false)
 
-  social_contacts_two = Virtue.create!(name: "Social Contacts",
-    description: "You have a broad range of acquaintances in a specific social circle (specified when this Virtue is purchased), accumulated over years of travel and socializing. Almost everywhere you go, you meet someone you know, or can get in touch with someone who can help you. Whenever you are somewhere new, you can contact someone on a simple Presence roll against an Ease Factor of 6. The storyguide may modify this target number upward for very small areas or areas where it is extremely unlikely that you would know someone. You may purchase this Virtue more than once, each time specifying a different social group.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  social_contacts_three = Virtue.create!(name: "Social Contacts",
-    description: "You have a broad range of acquaintances in a specific social circle (specified when this Virtue is purchased), accumulated over years of travel and socializing. Almost everywhere you go, you meet someone you know, or can get in touch with someone who can help you. Whenever you are somewhere new, you can contact someone on a simple Presence roll against an Ease Factor of 6. The storyguide may modify this target number upward for very small areas or areas where it is extremely unlikely that you would know someone. You may purchase this Virtue more than once, each time specifying a different social group.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  social_contacts_four = Virtue.create!(name: "Social Contacts",
-    description: "You have a broad range of acquaintances in a specific social circle (specified when this Virtue is purchased), accumulated over years of travel and socializing. Almost everywhere you go, you meet someone you know, or can get in touch with someone who can help you. Whenever you are somewhere new, you can contact someone on a simple Presence roll against an Ease Factor of 6. The storyguide may modify this target number upward for very small areas or areas where it is extremely unlikely that you would know someone. You may purchase this Virtue more than once, each time specifying a different social group.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  social_contacts_five = Virtue.create!(name: "Social Contacts",
-    description: "You have a broad range of acquaintances in a specific social circle (specified when this Virtue is purchased), accumulated over years of travel and socializing. Almost everywhere you go, you meet someone you know, or can get in touch with someone who can help you. Whenever you are somewhere new, you can contact someone on a simple Presence roll against an Ease Factor of 6. The storyguide may modify this target number upward for very small areas or areas where it is extremely unlikely that you would know someone. You may purchase this Virtue more than once, each time specifying a different social group.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  special_circumstances_one = Virtue.create!(name: "Special Circumstances",
+  special_circumstances = Virtue.create!(name: "Special Circumstances",
     description: "You are able to perform magic better in certain uncommon situations (such as during a storm or while touching the target), gaining a +3 bonus to your rolls to cast or resist spells. You may take this Virtue more than once, but you only gain a +3 bonus even if more than one set of circumstances applies.",
     virtue_type: "Hermetic",
     book: "Core",
-    major: false)
-
-  special_circumstances_two = Virtue.create!(name: "Special Circumstances",
-    description: "You are able to perform magic better in certain uncommon situations (such as during a storm or while touching the target), gaining a +3 bonus to your rolls to cast or resist spells. You may take this Virtue more than once, but you only gain a +3 bonus even if more than one set of circumstances applies.",
-    virtue_type: "Hermetic",
-    book: "Core",
-    major: false)
-
-  special_circumstances_three = Virtue.create!(name: "Special Circumstances",
-    description: "You are able to perform magic better in certain uncommon situations (such as during a storm or while touching the target), gaining a +3 bonus to your rolls to cast or resist spells. You may take this Virtue more than once, but you only gain a +3 bonus even if more than one set of circumstances applies.",
-    virtue_type: "Hermetic",
-    book: "Core",
-    major: false)
-
-  special_circumstances_four = Virtue.create!(name: "Special Circumstances",
-    description: "You are able to perform magic better in certain uncommon situations (such as during a storm or while touching the target), gaining a +3 bonus to your rolls to cast or resist spells. You may take this Virtue more than once, but you only gain a +3 bonus even if more than one set of circumstances applies.",
-    virtue_type: "Hermetic",
-    book: "Core",
-    major: false)
-
-  special_circumstances_five = Virtue.create!(name: "Special Circumstances",
-    description: "You are able to perform magic better in certain uncommon situations (such as during a storm or while touching the target), gaining a +3 bonus to your rolls to cast or resist spells. You may take this Virtue more than once, but you only gain a +3 bonus even if more than one set of circumstances applies.",
-    virtue_type: "Hermetic",
-    book: "Core",
+    creation_max: 5,
     major: false)
 
   strong_faerie_blood = Virtue.create!(name: "Strong Faerie Blood",
@@ -941,28 +746,11 @@ module Virtues
     book: "Core",
     major: false)
 
-  student_of_realm_one = Virtue.create!(name: "Student of (Realm)",
+  student_of_realm = Virtue.create!(name: "Student of (Realm)",
     description: "You have been trained in the mystical aspects of one of the four realms of power (Divine, Faerie, Infernal, or Magic), and you have a +2 bonus on all uses of the appropriate Lore. You may take that Lore at character generation even if you cannot learn other Arcane Abilities. You may take this Virtue multiple times, for a different realm each time. You may not take Student of (Realm) and Puissant Ability for the same Lore.",
     virtue_type: "General",
     book: "Core",
-    major: false)
-
-  student_of_realm_two = Virtue.create!(name: "Student of (Realm)",
-    description: "You have been trained in the mystical aspects of one of the four realms of power (Divine, Faerie, Infernal, or Magic), and you have a +2 bonus on all uses of the appropriate Lore. You may take that Lore at character generation even if you cannot learn other Arcane Abilities. You may take this Virtue multiple times, for a different realm each time. You may not take Student of (Realm) and Puissant Ability for the same Lore.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  student_of_realm_three = Virtue.create!(name: "Student of (Realm)",
-    description: "You have been trained in the mystical aspects of one of the four realms of power (Divine, Faerie, Infernal, or Magic), and you have a +2 bonus on all uses of the appropriate Lore. You may take that Lore at character generation even if you cannot learn other Arcane Abilities. You may take this Virtue multiple times, for a different realm each time. You may not take Student of (Realm) and Puissant Ability for the same Lore.",
-    virtue_type: "General",
-    book: "Core",
-    major: false)
-
-  student_of_realm_four = Virtue.create!(name: "Student of (Realm)",
-    description: "You have been trained in the mystical aspects of one of the four realms of power (Divine, Faerie, Infernal, or Magic), and you have a +2 bonus on all uses of the appropriate Lore. You may take that Lore at character generation even if you cannot learn other Arcane Abilities. You may take this Virtue multiple times, for a different realm each time. You may not take Student of (Realm) and Puissant Ability for the same Lore.",
-    virtue_type: "General",
-    book: "Core",
+    creation_max: 4,
     major: false)
 
   study_bonus = Virtue.create!(name: "Study Bonus",
@@ -1039,22 +827,11 @@ module Virtues
     book: "Core",
     major: false)
 
-  ways_of_the_land_one = Virtue.create!(name: "Ways of the (Land)",
+  ways_of_the_land = Virtue.create!(name: "Ways of the (Land)",
     description: "You have a deep understanding of a type of terrain, feeling more natural and at home there than anywhere else. Examples include Ways of the Forest, Ways of the Mountain, Ways of the Steppe or Ways of the Town. You get a +3 bonus to all rolls, including combat, that directly involve that area and its inhabitants; mundane, magical, or faerie. In addition, you roll one fewer botch die than normal (which may mean you roll no botch dice) in rolls that pertain to your area of understanding. You are not normally molested by animals of the terrain, and though particularly vicious creatures may still attack you, at least they’ll accord you proper respect. (For Ways of the Town, this still applies to town animals, of which there are plenty in the medieval world, rather than people. The +3 bonus does apply to people.) You may choose this Virtue multiple times, for different types of terrain.",
     virtue_type: "General",
     book: "Core",
-    major: true)
-
-  ways_of_the_land_two = Virtue.create!(name: "Ways of the (Land)",
-    description: "You have a deep understanding of a type of terrain, feeling more natural and at home there than anywhere else. Examples include Ways of the Forest, Ways of the Mountain, Ways of the Steppe or Ways of the Town. You get a +3 bonus to all rolls, including combat, that directly involve that area and its inhabitants; mundane, magical, or faerie. In addition, you roll one fewer botch die than normal (which may mean you roll no botch dice) in rolls that pertain to your area of understanding. You are not normally molested by animals of the terrain, and though particularly vicious creatures may still attack you, at least they’ll accord you proper respect. (For Ways of the Town, this still applies to town animals, of which there are plenty in the medieval world, rather than people. The +3 bonus does apply to people.) You may choose this Virtue multiple times, for different types of terrain.",
-    virtue_type: "General",
-    book: "Core",
-    major: true)
-
-  ways_of_the_land_three = Virtue.create!(name: "Ways of the (Land)",
-    description: "You have a deep understanding of a type of terrain, feeling more natural and at home there than anywhere else. Examples include Ways of the Forest, Ways of the Mountain, Ways of the Steppe or Ways of the Town. You get a +3 bonus to all rolls, including combat, that directly involve that area and its inhabitants; mundane, magical, or faerie. In addition, you roll one fewer botch die than normal (which may mean you roll no botch dice) in rolls that pertain to your area of understanding. You are not normally molested by animals of the terrain, and though particularly vicious creatures may still attack you, at least they’ll accord you proper respect. (For Ways of the Town, this still applies to town animals, of which there are plenty in the medieval world, rather than people. The +3 bonus does apply to people.) You may choose this Virtue multiple times, for different types of terrain.",
-    virtue_type: "General",
-    book: "Core",
+    creation_max: 3,
     major: true)
 
   wealthy = Virtue.create!(name: "Wealthy",

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_07_165208) do
+ActiveRecord::Schema.define(version: 2021_04_05_020305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,10 +78,9 @@ ActiveRecord::Schema.define(version: 2019_10_07_165208) do
   create_table "flaw_associations", force: :cascade do |t|
     t.integer "flaw_id"
     t.integer "character_id"
+    t.string "special"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "special_one"
-    t.string "special_two"
     t.index ["character_id"], name: "index_flaw_associations_on_character_id"
     t.index ["flaw_id", "character_id"], name: "index_flaw_associations_on_flaw_id_and_character_id"
   end
@@ -94,6 +93,7 @@ ActiveRecord::Schema.define(version: 2019_10_07_165208) do
     t.boolean "major"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "creation_max"
     t.index ["book"], name: "index_flaws_on_book"
     t.index ["flaw_type"], name: "index_flaws_on_flaw_type"
     t.index ["major"], name: "index_flaws_on_major"
@@ -114,10 +114,9 @@ ActiveRecord::Schema.define(version: 2019_10_07_165208) do
   create_table "virtue_associations", force: :cascade do |t|
     t.integer "virtue_id"
     t.integer "character_id"
+    t.string "special"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "special_one"
-    t.string "special_two"
     t.index ["character_id"], name: "index_virtue_associations_on_character_id"
     t.index ["virtue_id", "character_id"], name: "index_virtue_associations_on_virtue_id_and_character_id"
   end
@@ -131,6 +130,7 @@ ActiveRecord::Schema.define(version: 2019_10_07_165208) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "free", default: false
+    t.integer "creation_max"
     t.index ["book"], name: "index_virtues_on_book"
     t.index ["major"], name: "index_virtues_on_major"
     t.index ["virtue_type"], name: "index_virtues_on_virtue_type"
