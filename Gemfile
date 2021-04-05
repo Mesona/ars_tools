@@ -62,11 +62,12 @@ group :development do
   gem "activesupport", ">= 5.2.4.3"
   gem "rack", ">= 2.1.4"
   gem "actionpack", ">= 5.2.4.3"
-  gem "actionview", ">= 5.2.4.3"
-  gem "nokogiri", ">= 1.10.8"
+  gem "actionview", ">= 5.2.4.4"
+  gem "nokogiri", ">= 1.11.0"
   gem "rake", ">= 12.3.3"
   gem "websocket-extensions", ">= 0.1.5"
   gem "activestorage", ">= 5.2.4.3"
+  gem "activerecord", ">= 5.2.4.5"
 end
 
 group :test do
