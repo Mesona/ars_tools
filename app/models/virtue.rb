@@ -2,16 +2,16 @@
 #
 # Table name: virtues
 #
-#  id          :bigint(8)        not null, primary key
-#  name        :string           not null
-#  description :text             not null
-#  book        :string           not null
-#  virtue_type :string           not null
-#  major       :boolean
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  free        :boolean          default(FALSE)
-#  special     :boolean          default(FALSE)
+#  id           :bigint           not null, primary key
+#  name         :string           not null
+#  description  :text             not null
+#  book         :string           not null
+#  virtue_type  :string           not null
+#  major        :boolean
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  free         :boolean          default(FALSE)
+#  creation_max :integer
 #
 
 class Virtue < ApplicationRecord

@@ -2,7 +2,7 @@
 #
 # Table name: characters
 #
-#  id             :bigint(8)        not null, primary key
+#  id             :bigint           not null, primary key
 #  character_type :string           not null
 #  name           :string           not null
 #  user_id        :integer          not null
@@ -19,6 +19,7 @@
 #  age            :integer          default(0)
 #  appearant_age  :integer          default(0)
 #  gender         :string
+#  created        :boolean          default(FALSE)
 #
 
 require 'rails_helper'
