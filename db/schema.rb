@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 2021_04_05_020305) do
     t.boolean "major"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "creation_max"
+    t.integer "creation_max", default: 1
     t.index ["book"], name: "index_flaws_on_book"
     t.index ["flaw_type"], name: "index_flaws_on_flaw_type"
     t.index ["major"], name: "index_flaws_on_major"
@@ -130,7 +130,7 @@ ActiveRecord::Schema.define(version: 2021_04_05_020305) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "free", default: false
-    t.integer "creation_max"
+    t.integer "creation_max", default: 1
     t.index ["book"], name: "index_virtues_on_book"
     t.index ["major"], name: "index_virtues_on_major"
     t.index ["virtue_type"], name: "index_virtues_on_virtue_type"

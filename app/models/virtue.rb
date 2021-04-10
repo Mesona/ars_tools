@@ -11,7 +11,7 @@
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  free         :boolean          default(FALSE)
-#  creation_max :integer
+#  creation_max :integer          default(1)
 #
 
 class Virtue < ApplicationRecord
