@@ -52,6 +52,7 @@ class CharacterCreateVirtues extends React.Component {
     }));
 
     this.props.requestAllAbilities();
+    console.log("VIRTUES STATS:", this.state)
 
   }
 

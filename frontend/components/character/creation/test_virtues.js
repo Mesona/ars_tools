@@ -1,12 +1,12 @@
 import React from 'react';
 import CharacterCreatePerksContainer from './create_perks_container';
+import CharacterCreatePerks from './create_perks';
 
 class CharacterCreateVirtues extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      currentCharacter: null,
       perks: null,
       classifications: [],
       perkType: null,
@@ -18,24 +18,23 @@ class CharacterCreateVirtues extends React.Component {
   } 
 
   componentDidMount() {
+    console.log("TEST VIRTUES PROPS:", this.props);
     if (this.props.history.location.pathname.includes('virtues')) {
       this.setState({perkType: "virtues"});
       this.props.requestAllVirtues()
         .then(response => this.setClassifications(response, "virtues"));
-
     } else if (this.props.history.location.pathname.includes('flaws')) {
       this.setState({perkType: "flaws"});
       this.props.requestAllFlaws()
         .then(response => this.setClassifications(response, "flaws"));
-
     }
-
-    this.props.requestCharacter(this.props.match.params.characterId)
-      .then( response => this.setState({ currentCharacter: response.character }));
 
   }
 
   setClassifications(response, perkType) {
+    console.log("INSIDE CLASSIFICATION");
+    console.log("REPSONSE:", response);
+    console.log("PT:", perkType);
     let perksArray = [];
     let classifications = [];
 
@@ -68,6 +67,7 @@ class CharacterCreateVirtues extends React.Component {
       perks: perksArray,
       classifications: classifications
     }, () => {
+      console.log("TEST VIRTUES STATE:", this.state)
       this.unpauseRender();
     });
  }
@@ -90,15 +90,14 @@ class CharacterCreateVirtues extends React.Component {
       return (
         <>
           {this.state.perkType === "virtues" ?
-            <CharacterCreatePerksContainer
-              currentCharacter={this.state.currentCharacter}
+            // <CharacterCreatePerksContainer
+            <CharacterCreatePerks
               perkType={"virtue"}
               perks={this.state.perks}
               classifications={this.state.classifications}
             />
           :
             <CharacterCreatePerksContainer
-              currentCharacter={this.state.currentCharacter}
               perkType={"flaw"}
               perks={this.state.perks}
               classifications={this.state.classifications}

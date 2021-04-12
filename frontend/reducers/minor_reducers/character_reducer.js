@@ -5,6 +5,7 @@ import {
   RECEIVE_CHARACTER,
   REMOVE_CHARACTER,
   RESET_CHARACTERS,
+  CREATE_CHARACTER,
 } from '../../actions/character_actions';
 
 const CharactersReducer = (state = {}, action) => {
@@ -16,6 +17,9 @@ const CharactersReducer = (state = {}, action) => {
     case RECEIVE_CHARACTER:
       character = action.character;
       return merge({}, state, { [action.character.id]: character });
+    case CREATE_CHARACTER:
+      character = action.character;
+      return merge({}, state, { "currentCharacter": character});
     case REMOVE_CHARACTER:
       character = merge({}, state);
       delete character[action.characterId];

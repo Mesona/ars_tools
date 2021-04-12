@@ -1,3 +1,27 @@
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+import { requestAllVirtues } from '../../../actions/virtue_actions';
+import { requestAllFlaws } from '../../../actions/flaw_actions';
+import { storeVirtue, deleteVirtue, storeFlaw, deleteFlaw } from '../../../actions/create_virtues_and_flaws_actions';
+import { requestAllAbilities } from '../../../actions/ability_actions';
+
+const mapStateToProps = (state) => ({
+  currentPerks: state.entities.createVirtuesAndFlaws,
+  currentCharacter: state.entities.characters.currentCharacter,
+});
+
+const mapDispatchToProps = dispatch => ({
+  requestAllVirtues: () => dispatch(requestAllVirtues()),
+  requestAllFlaws: () => dispatch(requestAllFlaws()),
+  storeVirtue: (virtue) => dispatch(storeVirtue(virtue)),
+  deleteVirtue: (virtue) => dispatch(deleteVirtue(virtue)),
+  storeFlaw: (flaw) => dispatch(storeFlaw(flaw)),
+  deleteFlaw: (flaw) => dispatch(deleteFlaw(flaw)),
+  requestAllAbilities: () => dispatch(requestAllAbilities()),
+});
+
+
 import React from 'react';
 import UniquePerkContainer from './create_unique_perk_container';
 import { Link } from 'react-router-dom';
@@ -7,18 +31,14 @@ class CharacterCreatePerks extends React.Component {
     super(props);
 
     this.state = {
-      virtuePoints: 0,
-      flawPoints: 0,
-      minorFlaws: 0,
-      currentVirtues: {},
-      currentFlaws: {},
-      perkPointText: "",
-      show: this.props.classifications,
-      perks: [],
       currentCharacter: this.props.currentCharacter,
+      TEMP_PERKS: this.props.perks,
+      perkType: this.props.perkType,
+      show: this.props.classifications,
     };
 
     this.generatePerkFields = this.generatePerkFields.bind(this);
+    this.generateInitialStates = this.generateInitialStates.bind(this);
     this.initialPerkStateUpdate = this.initialPerkStateUpdate.bind(this);
     this.disablePerks = this.disablePerks.bind(this);
     this.disablePerkType = this.disablePerkType.bind(this);
@@ -33,21 +53,62 @@ class CharacterCreatePerks extends React.Component {
     this.updateDisabledTypes = this.updateDisabledTypes.bind(this);
   } 
 
+  generateInitialStates() {
+    let currentCharacter = this.state.currentCharacter;
+    let perks = Object.assign({}, currentCharacter.virtues, currentCharacter.flaws);
+    let minorVirtues = 0;
+    let minorFlaws = 0;
+    console.log("CURRENT CHARACTER:", currentCharacter)
+    console.log("PERKS:", perks)
+    console.log("KEYS:", Object.keys(perks));
+    for (let i = 0; i < Object.keys(perks).length; i++) {
+      let perkIndex = Object.keys(perks)[i];
+      let thisPerk = perks[perkIndex]
+      if (thisPerk.major === false) {
+        if (thisPerk.virute_type) {  // implies is a virtue
+          minorVirtues += 1;
+        } else {
+          minorFlaws += 1;
+        }
+      }
+    }
+
+    let flawPoints = Object.keys(currentCharacter.flaws).length - minorFlaws;  // # of major flaws
+    flawPoints = (flawPoints * 3) + minorFlaws;
+    let virtuePoints = Object.keys(currentCharacter.virtues).length - minorVirtues;
+    virtuePoints = (virtuePoints * 3) + minorVirtues;
+
+    this.setState({
+      "minorFlaws": minorFlaws,
+      "minorVirtues": minorVirtues,
+      "flawPoints": flawPoints,
+      "virtuePoints": virtuePoints,
+      "perkPointText": "",
+    }, function () {
+      this.initialPerkStateUpdate();
+    });
+  }
+
   componentDidMount() {
+    // TODO: Enable ability to resume an incomplete character creation
     // In case someone loads the virtues page on an incomplete character
     // that got through initial generation but never finalized
-    if (this.props.currentCharacter === undefined) {
-      this.props.requestCharacter(this.props.match.params.characterId)
-      .then( response => this.setState({  currentCharacter: response.character,
-                                          currentVirtues: response.character.virtues,
-                                          currentFlaws: response.character.flaws,
-                                        }, function () {
-                                          this.props.requestAllAbilities();
-                                          this.establishPerkHelperText();
-                                          // this.generatePerkFields();
-                                        }));
-    }
-    this.generatePerkFields();
+    // if (this.props.currentCharacter === undefined) {
+    //   this.props.requestCharacter(this.props.match.params.characterId)
+    //   .then( response => this.setState({  currentCharacter: response.character,
+    //                                       currentVirtues: response.character.virtues,
+    //                                       currentFlaws: response.character.flaws,
+    //                                     }, function () {
+    //                                       this.props.requestAllAbilities();
+    //                                       this.establishPerkHelperText();
+    //                                       // this.generatePerkFields();
+    //                                     }));
+    // }
+    console.log("CREATE PERKS STATE:", this.state);
+    console.log("CREATE PERKS PROPS:", this.props);
+    this.generateInitialStates();
+    // this.generatePerkFields();
+    this.establishPerkHelperText();
   }
 
   componentDidUpdate(prevProps) {
@@ -464,7 +525,7 @@ class CharacterCreatePerks extends React.Component {
 
           <br></br>
           <hr></hr>
-          {this.props.classifications.map(classification => (
+          {/* {this.props.classifications.map(classification => (
             <React.Fragment key={classification}>
               <p>{classification}</p>
               <span onClick={() => this.handleShow(classification)}>
@@ -557,11 +618,11 @@ class CharacterCreatePerks extends React.Component {
                 ) : null}
               </div>
             </React.Fragment>
-          ))}
+          ))} */}
         </div>
       );
     }
   }
 };
 
-export default CharacterCreatePerks;
+export default connect(mapStateToProps, mapDispatchToProps)(CharacterCreatePerks);

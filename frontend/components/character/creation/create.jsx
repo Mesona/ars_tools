@@ -5,6 +5,8 @@ import CharacterCreateInitial from './create_initial';
 import CharacterCreateStats from './create_stats';
 import CharacterCreateVirtuesContainer from './test_virtues_container';
 import CharacterCreateFlawsContainer from './create_flaws_container';
+import CharacterCreatePerks from './create_perks';
+import TestVirtuesContainer from './test_virtues_container';
 
 class CharacterCreate extends React.Component {
   constructor(props) {
@@ -27,8 +29,9 @@ class CharacterCreate extends React.Component {
         />
 
         <Route
-          path={`${match.path}/virtues/:characterId`}
-          component={CharacterCreateVirtuesContainer}
+          path={`${match.path}/virtues`}
+          // component={CharacterCreatePerks}
+          component={TestVirtuesContainer}
         />
 
         <Route

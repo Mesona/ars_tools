@@ -9,7 +9,7 @@ import CharacterCreate from './create';
 
 const mapStateToProps = (state, ownProps) => ({
   currentUser: state.session.currentUser,
-  currentCharacter: state.entities.characters[ownProps.match.params.characterId],
+  currentCharacter: state.entities.characters.currentCharacter,
   page: ownProps.page,
   match: ownProps.match,
 });
@@ -17,13 +17,8 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = dispatch => ({
   requestAllVirtues: () => dispatch(requestAllVirtues()),
   requestAllFlaws: () => dispatch(requestAllFlaws()),
-  createCharacter: (character) => dispatch(createCharacter(character)),
-  requestCharacter: (id) => dispatch(requestCharacter(id)),
-  updateCharacter: (character) => dispatch(updateCharacter(character)),
   storeVirtue: (virtue) => dispatch(storeVirtue(virtue)),
-  storeVirtues: (virtues) => dispatch(storeVirtues(virtues)),
   storeFlaw: (flaw) => dispatch(storeFlaw(flaw)),
-  storeFlaws: (flaws) => dispatch(storeFlaws(flaws)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CharacterCreate));

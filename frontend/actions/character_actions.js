@@ -3,6 +3,7 @@ import * as CharactersAPIUtils from '../util/character_utils';
 export const RECEIVE_ALL_CHARACTERS = 'RECEIVE_ALL_CHARACTERS';
 export const RECEIVE_CHARACTER = 'RECEIVE_CHARACTER';
 export const CREATE_CHARACTER = 'CREATE_CHARACTER';
+export const POST_CHARACTER = 'POST_CHARACTER';
 export const REMOVE_CHARACTER = 'REMOVE_CHARACTER';
 export const RECEIVE_CHARACTER_ERRORS = 'RECEIVE_CHARACTER_ERRORS';
 export const RESET_CHARACTERS = 'RESET_CHARACTERS';
@@ -21,6 +22,11 @@ const receiveCharacter = character => ({
 const removeCharacter = characterId => ({
   type: REMOVE_CHARACTER,
   characterId,
+});
+
+const initializeCharacter = character => ({
+  type: CREATE_CHARACTER,
+  character,
 });
 
 export const resetCharacters = () => ({
@@ -48,10 +54,17 @@ export const requestCharacter = id => dispatch => (
       errors => dispatch(receiveCharacterErrors(errors.responseJSON)))
 );
 
-export const createCharacter = character => dispatch => (
+export const postCharacter = character => dispatch => (
   CharactersAPIUtils.postCharacter(character)
     .then(character => dispatch(receiveCharacter(character)),
       errors => dispatch(receiveCharacterErrors(errors.responseJSON)))
+);
+
+export const createCharacter = character => dispatch => (
+  dispatch(initializeCharacter(character)),
+    errors => dispatch(receiveCharacterErrors(errors.responseJSON))
+    // .then(character => dispatch(receiveCharacter(character)),
+    //   errors => dispatch(receiveCharacterErrors(errors.responseJSON)))
 );
 
 export const updateCharacter = character => dispatch => (

@@ -1,5 +1,11 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { createCharacter } from "../../../actions/character_actions";
+import { connect } from 'react-redux';
+
+const mapDispatchtoProps = dispatch => ({
+  createCharacter: (character) => dispatch(createCharacter(character)),
+});
 
 class CharacterCreateInitial extends React.Component {
  constructor(props) {
@@ -16,16 +22,34 @@ class CharacterCreateInitial extends React.Component {
 
    this.handleSubmit = this.handleSubmit.bind(this);
    this.update = this.update.bind(this);
+   this.setDefaults = this.setDefaults.bind(this);
 
    this.showDropdownMenu = this.showDropdownMenu.bind(this);
    this.hideDropdownMenu = this.hideDropdownMenu.bind(this);
  } 
 
+ setDefaults(partial_character) {
+   // assumes Name, Type, and Gender are already provided
+   let character = {};
+   character = Object.assign(character, partial_character);
+   character.virtues = {};
+   character.flaws = {};
+
+   return character;
+ }
+
  handleSubmit(e) {
     e.preventDefault();
     let currentCharacter = Object.assign({}, this.state.currentCharacter);
-    this.props.createCharacter(currentCharacter)
-      .then((response) => this.props.history.push(`/characters/new/virtues/${response.character.id}`));
+    currentCharacter = this.setDefaults(currentCharacter);
+    this.setState({currentCharacter: currentCharacter}, () => {
+      console.log("STATE 1:", this.state);
+      this.props.createCharacter(currentCharacter);
+      this.props.history.push(`/characters/new/virtues`);
+    });
+    //this.props.history.push(`/characters/virtues`);
+    // this.props.createCharacter(currentCharacter)
+    //   .then((response) => this.props.history.push(`/characters/new/virtues/${response.character.id}`));
   }
 
   update(field) {
@@ -126,7 +150,8 @@ class CharacterCreateInitial extends React.Component {
 
         <div>
           {/* <span onClick={this.handleSubmit} className="fake-url">Next</span> */}
-          <Link to={`/${this.props.match.path}/virtues/:characterId`} onClick={this.handleSubmit}>Next</Link>
+          <Link to={`/${this.props.match.path}/virtues`} onClick={this.handleSubmit}>Next</Link>
+          {/* <Link to={`/${this.props.match.path}/virtues/:characterId`} onClick={this.handleSubmit}>Next</Link> */}
         </div>
 
         <Link to={`/`}>
@@ -138,4 +163,4 @@ class CharacterCreateInitial extends React.Component {
   }
 };
 
-export default withRouter(CharacterCreateInitial);
+export default withRouter(connect( null, mapDispatchtoProps)(CharacterCreateInitial));
