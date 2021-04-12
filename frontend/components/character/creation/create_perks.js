@@ -32,7 +32,7 @@ class CharacterCreatePerks extends React.Component {
 
     this.state = {
       currentCharacter: this.props.currentCharacter,
-      TEMP_PERKS: this.props.perks,
+      allPerks: this.props.perks,
       perkType: this.props.perkType,
       show: this.props.classifications,
     };
@@ -58,9 +58,6 @@ class CharacterCreatePerks extends React.Component {
     let perks = Object.assign({}, currentCharacter.virtues, currentCharacter.flaws);
     let minorVirtues = 0;
     let minorFlaws = 0;
-    console.log("CURRENT CHARACTER:", currentCharacter)
-    console.log("PERKS:", perks)
-    console.log("KEYS:", Object.keys(perks));
     for (let i = 0; i < Object.keys(perks).length; i++) {
       let perkIndex = Object.keys(perks)[i];
       let thisPerk = perks[perkIndex]
@@ -104,10 +101,8 @@ class CharacterCreatePerks extends React.Component {
     //                                       // this.generatePerkFields();
     //                                     }));
     // }
-    console.log("CREATE PERKS STATE:", this.state);
-    console.log("CREATE PERKS PROPS:", this.props);
     this.generateInitialStates();
-    // this.generatePerkFields();
+    this.generatePerkFields();
     this.establishPerkHelperText();
   }
 
@@ -119,7 +114,7 @@ class CharacterCreatePerks extends React.Component {
   }
 
   generatePerkFields() {
-    let local_perks = this.props.perks;
+    let local_perks = this.state.allPerks;
 
     for (let i = 0; i < local_perks.length; i++) {
       local_perks[i].disabled = false;
@@ -139,8 +134,13 @@ class CharacterCreatePerks extends React.Component {
   }
 
   initialPerkStateUpdate() {
-    const { currentPerks } = this.props;
-    const { currentCharacter } = this.state; 
+    const { currentCharacter } = this.props; 
+    let currentPerks = {};
+    if (this.perkType === "virtues") {
+      currentPerks = currentCharacter.virtues;
+    } else if (this.perkType === "flaws") {
+      currentPerks = currentCharacter.flaws;
+    }
 
     // Character type validations, always disabled
     if (currentCharacter.character_type === "grog") {
@@ -169,12 +169,15 @@ class CharacterCreatePerks extends React.Component {
 
     // Perks disabled upon load based on already established Perks
     for (let i = 0; i < currentPerks.length; i++) {
-      this.validation(currentPerks[i]);
+      let currentPerkIdx = Object.keys(currentPerks)[i];
+      let currentPerk = currentPerks[currentPerkIdx];
+      this.validation(currentPerk);
     }
 
-    if (this.props.currentVirtuesAndFlaws !== undefined) {
-      this.calculatePerkPoints();
-    }
+    this.calculatePerkPoints();
+    // if (this.props.currentVirtuesAndFlaws !== undefined) {
+    //   this.calculatePerkPoints();
+    // }
   }
 
   disablePerks() {
@@ -399,10 +402,10 @@ class CharacterCreatePerks extends React.Component {
 
     let totalVirtues = minorVirtues + (majorVirtues * 3);
     let totalFlaws = minorFlaws + (majorFlaws * 3);
-    console.log("CALC POINTS")
-    console.log(totalVirtues)
-    console.log(this.props.currentPerks)
-    console.log("CALC POINTS END")
+    // console.log("CALC POINTS")
+    // console.log(totalVirtues)
+    // console.log(this.props.currentPerks)
+    // console.log("CALC POINTS END")
 
     if (this.props.perkType === "virtue") {
       this.updateDisabledTypes(totalVirtues, "virtues");
@@ -427,9 +430,7 @@ class CharacterCreatePerks extends React.Component {
     // console.log(minorVirtues)
     // TODO: Simplify this ugliness
     if (perkType === "virtues") {
-      console.log('test')
       let virtuePoints = this.state.virtuePoints;
-      console.log(virtuePoints)
       // If we have added a non-free virtue
       if (value > virtuePoints && value > 7) {
         if (value > 9) {
@@ -443,7 +444,6 @@ class CharacterCreatePerks extends React.Component {
           });
         }
       } else if (value < virtuePoints && virtuePoints > 7) {
-        console.log("ya")
         if (value < 7) {
           this.setState({ virtuePoints: value }, () => {
             this.disablePerkType("major", false, 'undo');
@@ -539,7 +539,7 @@ class CharacterCreatePerks extends React.Component {
                       <p onClick={() => this.test("major", classification)}>
                         Major {this.props.perkType}
                       </p>
-                      {this.state.perks
+                      {this.props.perks
                         .filter(
                           perks => (
                             perks.perk_type === classification &&

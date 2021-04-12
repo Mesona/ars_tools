@@ -43,7 +43,6 @@ class CharacterCreateInitial extends React.Component {
     let currentCharacter = Object.assign({}, this.state.currentCharacter);
     currentCharacter = this.setDefaults(currentCharacter);
     this.setState({currentCharacter: currentCharacter}, () => {
-      console.log("STATE 1:", this.state);
       this.props.createCharacter(currentCharacter);
       this.props.history.push(`/characters/new/virtues`);
     });

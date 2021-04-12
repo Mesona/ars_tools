@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import UniquePerk from './create_unique_perk';
 
 const mapStateToProps = (state, ownProps) => ({
-  currentCharacter: state.entities.characters[ownProps.match.params.characterId],
+  currentCharacter: state.entities.characters.currentCharacter,
   currentPerks: state.entities.createVirtuesAndFlaws,
   abilities: state.entities.abilities,
 });

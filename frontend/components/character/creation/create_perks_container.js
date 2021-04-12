@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => ({
   // currentVirtues: state.entities.createVirtuesAndFlaws,
   // currentFlaws: state.entities.createVirtuesAndFlaws,
   currentPerks: state.entities.createVirtuesAndFlaws,
-  currentCharacter: state.entities.characters[ownProps.match.params.characterId],
+  currentCharacter: state.entities.characters.currentCharacter,
   // currentCharacter: state.entities.characters[ownProps.match.params.characterId],
 });
 

@@ -84,6 +84,8 @@ class UniquePerk extends React.Component {
     const SELECT_A_FORM = "Select a form . . .";
     const SELECT_A_REALM = "Select a realm . . .";
     const artOptions = this.state.formOptions.concat(this.state.techniqueOptions);
+    console.log("UP PROPS:", this.props)
+    console.log("UP STATE:", this.state)
 
     // Determines if the current perk uses special_two or not, as well as if
     // any other startup methods need to be called
