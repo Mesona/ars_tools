@@ -7,7 +7,6 @@ import { storeVirtue, deleteVirtue, storeFlaw, deleteFlaw } from '../../../actio
 import { requestAllAbilities } from '../../../actions/ability_actions';
 
 const mapStateToProps = (state) => ({
-  currentPerks: state.entities.createVirtuesAndFlaws,
   currentCharacter: state.entities.characters.currentCharacter,
 });
 
@@ -25,6 +24,7 @@ const mapDispatchToProps = dispatch => ({
 import React from 'react';
 import UniquePerkContainer from './create_unique_perk_container';
 import { Link } from 'react-router-dom';
+import merge from 'lodash/merge';
 
 class CharacterCreatePerks extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class CharacterCreatePerks extends React.Component {
 
     this.state = {
       currentCharacter: this.props.currentCharacter,
-      allPerks: this.props.perks,
+      perks: this.props.perks,
       perkType: this.props.perkType,
       show: this.props.classifications,
     };
@@ -108,33 +108,34 @@ class CharacterCreatePerks extends React.Component {
 
   componentDidUpdate(prevProps) {
     // Best way I found to enforce synchronise calue updating
-    if (prevProps.currentPerks !== this.props.currentPerks) {
+    if (prevProps.perks !== this.props.perks) {
       this.calculatePerkPoints();
     }
   }
 
   generatePerkFields() {
-    let local_perks = this.state.allPerks;
+    let perks = this.state.perks;
+    console.log("GENERATE PERKS:", perks)
 
-    for (let i = 0; i < local_perks.length; i++) {
-      local_perks[i].disabled = false;
+    for (let i = 0; i < perks.length; i++) {
+      perks[i].disabled = false;
       // Included array idx to speed up lookup
-      local_perks[i].idx = i;
-      local_perks[i].disabled_count = 0;
+      perks[i].idx = i;
+      perks[i].disabled_count = 0;
       if (this.props.perkType === "virtue") {
-        local_perks[i].perk_type = local_perks[i].virtue_type;
+        perks[i].perk_type = perks[i].virtue_type;
       } else {
-        local_perks[i].perk_type = local_perks[i].flaw_type;
+        perks[i].perk_type = perks[i].flaw_type;
       }
     }
 
-    this.setState({ perks: local_perks }, function () {
+    this.setState({ perks: perks }, function () {
       this.initialPerkStateUpdate();
     });
   }
 
   initialPerkStateUpdate() {
-    const { currentCharacter } = this.props; 
+    const { currentCharacter } = this.state; 
     let currentPerks = {};
     if (this.perkType === "virtues") {
       currentPerks = currentCharacter.virtues;
@@ -286,6 +287,8 @@ class CharacterCreatePerks extends React.Component {
 
   handlePerk(checkBox, perk, childData = null) {
     let storePerk, deletePerk;
+    // console.log("CB:", checkBox)
+    // console.log("PERK:", perk)
     if (this.props.perkType === "virtue") {
       storePerk = this.props.storeVirtue;
       deletePerk = this.props.deleteVirtue;
@@ -379,10 +382,13 @@ class CharacterCreatePerks extends React.Component {
     let minorVirtues = 0;
     let majorFlaws = 0;
     let minorFlaws = 0;
-    let currentPerks = this.props.currentPerks;
+    let currentVirtues = this.state.currentCharacter.virutes;
+    let currentFlaws = this.state.currentCharacter.flaws;
+    let currentPerks = merge({}, currentFlaws, currentVirtues);
 
     Object.keys(currentPerks).forEach( perkIndex => {
       let perk = currentPerks[perkIndex];
+      console.log("CURRENT PERKL", perk)
       if (perk.virtue_type !== undefined) {
         if (perk.free === false) {
           if (perk.major === true) {
@@ -525,7 +531,7 @@ class CharacterCreatePerks extends React.Component {
 
           <br></br>
           <hr></hr>
-          {/* {this.props.classifications.map(classification => (
+          {this.props.classifications.map(classification => (
             <React.Fragment key={classification}>
               <p>{classification}</p>
               <span onClick={() => this.handleShow(classification)}>
@@ -618,7 +624,7 @@ class CharacterCreatePerks extends React.Component {
                 ) : null}
               </div>
             </React.Fragment>
-          ))} */}
+          ))}
         </div>
       );
     }

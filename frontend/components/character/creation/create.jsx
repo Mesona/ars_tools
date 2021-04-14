@@ -3,10 +3,7 @@ import { withRouter, Route, Router, browserHistory } from 'react-router-dom';
 
 import CharacterCreateInitial from './create_initial';
 import CharacterCreateStats from './create_stats';
-import CharacterCreateVirtuesContainer from './test_virtues_container';
-import CharacterCreateFlawsContainer from './create_flaws_container';
-import CharacterCreatePerks from './create_perks';
-import TestVirtuesContainer from './test_virtues_container';
+import CharacterEstablishPerks from './establish_perks';
 
 class CharacterCreate extends React.Component {
   constructor(props) {
@@ -31,12 +28,14 @@ class CharacterCreate extends React.Component {
         <Route
           path={`${match.path}/virtues`}
           // component={CharacterCreatePerks}
-          component={TestVirtuesContainer}
+          component={CharacterEstablishPerks}
         />
 
         <Route
-          path={`${match.path}/flaws/:characterId`}
-          component={CharacterCreateFlawsContainer}
+          path={`${match.path}/flaws`}
+          // path={`${match.path}/flaws/:characterId`}
+          // component={CharacterCreateFlawsContainer}
+          component={CharacterEstablishPerks}
         />
       </>
 

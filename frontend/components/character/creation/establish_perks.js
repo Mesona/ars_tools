@@ -1,8 +1,22 @@
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+import { requestAllVirtues } from '../../../actions/virtue_actions';
+import { requestAllFlaws } from '../../../actions/flaw_actions';
+// import CharacterCreateVirtues from './test_virtues';
+
+const mapDispatchToProps = dispatch => ({
+  requestAllVirtues: () => dispatch(requestAllVirtues()),
+  requestAllFlaws: () => dispatch(requestAllFlaws()),
+});
+
+
+
+
 import React from 'react';
-import CharacterCreatePerksContainer from './create_perks_container';
 import CharacterCreatePerks from './create_perks';
 
-class CharacterCreateVirtues extends React.Component {
+class CharacterEstablishPerks extends React.Component {
   constructor(props) {
     super(props);
 
@@ -32,35 +46,25 @@ class CharacterCreateVirtues extends React.Component {
   }
 
   setClassifications(response, perkType) {
-    console.log("INSIDE CLASSIFICATION");
-    console.log("REPSONSE:", response);
-    console.log("PT:", perkType);
     let perksArray = [];
     let classifications = [];
-
     
     if (perkType === "virtues") {
       for (let i = 0; i < response.virtues.length; i++) {
-        perksArray.push(response.virtues[i]);
-      }
-
-      response.virtues.forEach((virtue) => {
-        if (!classifications.includes(virtue.virtue_type) && virtue.virtue_type !== "") {
-          classifications.push(virtue.virtue_type);
+        let this_virtue = response.virtues[i];
+        perksArray.push(this_virtue);
+        if (!classifications.includes(this_virtue.virtue_type) && this_virtue.virtue_type !== "") {
+          classifications.push(this_virtue.virtue_type);
         }      
-      });
-
-      this.setState({ classifications: classifications });
+      }
     } else {
       for (let i = 0; i < response.flaws.length; i++) {
-        perksArray.push(response.flaws[i]);
-      }
-
-      response.flaws.forEach((flaw) => {
-        if (!classifications.includes(flaw.flaw_type) && flaw.flaw_type !== "") {
-          classifications.push(flaw.flaw_type);
+        let this_flaw = response.flaws[i]
+        perksArray.push(this_flaw);
+        if (!classifications.includes(this_flaw.flaw_type) && this_flaw.flaw_type !== "") {
+          classifications.push(this_flaw.flaw_type);
         }      
-      });
+      }
     }
     
     this.setState({
@@ -90,14 +94,13 @@ class CharacterCreateVirtues extends React.Component {
       return (
         <>
           {this.state.perkType === "virtues" ?
-            // <CharacterCreatePerksContainer
             <CharacterCreatePerks
               perkType={"virtue"}
               perks={this.state.perks}
               classifications={this.state.classifications}
             />
           :
-            <CharacterCreatePerksContainer
+            <CharacterCreatePerks
               perkType={"flaw"}
               perks={this.state.perks}
               classifications={this.state.classifications}
@@ -109,4 +112,4 @@ class CharacterCreateVirtues extends React.Component {
   }
 };
 
-export default CharacterCreateVirtues;
+export default withRouter(connect(null, mapDispatchToProps)(CharacterEstablishPerks));
