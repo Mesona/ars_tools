@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter, Route, Router, browserHistory } from 'react-router-dom';
+import { withRouter, Route, Redirect, Router, browserHistory } from 'react-router-dom';
 
 import CharacterCreateInitial from './create_initial';
 import CharacterCreateStats from './create_stats';
@@ -27,14 +27,18 @@ class CharacterCreate extends React.Component {
 
         <Route
           path={`${match.path}/virtues`}
-          // component={CharacterCreatePerks}
-          component={CharacterEstablishPerks}
+          // component={CharacterEstablishPerks}
+          render={() => {
+            return (
+              this.props.currentCharacter === undefined ?
+              <Redirect to="/characters/new/gen" /> :
+              <Redirect to={path} />
+            )
+          }}
         />
 
         <Route
           path={`${match.path}/flaws`}
-          // path={`${match.path}/flaws/:characterId`}
-          // component={CharacterCreateFlawsContainer}
           component={CharacterEstablishPerks}
         />
       </>

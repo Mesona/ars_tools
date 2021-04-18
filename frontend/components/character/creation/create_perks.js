@@ -1,10 +1,11 @@
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Route } from 'react-router-dom';
 
 import { requestAllVirtues } from '../../../actions/virtue_actions';
 import { requestAllFlaws } from '../../../actions/flaw_actions';
 import { storeVirtue, deleteVirtue, storeFlaw, deleteFlaw } from '../../../actions/create_virtues_and_flaws_actions';
 import { requestAllAbilities } from '../../../actions/ability_actions';
+import CharacterCreateInitial from './create_initial';
 
 const mapStateToProps = (state) => ({
   currentCharacter: state.entities.characters.currentCharacter,
@@ -33,7 +34,6 @@ class CharacterCreatePerks extends React.Component {
     this.state = {
       currentCharacter: this.props.currentCharacter,
       perks: this.props.perks,
-      perkType: this.props.perkType,
       show: this.props.classifications,
     };
 
@@ -45,6 +45,7 @@ class CharacterCreatePerks extends React.Component {
     this.establishPerkHelperText = this.establishPerkHelperText.bind(this);
 
     // this.update = this.update.bind(this);
+    this.generateArray = this.generateArray.bind(this)
     this.handlePerk = this.handlePerk.bind(this);
     this.validation = this.validation.bind(this);
     this.handleShow = this.handleShow.bind(this);
@@ -53,16 +54,25 @@ class CharacterCreatePerks extends React.Component {
     this.updateDisabledTypes = this.updateDisabledTypes.bind(this);
   } 
 
+  generateArray(len) {
+    var arr = new Array(len);
+    for (var i=0; i<len; i++) {
+      arr[i] = i + i;
+    }
+    return arr;
+  }
+
   generateInitialStates() {
     let currentCharacter = this.state.currentCharacter;
     let perks = Object.assign({}, currentCharacter.virtues, currentCharacter.flaws);
     let minorVirtues = 0;
     let minorFlaws = 0;
+    console.log("PERKS:", perks)
     for (let i = 0; i < Object.keys(perks).length; i++) {
       let perkIndex = Object.keys(perks)[i];
       let thisPerk = perks[perkIndex]
       if (thisPerk.major === false) {
-        if (thisPerk.virute_type) {  // implies is a virtue
+        if (thisPerk.virute_type) {
           minorVirtues += 1;
         } else {
           minorFlaws += 1;
@@ -136,10 +146,11 @@ class CharacterCreatePerks extends React.Component {
 
   initialPerkStateUpdate() {
     const { currentCharacter } = this.state; 
+    const { perkType } = this.props;
     let currentPerks = {};
-    if (this.perkType === "virtues") {
+    if (perkType === "virtues") {
       currentPerks = currentCharacter.virtues;
-    } else if (this.perkType === "flaws") {
+    } else if (perkType === "flaws") {
       currentPerks = currentCharacter.flaws;
     }
 
@@ -287,12 +298,14 @@ class CharacterCreatePerks extends React.Component {
 
   handlePerk(checkBox, perk, childData = null) {
     let storePerk, deletePerk;
-    // console.log("CB:", checkBox)
-    // console.log("PERK:", perk)
-    if (this.props.perkType === "virtue") {
+    let currentCharacter = this.state.currentCharacter;
+    const { perkType } = this.props;
+    console.log("CB:", checkBox)
+    console.log("PERK:", perk)
+    if (perkType === "virtue") {
       storePerk = this.props.storeVirtue;
       deletePerk = this.props.deleteVirtue;
-    } else if (this.props.perkType === "flaw") {
+    } else if (perkType === "flaw") {
       storePerk = this.props.storeFlaw;
       deletePerk = this.props.deleteFlaw;
     }
@@ -305,11 +318,23 @@ class CharacterCreatePerks extends React.Component {
     // Checks if the virtue is already "checked," and if it
     // it is, the virtue will be deleted rather than added
     if (checkBox) {
-      storePerk(perk);
+      storePerk(perk)
+      // if (perkType === "virtues") {
+      //   currentCharacter.virtues = merge({}, currentCharacter.virtues, perk)
+      // } else {
+      //   currentCharacter.flaws = merge({}, currentCharacter.flaws, perk)
+      // }
+      this.setState({ currentCharacter });
       this.validation(perk);
+
     } else {
       console.log("SHOULD BE DELETED")
       console.log(perk)
+      // if (perkType === "virtues") {
+        // REMINDER:  REWORK CURRENT VIRTUES/FLAWS HERE
+      //   currentCharacter.virtues.delete(perk)
+
+      // }
       deletePerk(perk);
       this.validation(perk, true);
     }
@@ -494,6 +519,13 @@ class CharacterCreatePerks extends React.Component {
     }
   }
 
+  // if (this.props.currentCharacter === undefined) {
+  //   <Route path="/characters/new/gen" component={CharacterCreateInitial} currentUser={this.props.currentUser}>
+  //     {console.log("YO")}
+  //   </Route>
+  //   // this.props.history.push(`/characters/new/gen`);
+  // }
+
   render () {
     if (this.props.currentCharacter === undefined && this.props.perks === undefined) { 
       return (
@@ -553,18 +585,27 @@ class CharacterCreatePerks extends React.Component {
                           )
                         )
                         .map(perk => (
-                          <div
-                            id={perk.id}
-                            className={`create-perk-hover ${perk.disabled}`}
-                            key={perk.id}
-                          >
-                            <UniquePerkContainer
-                              perk={perk}
-                              validate={this.validation}
-                              handleClick={this.handlePerk}
-                            />
-                            <hr></hr>
-                          </div>
+                          <>
+                            {/* {console.log("PERK TEST:", `${perk.id}${perk.id}`)} */}
+                            {this.generateArray(perk.creation_max).forEach((perkIdx) => {
+                              <div
+                                id={perk.id}
+                                perkIdx={perkIdx}
+                                className={`create-perk-hover ${perk.disabled}`}
+                                key={`${perk.id}${perkIdx}`}
+                              >
+                                {/* {console.log("PERK:", `${perk}`)}
+                                {console.log("PCM:", perk.creation_max)}
+                                {console.log("PERK TEST:", `${perk.id}--${perkIdx}`)} */}
+                                <UniquePerkContainer
+                                  perk={perk}
+                                  validate={this.validation}
+                                  handleClick={this.handlePerk}
+                                />
+                                <hr></hr>
+                              </div>
+                            })}
+                          </>
                         ))}
                     </div>
 
@@ -585,6 +626,8 @@ class CharacterCreatePerks extends React.Component {
                             className={`create-perk-hover ${perk.disabled}`}
                             key={perk.id}
                           >
+                            {/* {console.log("PERK:", `${perk}`)} */}
+                            {console.log("PERK ID:", `${perk.id}`)}
                             <UniquePerkContainer
                               perk={perk}
                               validate={this.validation}
