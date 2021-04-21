@@ -53,16 +53,16 @@ class CharacterEstablishPerks extends React.Component {
       for (let i = 0; i < response.virtues.length; i++) {
         let this_virtue = response.virtues[i];
         perksArray.push(this_virtue);
-        if (!classifications.includes(this_virtue.virtue_type) && this_virtue.virtue_type !== "") {
-          classifications.push(this_virtue.virtue_type);
+        if (!classifications.includes(this_virtue.perk_type) && this_virtue.perk_type !== "") {
+          classifications.push(this_virtue.perk_type);
         }      
       }
     } else {
       for (let i = 0; i < response.flaws.length; i++) {
         let this_flaw = response.flaws[i]
         perksArray.push(this_flaw);
-        if (!classifications.includes(this_flaw.flaw_type) && this_flaw.flaw_type !== "") {
-          classifications.push(this_flaw.flaw_type);
+        if (!classifications.includes(this_flaw.perk_type) && this_flaw.perk_type !== "") {
+          classifications.push(this_flaw.perk_type);
         }      
       }
     }
@@ -87,7 +87,7 @@ class CharacterEstablishPerks extends React.Component {
     if (this.state.unpause === false) {
       return (
         <>
-          Loaaaaaaaaaading . . .
+          Loading . . .
         </>
       )}
     else { 

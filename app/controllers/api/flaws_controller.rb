@@ -16,7 +16,7 @@ class Api::FlawsController < ApplicationController
 
   private
     def flaw_params 
-      params.require(:flaw).permit(:name, :description, :book, :flaw_type, :major)
+      params.require(:flaw).permit(:name, :description, :book, :perk_type, :major)
     end
   
 end

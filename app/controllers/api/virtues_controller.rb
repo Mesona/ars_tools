@@ -16,7 +16,7 @@ class Api::VirtuesController < ApplicationController
 
   private
     def virtue_params
-      params.require(:virtue).permit(:name, :description, :book, :virtue_type, :major, :free)
+      params.require(:virtue).permit(:name, :description, :book, :perk_type, :major, :free)
     end
 
 end

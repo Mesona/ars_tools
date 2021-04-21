@@ -116,19 +116,19 @@ RSpec.describe Character, type: :model do
     end
 
     it "should only take 'Inoffensive to Animals' if they are 'Mages' or have 'Magical Air'" do
-      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Inoffensive To Animals", virtue_type: "General"))
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Inoffensive To Animals", perk_type: "General"))
       expect { test_character.save! }.to raise_error("Validation failed: Virtues Only magi or individuals with the Flaw 'Magical Air' may take 'Inoffensive To Animals'")
     end
 
     it "should only take 'Inoffensive to Animals' if they are 'Mages' or have 'Magical Air'" do
-      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Inoffensive To Animals", virtue_type: "General"))
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Inoffensive To Animals", perk_type: "General"))
       FlawAssociation.create!(character: test_character, flaw: Flaw.find_by(name: "Magical Air"))
       expect(test_character.save!).to eq(true)
     end
 
     it "should only take 'Inoffensive to Animals' if they are 'Mages' or have 'Magical Air'" do
       test_character.character_type = "Mage"
-      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Inoffensive To Animals", virtue_type: "Hermetic"))
+      VirtueAssociation.create!(character: test_character, virtue: Virtue.find_by(name: "Inoffensive To Animals", perk_type: "Hermetic"))
       expect(test_character.save!).to eq(true)
     end
 

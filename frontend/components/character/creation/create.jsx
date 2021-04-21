@@ -32,15 +32,31 @@ class CharacterCreate extends React.Component {
             return (
               this.props.currentCharacter === undefined ?
               <Redirect to="/characters/new/gen" /> :
-              <Redirect to={path} />
+              <CharacterEstablishPerks
+                currentCharacter={this.props.currentCharacter}
+              />
             )
           }}
         />
 
         <Route
           path={`${match.path}/flaws`}
-          component={CharacterEstablishPerks}
+          // component={CharacterEstablishPerks}
+          render={() => {
+            return (
+              this.props.currentCharacter === undefined ?
+              <Redirect to="/characters/new/gen" /> :
+              <CharacterEstablishPerks
+                currentCharacter={this.props.currentCharacter}
+              />
+            )
+          }}
         />
+
+        {/* <Route
+          path={`${match.path}/flaws`}
+          component={CharacterEstablishPerks}
+        /> */}
       </>
 
     )

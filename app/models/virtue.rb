@@ -6,7 +6,7 @@
 #  name         :string           not null
 #  description  :text             not null
 #  book         :string           not null
-#  virtue_type  :string           not null
+#  perk_type    :string           not null
 #  major        :boolean
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null

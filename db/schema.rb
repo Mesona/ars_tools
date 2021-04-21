@@ -89,14 +89,14 @@ ActiveRecord::Schema.define(version: 2021_04_05_020305) do
     t.string "name", null: false
     t.text "description", null: false
     t.string "book", null: false
-    t.string "flaw_type", null: false
+    t.string "perk_type", null: false
     t.boolean "major"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "creation_max", default: 1
     t.index ["book"], name: "index_flaws_on_book"
-    t.index ["flaw_type"], name: "index_flaws_on_flaw_type"
     t.index ["major"], name: "index_flaws_on_major"
+    t.index ["perk_type"], name: "index_flaws_on_perk_type"
   end
 
   create_table "users", force: :cascade do |t|
@@ -125,7 +125,7 @@ ActiveRecord::Schema.define(version: 2021_04_05_020305) do
     t.string "name", null: false
     t.text "description", null: false
     t.string "book", null: false
-    t.string "virtue_type", null: false
+    t.string "perk_type", null: false
     t.boolean "major"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 2021_04_05_020305) do
     t.integer "creation_max", default: 1
     t.index ["book"], name: "index_virtues_on_book"
     t.index ["major"], name: "index_virtues_on_major"
-    t.index ["virtue_type"], name: "index_virtues_on_virtue_type"
+    t.index ["perk_type"], name: "index_virtues_on_perk_type"
   end
 
 end

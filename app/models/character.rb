@@ -248,7 +248,7 @@ class Character < ApplicationRecord
       errors.add(:flaws, "Grogs may not take the 'Outlaw Leader' Flaw")
     end
 
-    if virtues.where(virtue_type: "Hermetic") != [] && self.character_type != "Mage"
+    if virtues.where(park_type: "Hermetic") != [] && self.character_type != "Mage"
       errors.add(:virtues, "Only Mages may take Hermetic Virtues")
     end
 
@@ -260,7 +260,7 @@ class Character < ApplicationRecord
       errors.add(:flaws, "Grogs may not have 'Major' Flaws")
     end
 
-    if flaws.where(flaw_type: "Hermetic") != [] && self.character_type != "Mage"
+    if flaws.where(perk_type: "Hermetic") != [] && self.character_type != "Mage"
       errors.add(:flaws, "Only Mages may take Hermetic Flaws")
     end
 
