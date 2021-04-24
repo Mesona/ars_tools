@@ -32,7 +32,6 @@ class CharacterEstablishPerks extends React.Component {
   } 
 
   componentDidMount() {
-    console.log("TEST VIRTUES PROPS:", this.props);
     if (this.props.history.location.pathname.includes('virtues')) {
       this.setState({perkType: "virtues"});
       this.props.requestAllVirtues()
@@ -71,17 +70,16 @@ class CharacterEstablishPerks extends React.Component {
       perks: perksArray,
       classifications: classifications
     }, () => {
-      console.log("TEST VIRTUES STATE:", this.state)
       this.unpauseRender();
     });
  }
 
- unpauseRender() {
+  unpauseRender() {
   //  This is a dumb function that prevents the child components
   // from rendering too soon, causing all kinds of errors because
   // setState is asynchronous
-   this.setState({ unpause: true });
- }
+    this.setState({ unpause: true });
+  }
 
   render () {
     if (this.state.unpause === false) {

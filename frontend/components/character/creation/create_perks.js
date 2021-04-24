@@ -34,7 +34,7 @@ class CharacterCreatePerks extends React.Component {
     this.state = {
       currentCharacter: this.props.currentCharacter,
       perks: this.props.perks,
-      show: this.props.classifications,
+      shown: this.props.classifications,
     };
 
     this.generatePerkFields = this.generatePerkFields.bind(this);
@@ -45,7 +45,6 @@ class CharacterCreatePerks extends React.Component {
     this.establishPerkHelperText = this.establishPerkHelperText.bind(this);
 
     // this.update = this.update.bind(this);
-    this.generateArray = this.generateArray.bind(this)
     this.handlePerk = this.handlePerk.bind(this);
     this.validation = this.validation.bind(this);
     this.handleShow = this.handleShow.bind(this);
@@ -59,8 +58,6 @@ class CharacterCreatePerks extends React.Component {
   } 
 
   componentDidMount() {
-    console.log("CREATE_PERKS PROPS:", this.props)
-    console.log("CREATE PERKS STATE:", this.state)
     // TODO: Enable ability to resume an incomplete character creation
     // In case someone loads the virtues page on an incomplete character
     // that got through initial generation but never finalized
@@ -81,7 +78,6 @@ class CharacterCreatePerks extends React.Component {
   }
 
   perksRender(perks) {
-    console.log("PERKS:", perks);
     return perks.map((perk) => {
       if (perk !== undefined) {
         return (
@@ -90,7 +86,12 @@ class CharacterCreatePerks extends React.Component {
             className={`create-perk-hover ${perk.disabled}`}
             key={perk.id}
           >
-            Name: {perk.name}
+            <UniquePerkContainer 
+              perk={perk}
+              validate={this.validation}
+              handleClick={this.handlePerk}
+            />
+            <hr></hr>
           </div>
         );
       }
@@ -114,8 +115,9 @@ class CharacterCreatePerks extends React.Component {
     majorPerks = this.perksRender(majorPerks);
     minorPerks = this.perksRender(minorPerks);
     freePerks = this.perksRender(freePerks);
+    let perkType = perks[0].perk_type
     return (
-      <div key="column" className="create-perks-parent">
+      <div key="column" className={`create-perks-parent ${this.state.shown.includes(perkType) ? "" : "removed"}`}>
         <div className="major">
           MAJOR
           {majorPerks}
@@ -152,7 +154,6 @@ class CharacterCreatePerks extends React.Component {
     // renderedTypes = this.perkColumnRender(thesePerks);
     return classifications.map((classification) => {
       let thesePerks = Object.values(this.state.perks).filter((perk) => perk.perk_type === classification);
-      console.log("CLASSIFICATION:", classification);
       return (
         <div key={classification}>
           <p>{classification}</p>
@@ -166,20 +167,11 @@ class CharacterCreatePerks extends React.Component {
     })
   };
 
-  generateArray(len) {
-    var arr = new Array(len);
-    for (var i=0; i<len; i++) {
-      arr[i] = i + i;
-    }
-    return arr;
-  }
-
   generateInitialStates() {
     let currentCharacter = this.state.currentCharacter;
     let perks = Object.assign({}, currentCharacter.virtues, currentCharacter.flaws);
     let minorVirtues = 0;
     let minorFlaws = 0;
-    console.log("PERKS:", perks)
     for (let i = 0; i < Object.keys(perks).length; i++) {
       let perkIndex = Object.keys(perks)[i];
       let thisPerk = perks[perkIndex]
@@ -217,7 +209,6 @@ class CharacterCreatePerks extends React.Component {
 
   generatePerkFields() {
     let perks = this.state.perks;
-    console.log("GENERATE PERKS:", perks)
 
     for (let i = 0; i < perks.length; i++) {
       perks[i].disabled = false;
@@ -392,8 +383,6 @@ class CharacterCreatePerks extends React.Component {
     let storePerk, deletePerk;
     let currentCharacter = this.state.currentCharacter;
     const { perkType } = this.props;
-    console.log("CB:", checkBox)
-    console.log("PERK:", perk)
     if (perkType === "virtue") {
       storePerk = this.props.storeVirtue;
       deletePerk = this.props.deleteVirtue;
@@ -476,14 +465,22 @@ class CharacterCreatePerks extends React.Component {
     // removes the section from view if it already exist
     // TODO: Visually hide the section so it doesn't need to rerender
     // when "show" is reactivated
-    let shownSections = [...this.state.show];
+    let shownSections = [...this.state.shown];
     if (shownSections.includes(section)) {
       let sectionIndex = shownSections.indexOf(section);
       let newSections = shownSections.slice(0, sectionIndex).concat(shownSections.slice(sectionIndex + 1));
-      this.setState({ show: newSections });
+      this.setState({ shown: newSections }, () => {
+        console.log('yo')
+        // document.getElementById(section).style.visibility = 'hidden';  // Will hide
+        // document.getElementById(section).style.display = "none";
+      });
     } else {
       shownSections.push(section);
-      this.setState({ show: shownSections });
+      this.setState({ shown: shownSections }, () => {
+        console.log('oy')
+        // document.getElementById(section).style.visibility = 'visible';  // Will show 
+        // document.getElementById(section).style.display = "block";
+      });
     }
   }
 
@@ -550,7 +547,6 @@ class CharacterCreatePerks extends React.Component {
   }
 
   updateDisabledTypes(value, perkType) {
-    console.log("U5")
     // console.log(totalVirtues)
     // console.log(minorVirtues)
     // TODO: Simplify this ugliness
@@ -661,115 +657,6 @@ class CharacterCreatePerks extends React.Component {
 
           {this.classificationRender(this.props.classifications)}
         </div>
-        // <div>
-        //   {console.log("ENTRY RETURN")}
-
-        //   {this.props.classifications.map(classification => (
-        //     <React.Fragment key={classification}>
-        //       <p>{classification}</p>
-        //       <span onClick={() => this.handleShow(classification)}>
-        //         Show/Hide
-        //       </span>
-        //       <hr></hr>
-        //       <div className="create-perks-parent">
-        //         {this.state.show.includes(classification) ? (
-        //           <>
-        //             <div className="major">
-        //               <p onClick={() => this.test("major", classification)}>
-        //                 Major {this.props.perkType}
-        //               </p>
-        //               {this.props.perks
-        //                 .filter(
-        //                   perks => (
-        //                     perks.perk_type === classification &&
-        //                     perks.major === true
-        //                   )
-        //                 )
-        //                 .map(perk => (
-        //                   <>
-        //                     {/* {console.log("PERK TEST:", `${perk.id}${perk.id}`)} */}
-        //                     {this.generateArray(perk.creation_max).forEach((perkIdx) => {
-        //                       <div
-        //                         id={perk.id}
-        //                         perkIdx={perkIdx}
-        //                         className={`create-perk-hover ${perk.disabled}`}
-        //                         key={`${perk.id}${perkIdx}`}
-        //                       >
-        //                         {/* {console.log("PERK:", `${perk}`)}
-        //                         {console.log("PCM:", perk.creation_max)}
-        //                         {console.log("PERK TEST:", `${perk.id}--${perkIdx}`)} */}
-        //                         <UniquePerkContainer
-        //                           perk={perk}
-        //                           validate={this.validation}
-        //                           handleClick={this.handlePerk}
-        //                         />
-        //                         <hr></hr>
-        //                       </div>
-        //                     })}
-        //                   </>
-        //                 ))}
-        //             </div>
-
-        //             <div className="minor">
-        //               <p>Minor {this.props.perkType}</p>
-        //               {this.props.perks
-        //                 .filter(
-        //                   perks =>
-        //                     (perks.perk_type === undefined
-        //                       ? perks.perk_type === classification
-        //                       : perks.perk_type === classification) &&
-        //                     perks.major === false &&
-        //                     perks.free === false
-        //                 )
-        //                 .map(perk => (
-        //                   <div
-        //                     id={perk.id}
-        //                     className={`create-perk-hover ${perk.disabled}`}
-        //                     key={perk.id}
-        //                   >
-        //                     {/* {console.log("PERK:", `${perk}`)} */}
-        //                     {console.log("PERK ID:", `${perk.id}`)}
-        //                     <UniquePerkContainer
-        //                       perk={perk}
-        //                       validate={this.validation}
-        //                       handleClick={this.handlePerk}
-        //                     />
-        //                     <hr></hr>
-        //                   </div>
-        //                 ))}
-        //             </div>
-
-        //             <div className="free">
-        //               <p>Free {this.props.perkType}</p>
-        //               {this.props.perks
-        //                 .filter(
-        //                   perks =>
-        //                     (perks.perk_type === undefined
-        //                       ? perks.perk_type === classification
-        //                       : perks.perk_type === classification) &&
-        //                     perks.free === true
-        //                 )
-        //                 .map(perk => (
-        //                   <div
-        //                     id={perk.id}
-        //                     className={`create-perk-hover ${perk.disabled}`}
-        //                     key={perk.id}
-        //                   >
-        //                     <UniquePerkContainer
-        //                       perk={perk}
-        //                       validate={this.validation}
-        //                       handleClick={this.handlePerk}
-        //                     />
-        //                     <hr></hr>
-        //                   </div>
-        //                 ))}
-        //             </div>
-        //           </>
-        //         ) : null}
-        //       </div>
-        //     </React.Fragment>
-        //   ))}
-        // </div>
       );
     }
   }
