@@ -3,7 +3,7 @@ import { withRouter, Route, Redirect, Router, browserHistory } from 'react-route
 
 import CharacterCreateInitial from './create_initial';
 import CharacterCreateStats from './create_stats';
-import CharacterEstablishPerks from './establish_perks';
+import CreatePerkType from './create_perk_type';
 
 class CharacterCreate extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class CharacterCreate extends React.Component {
             return (
               this.props.currentCharacter === undefined ?
               <Redirect to="/characters/new/gen" /> :
-              <CharacterEstablishPerks
+              <CreatePerkType
                 currentCharacter={this.props.currentCharacter}
               />
             )
@@ -46,7 +46,7 @@ class CharacterCreate extends React.Component {
             return (
               this.props.currentCharacter === undefined ?
               <Redirect to="/characters/new/gen" /> :
-              <CharacterEstablishPerks
+              <CreatePerkType
                 currentCharacter={this.props.currentCharacter}
               />
             )

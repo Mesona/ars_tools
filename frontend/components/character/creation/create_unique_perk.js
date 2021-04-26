@@ -17,7 +17,7 @@ class UniquePerk extends React.Component {
       // numberOfSpecials 3 is for virtues with custom specials
       numberOfSpecials: 0,
       disabled: "disabled",
-      thisID: this.props.perk.id,
+      thisID: this.props.perk.idx,
       theseOptions: [{}],
       statOptions: [
         { value: 'intelligence', label: 'Intelligence' },
