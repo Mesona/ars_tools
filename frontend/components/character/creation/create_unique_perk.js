@@ -408,8 +408,9 @@ class UniquePerk extends React.Component {
   calculateDupes() {
     let dupes = {};
 
-    Object.keys(this.props.currentPerks).forEach((currentPerk) => {
-      let perk = this.props.currentPerks[currentPerk];
+    // Object.keys(this.props.currentPerks).forEach((currentPerk) => {
+    this.props.currentPerks.forEach((perk) => {
+      // let perk = this.props.currentPerks[currentPerk];
       let value = perk.special_one;
       // Don't want to add the current virtue twice
       if (currentPerk !== this.props.perk.id && value !== null) {

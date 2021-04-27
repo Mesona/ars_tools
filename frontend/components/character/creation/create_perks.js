@@ -217,18 +217,31 @@ class CharacterCreatePerks extends React.Component {
 
     for (let i = 0; i < passedPerks.length; i++) {
       try {
-        perk = displayedPerks.find( thisPerk => thisPerk.name === passedPerks[i]);
+        perk = displayedPerks.find( (thisPerk) => thisPerk.name === passedPerks[i]);
+        if (perk.name === "Large") {
+          console.log("PERK:", perk)
+        }
   
         if (undo === false) {
+          console.log("DISABLED PERK")
           perk.disabled = "disabled";
+          console.log("DISABLED PERK D_C 1:", perk.disabled_count)
           perk.disabled_count++;
+          console.log("DISABLED PERK D_C 2:", perk.disabled_count)
         } else {
+          console.log("PERK D_C 1:", perk.disabled_count)
           perk.disabled_count--;
+          console.log("PERK D_C 2:", perk.disabled_count)
           if (perk.disabled_count === 0) {
+            console.log("ENABLED PERK")
             perk.disabled = false;
           }
         }
   
+        if (perk.name === "Large") {
+          console.log("AFTER:", perk)
+          console.log("DPP:", displayedPerks[perk.idx]);
+        }
         displayedPerks[perk.idx] = perk;
       }
       catch(TypeError) {
@@ -278,6 +291,7 @@ class CharacterCreatePerks extends React.Component {
     let currentCharacter = this.state.currentCharacter;
     const { perkType } = this.props;
     let currentPerks = this.state.currentPerks;
+    let undo;
  
     if (childData !== null) {
       perk.special_one = childData.special_one;
@@ -288,19 +302,17 @@ class CharacterCreatePerks extends React.Component {
     // it is, the virtue will be deleted rather than added
     if (checkBox) {
       currentPerks.push(perk);
+      undo = false;
     } else {
       currentPerks = _.remove(currentPerks, (thisPerk) => {
         return thisPerk !== perk;
       });
+      undo = true;
     }
 
-    this.validation(perk, true);
+    this.validation(perk, undo);
 
-    this.setState({
-      currentPerks,
-    }, () => {
-      this.validation(perk);
-    });
+    this.setState({currentPerks});
   }
 
 
@@ -368,8 +380,8 @@ class CharacterCreatePerks extends React.Component {
 
   test(type, classification) {
     // let testVirtues = this.props.perks.filter(e => e.virtueType === classification)
-    this.props.perks.filter( perk => (perk.perk_type === undefined ? perk.perk_type === classification : perk.perk_type === classification) && perk.major === true ).map( perk => {
-    })
+    // this.props.perks.filter( perk => (perk.perk_type === undefined ? perk.perk_type === classification : perk.perk_type === classification) && perk.major === true ).map( perk => {
+    // })
   }
 
   calculatePerkPoints(newPerk, math) {
