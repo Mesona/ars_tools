@@ -341,12 +341,12 @@ class UniquePerk extends React.Component {
   }
 
   enableSpecial() {
-    // let baseValidation = this.props.validate(this.props.perk);
     let baseValidation = this.props.perk.disabled;
 
     // If the virtue is not disabled by some "hard set" lock
+    console.log("TEST PROPS:", this.props)
+    console.log("TEST STATE:", this.state)
     if (baseValidation !== "disabled") {
-      // if (this.state.special_one === "" || this.special_two === "") {
       if (this.special_two === "") {
         this.setState({disabled: "disabled"});
       } else {

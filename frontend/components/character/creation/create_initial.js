@@ -32,8 +32,8 @@ class CharacterCreateInitial extends React.Component {
    // assumes Name, Type, and Gender are already provided
    let character = {};
    character = Object.assign(character, partial_character);
-   character.virtues = {};
-   character.flaws = {};
+   character.virtues = [];
+   character.flaws = [];
 
    return character;
  }

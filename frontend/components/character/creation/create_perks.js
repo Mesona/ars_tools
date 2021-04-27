@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
 import React from 'react';
 import UniquePerkContainer from './create_unique_perk_container';
 import { Link } from 'react-router-dom';
-import merge from 'lodash/merge';
+import { merge, remove } from 'lodash/merge';
 
 class CharacterCreatePerks extends React.Component {
   constructor(props) {
@@ -24,7 +24,7 @@ class CharacterCreatePerks extends React.Component {
 
     this.state = {
       currentCharacter: this.props.currentCharacter,
-      allPerks: this.props.perks,
+      displayedPerks: this.props.perks,
       shown: this.props.classifications,
     };
 
@@ -56,30 +56,18 @@ class CharacterCreatePerks extends React.Component {
 
   componentDidMount() {
     // TODO: Enable ability to resume an incomplete character creation
-    // In case someone loads the virtues page on an incomplete character
-    // that got through initial generation but never finalized
-    // if (this.props.currentCharacter === undefined) {
-    //   this.props.requestCharacter(this.props.match.params.characterId)
-    //   .then( response => this.setState({  currentCharacter: response.character,
-    //                                       currentVirtues: response.character.virtues,
-    //                                       currentFlaws: response.character.flaws,
-    //                                     }, function () {
-    //                                       this.props.requestAllAbilities();
-    //                                       this.establishPerkHelperText();
-    //                                       // this.generateTemporaryPerkAttributes();
-    //                                     }));
-    // }
     this.generateInitialStates();
   }
 
   generateInitialStates() {
     let currentCharacter = this.state.currentCharacter;
-    let currentPerks = Object.assign({}, currentCharacter.virtues, currentCharacter.flaws);
+    // let currentPerks = Object.assign([], currentCharacter.virtues, currentCharacter.flaws);
+    let currentPerks = [];
+    currentPerks = currentPerks.concat(currentCharacter.virtues, currentCharacter.flaws);
     let virtuePoints = 0;
     let flawPoints = 0;
-    for (let i = 0; i < Object.keys(currentPerks).length; i++) {
-      let perkIndex = Object.keys(currentPerks)[i];
-      let thisPerk = currentPerks[perkIndex]
+    for (let i = 0; i < currentPerks.length; i++) {
+      let thisPerk = currentPerks[i];
       if (thisPerk.major === false && thisPerk.free === false) {
         if (thisPerk.perk_type === "virtue") {
           virtuePoints += 1;
@@ -99,58 +87,62 @@ class CharacterCreatePerks extends React.Component {
       "flawPoints": flawPoints,
       "virtuePoints": virtuePoints,
       "perkPointText": "",
+      "currentPerks": currentPerks,
     }, function () {
       this.generateTemporaryPerkAttributes();
-      this.initialPerkStateUpdate();
       this.establishPerkHelperText();
+      this.initialPerkStateUpdate();
     });
   }
 
   initialPerkStateUpdate() {
     const { currentCharacter } = this.state; 
     const { perkType } = this.props;
-    let currentPerks = {};
-    if (perkType === "virtues") {
-      currentPerks = currentCharacter.virtues;
-    } else if (perkType === "flaws") {
-      currentPerks = currentCharacter.flaws;
-    }
-
-    // Character type validations, always disabled
-    if (currentCharacter.character_type === "grog") {
-      this.disablePerks(false,
-                        "The Gift",
-                        "Temporal Influence");
-
-      this.disablePerkType("major", true);
-
-    } else if (currentCharacter.character_type === "npc") {
-      this.disablePerks(false, "TheGift");
-
-    } else if (currentCharacter.character_type === "companion") {
-      this.disablePerks(false, "TheGift");
-
-    } else if (currentCharacter.character_type === "mage") {
-      this.disablePerks(false,
-                        "The Gift",
-                        "Hermetic Magus",
-                         "Covenfolk",
-                        "Craftsman",
-                        "Wanderer",
-                        "Merchant",
-                        "Peasant");
-    }
+    let currentPerks = this.state.currentPerks;
+    // if (perkType === "virtues") {
+    //   currentPerks = currentCharacter.virtues;
+    // } else if (perkType === "flaws") {
+    //   currentPerks = currentCharacter.flaws;
+    // }
 
     // Perks disabled upon load based on already established Perks
-    for (let i = 0; i < currentPerks.length; i++) {
-      let currentPerkIdx = Object.keys(currentPerks)[i];
-      let currentPerk = currentPerks[currentPerkIdx];
-      this.validation(currentPerk);
-    }
+    currentPerks.forEach((currentPerk) => this.validation(currentPerk));
+    // for (let i = 0; i < currentPerks.length; i++) {
+    //   // let currentPerkIdx = Object.keys(currentPerks)[i];
+    //   let currentPerk = currentPerks[i];
+    //   this.validation(currentPerk);
+    // }
 
     this.setState({
       currentPerks,
       displayReady: true
+    }, () => {
+      // Character type validations, always disabled
+      // TODO: Move to separate function
+      if (currentCharacter.character_type === "grog") {
+        this.disablePerks(false,
+                          "The Gift",
+                          "Temporal Influence");
+
+        this.disablePerkType("major", true);
+        this.disablePerkType("perk_type", "Hermetic");
+
+      } else if (currentCharacter.character_type === "npc") {
+        this.disablePerks(false, "TheGift");
+
+      } else if (currentCharacter.character_type === "companion") {
+        this.disablePerks(false, "TheGift");
+
+      } else if (currentCharacter.character_type === "mage") {
+        this.disablePerks(false,
+                          "The Gift",
+                          "Hermetic Magus",
+                          "Covenfolk",
+                          "Craftsman",
+                          "Wanderer",
+                          "Merchant",
+                          "Peasant");
+      }
     });
   }
 
@@ -195,29 +187,29 @@ class CharacterCreatePerks extends React.Component {
   }
 
   generateTemporaryPerkAttributes() {
-    let allPerks = this.state.allPerks;
-    let displayedPerks = [];
+    let displayedPerks = this.state.displayedPerks;
+    let updatedDisplayedPerks = []
 
     let index = 0;
     let thisPerk = null;
-    for (let i = 0; i < allPerks.length; i++) {
-      thisPerk = allPerks[i];
+    for (let i = 0; i < displayedPerks.length; i++) {
+      thisPerk = displayedPerks[i];
       thisPerk.disabled = false;
       thisPerk.disabled_count = 0;
 
       for (let j = 0; j < thisPerk.creation_max; j++) {
         let individualPerk = JSON.parse(JSON.stringify(thisPerk));
         individualPerk.idx = index; 
-        displayedPerks.push(individualPerk);
+        updatedDisplayedPerks.push(individualPerk);
         index++;
       }
     }
 
-    this.setState({ allPerks: displayedPerks}, () => console.log("ALLPERKS:", this.state.allPerks));
+    this.setState({ displayedPerks: updatedDisplayedPerks});
   }
 
   disablePerks() {
-    const { perks } = this.state;
+    let displayedPerks = this.state.displayedPerks;
 
     let perk;
     let passedPerks = [...arguments];
@@ -225,7 +217,7 @@ class CharacterCreatePerks extends React.Component {
 
     for (let i = 0; i < passedPerks.length; i++) {
       try {
-        perk = perks.find( thisPerk => thisPerk.name === passedPerks[i]);
+        perk = displayedPerks.find( thisPerk => thisPerk.name === passedPerks[i]);
   
         if (undo === false) {
           perk.disabled = "disabled";
@@ -237,7 +229,7 @@ class CharacterCreatePerks extends React.Component {
           }
         }
   
-        perks[perk.idx] = perk;
+        displayedPerks[perk.idx] = perk;
       }
       catch(TypeError) {
         // We don't want this to error out when it tried to load flaws on the
@@ -245,33 +237,35 @@ class CharacterCreatePerks extends React.Component {
       }
     }
 
-    this.setState({ perks: perks });
+    this.setState({ displayedPerks: displayedPerks });
   }
 
   disablePerkType(field, value, undo="") {
-    let { perks } = this.state;
+    let { displayedPerks } = this.state;
 
-    perks.forEach((perk) => {
+    for (let i = 0; i < Object.keys(displayedPerks).length; i++) {
+      let perkIdx = Object.keys(displayedPerks)[i];
+      let perk = displayedPerks[perkIdx];
       // TODO: Move somewhere for easy access, because this WILL be needed
       // Small snippet to create an object with a variable for its name
       // var this_perk = perk.name,
       //   obj = { [this_perk]: perk};
       if (perk[field] === value &&
-          ! (perk.id in this.props.currentPerks)) {
-            if (undo === "") {
-              perk.disabled = "disabled";
-              perk.disabled_count++;
-              perks[perk.idx] = perk;
-            } else {
-              perk.disabled_count--;
-              if (perk.disabled_count === 0) {
-                perk.disabled = false;
-              }
-              perks[perk.idx] = perk;
+        ! (perk in this.state.currentPerks)) {
+          if (undo === "") {
+            perk.disabled = "disabled";
+            perk.disabled_count++;
+            displayedPerks[perk.idx] = perk;
+          } else {
+            perk.disabled_count--;
+            if (perk.disabled_count === 0) {
+              perk.disabled = false;
             }
+            displayedPerks[perk.idx] = perk;
+          }
       }
-    });
-    this.setState({ perks: perks });
+    }
+    this.setState({ displayedPerks: displayedPerks });
   }
 
   // update(field) {
@@ -284,13 +278,6 @@ class CharacterCreatePerks extends React.Component {
     let currentCharacter = this.state.currentCharacter;
     const { perkType } = this.props;
     let currentPerks = this.state.currentPerks;
-    // if (perkType === "virtue") {
-    //   storePerk = this.props.storeVirtue;
-    //   deletePerk = this.props.deleteVirtue;
-    // } else if (perkType === "flaw") {
-    //   storePerk = this.props.storeFlaw;
-    //   deletePerk = this.props.deleteFlaw;
-    // }
  
     if (childData !== null) {
       perk.special_one = childData.special_one;
@@ -300,27 +287,20 @@ class CharacterCreatePerks extends React.Component {
     // Checks if the virtue is already "checked," and if it
     // it is, the virtue will be deleted rather than added
     if (checkBox) {
-      currentPerks = merge({}, currentPerks, perk)
-      // storePerk(perk)
-      // if (perkType === "virtues") {
-      //   currentCharacter.virtues = merge({}, currentCharacter.virtues, perk)
-      // } else {
-      //   currentCharacter.flaws = merge({}, currentCharacter.flaws, perk)
-      // }
-      this.setState({ currentCharacter });
-      this.validation(perk);
-
+      currentPerks.push(perk);
     } else {
-      console.log("SHOULD BE DELETED")
-      // console.log(perk)
-      // if (perkType === "virtues") {
-        // REMINDER:  REWORK CURRENT VIRTUES/FLAWS HERE
-      //   currentCharacter.virtues.delete(perk)
-
-      // }
-      // deletePerk(perk);
-      this.validation(perk, true);
+      currentPerks = _.remove(currentPerks, (thisPerk) => {
+        return thisPerk !== perk;
+      });
     }
+
+    this.validation(perk, true);
+
+    this.setState({
+      currentPerks,
+    }, () => {
+      this.validation(perk);
+    });
   }
 
 
@@ -494,7 +474,6 @@ class CharacterCreatePerks extends React.Component {
   }
 
   perksRender(perks) {
-    console.log("PERKS:", perks)
     return perks.map((perk) => {
       if (perk !== undefined) {
         return (
@@ -507,6 +486,7 @@ class CharacterCreatePerks extends React.Component {
               perk={perk}
               validate={this.validation}
               handleClick={this.handlePerk}
+              currentPerks={this.state.currentPerks}
             />
             <hr></hr>
           </div>
@@ -515,14 +495,13 @@ class CharacterCreatePerks extends React.Component {
     })
   }
 
-  perkColumnRender(perks) {
+  perkColumnRender(perks, perkType) {
     let majorPerks = Object.values(perks).filter((perk) => perk.major === true);
     let minorPerks = Object.values(perks).filter((perk) => perk.major === false && perk.free === false);
     let freePerks = Object.values(perks).filter((perk) => perk.major === false && perk.free === true);
     majorPerks = this.perksRender(majorPerks);
     minorPerks = this.perksRender(minorPerks);
     freePerks = this.perksRender(freePerks);
-    let perkType = perks[0].perk_type
     return (
       <div key={`column-${perkType}`} className={`create-perks-parent ${this.state.shown.includes(perkType) ? "" : "removed"}`}>
         <div className="major">
@@ -546,7 +525,7 @@ class CharacterCreatePerks extends React.Component {
 
   classificationRender(classifications) {
     return classifications.map((classification) => {
-      let thesePerks = Object.values(this.state.allPerks).filter((perk) => perk.perk_type === classification);
+      let thesePerks = Object.values(this.state.displayedPerks).filter((perk) => perk.perk_type === classification);
       return (
         <div key={classification}>
           <p>{classification}</p>
@@ -554,7 +533,7 @@ class CharacterCreatePerks extends React.Component {
             Show/Hide
           </span>
           <hr></hr>
-          {this.perkColumnRender(thesePerks)}
+          {this.perkColumnRender(thesePerks, classification)}
         </div>
       )
     })
