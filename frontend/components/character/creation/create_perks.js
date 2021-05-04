@@ -31,6 +31,7 @@ class CharacterCreatePerks extends React.Component {
     this.generateTemporaryPerkAttributes = this.generateTemporaryPerkAttributes.bind(this);
     this.generateInitialStates = this.generateInitialStates.bind(this);
     this.initialPerkStateUpdate = this.initialPerkStateUpdate.bind(this);
+    this.disablePerk = this.disablePerk.bind(this);
     this.disablePerks = this.disablePerks.bind(this);
     this.disablePerkType = this.disablePerkType.bind(this);
     this.establishPerkHelperText = this.establishPerkHelperText.bind(this);
@@ -208,6 +209,20 @@ class CharacterCreatePerks extends React.Component {
     this.setState({ displayedPerks: updatedDisplayedPerks});
   }
 
+  disablePerk(undo, perk) {
+    if (undo === false) {
+      perk.disabled = "disabled";
+      perk.disabled_count++;
+    } else {
+      perk.disabled_count--;
+      if (perk.disabled_count === 0) {
+        perk.disabled = false;
+      }
+    }
+
+    return perk;
+  }
+
   disablePerks() {
     let displayedPerks = this.state.displayedPerks;
 
@@ -218,30 +233,25 @@ class CharacterCreatePerks extends React.Component {
     for (let i = 0; i < passedPerks.length; i++) {
       try {
         perk = displayedPerks.find( (thisPerk) => thisPerk.name === passedPerks[i]);
-        if (perk.name === "Large") {
-          console.log("PERK:", perk)
+  
+        if (perk.name === "The Gift") {
+          console.log("DISABLE EARLY:", perk);
+        }
+
+        perk = this.disablePerk(undo, perk);
+        // if (undo === false) {
+        //   perk.disabled = "disabled";
+        //   perk.disabled_count++;
+        // } else {
+        //   perk.disabled_count--;
+        //   if (perk.disabled_count === 0) {
+        //     perk.disabled = false;
+        //   }
+        // }
+        if (perk.name === "The Gift") {
+          console.log("DISABLE LATE:", perk);
         }
   
-        if (undo === false) {
-          console.log("DISABLED PERK")
-          perk.disabled = "disabled";
-          console.log("DISABLED PERK D_C 1:", perk.disabled_count)
-          perk.disabled_count++;
-          console.log("DISABLED PERK D_C 2:", perk.disabled_count)
-        } else {
-          console.log("PERK D_C 1:", perk.disabled_count)
-          perk.disabled_count--;
-          console.log("PERK D_C 2:", perk.disabled_count)
-          if (perk.disabled_count === 0) {
-            console.log("ENABLED PERK")
-            perk.disabled = false;
-          }
-        }
-  
-        if (perk.name === "Large") {
-          console.log("AFTER:", perk)
-          console.log("DPP:", displayedPerks[perk.idx]);
-        }
         displayedPerks[perk.idx] = perk;
       }
       catch(TypeError) {
@@ -265,19 +275,22 @@ class CharacterCreatePerks extends React.Component {
       //   obj = { [this_perk]: perk};
       if (perk[field] === value &&
         ! (perk in this.state.currentPerks)) {
-          if (undo === "") {
-            perk.disabled = "disabled";
-            perk.disabled_count++;
-            displayedPerks[perk.idx] = perk;
-          } else {
-            perk.disabled_count--;
-            if (perk.disabled_count === 0) {
-              perk.disabled = false;
-            }
-            displayedPerks[perk.idx] = perk;
-          }
+          perk = this.disablePerk(undo, perk);
+          // if (undo === "") {
+          //   perk.disabled = "disabled";
+          //   perk.disabled_count++;
+          //   displayedPerks[perk.idx] = perk;
+          // } else {
+          //   perk.disabled_count--;
+          //   if (perk.disabled_count === 0) {
+          //     perk.disabled = false;
+          //   }
+          //   displayedPerks[perk.idx] = perk;
+          // }
+          displayedPerks[perk.idx] = perk;
       }
     }
+
     this.setState({ displayedPerks: displayedPerks });
   }
 
@@ -288,7 +301,6 @@ class CharacterCreatePerks extends React.Component {
   // }
 
   handlePerk(checkBox, perk, childData = null) {
-    let currentCharacter = this.state.currentCharacter;
     const { perkType } = this.props;
     let currentPerks = this.state.currentPerks;
     let undo;
@@ -301,18 +313,24 @@ class CharacterCreatePerks extends React.Component {
     // Checks if the virtue is already "checked," and if it
     // it is, the virtue will be deleted rather than added
     if (checkBox) {
+      this.calculatePerkPoints(perk, "add");
       currentPerks.push(perk);
       undo = false;
     } else {
+      this.calculatePerkPoints(perk, "subtract");
       currentPerks = _.remove(currentPerks, (thisPerk) => {
         return thisPerk !== perk;
       });
       undo = true;
     }
 
+    if (perk.name === "The Gift") {
+      console.log("YOOOO 2:", perk.disabled);
+    }
+
     this.validation(perk, undo);
 
-    this.setState({currentPerks});
+    this.setState({ currentPerks });
   }
 
 
@@ -336,7 +354,7 @@ class CharacterCreatePerks extends React.Component {
     } else if (perk.name === 'Large') {
       this.disablePerks(undo, "Giant Blood", "Dwarf", "Small Frame");
 
-    } else if (perk.name === "Small Frame") {
+    } else if (perk.name === "Small/disable Frame") {
       this.disablePerks(undo, "Large", "Giant Blood", "Dwarf");
 
     } else if (perk.name === "Dwarf") {
@@ -378,7 +396,8 @@ class CharacterCreatePerks extends React.Component {
     }
   }
 
-  test(type, classification) {
+  test() {
+    console.log("Virtue Points:", this.state.virtuePoints);
     // let testVirtues = this.props.perks.filter(e => e.virtueType === classification)
     // this.props.perks.filter( perk => (perk.perk_type === undefined ? perk.perk_type === classification : perk.perk_type === classification) && perk.major === true ).map( perk => {
     // })
@@ -387,16 +406,16 @@ class CharacterCreatePerks extends React.Component {
   calculatePerkPoints(newPerk, math) {
     // FIXME: visually lags one state behind
     let perkPoints = 0;
-    newPerk.perk_type === "virtue" ?
-      perkPoints = this.state.virtuePoints :
+    if (this.props.perkType === "virtue") {
+      perkPoints = this.state.virtuePoints;
+    } else {
       perkPoints = this.state.flawPoints;
+    }
 
-    // let virtuePoints = (this.state.majorVirtues * 3) + (this.state.minorVirtues);
-    // let flawPoints = (this.state.majorFlaws * 3) + (this.state.minorFlaws);
     let additionalValue = 0;
     if (newPerk.major === true) {
       additionalValue = 3;
-    } else {
+    } else if (newPerk.free === false) {
       additionalValue = 1;
     }
 
@@ -407,19 +426,27 @@ class CharacterCreatePerks extends React.Component {
       newPerkPoints = perkPoints - additionalValue;
     }
 
-    return newPerkPoints;
+    if (this.props.perkType === "virtue") {
+      this.setState({ virtuePoints: newPerkPoints}, () => {
+      });
+    } else {
+      this.setState({ flawPoints: perkPoints });
+    }
 
-    // if (totalVirtues > 7) {
-      // let virtuePoints = (majorVirtues * 3) + minorVirtues;
-      // this.setState({ virtuePoints: totalVirtues }, () => {
-      //   this.updateDisabledTypes(totalVirtues);
-      // });
-    // } else if (totalFlaws > 7) {
-      // let flawPoints = (majorFlaws * 3) + minorFlaws;
-      // this.setState({ flawPoints: totalFlaws }, () => {
-      //   this.updateDisabledTypes(totalFlaws);
-      // });
-    // }
+    if (perkPoints < 10 && newPerkPoints === 10) {
+      console.log("DISABLING MINORS")
+      this.disablePerkType("major", true);
+      this.disablePerkType("major", false);
+    } else if (perkPoints === 10 && newPerkPoints < 10) {
+      console.log("REENABLING MINORS")
+      this.disablePerkType("major", false, true);
+    } else if (perkPoints < 7 && newPerkPoints > 7) {
+      console.log("DISABLING MAJORS")
+      this.disablePerkType("major", true);
+    } else if (perkPoints > 7 && newPerkPoints < 7) {
+      console.log("REENABLING MAJORS")
+      this.disablePerkType("major", true, true);
+    }
   }
 
   updateDisabledTypes(value, perkType) {
@@ -563,7 +590,7 @@ class CharacterCreatePerks extends React.Component {
     else { 
       return (
         <div>
-          <p>
+          <p onClick={this.test}>
             Total Virtue Point Accumulation:{this.state.virtuePoints}
           </p>
           <p>

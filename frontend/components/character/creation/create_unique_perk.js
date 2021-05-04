@@ -485,9 +485,11 @@ class UniquePerk extends React.Component {
   // circumstance, be unchecked. Primarily used by Virtues & Flaws granted to
   // Mages and their chosen House
   checkBox() {
+    console.log("HERE:", this.props)
     let thisID = `create-perk-checkbox-${this.state.thisID}`;
     let thisCheckbox = document.getElementById(thisID);
     thisCheckbox.checked = true;
+    console.log("TCB:", thisCheckbox);
     this.props.handleClick(true, this.props.perk, this.state);
   }
 
